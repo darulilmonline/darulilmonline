@@ -8,138 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-:root{
-  --teal:#0F4C5C; --teal-deep:#0A3340; --ink:#1B2A2F; --ivory:#FBF7EE; --sand:#F1E9D6; --saffron:#E0A526; --saffron-deep:#B8841B;
-  --bg:var(--ivory); --surface:#FFFFFF; --surface-2:var(--sand); --text:var(--ink); --muted:#5A6A6F; --line:#DED5BF;
-  --brand:var(--teal); --brand-text:#FFFFFF; --accent:var(--saffron);
-  --radius:14px; --maxw:1120px;
-  box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-}
-@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
-  color-scheme:dark; --bg:#0D1A1F; --surface:#13252B; --surface-2:#1A3038; --text:#F2EDE1; --muted:#A9B5B9; --line:#2A3F47; --brand:#13606F; --accent:#E8B542;
-}}
-:root[data-theme="dark"]{ color-scheme:dark; --bg:#0D1A1F; --surface:#13252B; --surface-2:#1A3038; --text:#F2EDE1; --muted:#A9B5B9; --line:#2A3F47; --brand:#13606F; --accent:#E8B542; }
-html{scroll-padding-top:calc(72px + env(safe-area-inset-top,0px)); scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
-*{box-sizing:inherit;margin:0}
-body{background:var(--bg);color:var(--text);font-family:"Hind Siliguri",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:10}
-[lang="ar"], .ar{font-family:"Amiri","Noto Naskh Arabic",serif}
-html[dir="rtl"] body{font-family:"Amiri","Noto Naskh Arabic","Hind Siliguri",serif;font-size:19px;line-height:1.9}
-a{color:inherit}
-img{max-width:100%;display:block}
-.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
-h1,h2,h3{line-height:1.2;font-weight:700}
-h2{font-size:clamp(26px,4vw,38px);margin-bottom:12px}
-.lead{color:var(--muted);max-width:60ch}
-section{padding:72px 0}
-.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:999px;font-weight:600;text-decoration:none;border:2px solid transparent;cursor:pointer;font-size:17px;font-family:inherit;transition:transform .12s ease}
-.btn:active{transform:scale(.98)}
-.btn-primary{background:var(--accent);color:var(--ink);border-color:var(--accent)}
-.btn-ghost{background:transparent;color:inherit;border-color:currentColor}
-.btn-wa{background:#1FAF5A;color:#fff}
-.btn:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-
-/* header */
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
-.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700;font-size:19px}
-.logo svg{width:40px;height:40px;flex:none}
-.logo small{display:block;font-size:12px;color:var(--muted);font-weight:500;line-height:1.1}
-.links{display:none;gap:22px;font-weight:500}
-.links a{text-decoration:none;color:var(--muted)}
-.links a:hover{color:var(--text)}
-.lang{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
-.lang button{background:none;border:0;padding:8px 12px;font-family:inherit;font-size:14px;font-weight:600;color:var(--muted);cursor:pointer}
-.lang button[aria-pressed="true"]{background:var(--brand);color:var(--brand-text)}
-@media(min-width:900px){.links{display:flex}}
-
-/* hero */
-.hero{background:var(--brand);color:#fff;padding:40px 0 64px;position:relative;overflow:visible}
-.hero .wrap{display:grid;gap:36px;align-items:center}
-.iqra{font-family:"Amiri",serif;font-size:clamp(110px,22vw,240px);line-height:1.15;padding-top:.15em;color:var(--accent);text-align:center;direction:rtl;font-weight:700;letter-spacing:-.02em;user-select:none}
-.iqra span{display:block;font-size:clamp(15px,2vw,20px);color:#fff;opacity:.85;letter-spacing:.02em;font-family:"Hind Siliguri",sans-serif;font-weight:500;margin-top:10px;direction:ltr}
-html[dir="rtl"] .iqra span{font-family:"Amiri",serif;direction:rtl}
-.hero h1{font-size:clamp(34px,5.4vw,60px);margin-bottom:16px}
-.hero p{font-size:clamp(17px,2vw,20px);opacity:.92;max-width:52ch;margin-bottom:28px}
-.hero-cta{display:flex;flex-wrap:wrap;gap:12px}
-.facts{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:32px;font-size:15px;opacity:.9}
-.facts span::before{content:"✓ ";color:var(--accent)}
-@media(min-width:900px){.hero .wrap{grid-template-columns:1.15fr .85fr}.iqra{text-align:end}}
-
-/* courses */
-.courses{display:grid;gap:14px;margin-top:36px}
-.course{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px 20px;display:grid;grid-template-columns:52px 1fr;gap:16px;align-items:start}
-.course .ar-glyph{font-family:"Amiri",serif;font-size:34px;line-height:1;color:var(--brand);direction:rtl;text-align:center;padding-top:4px}
-.course h3{font-size:20px;margin-bottom:4px}
-.course p{color:var(--muted);font-size:16px}
-.course .for{margin-top:10px;font-size:14px;color:var(--brand);font-weight:600}
-@media(min-width:720px){.courses{grid-template-columns:1fr 1fr}}
-@media(min-width:1000px){.courses{grid-template-columns:repeat(3,1fr)}}
-
-/* steps */
-.steps{counter-reset:s;display:grid;gap:22px;margin-top:36px}
-.step{position:relative;padding-inline-start:64px}
-.step::before{counter-increment:s;content:counter(s);position:absolute;inset-inline-start:0;top:0;width:46px;height:46px;border-radius:50%;background:var(--accent);color:var(--ink);font-weight:700;font-size:20px;display:grid;place-items:center}
-.step h3{font-size:19px;margin-bottom:4px}
-.step p{color:var(--muted)}
-@media(min-width:900px){.steps{grid-template-columns:repeat(4,1fr)}}
-
-/* pricing */
-.plans{display:grid;gap:16px;margin-top:36px}
-.plan{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px 24px}
-.plan.featured{border:2px solid var(--accent);position:relative}
-.plan.featured .tag{position:absolute;top:-14px;inset-inline-start:20px;background:var(--accent);color:var(--ink);padding:3px 12px;border-radius:999px;font-size:14px;font-weight:700}
-.plan h3{font-size:20px}
-.price{font-size:40px;font-weight:700;line-height:1;margin:14px 0 4px}
-.price small{font-size:16px;font-weight:500;color:var(--muted)}
-.plan ul{list-style:none;padding:0;margin:18px 0 22px;color:var(--muted)}
-.plan li{padding:6px 0;border-top:1px solid var(--line)}
-.plan li:first-child{border-top:0}
-.plan .btn{width:100%;justify-content:center}
-@media(min-width:900px){.plans{grid-template-columns:repeat(3,1fr)}}
-.note{font-size:15px;color:var(--muted);margin-top:16px}
-
-/* why */
-.why{background:var(--surface-2)}
-.why-grid{display:grid;gap:26px;margin-top:36px}
-.why-grid h3{font-size:19px;margin-bottom:4px}
-.why-grid p{color:var(--muted)}
-@media(min-width:720px){.why-grid{grid-template-columns:1fr 1fr}}
-
-/* faq */
-details{border-top:1px solid var(--line);padding:16px 0}
-details:last-of-type{border-bottom:1px solid var(--line)}
-summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:12px}
-summary::after{content:"+";font-size:24px;color:var(--brand);line-height:1}
-details[open] summary::after{content:"–"}
-details p{color:var(--muted);margin-top:10px;max-width:70ch}
-
-/* contact */
-.contact{background:var(--teal-deep);color:#fff}
-.contact-grid{display:grid;gap:28px;align-items:center}
-.contact .big{font-size:clamp(28px,5vw,44px);font-weight:700;direction:ltr;unicode-bidi:isolate}
-.pay{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-.pay span{border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:6px 14px;font-size:15px}
-@media(min-width:900px){.contact-grid{grid-template-columns:1fr 1fr}}
-
-/* apply form */
-.apply{background:var(--surface-2)}
-.form{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:28px 22px;margin-top:32px;display:grid;gap:16px;max-width:720px}
-.form label{display:grid;gap:6px;font-weight:600;font-size:15px}
-.form input,.form select,.form textarea{font:inherit;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);width:100%}
-.form textarea{min-height:90px;resize:vertical}
-.form .row{display:grid;gap:16px}
-@media(min-width:640px){.form .row{grid-template-columns:1fr 1fr}}
-.form .btn{justify-content:center}
-.msg{padding:14px 16px;border-radius:10px;display:none;font-weight:600}
-.msg.ok{display:block;background:#DFF5E5;color:#14532D}
-.msg.err{display:block;background:#FDE2E1;color:#7F1D1D}
-footer{padding:36px 0;color:var(--muted);font-size:15px}
-footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
-.bismillah{font-family:"Amiri",serif;font-size:28px;color:var(--brand);text-align:center;direction:rtl;margin-bottom:28px}
-</style>
+<link rel="stylesheet" href="/assets/style.css">
 </head>
 <body>
 
@@ -164,11 +33,13 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     </div>
   </div>
 </header>
+<div class="band" aria-hidden="true"></div>
 
 <main id="top">
 <section class="hero">
   <div class="wrap">
     <div>
+      <div class="bismillah-h" aria-label="Bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
       <h1 data-i18n="hero.h1">ঘরে বসেই শিখুন কুরআন, নামাজ ও আরবি</h1>
       <p data-i18n="hero.p">বাংলাদেশের অনলাইন মাদরাসা। অভিজ্ঞ কারী ও আলেমদের সাথে লাইভ ক্লাস, সাথে রেকর্ডেড ভিডিও — শিশু ও বড় সবার জন্য। প্রথম ৩ দিন সম্পূর্ণ ফ্রি।</p>
       <div class="hero-cta">
@@ -181,7 +52,7 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
         <span data-i18n="hero.f3">bKash · Nagad · Rocket · ব্যাংক</span>
       </div>
     </div>
-    <div class="iqra" aria-hidden="true">اقْرَأْ<span data-i18n="hero.iqra">“পড়ো” — সূরা আলাক, প্রথম ওহী</span></div>
+    <div class="mihrab"><div class="iqra" aria-hidden="true">اقْرَأْ</div><span class="iqra-cap" data-i18n="hero.iqra">“পড়ো” — সূরা আলাক, প্রথম ওহী</span></div>
   </div>
 </section>
 
@@ -190,11 +61,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <h2 data-i18n="courses.h2">কোর্সসমূহ</h2>
     <p class="lead" data-i18n="courses.lead">প্রতিটি কোর্সে সপ্তাহে ৩–৫ দিন লাইভ ক্লাস, প্রতিটি ক্লাসের রেকর্ডিং, এবং মাসিক অগ্রগতি রিপোর্ট।</p>
     <div class="courses">
-      <article class="course"><div class="ar-glyph">ا</div><div><h3 data-i18n="c1.h">নূরানী কায়দা</h3><p data-i18n="c1.p">অক্ষর চেনা থেকে শুরু করে সহীহভাবে কুরআন পড়া পর্যন্ত। একদম শুরু থেকে।</p><div class="for" data-i18n="c1.for">শিশু ও বড় — যারা পড়তে শিখছেন</div></div></article>
-      <article class="course"><div class="ar-glyph">ق</div><div><h3 data-i18n="c2.h">তাজবীদসহ কুরআন তিলাওয়াত</h3><p data-i18n="c2.p">মাখরাজ, সিফাত ও তাজবীদের নিয়ম মেনে সুন্দর ও শুদ্ধ তিলাওয়াত।</p><div class="for" data-i18n="c2.for">যারা পড়তে পারেন, শুদ্ধ করতে চান</div></div></article>
-      <article class="course"><div class="ar-glyph">ح</div><div><h3 data-i18n="c3.h">হিফযুল কুরআন</h3><p data-i18n="c3.p">সবক, সবকি ও আমুখতার নিয়মে প্রতিদিন মুখস্থ ও শোনানো। ব্যক্তিগত তত্ত্বাবধান।</p><div class="for" data-i18n="c3.for">সিরিয়াস শিক্ষার্থীদের জন্য</div></div></article>
-      <article class="course"><div class="ar-glyph">ص</div><div><h3 data-i18n="c4.h">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</h3><p data-i18n="c4.p">সহীহ নামাজ, অযু-গোসল, মাসনুন দোয়া, এবং সকাল-সন্ধ্যার আমল — দলিলসহ।</p><div class="for" data-i18n="c4.for">সবার জন্য</div></div></article>
-      <article class="course"><div class="ar-glyph">ع</div><div><h3 data-i18n="c5.h">আরবি ভাষা (প্রাথমিক)</h3><p data-i18n="c5.p">কুরআন বোঝার জন্য প্রয়োজনীয় শব্দভাণ্ডার ও ব্যাকরণ। সহজ ধাপে ধাপে।</p><div class="for" data-i18n="c5.for">বড়দের জন্য</div></div></article>
+      <a class="course" href="/noorani" data-slug="noorani"><div class="ar-glyph">ا</div><div><h3 data-i18n="c1.h">নূরানী কায়দা</h3><p data-i18n="c1.p">অক্ষর চেনা থেকে শুরু করে সহীহভাবে কুরআন পড়া পর্যন্ত। একদম শুরু থেকে।</p><div class="for" data-i18n="c1.for">শিশু ও বড় — যারা পড়তে শিখছেন</div></div></a>
+      <a class="course" href="/tajweed" data-slug="tajweed"><div class="ar-glyph">ق</div><div><h3 data-i18n="c2.h">তাজবীদসহ কুরআন তিলাওয়াত</h3><p data-i18n="c2.p">মাখরাজ, সিফাত ও তাজবীদের নিয়ম মেনে সুন্দর ও শুদ্ধ তিলাওয়াত।</p><div class="for" data-i18n="c2.for">যারা পড়তে পারেন, শুদ্ধ করতে চান</div></div></a>
+      <a class="course" href="/hifz" data-slug="hifz"><div class="ar-glyph">ح</div><div><h3 data-i18n="c3.h">হিফযুল কুরআন</h3><p data-i18n="c3.p">সবক, সবকি ও আমুখতার নিয়মে প্রতিদিন মুখস্থ ও শোনানো। ব্যক্তিগত তত্ত্বাবধান।</p><div class="for" data-i18n="c3.for">সিরিয়াস শিক্ষার্থীদের জন্য</div></div></a>
+      <a class="course" href="/salah" data-slug="salah"><div class="ar-glyph">ص</div><div><h3 data-i18n="c4.h">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</h3><p data-i18n="c4.p">সহীহ নামাজ, অযু-গোসল, মাসনুন দোয়া, এবং সকাল-সন্ধ্যার আমল — দলিলসহ।</p><div class="for" data-i18n="c4.for">সবার জন্য</div></div></a>
+      <a class="course" href="/arabic" data-slug="arabic"><div class="ar-glyph">ع</div><div><h3 data-i18n="c5.h">আরবি ভাষা (প্রাথমিক)</h3><p data-i18n="c5.p">কুরআন বোঝার জন্য প্রয়োজনীয় শব্দভাণ্ডার ও ব্যাকরণ। সহজ ধাপে ধাপে।</p><div class="for" data-i18n="c5.for">বড়দের জন্য</div></div></a>
     </div>
   </div>
 </section>
@@ -217,9 +88,9 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
     <h2 data-i18n="fee.h2">মাসিক ফি</h2>
     <p class="lead" data-i18n="fee.lead">কোনো ভর্তি ফি নেই। প্রথম ৩ দিন ফ্রি — পছন্দ না হলে কোনো টাকা লাগবে না।</p>
     <div class="plans">
-      <div class="plan"><h3 data-i18n="p1.h">গ্রুপ ক্লাস</h3><div class="price">৳৫০০<small data-i18n="fee.mo">/মাস</small></div><ul><li data-i18n="p1.l1">সপ্তাহে ৩ দিন লাইভ ক্লাস</li><li data-i18n="p1.l2">৮–১০ জনের গ্রুপ</li><li data-i18n="p1.l3">সব ক্লাসের রেকর্ডিং</li><li data-i18n="p1.l4">মাসিক অগ্রগতি রিপোর্ট</li></ul><a class="btn btn-ghost" href="#apply" data-plan="group" data-i18n="fee.cta">ফ্রি ট্রায়াল নিন</a></div>
-      <div class="plan featured"><span class="tag" data-i18n="p2.tag">সবচেয়ে জনপ্রিয়</span><h3 data-i18n="p2.h">ছোট গ্রুপ</h3><div class="price">৳১,০০০<small data-i18n="fee.mo">/মাস</small></div><ul><li data-i18n="p2.l1">সপ্তাহে ৫ দিন লাইভ ক্লাস</li><li data-i18n="p2.l2">৩–৪ জনের গ্রুপ</li><li data-i18n="p2.l3">সব ক্লাসের রেকর্ডিং</li><li data-i18n="p2.l4">অভিভাবকের সাথে মাসিক কথা</li></ul><a class="btn btn-primary" href="#apply" data-plan="small" data-i18n="fee.cta">ফ্রি ট্রায়াল নিন</a></div>
-      <div class="plan"><h3 data-i18n="p3.h">একক ক্লাস (One-to-One)</h3><div class="price">৳১,৫০০<small data-i18n="fee.mo">/মাস</small></div><ul><li data-i18n="p3.l1">সপ্তাহে ৫ দিন, শুধু আপনার জন্য</li><li data-i18n="p3.l2">নিজের সুবিধামতো সময়</li><li data-i18n="p3.l3">হিফযের জন্য উপযুক্ত</li><li data-i18n="p3.l4">সাপ্তাহিক অগ্রগতি রিপোর্ট</li></ul><a class="btn btn-ghost" href="#apply" data-plan="one" data-i18n="fee.cta">ফ্রি ট্রায়াল নিন</a></div>
+      <div class="plan"><h3 data-i18n="p1.h">গ্রুপ ক্লাস</h3><div class="price"><span data-i18n="p1.price">৳৫০০</span><small data-i18n="fee.mo">/মাস</small></div><ul><li data-i18n="p1.l1">সপ্তাহে ৩ দিন লাইভ ক্লাস</li><li data-i18n="p1.l2">৮–১০ জনের গ্রুপ</li><li data-i18n="p1.l3">সব ক্লাসের রেকর্ডিং</li><li data-i18n="p1.l4">মাসিক অগ্রগতি রিপোর্ট</li></ul><a class="btn btn-ghost" href="#apply" data-plan="group" data-i18n="fee.cta">ফ্রি ট্রায়াল নিন</a></div>
+      <div class="plan featured"><span class="tag" data-i18n="p2.tag">সবচেয়ে জনপ্রিয়</span><h3 data-i18n="p2.h">ছোট গ্রুপ</h3><div class="price"><span data-i18n="p2.price">৳১,০০০</span><small data-i18n="fee.mo">/মাস</small></div><ul><li data-i18n="p2.l1">সপ্তাহে ৫ দিন লাইভ ক্লাস</li><li data-i18n="p2.l2">৩–৪ জনের গ্রুপ</li><li data-i18n="p2.l3">সব ক্লাসের রেকর্ডিং</li><li data-i18n="p2.l4">অভিভাবকের সাথে মাসিক কথা</li></ul><a class="btn btn-primary" href="#apply" data-plan="small" data-i18n="fee.cta">ফ্রি ট্রায়াল নিন</a></div>
+      <div class="plan"><h3 data-i18n="p3.h">একক ক্লাস (One-to-One)</h3><div class="price"><span data-i18n="p3.price">৳১,৫০০</span><small data-i18n="fee.mo">/মাস</small></div><ul><li data-i18n="p3.l1">সপ্তাহে ৫ দিন, শুধু আপনার জন্য</li><li data-i18n="p3.l2">নিজের সুবিধামতো সময়</li><li data-i18n="p3.l3">হিফযের জন্য উপযুক্ত</li><li data-i18n="p3.l4">সাপ্তাহিক অগ্রগতি রিপোর্ট</li></ul><a class="btn btn-ghost" href="#apply" data-plan="one" data-i18n="fee.cta">ফ্রি ট্রায়াল নিন</a></div>
     </div>
     <p class="note" data-i18n="fee.note">একই পরিবারের দ্বিতীয় শিক্ষার্থীর জন্য ২০% ছাড়। ফি বছরে একবার পর্যালোচনা হয়।</p>
   </div>
@@ -307,9 +178,11 @@ footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 </section>
 </main>
 
+<div class="band" aria-hidden="true"></div>
 <footer>
   <div class="wrap">
     <div><strong data-i18n="brand">দারুল ইলম অনলাইন</strong> · darulilmonline.com</div>
+    <div class="ar-foot">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
     <div data-i18n="foot">© ২০২৬ দারুল ইলম অনলাইন। সর্বস্বত্ব সংরক্ষিত।</div>
   </div>
 </footer>
@@ -332,7 +205,7 @@ en:{
  "how.h2":"How to start","how.lead":"From enrolment to your first class — usually within a day.",
  "s1.h":"Fill in the form","s1.p":"Name, age, course and preferred time. Takes 2 minutes.","s2.h":"Free trial classes","s2.p":"Join live classes for 3 days and check the teacher and method.","s3.h":"Send the fee","s3.p":"Pay via bKash, Nagad, Rocket or bank and share the transaction ID.","s4.h":"Regular classes","s4.p":"Live classes at your set time, recordings and a monthly report.",
  "fee.h2":"Monthly fees","fee.lead":"No admission fee. First 3 days free — if it’s not for you, you pay nothing.","fee.mo":"/month","fee.cta":"Take the free trial",
- "p1.h":"Group class","p1.l1":"3 live classes a week","p1.l2":"Groups of 8–10","p1.l3":"All class recordings","p1.l4":"Monthly progress report",
+ "p1.price":"৳500","p2.price":"৳1,000","p3.price":"৳1,500","p1.h":"Group class","p1.l1":"3 live classes a week","p1.l2":"Groups of 8–10","p1.l3":"All class recordings","p1.l4":"Monthly progress report",
  "p2.tag":"Most popular","p2.h":"Small group","p2.l1":"5 live classes a week","p2.l2":"Groups of 3–4","p2.l3":"All class recordings","p2.l4":"Monthly call with parents",
  "p3.h":"One-to-one","p3.l1":"5 days a week, just for you","p3.l2":"Your own schedule","p3.l3":"Ideal for hifz","p3.l4":"Weekly progress report",
  "fee.note":"20% off for a second student from the same family. Fees are reviewed once a year.",
@@ -348,7 +221,7 @@ ar:{
  "brand":"دار العلم أونلاين","tagline":"تعلّم الدين من بيتك",
  "nav.courses":"الدورات","nav.how":"كيف تبدأ","nav.fee":"الرسوم","nav.faq":"الأسئلة","nav.contact":"تواصل",
  "hero.h1":"تعلّم القرآن والصلاة والعربية من بيتك","hero.p":"مدرسة بنغلاديش الإلكترونية. دروس مباشرة مع قرّاء وعلماء ذوي خبرة، مع التسجيلات — للأطفال والكبار. أول ثلاثة أيام مجانًا.",
- "hero.cta1":"ابدأ ثلاثة أيام مجانية","hero.cta2":"تحدّث عبر واتساب","hero.f1":"دروس مباشرة ومسجّلة","hero.f2":"للأطفال والكبار","hero.f3":"بيكاش · ناجاد · روكيت · تحويل بنكي",
+ "hero.cta1":"ابدأ ثلاثة أيام مجانية","hero.cta2":"تحدّث عبر واتساب","hero.f1":"دروس مباشرة ومسجّلة","hero.f2":"للأطفال والكبار","hero.f3":"تحويل بنكي · STC Pay · بيكاش",
  "hero.iqra":"سورة العلق — أول ما نزل من الوحي",
  "courses.h2":"الدورات","courses.lead":"كل دورة فيها ٣–٥ دروس مباشرة أسبوعيًا، وتسجيل لكل درس، وتقرير تقدّم شهري.",
  "c1.h":"القاعدة النورانية","c1.p":"من معرفة الحروف إلى قراءة القرآن قراءة صحيحة. من البداية تمامًا.","c1.for":"للأطفال والكبار المبتدئين",
@@ -359,13 +232,13 @@ ar:{
  "how.h2":"كيف تبدأ","how.lead":"من التسجيل إلى أول درس — عادة خلال يوم واحد.",
  "s1.h":"املأ النموذج","s1.p":"الاسم والعمر والدورة والوقت المفضّل. دقيقتان فقط.","s2.h":"دروس تجريبية مجانية","s2.p":"احضر الدروس المباشرة ثلاثة أيام وتأكّد من المعلم والطريقة.","s3.h":"أرسل الرسوم","s3.p":"عبر بيكاش أو ناجاد أو روكيت أو البنك وأرسل رقم العملية.","s4.h":"دروس منتظمة","s4.p":"دروس مباشرة في وقتك المحدد، مع التسجيلات وتقرير شهري.",
  "fee.h2":"الرسوم الشهرية","fee.lead":"لا رسوم تسجيل. أول ثلاثة أيام مجانًا — إن لم يعجبك فلا تدفع شيئًا.","fee.mo":"/شهر","fee.cta":"جرّب مجانًا",
- "p1.h":"مجموعة","p1.l1":"٣ دروس مباشرة أسبوعيًا","p1.l2":"مجموعات من ٨–١٠","p1.l3":"تسجيل كل الدروس","p1.l4":"تقرير تقدّم شهري",
+ "p1.price":"٢٠ ر.س","p2.price":"٤٠ ر.س","p3.price":"٦٠ ر.س","p1.h":"مجموعة","p1.l1":"٣ دروس مباشرة أسبوعيًا","p1.l2":"مجموعات من ٨–١٠","p1.l3":"تسجيل كل الدروس","p1.l4":"تقرير تقدّم شهري",
  "p2.tag":"الأكثر طلبًا","p2.h":"مجموعة صغيرة","p2.l1":"٥ دروس مباشرة أسبوعيًا","p2.l2":"مجموعات من ٣–٤","p2.l3":"تسجيل كل الدروس","p2.l4":"مكالمة شهرية مع ولي الأمر",
  "p3.h":"درس فردي","p3.l1":"٥ أيام أسبوعيًا، لك وحدك","p3.l2":"في الوقت الذي يناسبك","p3.l3":"مناسب للحفظ","p3.l4":"تقرير تقدّم أسبوعي",
- "fee.note":"خصم ٢٠٪ للطالب الثاني من نفس الأسرة. تُراجع الرسوم مرة في السنة.",
+ "fee.note":"الأسعار بالريال السعودي للمقيمين في الخليج (ما يعادل ٥٠٠ / ١٠٠٠ / ١٥٠٠ تاكا). خصم ٢٠٪ للطالب الثاني من نفس الأسرة.",
  "why.h2":"لماذا دار العلم أونلاين","w1.h":"معلمون موثوقون","w1.p":"كل معلم حاصل على إجازة من مدرسة معتمدة ومختار بعد مقابلة.","w2.h":"تسجيل إن فاتك الدرس","w2.p":"كل درس مباشر مسجّل — شاهده في أي وقت.","w3.h":"تقارير لأولياء الأمور","w3.p":"ما الذي تعلّمه ابنك وأين يحتاج مساعدة — تقرير مكتوب كل شهر.","w4.h":"معلمات للبنات","w4.p":"تتوفر معلمات للبنات والنساء عند الطلب.",
  "faq.h2":"أسئلة شائعة","q1":"أين تُقام الدروس؟","a1":"عبر زووم أو جوجل ميت. بعد التسجيل يصلك رابط الدرس ووقته على واتساب. من الهاتف أو الحاسوب.","q2":"طفلي صغير جدًا، هل يستطيع؟","a2":"نقبل من عمر ٥ سنوات. دروس الأطفال ٢٥–٣٠ دقيقة بأسلوب اللعب. جرّب ثلاثة أيام وقرّر.","q3":"متى الدروس؟","a3":"عدة مجموعات صباحًا وظهرًا ومساءً. ونوفّق الأوقات للمقيمين في الخارج.","q4":"كيف أدفع؟","a4":"عبر بيكاش أو ناجاد أو روكيت أو تحويل بنكي. أرسل رقم العملية على واتساب ويُؤكَّد خلال ٢٤ ساعة.","q5":"ماذا لو أردت التوقف؟","a5":"يمكنك التوقف في أي شهر. لا التزام.",
- "ct.h2":"تواصل معنا للتسجيل أو لأي سؤال","ct.p":"متاحون على واتساب والهاتف يوميًا من ٩ صباحًا حتى ١٠ مساءً.","ct.bank":"تحويل بنكي","ct.wa":"راسلنا على واتساب","ct.hint":"اكتب في رسالتك: اسم الطالب، العمر، الدورة، الوقت المفضّل.",
+ "ct.h2":"تواصل معنا للتسجيل أو لأي سؤال","ct.p":"متاحون على واتساب والهاتف يوميًا من ٩ صباحًا حتى ١٠ مساءً.","ct.bank":"تحويل بنكي / STC Pay","ct.wa":"راسلنا على واتساب","ct.hint":"اكتب في رسالتك: اسم الطالب، العمر، الدورة، الوقت المفضّل.",
  "nav.apply":"التسجيل","ap.h2":"طلب التسجيل","ap.lead":"املأ النموذج — سنتواصل معك على واتساب خلال ٢٤ ساعة بموعد الدرس التجريبي المجاني.",
  "f.name":"اسم الطالب","f.age":"العمر","f.guardian":"اسم ولي الأمر (للأطفال)","f.phone":"رقم واتساب","f.course":"الدورة","f.choose":"اختر","f.plan":"نوع الدرس","f.time":"الوقت المفضّل","t.m":"صباحًا (٧–١١)","t.a":"عصرًا (٣–٦)","t.e":"مساءً (٧–١٠)","f.note":"أي ملاحظة (اختياري)","f.submit":"إرسال الطلب",
  "f.ok":"وصل طلبك. سنراسلك على واتساب قريبًا إن شاء الله.","f.err":"تعذّر الإرسال. تحقّق من الاسم والرقم والدورة، أو راسلنا على واتساب.","f.sending":"جارٍ الإرسال…",
@@ -380,10 +253,14 @@ function setLang(l){
   document.documentElement.lang=l; document.documentElement.dir=(l==="ar"?"rtl":"ltr"); document.title=titles[l];
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.lang===l)));
   try{localStorage.setItem("dio-lang",l);}catch(e){}
+  const u=new URL(location.href); u.searchParams.set("lang",l); history.replaceState(null,"",u);
+  document.querySelectorAll('a[href^="/"]').forEach(a=>{const x=new URL(a.getAttribute("href"),location.origin); x.searchParams.set("lang",l); a.setAttribute("href",x.pathname+x.search+x.hash);});
 }
 document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
-let saved="bn"; try{saved=localStorage.getItem("dio-lang")||"bn";}catch(e){}
-if(saved!=="bn") setLang(saved);
+const qp=new URLSearchParams(location.search);
+let saved=qp.get("lang"); if(!["bn","en","ar"].includes(saved)){ saved="bn"; try{saved=localStorage.getItem("dio-lang")||"bn";}catch(e){} }
+setLang(saved);
+if(qp.get("course")){ const sel=document.querySelector('select[name="course"]'); if(sel) sel.value=qp.get("course"); }
 // ---- ভর্তির ফরম → Supabase ----
 const SB_URL="https://nlylwrbxejjxnfljcztv.supabase.co";
 const SB_KEY="sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg";
