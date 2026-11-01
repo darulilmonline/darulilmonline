@@ -65,7 +65,7 @@ a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
       <div><h1>ভর্তির আবেদন</h1><div class="muted" id="who"></div></div>
       <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
     </div>
-    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
     <div id="panel-apps">
     <div class="stats" id="stats"></div>
     <div class="tools">
@@ -76,6 +76,11 @@ a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
       <thead><tr><th>তারিখ</th><th>শিক্ষার্থী</th><th>বয়স</th><th>অভিভাবক</th><th>ফোন</th><th>কোর্স</th><th>ধরন</th><th>সময়</th><th>নোট</th><th>অবস্থা</th></tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
+    </div>
+
+    <div id="panel-teachers" style="display:none">
+      <div class="tools"><input id="tq" placeholder="নাম বা নম্বর দিয়ে খুঁজুন"><select id="tfStatus"><option value="">সব অবস্থা</option><option value="new">নতুন</option><option value="interview">সাক্ষাৎকার</option><option value="demo">ডেমো ক্লাস</option><option value="hired">নিয়োগ</option><option value="rejected">বাদ</option></select></div>
+      <div class="tbl"><table><thead><tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>পদ</th><th>লিঙ্গ</th><th>অবস্থান</th><th>বয়স</th><th>যোগ্যতা</th><th>অভিজ্ঞতা</th><th>সময়</th><th>ডিভাইস</th><th>অবস্থা</th></tr></thead><tbody id="trows"></tbody></table></div>
     </div>
 
     <div id="panel-cms" style="display:none">
@@ -154,7 +159,9 @@ document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
   document.querySelectorAll(".tab").forEach(x=>{x.classList.toggle("active",x===b);x.classList.toggle("ghost",x!==b);});
   $("panel-apps").style.display=b.dataset.tab==="apps"?"block":"none";
   $("panel-cms").style.display=b.dataset.tab==="cms"?"block":"none";
+  $("panel-teachers").style.display=b.dataset.tab==="teachers"?"block":"none";
   if(b.dataset.tab==="cms") loadCms();
+  if(b.dataset.tab==="teachers") loadTeachers();
 });
 $("cmsPage").onchange=loadCms; $("cmsLang").onchange=renderCms; $("cmsQ").oninput=renderCms;
 async function loadCms(){
@@ -189,6 +196,31 @@ function renderCms(){
       const {error}=await sb.from("site_content").delete().match({page,key:k,lang});
       if(error){alert(error.message);return;} delete OVR[lang+"|"+k]; renderCms();
     };
+  });
+}
+
+// ===== শিক্ষক আবেদন =====
+const TPOS={qari:"কারী",female:"মহিলা শিক্ষিকা",alim:"আলেম"},TG={male:"পুরুষ",female:"মহিলা"},TAV={morning:"সকাল",afternoon:"বিকাল",evening:"রাত",flexible:"যেকোনো"},TDEV={phone:"ফোন",laptop:"ল্যাপটপ",both:"দুটোই"};
+const TST={new:"নতুন",interview:"সাক্ষাৎকার",demo:"ডেমো ক্লাস",hired:"নিয়োগ",rejected:"বাদ"};
+let trows=[];
+$("tq").oninput=renderT; $("tfStatus").onchange=renderT;
+async function loadTeachers(){
+  const {data,error}=await sb.from("teacher_applications").select("*").order("created_at",{ascending:false});
+  if(error){ $("trows").innerHTML='<tr><td colspan="12" class="err">লোড হয়নি: '+error.message+' (teachers.sql চালানো হয়েছে?)</td></tr>'; return; }
+  trows=data; renderT();
+}
+function renderT(){
+  const q=$("tq").value.trim().toLowerCase(), fs=$("tfStatus").value;
+  const list=trows.filter(r=>(!fs||r.status===fs)&&(!q||r.full_name.toLowerCase().includes(q)||(r.phone||"").includes(q)));
+  if(!list.length){ $("trows").innerHTML='<tr><td colspan="12" class="muted">কোনো আবেদন নেই।</td></tr>'; return; }
+  $("trows").innerHTML=list.map(r=>{
+    const wa=r.phone.startsWith("+")?r.phone.slice(1):(r.phone.startsWith("0")?"88"+r.phone:r.phone);
+    const opts=Object.entries(TST).map(([k,v])=>`<option value="${k}" ${r.status===k?"selected":""}>${v}</option>`).join("");
+    return `<tr><td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.full_name)}</b></td><td><a class="wa" href="https://wa.me/${wa}" target="_blank" rel="noopener">${esc(r.phone)}</a></td><td>${TPOS[r.position]||esc(r.position)}</td><td>${TG[r.gender]||""}</td><td>${esc(r.location)}</td><td>${r.age??""}</td><td style="max-width:220px">${esc(r.qualification)}</td><td style="max-width:200px">${esc(r.experience)}</td><td>${TAV[r.availability]||""}</td><td>${TDEV[r.device]||""}</td><td><select class="st st-${r.status==='hired'?'paid':r.status==='new'?'new':r.status==='rejected'?'closed':'trial'}" data-tid="${r.id}">${opts}</select></td></tr>`;
+  }).join("");
+  document.querySelectorAll("select[data-tid]").forEach(sel=>sel.onchange=async()=>{
+    const {error}=await sb.from("teacher_applications").update({status:sel.value}).eq("id",sel.dataset.tid);
+    if(error){alert("সেভ হয়নি: "+error.message);return;} const r=trows.find(x=>x.id==sel.dataset.tid); r.status=sel.value; renderT();
   });
 }
 init();
