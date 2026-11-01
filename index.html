@@ -327,6 +327,70 @@ html[dir="rtl"] .course .more::after{content:"‹"}
 .more-f summary::after{content:none}
 .form::before,.info::before,.sd-top::before{height:4px;background:linear-gradient(90deg,var(--gold-deep),var(--gold-2),var(--gold-deep))}
 
+
+/* ---- v3: arch cards, connect, footer, library, record ---- */
+.courses{display:grid;gap:16px;margin-top:40px;grid-template-columns:1fr}
+@media(min-width:560px){.courses{grid-template-columns:1fr 1fr}}
+@media(min-width:900px){.courses{grid-template-columns:repeat(3,1fr)}}
+@media(min-width:1100px){.courses{grid-template-columns:repeat(5,1fr)}}
+.courses .course{display:flex;flex-direction:column;align-items:center;text-align:center;border-radius:50% 50% 16px 16px/104px 104px 16px 16px;padding:46px 18px 28px;position:relative;overflow:visible}
+.courses .course::before{content:"";position:absolute;inset:8px;border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);border-radius:50% 50% 10px 10px/97px 97px 10px 10px;pointer-events:none}
+.courses .course::after{left:24px;right:24px;border-radius:3px 3px 0 0}
+.courses .course .ar-glyph{width:76px;height:76px;border-radius:50%;clip-path:none;padding:0;margin-bottom:18px;font-size:40px;box-shadow:0 0 0 4px var(--surface),0 0 0 5.5px var(--gold)}
+.courses .course>div:last-child{display:flex;flex-direction:column;align-items:center;flex:1}
+.courses .course h3{font-size:19px;margin-bottom:6px}
+.courses .course p{font-size:15px}
+.courses .course .more{margin-top:auto;padding-top:14px}
+.cn-grid{display:grid;gap:12px;grid-template-columns:1fr}
+@media(min-width:560px){.cn-grid{grid-template-columns:1fr 1fr}}
+.cn{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);color:#fff;text-decoration:none;transition:background .2s,border-color .2s}
+.cn:hover{background:rgba(255,255,255,.13);border-color:var(--gold)}
+.cn[hidden],.ft-soc a[hidden]{display:none}
+.cn-ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;flex:none;color:#fff}
+.cn-ic svg{width:24px;height:24px}
+.cn b{display:block;font-size:16px;line-height:1.3}
+.cn small{display:block;font-size:13px;opacity:.78;line-height:1.4}
+.ic-wa{background:#1FAF5A;color:#fff}.ic-tg{background:#229ED9;color:#fff}.ic-gold{background:var(--gold);color:#2A1F05}.ic-red{background:#D2383E;color:#fff}
+footer .wrap.ft{display:grid;gap:14px 28px;justify-items:start;align-items:center}
+@media(min-width:900px){footer .wrap.ft{grid-template-columns:auto 1fr auto}}
+.ft-brand strong{display:block;color:var(--text);font-size:17px}.ft-brand span{font-size:14px}
+.ft-links{display:flex;flex-wrap:wrap;gap:6px 20px}
+.ft-links a{text-decoration:none;color:var(--muted);font-weight:600}.ft-links a:hover{color:var(--text)}
+.ft-soc{display:flex;gap:8px}
+.ft-soc a{width:40px;height:40px;border-radius:50%;display:grid;place-items:center}
+.ft-soc svg{width:20px;height:20px}
+footer .ft>.ar-foot,footer .ft>.ft-copy{grid-column:1/-1}
+.lib-tools{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.lib-tabs{display:flex;flex-wrap:wrap;gap:8px}
+.lib-tabs button{font:inherit;font-weight:600;font-size:15px;padding:9px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer}
+.lib-tabs button[aria-selected="true"]{background:var(--brand);color:var(--gold-2);border-color:var(--brand)}
+.lib-tools select{font:inherit;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+.lib-grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));margin-top:26px}
+.li{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;display:flex;flex-direction:column}
+.li .md{aspect-ratio:16/10;background:var(--surface-2);display:grid;place-items:center;position:relative;overflow:hidden}
+.li .md img{width:100%;height:100%;object-fit:cover;display:block}
+.li .md iframe,.li .md video{width:100%;height:100%;border:0;background:#000}
+.li .md audio{width:90%}
+.li .bd{padding:14px 16px 18px;display:grid;gap:6px}
+.li .kd{font-size:12px;font-weight:700;color:var(--gold-deep)}
+.li h3{font-size:17px;line-height:1.35}.li p{font-size:14px;color:var(--muted)}
+.li .act{display:flex;gap:16px;margin-top:4px}.li .act a{font-weight:700;font-size:14px;color:var(--brand);text-decoration:none}
+.yt{border:0;padding:0;width:100%;height:100%;position:relative;background:#000;cursor:pointer}
+.yt img{opacity:.85}.yt span{position:absolute;inset:0;display:grid;place-items:center}
+.yt span i{width:64px;height:44px;border-radius:12px;background:#E62117;display:grid;place-items:center;color:#fff;font-style:normal;font-size:20px}
+.big-ic{width:70px;height:70px;border-radius:16px;display:grid;place-items:center;font-weight:800;font-size:18px}
+.big-ic.pdf{background:#fff;color:#C62828;border:2px solid #F3B4B4}
+.big-ic.lnk{background:var(--brand);color:var(--gold-2)}
+.recbox{border:1.5px dashed var(--line);border-radius:16px;padding:24px 18px;text-align:center;display:grid;gap:12px;justify-items:center;background:var(--bg)}
+.recbtn{width:96px;height:96px;border-radius:50%;border:0;cursor:pointer;background:linear-gradient(180deg,#E5484D,#B4232A);color:#fff;display:grid;place-items:center;box-shadow:0 10px 24px rgba(180,35,42,.35)}
+.recbtn svg{width:38px;height:38px}
+.recbtn.on{animation:recpulse 1.2s infinite;background:linear-gradient(180deg,#B4232A,#7F1D1D)}
+@keyframes recpulse{0%{box-shadow:0 0 0 0 rgba(229,72,77,.5)}100%{box-shadow:0 0 0 24px rgba(229,72,77,0)}}
+@media (prefers-reduced-motion:reduce){.recbtn.on{animation:none}}
+.rectime{font-size:30px;font-weight:700;font-variant-numeric:tabular-nums;direction:ltr}
+.recfile{font-size:15px;color:var(--muted);display:grid;gap:6px;justify-items:center}
+.recbox audio{width:100%;max-width:420px}
+.alt-send{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
@@ -346,7 +410,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
     </a>
     <nav class="links" aria-label="main">
       <a href="#courses" data-i18n="nav.courses">কোর্স</a>
-      <a href="#how" data-i18n="nav.how">কীভাবে শুরু</a>
+      <a href="/library" data-i18n="nav.lib">লাইব্রেরি</a>
       <a href="#pricing" data-i18n="nav.fee">ফি</a>
       <a href="#faq" data-i18n="nav.faq">প্রশ্নোত্তর</a>
       <a href="#apply" data-i18n="nav.apply">ভর্তি</a>
@@ -408,16 +472,12 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
   <div class="wrap">
     <h2 data-i18n="courses.h2">কোর্সসমূহ</h2>
     <p class="lead" data-i18n="courses.lead">প্রতিটি কোর্সে সপ্তাহে ৩–৫ দিন লাইভ ক্লাস, প্রতিটি ক্লাসের রেকর্ডিং, এবং মাসিক অগ্রগতি রিপোর্ট।</p>
-    <div class="cs" aria-roledescription="carousel" aria-label="কোর্স">
-      <div class="cs-bar"><div class="cs-count"><b>1</b> / 5</div><div class="cs-nav"><button class="cs-prev" aria-label="আগের কোর্স"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button><button class="cs-next" aria-label="পরের কোর্স"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button></div></div>
-      <div class="courses cs-track" tabindex="0">
+    <div class="courses">
       <a class="course" href="/noorani" data-slug="noorani"><div class="ar-glyph">ا</div><div><h3 data-i18n="c1.h">নূরানী কায়দা</h3><p data-i18n="c1.p">অক্ষর চেনা থেকে শুরু করে সহীহভাবে কুরআন পড়া পর্যন্ত। একদম শুরু থেকে।</p><div class="for" data-i18n="c1.for">শিশু ও বড় — যারা পড়তে শিখছেন</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
       <a class="course" href="/tajweed" data-slug="tajweed"><div class="ar-glyph">ق</div><div><h3 data-i18n="c2.h">তাজবীদসহ কুরআন তিলাওয়াত</h3><p data-i18n="c2.p">মাখরাজ, সিফাত ও তাজবীদের নিয়ম মেনে সুন্দর ও শুদ্ধ তিলাওয়াত।</p><div class="for" data-i18n="c2.for">যারা পড়তে পারেন, শুদ্ধ করতে চান</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
       <a class="course" href="/hifz" data-slug="hifz"><div class="ar-glyph">ح</div><div><h3 data-i18n="c3.h">হিফযুল কুরআন</h3><p data-i18n="c3.p">সবক, সবকি ও আমুখতার নিয়মে প্রতিদিন মুখস্থ ও শোনানো। ব্যক্তিগত তত্ত্বাবধান।</p><div class="for" data-i18n="c3.for">সিরিয়াস শিক্ষার্থীদের জন্য</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
       <a class="course" href="/salah" data-slug="salah"><div class="ar-glyph">ص</div><div><h3 data-i18n="c4.h">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</h3><p data-i18n="c4.p">সহীহ নামাজ, অযু-গোসল, মাসনুন দোয়া, এবং সকাল-সন্ধ্যার আমল — দলিলসহ।</p><div class="for" data-i18n="c4.for">সবার জন্য</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
       <a class="course" href="/arabic" data-slug="arabic"><div class="ar-glyph">ع</div><div><h3 data-i18n="c5.h">আরবি ভাষা (প্রাথমিক)</h3><p data-i18n="c5.p">কুরআন বোঝার জন্য প্রয়োজনীয় শব্দভাণ্ডার ও ব্যাকরণ। সহজ ধাপে ধাপে।</p><div class="for" data-i18n="c5.for">বড়দের জন্য</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
-      </div>
-      <div class="cs-dots"></div>
     </div>
   </div>
 </section>
@@ -522,9 +582,13 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
       <div class="big">01329-173444</div>
       <div class="pay"><span>bKash</span><span>Nagad</span><span>Rocket</span><span data-i18n="ct.bank">ব্যাংক ট্রান্সফার</span></div>
     </div>
-    <div>
-      <a class="btn btn-wa" href="https://wa.me/8801329173444?text=%E0%A6%86%E0%A6%B8%E0%A6%B8%E0%A6%BE%E0%A6%B2%E0%A6%BE%E0%A6%AE%E0%A7%81%20%E0%A6%86%E0%A6%B2%E0%A6%BE%E0%A6%87%E0%A6%95%E0%A7%81%E0%A6%AE%2C%20%E0%A6%AD%E0%A6%B0%E0%A7%8D%E0%A6%A4%E0%A6%BF%20%E0%A6%B9%E0%A6%A4%E0%A7%87%20%E0%A6%9A%E0%A6%BE%E0%A6%87%E0%A5%A4" target="_blank" rel="noopener" data-i18n="ct.wa">WhatsApp-এ মেসেজ দিন</a>
-      <p style="margin-top:14px;opacity:.85;font-size:15px" data-i18n="ct.hint">বার্তায় লিখুন: শিক্ষার্থীর নাম, বয়স, কোন কোর্স, পছন্দের সময়।</p>
+    <div class="cn-grid">
+      <a class="cn" href="https://wa.me/8801329173444" target="_blank" rel="noopener"><span class="cn-ic ic-wa"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.2 1.2z"/></svg></span><span><b data-i18n="cn.wa">WhatsApp</b><small data-i18n="cn.wa.s">মেসেজ, ভয়েস, ছবি বা PDF পাঠান</small></span></a>
+      <a class="cn" data-link="telegram_chat" href="#" hidden target="_blank" rel="noopener"><span class="cn-ic ic-tg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.5c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.4-1.5zM8.7 14.3l9.4-5.9c.4-.3.8-.1.5.2l-7.8 7-.3 3.3z"/></svg></span><span><b data-i18n="cn.tgm">Telegram</b><small data-i18n="cn.tgm.s">সরাসরি মেসেজ দিন</small></span></a>
+      <a class="cn" data-link="telegram_channel" href="#" hidden target="_blank" rel="noopener"><span class="cn-ic ic-tg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.5c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.4-1.5zM8.7 14.3l9.4-5.9c.4-.3.8-.1.5.2l-7.8 7-.3 3.3z"/></svg></span><span><b data-i18n="cn.tgc">Telegram চ্যানেল</b><small data-i18n="cn.tgc.s">দারস, ঘোষণা ও নতুন কোর্স</small></span></a>
+      <a class="cn" data-link="telegram_group" href="#" hidden target="_blank" rel="noopener"><span class="cn-ic ic-tg"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.5c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.4-1.5zM8.7 14.3l9.4-5.9c.4-.3.8-.1.5.2l-7.8 7-.3 3.3z"/></svg></span><span><b data-i18n="cn.tgg">Telegram গ্রুপ</b><small data-i18n="cn.tgg.s">প্রশ্নোত্তর ও আলোচনা</small></span></a>
+      <a class="cn" href="/record"><span class="cn-ic ic-red"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg></span><span><b data-i18n="cn.rec">তিলাওয়াত পাঠান</b><small data-i18n="cn.rec.s">রেকর্ড করুন বা ভয়েস ফাইল দিন</small></span></a>
+      <a class="cn" href="/library"><span class="cn-ic ic-gold"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7M8 11h7"/></svg></span><span><b data-i18n="cn.lib">লাইব্রেরি</b><small data-i18n="cn.lib.s">ছবি, PDF, ভিডিও ও অডিও</small></span></a>
     </div>
   </div>
 </section>
@@ -532,19 +596,18 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 
 <nav class="mbar" aria-label="দ্রুত কাজ"><a class="btn btn-primary" href="/#apply" data-i18n="mb.apply">ভর্তি হোন</a><a class="btn btn-wa" href="https://wa.me/8801329173444" target="_blank" rel="noopener">WhatsApp</a></nav>
 <div class="band" aria-hidden="true"></div>
-<footer>
-  <div class="wrap">
-    <div><strong data-i18n="brand">দারুল ইলম অনলাইন</strong> · darulilmonline.com</div>
-    <div><a href="/rules" style="margin-inline-end:16px">নিয়মাবলি</a><a href="/teachers">শিক্ষক নিয়োগ</a></div>
-    <div class="ar-foot">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
-    <div data-i18n="foot">© ২০২৬ দারুল ইলম অনলাইন। সর্বস্বত্ব সংরক্ষিত।</div>
-  </div>
-</footer>
+<footer><div class="wrap ft">
+  <div class="ft-brand"><strong data-i18n="brand">দারুল ইলম অনলাইন</strong><span>darulilmonline.com</span></div>
+  <nav class="ft-links" aria-label="footer"><a href="/rules">নিয়মাবলি</a><a href="/teachers">শিক্ষক নিয়োগ</a><a href="/library">লাইব্রেরি</a><a href="/record">তিলাওয়াত পাঠান</a></nav>
+  <div class="ft-soc"><a class="ic-wa" href="https://wa.me/8801329173444" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.2 1.2z"/></svg></a><a class="ic-tg" data-link="telegram_channel" href="#" hidden target="_blank" rel="noopener" aria-label="Telegram channel"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.5c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.4-1.5zM8.7 14.3l9.4-5.9c.4-.3.8-.1.5.2l-7.8 7-.3 3.3z"/></svg></a><a class="ic-tg" data-link="telegram_group" href="#" hidden target="_blank" rel="noopener" aria-label="Telegram group"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.5c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.4-1.5zM8.7 14.3l9.4-5.9c.4-.3.8-.1.5.2l-7.8 7-.3 3.3z"/></svg></a></div>
+  <div class="ar-foot">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
+  <div class="ft-copy" data-i18n="foot">© ২০২৬ দারুল ইলম অনলাইন। সর্বস্বত্ব সংরক্ষিত।</div>
+</div></footer>
 
 <script>
 const T={
 bn:{},
-en:{"mb.apply":"Enrol","f.more":"Add more details (optional)",
+en:{"mb.apply":"Enrol","nav.lib":"Library","cn.wa.s":"Send a message, voice note, photo or PDF","cn.tgm.s":"Message us directly","cn.tgc":"Telegram channel","cn.tgc.s":"Lessons, announcements and new courses","cn.tgg":"Telegram group","cn.tgg.s":"Questions and discussion","cn.rec":"Send your recitation","cn.rec.s":"Record it or upload a voice file","cn.lib":"Library","cn.lib.s":"Photos, PDFs, videos and audio","f.more":"Add more details (optional)",
  "brand":"Darul Ilm Online","tagline":"Learn deen from home",
  "nav.courses":"Courses","nav.how":"How to start","nav.fee":"Fees","nav.faq":"FAQ","nav.contact":"Contact",
  "hero.h1":"Learn Quran, salah and Arabic from home","hero.p":"Live classes from home with experienced teachers — for children and adults. First 3 days free.",
@@ -571,7 +634,7 @@ en:{"mb.apply":"Enrol","f.more":"Add more details (optional)",
  "f.ok":"Application received. We’ll message you on WhatsApp soon, in sha Allah.","f.err":"Couldn’t submit. Check your name, number and course, or message us on WhatsApp.","f.sending":"Sending…",
  "foot":"© 2026 Darul Ilm Online. All rights reserved."
 },
-ar:{"mb.apply":"سجّل الآن","f.more":"معلومات إضافية (اختياري)",
+ar:{"mb.apply":"سجّل الآن","nav.lib":"المكتبة","cn.wa.s":"أرسل رسالة أو صوتًا أو صورة أو PDF","cn.tgm.s":"راسلنا مباشرة","cn.tgc":"قناة تيليجرام","cn.tgc.s":"دروس وإعلانات ودورات جديدة","cn.tgg":"مجموعة تيليجرام","cn.tgg.s":"أسئلة ونقاش","cn.rec":"أرسل تلاوتك","cn.rec.s":"سجّلها أو ارفع ملفًا صوتيًا","cn.lib":"المكتبة","cn.lib.s":"صور وPDF وفيديو وصوت","f.more":"معلومات إضافية (اختياري)",
  "brand":"دار العلم أونلاين","tagline":"تعلّم الدين من بيتك",
  "nav.courses":"الدورات","nav.how":"كيف تبدأ","nav.fee":"الرسوم","nav.faq":"الأسئلة","nav.contact":"تواصل",
  "hero.h1":"تعلّم القرآن والصلاة والعربية من بيتك","hero.p":"دروس مباشرة من بيتك مع معلمين ذوي خبرة — للأطفال والكبار. أول ثلاثة أيام مجانًا.",
@@ -701,33 +764,6 @@ form.addEventListener("submit",async e=>{
   apply();
 })();
 </script>
-<script>
-(function(){
-  const box=document.querySelector(".cs"); if(!box) return;
-  const tr=box.querySelector(".cs-track"), cards=[...tr.children], dots=box.querySelector(".cs-dots"), prev=box.querySelector(".cs-prev"), next=box.querySelector(".cs-next"), cnt=box.querySelector(".cs-count b"), bar=box.querySelector(".cs-prog i");
-  const rtl=()=>document.documentElement.dir==="rtl";
-  dots.innerHTML=cards.map((_,i)=>`<button aria-label="${i+1}"></button>`).join("");
-  const db=[...dots.children];
-  let idx=0,timer=null,paused=false;
-  const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const step=()=>cards[0].getBoundingClientRect().width+(parseFloat(getComputedStyle(tr).columnGap)||20);
-  const maxIdx=()=>Math.max(0,cards.length-Math.max(1,Math.floor((tr.clientWidth+10)/step())));
-  function go(i,smooth=true){idx=Math.max(0,Math.min(maxIdx(),i));tr.scrollTo({left:(rtl()?-1:1)*idx*step(),behavior:smooth?"smooth":"auto"});mark();}
-  function mark(){db.forEach((d,j)=>d.setAttribute("aria-current",String(j===idx)));cnt.textContent=String(idx+1);prev.disabled=idx===0;next.disabled=idx>=maxIdx();restartBar();}
-  function restartBar(){if(!bar||reduce)return;bar.classList.remove("run");void bar.offsetWidth;if(!paused)bar.classList.add("run");}
-  tr.addEventListener("scroll",()=>{clearTimeout(tr._t);tr._t=setTimeout(()=>{const i=Math.min(maxIdx(),Math.round(Math.abs(tr.scrollLeft)/step()));if(i!==idx){idx=i;mark();}},90);},{passive:true});
-  prev.onclick=()=>{go(idx-1);reset();}; next.onclick=()=>{go(idx+1);reset();};
-  db.forEach((d,j)=>d.onclick=()=>{go(j);reset();});
-  function reset(){clearInterval(timer);restartBar();}
-  const pause=()=>{paused=true;clearInterval(timer);bar&&bar.classList.remove("run");}, resume=()=>{paused=false;reset();};
-  box.addEventListener("mouseenter",pause);box.addEventListener("mouseleave",resume);
-  box.addEventListener("focusin",pause);box.addEventListener("focusout",resume);
-  tr.addEventListener("touchstart",pause,{passive:true});tr.addEventListener("touchend",()=>setTimeout(resume,4000),{passive:true});
-  tr.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){go(idx+(rtl()?-1:1));e.preventDefault();}if(e.key==="ArrowLeft"){go(idx+(rtl()?1:-1));e.preventDefault();}});
-  new MutationObserver(()=>go(idx,false)).observe(document.documentElement,{attributes:true,attributeFilter:["dir"]});
-  addEventListener("resize",()=>go(idx,false));
-  mark();reset();
-})();
-</script>
+<script>(function(){fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/site_content?select=key,value&page=eq.links&lang=eq.bn",{headers:{apikey:"sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg",Authorization:"Bearer sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg"}}).then(r=>r.ok?r.json():[]).then(rows=>{const m={};rows.forEach(x=>m[x.key]=x.value);document.querySelectorAll("[data-link]").forEach(a=>{const v=m[a.dataset.link];if(v&&/^https?:\/\//.test(v)){a.href=v;a.hidden=false;}});}).catch(()=>{});})();</script>
 </body>
 </html>

@@ -47,6 +47,11 @@ a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
 .cms .act button{padding:7px 12px;font-size:14px}
 .cms .saved{color:#15803D;font-size:13px}
 .cms textarea[dir="rtl"]{text-align:right}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.mgrid{display:grid;gap:10px;max-width:640px}
+.mgrid textarea{font:inherit;min-height:60px;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
+.mini{padding:6px 10px;font-size:13px}
+td audio{width:220px;height:36px}
 </style>
 </head>
 <body>
@@ -65,7 +70,7 @@ a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
       <div><h1>ভর্তির আবেদন</h1><div class="muted" id="who"></div></div>
       <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
     </div>
-    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
     <div id="panel-apps">
     <div class="stats" id="stats"></div>
     <div class="tools">
@@ -83,9 +88,30 @@ a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
       <div class="tbl"><table><thead><tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>পদ</th><th>লিঙ্গ</th><th>অবস্থান</th><th>বয়স</th><th>যোগ্যতা</th><th>অভিজ্ঞতা</th><th>সময়</th><th>ডিভাইস</th><th>অবস্থা</th></tr></thead><tbody id="trows"></tbody></table></div>
     </div>
 
+    <div id="panel-recs" style="display:none">
+      <p class="muted" style="margin-bottom:12px">শিক্ষার্থীদের পাঠানো তিলাওয়াত। "শুনুন" চাপলে এখানেই বাজবে।</p>
+      <div class="tbl"><table><thead><tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>কোর্স</th><th>দৈর্ঘ্য</th><th>নোট</th><th>শুনুন</th><th>অবস্থা</th><th></th></tr></thead><tbody id="rrows"></tbody></table></div>
+    </div>
+
+    <div id="panel-media" style="display:none">
+      <div class="card" style="margin-bottom:18px">
+        <h1 style="font-size:18px;margin-bottom:12px">লাইব্রেরিতে নতুন কনটেন্ট</h1>
+        <div class="mgrid">
+          <input id="mTitle" placeholder="শিরোনাম — যেমন: সূরা ফাতিহা (তাজবীদসহ)">
+          <select id="mCourse"><option value="">সাধারণ / সব কোর্স</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option></select>
+          <textarea id="mDesc" placeholder="ছোট বিবরণ (ঐচ্ছিক)"></textarea>
+          <label class="muted">ফাইল বেছে নিন — ছবি, PDF, অডিও, ছোট ভিডিও (সর্বোচ্চ ৫০MB)<input id="mFile" type="file" accept="image/*,application/pdf,audio/*,video/*,.opus,.ogg,.m4a" style="margin-top:6px"></label>
+          <input id="mUrl" placeholder="অথবা লিংক দিন — YouTube, Google Drive, Facebook ইত্যাদি">
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="mSave">যোগ করুন</button><span id="mMsg" class="muted"></span></div>
+        <p class="muted" style="margin-top:8px">বড় ভিডিও YouTube-এ (Unlisted) আপলোড করে লিংক দিন — দ্রুত চলবে, জায়গাও বাঁচবে।</p>
+      </div>
+      <div class="tbl"><table><thead><tr><th>তারিখ</th><th>শিরোনাম</th><th>ধরন</th><th>কোর্স</th><th>দেখুন</th><th>সাইটে দেখাবে</th><th></th></tr></thead><tbody id="mrows"></tbody></table></div>
+    </div>
+
     <div id="panel-cms" style="display:none">
       <div class="tools">
-        <select id="cmsPage"><option value="home">হোম পেজ</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option></select>
+        <select id="cmsPage"><option value="home">হোম পেজ</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option><option value="links">লিংক (Telegram চ্যানেল, গ্রুপ)</option></select>
         <select id="cmsLang"><option value="bn">বাংলা</option><option value="en">English</option><option value="ar">العربية</option></select>
         <input id="cmsQ" placeholder="লেখা খুঁজুন">
       </div>
@@ -222,6 +248,73 @@ function renderT(){
     const {error}=await sb.from("teacher_applications").update({status:sel.value}).eq("id",sel.dataset.tid);
     if(error){alert("সেভ হয়নি: "+error.message);return;} const r=trows.find(x=>x.id==sel.dataset.tid); r.status=sel.value; renderT();
   });
+}
+
+// ===== লাইব্রেরি ও তিলাওয়াত =====
+const KIND={image:"ছবি",pdf:"PDF",video:"ভিডিও",audio:"অডিও",link:"লিংক"};
+const RST={new:"নতুন",heard:"শোনা হয়েছে",replied:"উত্তর দেওয়া"};
+const CBN={noorani:"নূরানী",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ",arabic:"আরবি"};
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-media").style.display=b.dataset.tab==="media"?"block":"none";
+  $("panel-recs").style.display=b.dataset.tab==="recs"?"block":"none";
+  if(b.dataset.tab==="media") loadMedia();
+  if(b.dataset.tab==="recs") loadRecs();
+}));
+const waOf=p=>"https://wa.me/"+(p.startsWith("+")?p.slice(1):(p.startsWith("0")?"88"+p:p)).replace(/\D/g,"");
+function kindOfFile(f){const t=f.type||"",e=(f.name.split(".").pop()||"").toLowerCase();
+  if(t.startsWith("image/"))return"image"; if(t==="application/pdf"||e==="pdf")return"pdf";
+  if(t.startsWith("audio/")||["opus","ogg","m4a","mp3","wav","aac"].includes(e))return"audio";
+  if(t.startsWith("video/"))return"video"; return"link";}
+function kindOfUrl(u){u=u.toLowerCase();
+  if(/youtu\.?be|vimeo|facebook\.com\/.*video|\.mp4($|\?)/.test(u))return"video";
+  if(/\.pdf($|\?)/.test(u))return"pdf"; if(/\.(jpe?g|png|webp|gif)($|\?)/.test(u))return"image";
+  if(/\.(mp3|m4a|ogg|opus|wav)($|\?)/.test(u))return"audio"; return"link";}
+$("mSave").onclick=async()=>{
+  const title=$("mTitle").value.trim(),file=$("mFile").files[0],url=$("mUrl").value.trim(),msg=$("mMsg");
+  if(!title){msg.textContent="শিরোনাম দিন।";return;}
+  if(!file&&!/^https?:\/\//.test(url)){msg.textContent="একটা ফাইল বেছে নিন অথবা লিংক দিন।";return;}
+  $("mSave").disabled=true;msg.textContent="যোগ হচ্ছে…";
+  try{
+    let row={title,course:$("mCourse").value||null,description:$("mDesc").value.trim()||null};
+    if(file){
+      if(file.size>50*1024*1024) throw new Error("ফাইল ৫০MB-এর বেশি — YouTube/Drive লিংক দিন।");
+      const kind=kindOfFile(file),safe=file.name.replace(/[^\w.\-]+/g,"_").slice(-60),path=kind+"/"+Date.now()+"-"+safe;
+      const ct=file.type||(kind==="audio"?"audio/ogg":"application/octet-stream");
+      const up=await sb.storage.from("media").upload(path,file,{contentType:ct,upsert:false});
+      if(up.error) throw up.error;
+      row={...row,kind,path,url:sb.storage.from("media").getPublicUrl(path).data.publicUrl};
+    } else row={...row,kind:kindOfUrl(url),url};
+    const {error}=await sb.from("media").insert(row); if(error) throw error;
+    msg.textContent="যোগ হয়েছে ✓ — সাইটের লাইব্রেরিতে দেখা যাচ্ছে।";["mTitle","mDesc","mUrl"].forEach(i=>$(i).value="");$("mFile").value="";loadMedia();
+  }catch(e){msg.textContent="হয়নি: "+(e.message||e);}
+  $("mSave").disabled=false;
+};
+async function loadMedia(){
+  const {data,error}=await sb.from("media").select("*").order("created_at",{ascending:false});
+  if(error){$("mrows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+error.message+' (media.sql চালানো হয়েছে?)</td></tr>';return;}
+  if(!data.length){$("mrows").innerHTML='<tr><td colspan="7" class="muted">এখনও কিছু নেই।</td></tr>';return;}
+  $("mrows").innerHTML=data.map(r=>`<tr><td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.title)}</b>${r.description?'<div class="muted">'+esc(r.description)+'</div>':""}</td><td>${KIND[r.kind]||r.kind}</td><td>${CBN[r.course]||"সাধারণ"}</td><td><a href="${esc(r.url)}" target="_blank" rel="noopener">খুলুন</a></td><td><input type="checkbox" data-pub="${r.id}" ${r.published?"checked":""}></td><td><button class="ghost mini" data-del="${r.id}" data-path="${esc(r.path||"")}">মুছুন</button></td></tr>`).join("");
+  document.querySelectorAll("[data-pub]").forEach(c=>c.onchange=async()=>{const {error}=await sb.from("media").update({published:c.checked}).eq("id",c.dataset.pub);if(error)alert(error.message);});
+  document.querySelectorAll("#mrows [data-del]").forEach(b=>b.onclick=async()=>{
+    if(!confirm("এটা মুছে ফেলবেন?"))return;
+    if(b.dataset.path){const {error}=await sb.storage.from("media").remove([b.dataset.path]);if(error){alert(error.message);return;}}
+    const {error}=await sb.from("media").delete().eq("id",b.dataset.del);if(error)alert(error.message);loadMedia();});
+}
+async function loadRecs(){
+  const {data,error}=await sb.from("recordings").select("*").order("created_at",{ascending:false});
+  if(error){$("rrows").innerHTML='<tr><td colspan="9" class="err">লোড হয়নি: '+error.message+' (media.sql চালানো হয়েছে?)</td></tr>';return;}
+  if(!data.length){$("rrows").innerHTML='<tr><td colspan="9" class="muted">এখনও কোনো তিলাওয়াত আসেনি।</td></tr>';return;}
+  $("rrows").innerHTML=data.map(r=>{const opts=Object.entries(RST).map(([k,v])=>`<option value="${k}" ${r.status===k?"selected":""}>${v}</option>`).join("");
+    return `<tr><td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.name)}</b></td><td><a class="wa" href="${waOf(r.phone)}" target="_blank" rel="noopener">${esc(r.phone)}</a></td><td>${CBN[r.course]||"—"}</td><td>${r.seconds?Math.floor(r.seconds/60)+":"+String(r.seconds%60).padStart(2,"0"):"—"}</td><td style="max-width:200px">${esc(r.note)}</td><td><button class="mini" data-play="${esc(r.path)}">শুনুন</button></td><td><select class="st st-${r.status==="new"?"new":r.status==="replied"?"paid":"trial"}" data-rid="${r.id}">${opts}</select></td><td><button class="ghost mini" data-rdel="${r.id}" data-path="${esc(r.path)}">মুছুন</button></td></tr>`;}).join("");
+  document.querySelectorAll("[data-play]").forEach(b=>b.onclick=async()=>{
+    const {data,error}=await sb.storage.from("recordings").createSignedUrl(b.dataset.play,3600);
+    if(error){alert(error.message);return;}
+    b.outerHTML=`<audio controls autoplay src="${data.signedUrl}"></audio> <a href="${data.signedUrl}" download>ডাউনলোড</a>`;});
+  document.querySelectorAll("[data-rid]").forEach(s=>s.onchange=async()=>{const {error}=await sb.from("recordings").update({status:s.value}).eq("id",s.dataset.rid);if(error)alert(error.message);else loadRecs();});
+  document.querySelectorAll("[data-rdel]").forEach(b=>b.onclick=async()=>{
+    if(!confirm("এই তিলাওয়াত মুছে ফেলবেন?"))return;
+    await sb.storage.from("recordings").remove([b.dataset.path]);
+    const {error}=await sb.from("recordings").delete().eq("id",b.dataset.rdel);if(error)alert(error.message);loadRecs();});
 }
 init();
 </script>
