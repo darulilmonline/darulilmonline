@@ -211,22 +211,57 @@ html[dir="rtl"] .learn li{padding:14px 46px 14px 16px}
 
 
 
-/* ---- settings panel ---- */
+/* ---- settings drawer ---- */
 :root{--font-bn:"Hind Siliguri";--font-en:var(--font-bn);--font-ar:"Amiri"}
 :root[data-theme="dark"] .price{color:var(--gold-2)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .price{color:var(--gold-2)}}
-.setbtn{position:fixed;inset-inline-end:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);background:var(--brand);color:var(--gold-2);font-weight:700;font-size:18px;font-family:"Hind Siliguri",sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3)}
-.setpanel{position:fixed;inset-inline-end:16px;bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:50;width:min(360px,calc(100vw - 32px));max-height:min(72vh,620px);overflow:auto;background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 20px 50px rgba(0,0,0,.3);display:none;font-family:"Hind Siliguri",sans-serif;direction:ltr;text-align:left}
-.setpanel.open{display:block}
-.setpanel h4{font-size:15px;margin:0 0 8px;color:var(--gold-deep);line-height:1.3}
-.setpanel .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px}
-.setpanel .opts.three{grid-template-columns:1fr 1fr 1fr}
-.setpanel button{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);cursor:pointer;font-size:15px;line-height:1.4;text-align:center}
-.setpanel button[aria-pressed="true"]{border:2px solid var(--gold);background:var(--brand);color:var(--gold-2)}
-.setpanel .sw{display:flex;align-items:center;gap:8px;justify-content:flex-start;font-size:14px}
-.setpanel .dot{width:22px;height:22px;border-radius:50%;flex:none;border:1px solid rgba(0,0,0,.15)}
-.setpanel .row2{display:flex;gap:8px}
-.setpanel .row2 button{flex:1}
+.setbtn{position:fixed;inset-inline-end:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:60;display:flex;align-items:center;gap:8px;height:50px;padding:0 18px 0 14px;border-radius:999px;border:1.5px solid var(--gold);background:linear-gradient(180deg,var(--brand-2),var(--brand));color:var(--gold-2);font:700 15px/1 "Hind Siliguri",sans-serif;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.15);transition:transform .15s}
+.setbtn:hover{transform:translateY(-2px)}
+.setbtn svg{width:20px;height:20px}
+.sd-back{position:fixed;inset:0;z-index:70;background:rgba(5,12,15,.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);opacity:0;pointer-events:none;transition:opacity .3s}
+.sd-back.open{opacity:1;pointer-events:auto}
+.sd{position:fixed;top:0;bottom:0;right:0;z-index:71;width:min(420px,100vw);background:var(--surface);color:var(--text);display:flex;flex-direction:column;box-shadow:-20px 0 60px rgba(0,0,0,.3);transform:translateX(104%);transition:transform .38s cubic-bezier(.2,.8,.2,1);font-family:"Hind Siliguri",sans-serif;direction:ltr;text-align:left;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.sd.open{transform:none}
+.sd-top{padding:20px 22px 0;position:relative}
+.sd-top::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:repeating-linear-gradient(135deg,var(--gold-deep) 0 6px,var(--gold-2) 6px 12px)}
+.sd-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:6px 0 16px}
+.sd-head h3{font-size:21px;line-height:1.2}
+.sd-head small{display:block;font-size:13px;color:var(--muted);font-weight:500;margin-top:2px}
+.sd-x{width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--bg);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
+.sd-tabs{display:grid;grid-template-columns:repeat(5,1fr);position:relative;border-bottom:1px solid var(--line)}
+.sd-tabs button{background:none;border:0;padding:10px 2px 12px;font:600 14px/1.2 "Hind Siliguri",sans-serif;color:var(--muted);cursor:pointer}
+.sd-tabs button[aria-selected="true"]{color:var(--text)}
+.sd-tabs .ink{position:absolute;bottom:-1px;left:0;height:3px;width:20%;background:linear-gradient(90deg,var(--gold-deep),var(--gold));border-radius:3px 3px 0 0;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.sd-view{flex:1;overflow:hidden;position:relative}
+.sd-track{display:flex;height:100%;transition:transform .4s cubic-bezier(.2,.8,.2,1);will-change:transform}
+.sd-slide{flex:0 0 100%;height:100%;overflow-y:auto;padding:18px 22px 24px}
+.sd-slide h5{font-size:13px;color:var(--gold-deep);margin:0 0 12px;font-weight:700}
+.sd-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.sd-card{position:relative;text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:10px;cursor:pointer;color:var(--text);font:inherit;transition:border-color .2s,transform .15s,box-shadow .2s}
+.sd-card:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.sd-card[aria-pressed="true"]{border-color:var(--gold);box-shadow:0 0 0 3px color-mix(in srgb,var(--gold) 30%,transparent)}
+.sd-card[aria-pressed="true"]::after{content:"✓";position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;background:var(--gold);color:#2A1F05;font-size:13px;font-weight:700;display:grid;place-items:center}
+.sd-card .nm{display:block;font-size:14px;font-weight:600;margin-top:8px}
+.sd-card .sub{display:block;font-size:12px;color:var(--muted)}
+.pv{height:70px;border-radius:9px;position:relative;overflow:hidden;border:1px solid rgba(0,0,0,.08)}
+.pv i{position:absolute;display:block}
+.pv .h{inset:0 0 auto 0;height:22px}
+.pv .c{left:9px;width:8px;height:8px;top:7px;border-radius:50%}
+.pv .l1{left:10px;top:31px;width:62%;height:5px;border-radius:3px;background:rgba(0,0,0,.2)}
+.pv .l2{left:10px;top:41px;width:40%;height:5px;border-radius:3px;background:rgba(0,0,0,.12)}
+.pv .b{left:10px;bottom:8px;width:38px;height:11px;border-radius:6px}
+.pv.dk .l1{background:rgba(255,255,255,.35)}.pv.dk .l2{background:rgba(255,255,255,.2)}
+.sd-mode .ic{height:70px;border-radius:9px;display:grid;place-items:center}
+.sd-mode .ic svg{width:30px;height:30px}
+.sd-font .smp{display:block;font-size:26px;line-height:1.35;min-height:70px;padding:6px 4px;border-radius:9px;background:var(--surface);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.sd-font .smp.ar{direction:rtl;text-align:right}
+.sd-foot{display:flex;gap:10px;padding:14px 22px 18px;border-top:1px solid var(--line);background:var(--surface)}
+.sd-foot button{flex:1;padding:13px;border-radius:999px;font:700 15px "Hind Siliguri",sans-serif;cursor:pointer;border:1.5px solid var(--line);background:var(--bg);color:var(--text)}
+.sd-foot .ok{background:linear-gradient(180deg,var(--gold-2),var(--gold) 55%,var(--gold-deep));border-color:var(--gold-deep);color:#2A1F05}
+.sd-dots{display:flex;justify-content:center;gap:6px;padding:0 0 4px}
+.sd-dots span{width:6px;height:6px;border-radius:50%;background:var(--line);transition:width .3s,background .3s}
+.sd-dots span.on{width:20px;border-radius:3px;background:var(--gold)}
+@media (prefers-reduced-motion:reduce){.sd,.sd-track,.sd-tabs .ink,.sd-back{transition:none}}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
@@ -519,42 +554,59 @@ form.addEventListener("submit",async e=>{
 </script>
 
 
-<button class="setbtn" id="setBtn" aria-label="থিম ও ফন্ট সেটিং" aria-expanded="false">Aa</button>
-<div class="setpanel" id="setPanel" role="dialog" aria-label="সেটিং"></div>
+<button class="setbtn" id="setBtn" aria-label="থিম ও ফন্ট সেটিং" aria-expanded="false" aria-controls="setDrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="12" cy="7" r="1.2" fill="currentColor"/><circle cx="16.5" cy="10.5" r="1.2" fill="currentColor"/></svg>সাজসজ্জা</button>
+<div class="sd-back" id="setBack"></div>
+<aside class="sd" id="setDrawer" role="dialog" aria-modal="true" aria-label="থিম ও ফন্ট" aria-hidden="true"></aside>
 <script>
 (function(){
-  const R=document.documentElement, P=document.getElementById("setPanel"), B=document.getElementById("setBtn");
-  const MODES=[["auto","অটো"],["light","আলো"],["dark","অন্ধকার"]];
-  const PAL=[["teal","টিল-সোনালি","#0B3D4A","#D4AF37"],["golden","সোনালি","#6B4E16","#E8B923"],["brown","বাদামি","#4E342E","#C9A66B"],["pink","গোলাপি","#8E2C5A","#F2B8CC"],["emerald","সবুজ","#0B5D3B","#D4AF37"],["navy","নেভি নীল","#1B2A4E","#D4AF37"],["purple","বেগুনি","#4A2A6B","#D4AF37"],["maroon","মেরুন","#6B1E2A","#D4AF37"],["turquoise","ফিরোজা","#0E6E7E","#F2C14E"],["black","কালো-সোনালি","#1A1A1A","#D4AF37"],["olive","জলপাই","#4B5320","#D9B44A"],["saffron","জাফরান","#9A4A0E","#F4B942"]];
+  const R=document.documentElement,D=document.getElementById("setDrawer"),BK=document.getElementById("setBack"),BTN=document.getElementById("setBtn");
+  const SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  const MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
+  const AUTO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/></svg>';
+  const MODES=[["auto","অটো","ফোনের সেটিং অনুযায়ী",AUTO,"linear-gradient(135deg,#FBF7EE 50%,#1A1D21 50%)","#A8862A"],["light","আলো","দিনের জন্য",SUN,"#FBF7EE","#A8862A"],["dark","অন্ধকার","রাতে চোখের আরাম",MOON,"#1A1D21","#F1D27A"]];
+  const PAL=[["teal","টিল-সোনালি","#0B3D4A","#D4AF37","#FBF7EE"],["golden","সোনালি","#6B4E16","#E8B923","#FFFBEF"],["brown","বাদামি","#4E342E","#C9A66B","#FAF6F1"],["pink","গোলাপি","#8E2C5A","#F2B8CC","#FFF7FA"],["emerald","সবুজ","#0B5D3B","#D4AF37","#F7FAF5"],["navy","নেভি নীল","#1B2A4E","#D4AF37","#F7F8FB"],["purple","বেগুনি","#4A2A6B","#D4AF37","#FAF7FC"],["maroon","মেরুন","#6B1E2A","#D4AF37","#FBF6F4"],["turquoise","ফিরোজা","#0E6E7E","#F2C14E","#F4FBFC"],["black","কালো-সোনালি","#1A1A1A","#D4AF37","#FAF8F2"],["olive","জলপাই","#4B5320","#D9B44A","#F9F9F1"],["saffron","জাফরান","#9A4A0E","#F4B942","#FFF8F1"]];
   const BN=[["","হিন্দ শিলিগুড়ি","Hind Siliguri"],["Tiro Bangla","তিরো বাংলা"],["Noto Serif Bengali","নোটো সেরিফ"],["Noto Sans Bengali","নোটো সান্স"],["Anek Bangla","অনেক বাংলা"],["Baloo Da 2","বালু দা"],["Atma","আত্মা"],["Mina","মিনা"],["Galada","গালাদা"]];
-  const EN=[["","বাংলা ফন্টের মতো","Hind Siliguri"],["Inter","Inter"],["Poppins","Poppins"],["Montserrat","Montserrat"],["Nunito","Nunito"],["Lora","Lora"],["Merriweather","Merriweather"],["Playfair Display","Playfair"]];
-  const AR=[["","أميري","Amiri"],["Noto Naskh Arabic","نسخ"],["Scheherazade New","شهرزاد"],["Lateef","لطيف"],["Markazi Text","مركزي"],["Reem Kufi","ريم كوفي"],["Cairo","القاهرة"],["Tajawal","تجوال"],["Aref Ruqaa","رقعة"]];
+  const EN=[["","বাংলা ফন্টের মতো","Hind Siliguri"],["Inter","Inter"],["Poppins","Poppins"],["Montserrat","Montserrat"],["Nunito","Nunito"],["Lora","Lora"],["Merriweather","Merriweather"],["Playfair Display","Playfair Display"]];
+  const AR=[["","أميري · Amiri","Amiri"],["Noto Naskh Arabic","نسخ · Naskh"],["Scheherazade New","شهرزاد · Scheherazade"],["Lateef","لطيف · Lateef"],["Markazi Text","مركزي · Markazi"],["Reem Kufi","ريم كوفي · Kufi"],["Cairo","القاهرة · Cairo"],["Tajawal","تجوال · Tajawal"],["Aref Ruqaa","رقعة · Ruqaa"]];
+  const TABS=["মোড","থিম","বাংলা","English","عربي"];
   const get=(k,d)=>{try{return localStorage.getItem("dio-"+k)??d}catch(e){return d}};
-  const put=(k,v)=>{try{if(v===""||v===null)localStorage.removeItem("dio-"+k);else localStorage.setItem("dio-"+k,v)}catch(e){}};
-  const esc=s=>s.replace(/"/g,"&quot;");
-  function fontBtns(list,key){return list.map(([v,l,face])=>`<button data-k="${key}" data-v="${esc(v)}" style="font-family:'${face||v}'">${l}</button>`).join("")}
-  P.innerHTML=`<h4>মোড</h4><div class="opts three">${MODES.map(([v,l])=>`<button data-k="theme" data-v="${v}">${l}</button>`).join("")}</div>
-  <h4>রঙের থিম</h4><div class="opts">${PAL.map(([v,l,a,b])=>`<button class="sw" data-k="palette" data-v="${v}"><span class="dot" style="background:linear-gradient(135deg,${a} 50%,${b} 50%)"></span>${l}</button>`).join("")}</div>
-  <h4>বাংলা ফন্ট</h4><div class="opts">${fontBtns(BN,"font-bn")}</div>
-  <h4>English font</h4><div class="opts">${fontBtns(EN,"font-en")}</div>
-  <h4>الخط العربي</h4><div class="opts">${fontBtns(AR,"font-ar")}</div>
-  <div class="row2"><button id="setReset">ডিফল্টে ফিরুন</button><button id="setClose">বন্ধ</button></div>`;
+  const put=(k,v)=>{try{if(!v)localStorage.removeItem("dio-"+k);else localStorage.setItem("dio-"+k,v)}catch(e){}};
+  const q=s=>String(s).replace(/"/g,"&quot;");
+  const fontCards=(list,key,sample,ar)=>`<div class="sd-grid">${list.map(([v,l,face])=>`<button class="sd-card sd-font" data-k="${key}" data-v="${q(v)}"><span class="smp${ar?" ar":""}" style="font-family:'${face||v}'">${sample}</span><span class="nm">${l}</span></button>`).join("")}</div>`;
+  D.innerHTML=`<div class="sd-top">
+      <div class="sd-head"><div><h3>সাজসজ্জা</h3><small>থিম ও ফন্ট — আপনার পছন্দ মনে থাকবে</small></div><button class="sd-x" id="sdX" aria-label="বন্ধ">×</button></div>
+      <div class="sd-tabs" role="tablist">${TABS.map((t,i)=>`<button role="tab" data-i="${i}" aria-selected="${i===0}">${t}</button>`).join("")}<span class="ink"></span></div>
+    </div>
+    <div class="sd-view"><div class="sd-track">
+      <section class="sd-slide"><h5>প্রদর্শন মোড</h5><div class="sd-grid">${MODES.map(([v,l,s,ic,bg,fg])=>`<button class="sd-card sd-mode" data-k="theme" data-v="${v}"><span class="ic" style="background:${bg};color:${fg}">${ic}</span><span class="nm">${l}</span><span class="sub">${s}</span></button>`).join("")}</div></section>
+      <section class="sd-slide"><h5>রঙের থিম — ${PAL.length}টি</h5><div class="sd-grid">${PAL.map(([v,l,a,b,c])=>`<button class="sd-card" data-k="palette" data-v="${v}"><span class="pv" style="background:${c}"><i class="h" style="background:${a}"></i><i class="c" style="background:${b}"></i><i class="l1"></i><i class="l2"></i><i class="b" style="background:${b}"></i></span><span class="nm">${l}</span></button>`).join("")}</div></section>
+      <section class="sd-slide"><h5>বাংলা ফন্ট</h5>${fontCards(BN,"font-bn","আলহামদুলিল্লাহ")}</section>
+      <section class="sd-slide"><h5>English font</h5>${fontCards(EN,"font-en","Learn with insight")}</section>
+      <section class="sd-slide"><h5>الخط العربي</h5>${fontCards(AR,"font-ar","بِسْمِ اللّٰه",1)}</section>
+    </div></div>
+    <div class="sd-dots">${TABS.map((_,i)=>`<span class="${i===0?"on":""}"></span>`).join("")}</div>
+    <div class="sd-foot"><button id="sdReset">ডিফল্টে ফিরুন</button><button class="ok" id="sdOk">সম্পন্ন</button></div>`;
+  const track=D.querySelector(".sd-track"),ink=D.querySelector(".ink"),tabs=[...D.querySelectorAll('[role="tab"]')],dots=[...D.querySelectorAll(".sd-dots span")];
+  let cur=0;
+  function go(i){cur=Math.max(0,Math.min(TABS.length-1,i));track.style.transform=`translateX(${-100*cur}%)`;ink.style.transform=`translateX(${100*cur}%)`;tabs.forEach((t,j)=>t.setAttribute("aria-selected",String(j===cur)));dots.forEach((d,j)=>d.classList.toggle("on",j===cur));}
+  tabs.forEach(t=>t.onclick=()=>go(+t.dataset.i));
+  let sx=null,sy=null;
+  D.querySelector(".sd-view").addEventListener("touchstart",e=>{sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  D.querySelector(".sd-view").addEventListener("touchend",e=>{if(sx===null)return;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.3)go(cur+(dx<0?1:-1));sx=null;},{passive:true});
   function apply(){
-    const t=get("theme","auto"), p=get("palette","teal");
+    const t=get("theme","auto"),p=get("palette","teal");
     if(t==="auto")R.removeAttribute("data-theme");else R.setAttribute("data-theme",t);
     if(p==="teal")R.removeAttribute("data-palette");else R.setAttribute("data-palette",p);
-    ["bn","en","ar"].forEach(k=>{const v=get("font-"+k,""); if(v){R.style.setProperty("--font-"+k,'"'+v+'"');window.dioLoadFont&&window.dioLoadFont(v);} else R.style.removeProperty("--font-"+k);});
-    P.querySelectorAll("button[data-k]").forEach(b=>{const k=b.dataset.k,d=k==="theme"?"auto":k==="palette"?"teal":""; b.setAttribute("aria-pressed",String(get(k,d)===b.dataset.v));});
+    ["bn","en","ar"].forEach(k=>{const v=get("font-"+k,"");if(v){R.style.setProperty("--font-"+k,'"'+v+'"');window.dioLoadFont&&window.dioLoadFont(v);}else R.style.removeProperty("--font-"+k);});
+    D.querySelectorAll("[data-k]").forEach(b=>{const k=b.dataset.k,d=k==="theme"?"auto":k==="palette"?"teal":"";b.setAttribute("aria-pressed",String(get(k,d)===b.dataset.v));});
   }
-  function loadPreviews(){ [...BN,...EN,...AR].forEach(([v])=>v&&window.dioLoadFont&&window.dioLoadFont(v)); }
-  B.onclick=()=>{const o=P.classList.toggle("open");B.setAttribute("aria-expanded",o); if(o)loadPreviews();};
-  P.addEventListener("click",e=>{
-    const b=e.target.closest("button"); if(!b)return;
-    if(b.id==="setClose"){P.classList.remove("open");B.setAttribute("aria-expanded","false");return;}
-    if(b.id==="setReset"){["theme","palette","font-bn","font-en","font-ar"].forEach(k=>put(k,""));apply();return;}
-    if(b.dataset.k){put(b.dataset.k,b.dataset.v);apply();}
-  });
-  document.addEventListener("keydown",e=>{if(e.key==="Escape"&&P.classList.contains("open")){P.classList.remove("open");B.setAttribute("aria-expanded","false");B.focus();}});
+  let loaded=false;
+  function open(){D.classList.add("open");BK.classList.add("open");D.setAttribute("aria-hidden","false");BTN.setAttribute("aria-expanded","true");document.body.style.overflow="hidden";if(!loaded){[...BN,...EN,...AR].forEach(([v])=>v&&window.dioLoadFont&&window.dioLoadFont(v));loaded=true;}setTimeout(()=>D.querySelector("#sdX").focus(),50);}
+  function close(){D.classList.remove("open");BK.classList.remove("open");D.setAttribute("aria-hidden","true");BTN.setAttribute("aria-expanded","false");document.body.style.overflow="";BTN.focus();}
+  BTN.onclick=open;BK.onclick=close;D.querySelector("#sdX").onclick=close;D.querySelector("#sdOk").onclick=close;
+  D.querySelector("#sdReset").onclick=()=>{["theme","palette","font-bn","font-en","font-ar"].forEach(k=>put(k,""));apply();};
+  D.addEventListener("click",e=>{const b=e.target.closest("[data-k]");if(b){put(b.dataset.k,b.dataset.v);apply();}});
+  document.addEventListener("keydown",e=>{if(!D.classList.contains("open"))return;if(e.key==="Escape")close();if(e.key==="ArrowRight"&&e.target.getAttribute("role")==="tab")go(cur+1);if(e.key==="ArrowLeft"&&e.target.getAttribute("role")==="tab")go(cur-1);});
   apply();
 })();
 </script>
