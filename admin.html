@@ -158,7 +158,7 @@ document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
 });
 $("cmsPage").onchange=loadCms; $("cmsLang").onchange=renderCms; $("cmsQ").oninput=renderCms;
 async function loadCms(){
-  if(!DEF){ try{ DEF=await (await fetch("/assets/content.json?v="+Date.now())).json(); }catch(e){ $("cmsList").innerHTML='<p class="err">content.json লোড হয়নি।</p>'; return; } }
+  if(!DEF){ try{ DEF=await (await fetch("/content.json?v="+Date.now())).json(); }catch(e){ $("cmsList").innerHTML='<p class="err">content.json লোড হয়নি।</p>'; return; } }
   const page=$("cmsPage").value;
   const {data,error}=await sb.from("site_content").select("key,lang,value").eq("page",page);
   if(error){ $("cmsList").innerHTML='<p class="err">'+error.message+'</p>'; return; }
