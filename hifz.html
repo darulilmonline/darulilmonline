@@ -6,7 +6,7 @@
 <title>হিফযুল কুরআন — দারুল ইলম অনলাইন</title>
 <meta name="description" content="দারুল উলূমের প্রচলিত সবক–সবকি–আমুখতা পদ্ধতিতে প্রতিদিন নতুন মুখস্থ, গতকালের পুনরাবৃত্তি ও পুরোনো পারা শোনানো। প্রতিটি শিক্ষার্থীর জন্য আলাদা লক্ষ্য ও ">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Tiro+Bangla:ital@0;1&family=Noto+Serif+Bengali:wght@400;600;700&family=Baloo+Da+2:wght@400;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 
 :root{
@@ -24,10 +24,10 @@
 html{scroll-padding-top:calc(76px + env(safe-area-inset-top,0px)); scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} *{transition:none!important;animation:none!important} }
 *{box-sizing:inherit;margin:0}
-body{background:var(--bg);color:var(--text);font-family:"Hind Siliguri",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;position:relative}
+body{background:var(--bg);color:var(--text);font-family:var(--font-bn),"Hind Siliguri",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;position:relative}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--surface);z-index:10}
 .ar,[lang="ar"]{font-family:"Amiri","Noto Naskh Arabic",serif}
-html[dir="rtl"] body{font-family:"Amiri","Noto Naskh Arabic","Hind Siliguri",serif;font-size:19px;line-height:1.9}
+html[dir="rtl"] body{font-family:"Amiri","Noto Naskh Arabic",var(--font-bn),serif;font-size:19px;line-height:1.9}
 a{color:inherit} img{max-width:100%;display:block}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
 h1,h2,h3{line-height:1.2;font-weight:700}
@@ -195,7 +195,25 @@ html[dir="rtl"] .learn li{padding:14px 46px 14px 16px}
 .more a span:last-child{color:var(--gold)}
 @media(min-width:720px){.more{grid-template-columns:1fr 1fr}}
 
+
+/* ---- settings (theme + font) ---- */
+:root{--font-bn:"Hind Siliguri"}
+:root[data-font="tiro"]{--font-bn:"Tiro Bangla"}
+:root[data-font="noto"]{--font-bn:"Noto Serif Bengali"}
+:root[data-font="baloo"]{--font-bn:"Baloo Da 2"}
+:root[data-font="tiro"] body,:root[data-font="noto"] body{line-height:1.8}
+:root[data-font="tiro"] h1,:root[data-font="tiro"] h2,:root[data-font="noto"] h1,:root[data-font="noto"] h2{line-height:1.35}
+.setbtn{position:fixed;inset-inline-end:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:50;width:52px;height:52px;border-radius:50%;border:2px solid var(--gold);background:var(--brand);color:var(--gold-2);font-weight:700;font-size:18px;font-family:"Hind Siliguri",sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.setpanel{position:fixed;inset-inline-end:16px;bottom:calc(78px + env(safe-area-inset-bottom,0px));z-index:50;width:min(320px,calc(100vw - 32px));background:var(--surface);color:var(--text);border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 20px 50px rgba(0,0,0,.3);display:none;font-family:"Hind Siliguri",sans-serif}
+.setpanel.open{display:block}
+.setpanel h4{font-size:15px;margin:0 0 8px;color:var(--gold-deep)}
+.setpanel .opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
+.setpanel button{font:inherit;padding:9px 10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);cursor:pointer;font-size:15px}
+.setpanel button[aria-pressed="true"]{border-color:var(--gold);background:var(--brand);color:var(--gold-2)}
+.setpanel .f-hind{font-family:"Hind Siliguri"}.setpanel .f-tiro{font-family:"Tiro Bangla"}.setpanel .f-noto{font-family:"Noto Serif Bengali"}.setpanel .f-baloo{font-family:"Baloo Da 2"}
+.setpanel .close{width:100%;margin-top:4px}
 </style>
+<script>try{var t=localStorage.getItem("dio-theme"),f=localStorage.getItem("dio-font");if(t&&t!=="auto")document.documentElement.setAttribute("data-theme",t);if(f&&f!=="hind")document.documentElement.setAttribute("data-font",f);}catch(e){}</script>
 </head>
 <body>
 <header><div class="wrap nav">
@@ -268,5 +286,31 @@ document.querySelectorAll(".lang button").forEach(b=>b.addEventListener("click",
 const qp=new URLSearchParams(location.search); let saved=qp.get("lang");
 if(!["bn","en","ar"].includes(saved)){ saved="bn"; try{saved=localStorage.getItem("dio-lang")||"bn";}catch(e){} }
 loadOverrides("hifz").then(()=>setLang(saved));
+</script>
+
+<button class="setbtn" id="setBtn" aria-label="থিম ও ফন্ট সেটিং" aria-expanded="false">Aa</button>
+<div class="setpanel" id="setPanel" role="dialog" aria-label="সেটিং">
+  <h4>থিম</h4>
+  <div class="opts" data-set="theme"><button data-v="auto">অটো</button><button data-v="light">আলো</button><button data-v="dark">অন্ধকার</button></div>
+  <h4>বাংলা ফন্ট</h4>
+  <div class="opts" data-set="font"><button data-v="hind" class="f-hind">হিন্দ শিলিগুড়ি</button><button data-v="tiro" class="f-tiro">তিরো বাংলা</button><button data-v="noto" class="f-noto">নোটো সেরিফ</button><button data-v="baloo" class="f-baloo">বালু দা</button></div>
+  <button class="close" id="setClose">বন্ধ</button>
+</div>
+<script>
+(function(){
+  const R=document.documentElement;
+  function get(k,d){try{return localStorage.getItem("dio-"+k)||d}catch(e){return d}}
+  function apply(){
+    const t=get("theme","auto"), f=get("font","hind");
+    if(t==="auto") R.removeAttribute("data-theme"); else R.setAttribute("data-theme",t);
+    if(f==="hind") R.removeAttribute("data-font"); else R.setAttribute("data-font",f);
+    document.querySelectorAll('.setpanel [data-set]').forEach(g=>{const cur=g.dataset.set==="theme"?t:f; g.querySelectorAll("button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===cur)));});
+  }
+  const btn=document.getElementById("setBtn"),p=document.getElementById("setPanel");
+  btn.onclick=()=>{p.classList.toggle("open");btn.setAttribute("aria-expanded",p.classList.contains("open"));};
+  document.getElementById("setClose").onclick=()=>{p.classList.remove("open");btn.setAttribute("aria-expanded","false");};
+  document.querySelectorAll('.setpanel [data-set] button').forEach(b=>b.onclick=()=>{try{localStorage.setItem("dio-"+b.parentElement.dataset.set,b.dataset.v);}catch(e){} apply();});
+  apply();
+})();
 </script>
 </body></html>
