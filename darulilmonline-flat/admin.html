@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>অ্যাডমিন — দারুল ইলম অনলাইন</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<style>
+:root{--teal:#0F4C5C;--ink:#1B2A2F;--bg:#FBF7EE;--surface:#fff;--text:#1B2A2F;--muted:#5A6A6F;--line:#DED5BF;--accent:#E0A526;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0D1A1F;--surface:#13252B;--text:#F2EDE1;--muted:#A9B5B9;--line:#2A3F47}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0D1A1F;--surface:#13252B;--text:#F2EDE1;--muted:#A9B5B9;--line:#2A3F47}
+*{box-sizing:inherit;margin:0}
+body{background:var(--bg);color:var(--text);font-family:"Hind Siliguri",system-ui,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin-bottom:4px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.login{max-width:380px;margin:60px auto;display:grid;gap:12px}
+input,select,button{font:inherit;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
+button{background:var(--accent);color:var(--ink);border:0;font-weight:700;cursor:pointer}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--text);font-weight:600}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 16px}
+.stat b{font-size:22px;display:block}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.tools input{flex:1;min-width:180px}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:900px}
+th,td{padding:10px 12px;text-align:start;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+th{color:var(--muted);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.st{padding:4px 8px;border-radius:999px;font-size:13px;font-weight:700;border:0}
+.st-new{background:#FDE68A;color:#78350F}.st-trial{background:#BFDBFE;color:#1E3A8A}.st-paid{background:#BBF7D0;color:#14532D}.st-closed{background:#E5E7EB;color:#374151}
+a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
+.err{color:#B91C1C;font-weight:600}
+.muted{color:var(--muted);font-size:14px}
+.tab.active{background:var(--accent);color:var(--ink);border:0}
+.cms{display:grid;gap:10px}
+.cms .item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:8px}
+.cms .k{font-size:12px;color:var(--muted)}
+.cms .d{font-size:14px;color:var(--muted);white-space:pre-wrap}
+.cms textarea{font:inherit;width:100%;min-height:44px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);resize:vertical}
+.cms .item.changed{border-color:var(--accent)}
+.cms .act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cms .act button{padding:7px 12px;font-size:14px}
+.cms .saved{color:#15803D;font-size:13px}
+.cms textarea[dir="rtl"]{text-align:right}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="loginBox" class="card login">
+    <h1>অ্যাডমিন লগইন</h1>
+    <p class="muted">দারুল ইলম অনলাইন — ভর্তির আবেদন</p>
+    <input id="email" type="email" placeholder="ইমেইল" autocomplete="username">
+    <input id="pass" type="password" placeholder="পাসওয়ার্ড" autocomplete="current-password">
+    <button id="loginBtn">লগইন</button>
+    <div id="loginErr" class="err"></div>
+  </div>
+
+  <div id="app" style="display:none">
+    <div class="top">
+      <div><h1>ভর্তির আবেদন</h1><div class="muted" id="who"></div></div>
+      <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
+    </div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div id="panel-apps">
+    <div class="stats" id="stats"></div>
+    <div class="tools">
+      <input id="q" placeholder="নাম বা নম্বর দিয়ে খুঁজুন">
+      <select id="fStatus"><option value="">সব অবস্থা</option><option value="new">নতুন</option><option value="trial">ট্রায়ালে</option><option value="paid">ভর্তি হয়েছে</option><option value="closed">বন্ধ</option></select>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>তারিখ</th><th>শিক্ষার্থী</th><th>বয়স</th><th>অভিভাবক</th><th>ফোন</th><th>কোর্স</th><th>ধরন</th><th>সময়</th><th>নোট</th><th>অবস্থা</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    </div>
+
+    <div id="panel-cms" style="display:none">
+      <div class="tools">
+        <select id="cmsPage"><option value="home">হোম পেজ</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option></select>
+        <select id="cmsLang"><option value="bn">বাংলা</option><option value="en">English</option><option value="ar">العربية</option></select>
+        <input id="cmsQ" placeholder="লেখা খুঁজুন">
+      </div>
+      <p class="muted" style="margin-bottom:12px">যে লেখাটা বদলাতে চান, ঘরে নতুন লেখা লিখে <b>সেভ</b> চাপুন। সাইটে সাথে সাথে বদলে যাবে। <b>আসল লেখায় ফিরুন</b> চাপলে পরিবর্তন মুছে যায়। (দাম বদলাতে তিন ভাষায় আলাদা করে বদলাতে হবে।)</p>
+      <div id="cmsList" class="cms"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB_URL="https://nlylwrbxejjxnfljcztv.supabase.co";
+const SB_KEY="sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg";
+const sb=supabase.createClient(SB_URL,SB_KEY);
+const COURSE={noorani:"নূরানী কায়দা",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ ও আমল",arabic:"আরবি"};
+const PLAN={group:"গ্রুপ",small:"ছোট গ্রুপ",one:"একক"};
+const TIME={morning:"সকাল",afternoon:"বিকাল",evening:"সন্ধ্যা/রাত"};
+const STATUS={new:"নতুন",trial:"ট্রায়ালে",paid:"ভর্তি হয়েছে",closed:"বন্ধ"};
+let rows=[];
+const $=id=>document.getElementById(id);
+
+async function init(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session){ showApp(session.user.email); load(); }
+}
+$("loginBtn").onclick=async()=>{
+  $("loginErr").textContent="";
+  const {data,error}=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("pass").value});
+  if(error){ $("loginErr").textContent="ইমেইল বা পাসওয়ার্ড ভুল।"; return; }
+  showApp(data.user.email); load();
+};
+$("pass").addEventListener("keydown",e=>{if(e.key==="Enter")$("loginBtn").click();});
+$("logout").onclick=async()=>{ await sb.auth.signOut(); location.reload(); };
+$("reload").onclick=load;
+$("q").oninput=render; $("fStatus").onchange=render;
+
+function showApp(email){ $("loginBox").style.display="none"; $("app").style.display="block"; $("who").textContent=email; }
+
+async function load(){
+  const {data,error}=await sb.from("applications").select("*").order("created_at",{ascending:false});
+  if(error){ $("rows").innerHTML='<tr><td colspan="10" class="err">লোড করা যায়নি: '+error.message+'</td></tr>'; return; }
+  rows=data; render();
+}
+function fmt(d){ return new Date(d).toLocaleString("bn-BD",{dateStyle:"medium",timeStyle:"short"}); }
+function esc(s){ return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function render(){
+  const q=$("q").value.trim().toLowerCase(), fs=$("fStatus").value;
+  const list=rows.filter(r=>(!fs||r.status===fs)&&(!q||r.student_name.toLowerCase().includes(q)||(r.phone||"").includes(q)||(r.guardian_name||"").toLowerCase().includes(q)));
+  const c={new:0,trial:0,paid:0,closed:0}; rows.forEach(r=>c[r.status]=(c[r.status]||0)+1);
+  $("stats").innerHTML=`<div class="stat"><b>${rows.length}</b>মোট আবেদন</div><div class="stat"><b>${c.new||0}</b>নতুন</div><div class="stat"><b>${c.trial||0}</b>ট্রায়ালে</div><div class="stat"><b>${c.paid||0}</b>ভর্তি</div>`;
+  if(!list.length){ $("rows").innerHTML='<tr><td colspan="10" class="muted">কোনো আবেদন নেই।</td></tr>'; return; }
+  $("rows").innerHTML=list.map(r=>{
+    const wa=r.phone.startsWith("+")?r.phone.slice(1):(r.phone.startsWith("0")?"88"+r.phone:r.phone);
+    const opts=Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${r.status===k?"selected":""}>${v}</option>`).join("");
+    return `<tr>
+      <td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.student_name)}</b></td><td>${r.age??""}</td><td>${esc(r.guardian_name)}</td>
+      <td><a class="wa" href="https://wa.me/${wa}" target="_blank" rel="noopener">${esc(r.phone)}</a></td>
+      <td>${COURSE[r.course]||esc(r.course)}</td><td>${PLAN[r.plan]||esc(r.plan)}</td><td>${TIME[r.preferred_time]||esc(r.preferred_time)}</td>
+      <td style="max-width:220px">${esc(r.note)}</td>
+      <td><select class="st st-${r.status}" data-id="${r.id}">${opts}</select></td></tr>`;
+  }).join("");
+  document.querySelectorAll("select.st").forEach(sel=>sel.onchange=async()=>{
+    const {error}=await sb.from("applications").update({status:sel.value}).eq("id",sel.dataset.id);
+    if(error){ alert("সেভ হয়নি: "+error.message); return; }
+    const r=rows.find(x=>x.id==sel.dataset.id); r.status=sel.value; render();
+  });
+}
+
+// ===== সাইটের লেখা (CMS) =====
+let DEF=null, OVR={};
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>{x.classList.toggle("active",x===b);x.classList.toggle("ghost",x!==b);});
+  $("panel-apps").style.display=b.dataset.tab==="apps"?"block":"none";
+  $("panel-cms").style.display=b.dataset.tab==="cms"?"block":"none";
+  if(b.dataset.tab==="cms") loadCms();
+});
+$("cmsPage").onchange=loadCms; $("cmsLang").onchange=renderCms; $("cmsQ").oninput=renderCms;
+async function loadCms(){
+  if(!DEF){ try{ DEF=await (await fetch("/content.json?v="+Date.now())).json(); }catch(e){ $("cmsList").innerHTML='<p class="err">content.json লোড হয়নি।</p>'; return; } }
+  const page=$("cmsPage").value;
+  const {data,error}=await sb.from("site_content").select("key,lang,value").eq("page",page);
+  if(error){ $("cmsList").innerHTML='<p class="err">'+error.message+'</p>'; return; }
+  OVR={}; (data||[]).forEach(r=>OVR[r.lang+"|"+r.key]=r.value);
+  renderCms();
+}
+function renderCms(){
+  if(!DEF) return;
+  const page=$("cmsPage").value, lang=$("cmsLang").value, q=$("cmsQ").value.trim().toLowerCase();
+  const d=DEF[page]||{}; const keys=Object.keys(d.bn||{});
+  const dir=lang==="ar"?"rtl":"ltr";
+  $("cmsList").innerHTML=keys.filter(k=>{const t=(d[lang]||{})[k]||d.bn[k]||""; return !q||t.toLowerCase().includes(q)||k.includes(q);}).map(k=>{
+    const def=(d[lang]||{})[k]??d.bn[k]??""; const cur=OVR[lang+"|"+k]; const val=cur??def;
+    return `<div class="item ${cur!==undefined?"changed":""}" data-key="${k}">
+      <div class="k">${k}</div>
+      <textarea dir="${dir}">${esc(val)}</textarea>
+      <div class="act"><button class="save">সেভ</button>${cur!==undefined?'<button class="ghost reset">আসল লেখায় ফিরুন</button><span class="muted">আসল: '+esc(def)+'</span>':''}<span class="saved"></span></div>
+    </div>`;}).join("")||'<p class="muted">কিছু পাওয়া যায়নি।</p>';
+  $("cmsList").querySelectorAll(".item").forEach(it=>{
+    const k=it.dataset.key, ta=it.querySelector("textarea");
+    it.querySelector(".save").onclick=async()=>{
+      const v=ta.value.trim(); if(!v){alert("খালি রাখা যাবে না।");return;}
+      const {error}=await sb.from("site_content").upsert({page,key:k,lang,value:v,updated_at:new Date().toISOString()});
+      if(error){alert("সেভ হয়নি: "+error.message);return;}
+      OVR[lang+"|"+k]=v; it.classList.add("changed"); it.querySelector(".saved").textContent="সেভ হয়েছে ✓"; setTimeout(renderCms,800);
+    };
+    const rs=it.querySelector(".reset"); if(rs) rs.onclick=async()=>{
+      const {error}=await sb.from("site_content").delete().match({page,key:k,lang});
+      if(error){alert(error.message);return;} delete OVR[lang+"|"+k]; renderCms();
+    };
+  });
+}
+init();
+</script>
+</body>
+</html>
