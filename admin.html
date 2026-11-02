@@ -53,6 +53,20 @@ a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
 .mgrid label input,.mgrid label select{width:100%}
 .mgrid textarea{font:inherit;min-height:60px;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
 .mini{padding:6px 10px;font-size:13px}
+.fgrid{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.fgrid label{display:grid;gap:4px;font-size:14px;color:var(--muted)}
+.fgrid label.wide{grid-column:1/-1}
+.fgrid input,.fgrid select,.fgrid textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
+.btn-s{display:inline-block;padding:6px 10px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none}
+.wa-b{background:#1FAF5A;color:#fff}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700}
+.pill.ok{background:#BBF7D0;color:#14532D}.pill.due{background:#FECACA;color:#7F1D1D}.pill.off{background:#E5E7EB;color:#374151}
+tr.sub td{background:var(--bg)}
+.payf{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.payf input,.payf select{padding:8px 10px;font-size:14px}
+.hist{display:grid;gap:6px;font-size:14px}
+.hist div{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
 td audio{width:220px;height:36px}
 </style>
 </head>
@@ -69,10 +83,10 @@ td audio{width:220px;height:36px}
 
   <div id="app" style="display:none">
     <div class="top">
-      <div><h1>ভর্তির আবেদন</h1><div class="muted" id="who"></div></div>
+      <div><h1>অ্যাডমিন প্যানেল — দারুল ইলম অনলাইন</h1><div class="muted" id="who"></div></div>
       <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
     </div>
-    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
     <div id="panel-apps">
     <div class="stats" id="stats"></div>
     <div class="tools">
@@ -80,9 +94,42 @@ td audio{width:220px;height:36px}
       <select id="fStatus"><option value="">সব অবস্থা</option><option value="new">নতুন</option><option value="trial">ট্রায়ালে</option><option value="paid">ভর্তি হয়েছে</option><option value="closed">বন্ধ</option></select>
     </div>
     <div class="tbl"><table>
-      <thead><tr><th>তারিখ</th><th>শিক্ষার্থী</th><th>বয়স</th><th>অভিভাবক</th><th>ফোন</th><th>কোর্স</th><th>ধরন</th><th>সময়</th><th>নোট</th><th>অবস্থা</th></tr></thead>
+      <thead><tr><th>তারিখ</th><th>শিক্ষার্থী</th><th>বয়স</th><th>অভিভাবক</th><th>ফোন</th><th>কোর্স</th><th>ধরন</th><th>সময়</th><th>নোট</th><th>অবস্থা</th><th>কাজ</th></tr></thead>
       <tbody id="rows"></tbody>
     </table></div>
+    </div>
+
+    <div id="panel-students" style="display:none">
+      <div class="tools">
+        <label class="muted" style="display:flex;align-items:center;gap:8px">মাস <input type="month" id="sMonth"></label>
+        <input id="sq" placeholder="নাম বা নম্বর দিয়ে খুঁজুন">
+        <select id="sBatch"><option value="">সব ব্যাচ</option></select>
+        <select id="sFilter"><option value="active">সক্রিয় শিক্ষার্থী</option><option value="due">শুধু বকেয়া</option><option value="paid">শুধু পরিশোধিত</option><option value="all">সব (বন্ধসহ)</option></select>
+        <button id="sNew">+ নতুন শিক্ষার্থী</button>
+        <button class="ghost" id="sCsv">CSV ডাউনলোড</button>
+      </div>
+      <div class="stats" id="sStats"></div>
+      <div class="card" id="sForm" hidden style="margin-bottom:18px">
+        <h1 style="font-size:18px;margin-bottom:12px" id="sFormTitle">নতুন শিক্ষার্থী</h1>
+        <div class="fgrid">
+          <label>নাম<input id="f_name"></label>
+          <label>WhatsApp নম্বর<input id="f_phone" placeholder="01XXXXXXXXX বা +966..."></label>
+          <label>অভিভাবক<input id="f_guardian"></label>
+          <label>বয়স<input id="f_age" type="number" min="3" max="99"></label>
+          <label>কোর্স<select id="f_course"><option value="">—</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option></select></label>
+          <label>ক্লাসের ধরন<select id="f_plan"><option value="group">গ্রুপ</option><option value="small">ছোট গ্রুপ</option><option value="one">একক</option></select></label>
+          <label>ব্যাচ<input id="f_batch" list="batchList" placeholder="যেমন: নূরানী-সকাল-১"></label>
+          <label>শিক্ষক<input id="f_teacher" list="teacherList"></label>
+          <label>মাসিক ফি<input id="f_fee" type="number" min="0" step="1"></label>
+          <label>মুদ্রা<select id="f_cur"><option value="BDT">৳ টাকা</option><option value="SAR">ر.س রিয়াল</option></select></label>
+          <label>শুরুর তারিখ<input id="f_start" type="date"></label>
+          <label>অবস্থা<select id="f_status"><option value="active">সক্রিয়</option><option value="paused">বিরতিতে</option><option value="left">বন্ধ</option></select></label>
+          <label class="wide">নোট<textarea id="f_notes"></textarea></label>
+        </div>
+        <datalist id="batchList"></datalist><datalist id="teacherList"></datalist>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="fSave">সেভ করুন</button><button class="ghost" id="fCancel">বাতিল</button><span class="muted" id="fMsg"></span></div>
+      </div>
+      <div class="tbl"><table><thead><tr><th>শিক্ষার্থী</th><th>ফোন</th><th>কোর্স</th><th>ব্যাচ · শিক্ষক</th><th>মাসিক ফি</th><th id="sMonthHead">এই মাস</th><th>কাজ</th></tr></thead><tbody id="srows"></tbody></table></div>
     </div>
 
     <div id="panel-teachers" style="display:none">
@@ -163,7 +210,7 @@ function render(){
   const list=rows.filter(r=>(!fs||r.status===fs)&&(!q||r.student_name.toLowerCase().includes(q)||(r.phone||"").includes(q)||(r.guardian_name||"").toLowerCase().includes(q)));
   const c={new:0,trial:0,paid:0,closed:0}; rows.forEach(r=>c[r.status]=(c[r.status]||0)+1);
   $("stats").innerHTML=`<div class="stat"><b>${rows.length}</b>মোট আবেদন</div><div class="stat"><b>${c.new||0}</b>নতুন</div><div class="stat"><b>${c.trial||0}</b>ট্রায়ালে</div><div class="stat"><b>${c.paid||0}</b>ভর্তি</div>`;
-  if(!list.length){ $("rows").innerHTML='<tr><td colspan="10" class="muted">কোনো আবেদন নেই।</td></tr>'; return; }
+  if(!list.length){ $("rows").innerHTML='<tr><td colspan="11" class="muted">কোনো আবেদন নেই।</td></tr>'; return; }
   $("rows").innerHTML=list.map(r=>{
     const wa=r.phone.startsWith("+")?r.phone.slice(1):(r.phone.startsWith("0")?"88"+r.phone:r.phone);
     const opts=Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${r.status===k?"selected":""}>${v}</option>`).join("");
@@ -172,13 +219,15 @@ function render(){
       <td><a class="wa" href="https://wa.me/${wa}" target="_blank" rel="noopener">${esc(r.phone)}</a></td>
       <td>${COURSE[r.course]||esc(r.course)}</td><td>${PLAN[r.plan]||esc(r.plan)}</td><td>${TIME[r.preferred_time]||esc(r.preferred_time)}</td>
       <td style="max-width:220px">${esc(r.note)}</td>
-      <td><select class="st st-${r.status}" data-id="${r.id}">${opts}</select></td></tr>`;
+      <td><select class="st st-${r.status}" data-id="${r.id}">${opts}</select></td>
+      <td style="white-space:nowrap"><a class="btn-s wa-b" href="${welcomeLink(r)}" target="_blank" rel="noopener">স্বাগত মেসেজ</a> <button class="mini" data-enroll="${r.id}">ভর্তি করুন</button></td></tr>`;
   }).join("");
-  document.querySelectorAll("select.st").forEach(sel=>sel.onchange=async()=>{
+  document.querySelectorAll("#rows select.st").forEach(sel=>sel.onchange=async()=>{
     const {error}=await sb.from("applications").update({status:sel.value}).eq("id",sel.dataset.id);
     if(error){ alert("সেভ হয়নি: "+error.message); return; }
     const r=rows.find(x=>x.id==sel.dataset.id); r.status=sel.value; render();
   });
+  document.querySelectorAll("#rows [data-enroll]").forEach(b=>b.onclick=()=>enrollFrom(rows.find(x=>x.id==b.dataset.enroll)));
 }
 
 // ===== সাইটের লেখা (CMS) =====
@@ -359,6 +408,140 @@ async function autoClean(){
     if(!e2) $("cleanNote").textContent="৩০ দিনের পুরোনো "+data.length+"টা তিলাওয়াত আজ নিজে মুছে গেছে। নতুনগুলো নিরাপদ আছে।";
   }catch(err){console.warn(err);}
 }
+
+// ===== শিক্ষার্থী ও ফি =====
+const SST={active:"সক্রিয়",paused:"বিরতিতে",left:"বন্ধ"};
+const CUR={BDT:"৳",SAR:"ر.س"};
+const FEE={BDT:{group:500,small:1000,one:1500},SAR:{group:20,small:40,one:60}};
+let STU=[],PAY={},editId=null,fromApp=null;
+const money=(n,c)=>(c==="SAR"?"":"৳")+Number(n||0).toLocaleString("bn-BD")+(c==="SAR"?" ر.س":"");
+const monthKey=()=>($("sMonth").value||new Date().toISOString().slice(0,7))+"-01";
+const monthBn=()=>new Date(monthKey()+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"});
+const waNum=p=>(p.startsWith("+")?p.slice(1):(p.startsWith("0")?"88"+p:p)).replace(/\D/g,"");
+const waText=(p,t)=>"https://wa.me/"+waNum(p)+"?text="+encodeURIComponent(t);
+function welcomeLink(r){
+  return waText(r.phone,`আসসালামু আলাইকুম। দারুল ইলম অনলাইনে আবেদনের জন্য জাযাকাল্লাহু খাইরান।\n${COURSE[r.course]||"কোর্স"}-এর ৩ দিনের ফ্রি ক্লাস শুরু হবে:\nতারিখ: \nসময় (বাংলাদেশ): \nশিক্ষক: \nক্লাসের লিংক ক্লাসের ১০ মিনিট আগে এখানে পাঠানো হবে।\nনিয়মাবলি: darulilmonline.com/rules`);
+}
+$("sMonth").value=new Date().toISOString().slice(0,7);
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-students").style.display=b.dataset.tab==="students"?"block":"none";
+  if(b.dataset.tab==="students") loadStudents();
+}));
+["sMonth"].forEach(id=>$(id).onchange=loadStudents);
+["sq","sBatch","sFilter"].forEach(id=>$(id).addEventListener(id==="sq"?"input":"change",renderStudents));
+async function loadStudents(){
+  const s=await sb.from("students").select("*").order("name");
+  if(s.error){$("srows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+s.error.message+' (students.sql চালানো হয়েছে?)</td></tr>';return;}
+  STU=s.data;
+  const p=await sb.from("payments").select("*").eq("month",monthKey());
+  PAY={}; (p.data||[]).forEach(x=>PAY[x.student_id]=x);
+  const batches=[...new Set(STU.map(x=>x.batch).filter(Boolean))].sort(), teachers=[...new Set(STU.map(x=>x.teacher).filter(Boolean))].sort();
+  const cur=$("sBatch").value;
+  $("sBatch").innerHTML='<option value="">সব ব্যাচ</option>'+batches.map(b=>`<option ${b===cur?"selected":""}>${esc(b)}</option>`).join("");
+  $("batchList").innerHTML=batches.map(b=>`<option value="${esc(b)}">`).join("");
+  $("teacherList").innerHTML=teachers.map(b=>`<option value="${esc(b)}">`).join("");
+  $("sMonthHead").textContent=monthBn();
+  renderStudents();
+}
+function renderStudents(){
+  const q=$("sq").value.trim().toLowerCase(),bt=$("sBatch").value,fl=$("sFilter").value;
+  const act=STU.filter(x=>x.status==="active");
+  const paid=act.filter(x=>PAY[x.id]),due=act.filter(x=>!PAY[x.id]&&Number(x.monthly_fee)>0);
+  const tot={}; Object.values(PAY).forEach(p=>tot[p.currency]=(tot[p.currency]||0)+Number(p.amount));
+  const dueTot={}; due.forEach(x=>dueTot[x.currency]=(dueTot[x.currency]||0)+Number(x.monthly_fee));
+  const fmtTot=o=>Object.entries(o).map(([c,n])=>money(n,c)).join(" · ")||"০";
+  $("sStats").innerHTML=`<div class="stat"><b>${act.length}</b>সক্রিয় শিক্ষার্থী</div><div class="stat"><b>${paid.length}</b>${monthBn()}-এ দিয়েছে</div><div class="stat"><b style="color:#B91C1C">${due.length}</b>বকেয়া</div><div class="stat"><b>${fmtTot(tot)}</b>আদায় হয়েছে</div><div class="stat"><b>${fmtTot(dueTot)}</b>বাকি আছে</div>`;
+  let list=STU.filter(x=>(fl==="all"||x.status==="active")&&(!bt||x.batch===bt)&&(!q||x.name.toLowerCase().includes(q)||x.phone.includes(q)||(x.guardian_name||"").toLowerCase().includes(q)));
+  if(fl==="due") list=list.filter(x=>!PAY[x.id]); if(fl==="paid") list=list.filter(x=>PAY[x.id]);
+  if(!list.length){$("srows").innerHTML='<tr><td colspan="7" class="muted">কোনো শিক্ষার্থী নেই। উপরে "+ নতুন শিক্ষার্থী" অথবা ভর্তির আবেদন থেকে "ভর্তি করুন" চাপুন।</td></tr>';return;}
+  $("srows").innerHTML=list.map(x=>{
+    const p=PAY[x.id];
+    const st=x.status!=="active"?`<span class="pill off">${SST[x.status]}</span>`:p?`<span class="pill ok">✓ ${money(p.amount,p.currency)}</span><div class="muted" style="font-size:12px">${esc(p.method||"")} ${esc(p.txn_id||"")}</div>`:`<span class="pill due">বকেয়া</span>`;
+    const remind=waText(x.phone,`আসসালামু আলাইকুম। ${x.name}-এর ${monthBn()} মাসের ফি ${money(x.monthly_fee,x.currency)} এখনও বাকি আছে।\n${x.currency==="SAR"?"পেমেন্টের মাধ্যম জানতে এই মেসেজের উত্তর দিন।":"bKash/Nagad: 01329-173444 (Send Money)"}\nপাঠিয়ে ট্রানজেকশন আইডি এখানে লিখুন। জাযাকাল্লাহু খাইরান।`);
+    const receipt=p?waText(x.phone,`আলহামদুলিল্লাহ। ${x.name}-এর ${monthBn()} মাসের ফি ${money(p.amount,p.currency)} পেয়েছি${p.txn_id?" (TxnID: "+p.txn_id+")":""}। জাযাকাল্লাহু খাইরান।\n— দারুল ইলম অনলাইন`):"";
+    return `<tr data-sid="${x.id}"><td><b>${esc(x.name)}</b>${x.guardian_name?`<div class="muted" style="font-size:13px">অভিভাবক: ${esc(x.guardian_name)}</div>`:""}</td>
+      <td><a class="wa" href="https://wa.me/${waNum(x.phone)}" target="_blank" rel="noopener">${esc(x.phone)}</a></td>
+      <td>${COURSE[x.course]||"—"}<div class="muted" style="font-size:13px">${PLAN[x.plan]||""}</div></td>
+      <td>${esc(x.batch||"—")}<div class="muted" style="font-size:13px">${esc(x.teacher||"")}</div></td>
+      <td>${money(x.monthly_fee,x.currency)}</td><td>${st}</td>
+      <td style="white-space:nowrap">${x.status==="active"&&!p?`<button class="mini" data-pay="${x.id}">ফি জমা</button> <a class="btn-s wa-b" href="${remind}" target="_blank" rel="noopener">রিমাইন্ডার</a>`:""}${p?`<a class="btn-s wa-b" href="${receipt}" target="_blank" rel="noopener">রসিদ পাঠান</a>`:""} <button class="ghost mini" data-hist="${x.id}">ইতিহাস</button> <button class="ghost mini" data-sedit="${x.id}">সম্পাদনা</button></td></tr>`;
+  }).join("");
+  document.querySelectorAll("[data-pay]").forEach(b=>b.onclick=()=>payRow(STU.find(x=>x.id==b.dataset.pay),b.closest("tr")));
+  document.querySelectorAll("[data-hist]").forEach(b=>b.onclick=()=>histRow(STU.find(x=>x.id==b.dataset.hist),b.closest("tr")));
+  document.querySelectorAll("[data-sedit]").forEach(b=>b.onclick=()=>openForm(STU.find(x=>x.id==b.dataset.sedit)));
+}
+function closeSubs(){document.querySelectorAll("#srows tr.sub").forEach(r=>r.remove());}
+function payRow(x,tr){
+  closeSubs();
+  const r=document.createElement("tr");r.className="sub";
+  r.innerHTML=`<td colspan="7"><div class="payf"><b>${monthBn()} — ফি জমা:</b>
+    <input type="number" id="pAmt" value="${Number(x.monthly_fee)}" style="width:110px"> ${CUR[x.currency]}
+    <select id="pMet"><option>bKash</option><option>Nagad</option><option>Rocket</option><option>ব্যাংক</option><option>STC Pay</option><option>নগদ হাতে</option></select>
+    <input id="pTxn" placeholder="ট্রানজেকশন আইডি" style="width:170px">
+    <input id="pNote" placeholder="নোট (ঐচ্ছিক)" style="width:150px">
+    <button id="pSave">জমা করুন</button><button class="ghost" id="pCancel">বাতিল</button><span id="pMsg" class="muted"></span></div>
+    <div class="muted" style="font-size:13px;margin-top:6px">জমা করার আগে নিজের bKash/Nagad অ্যাপে টাকা এসেছে কি না মিলিয়ে নিন।</div></td>`;
+  tr.after(r);
+  r.querySelector("#pCancel").onclick=closeSubs;
+  r.querySelector("#pSave").onclick=async()=>{
+    const amt=Number(r.querySelector("#pAmt").value),met=r.querySelector("#pMet").value,txn=r.querySelector("#pTxn").value.trim(),msg=r.querySelector("#pMsg");
+    if(!(amt>0)){msg.textContent="সঠিক পরিমাণ দিন।";return;}
+    if(!txn&&met!=="নগদ হাতে"){msg.textContent="ট্রানজেকশন আইডি দিন।";return;}
+    msg.textContent="জমা হচ্ছে…";
+    const {error}=await sb.from("payments").insert({student_id:x.id,month:monthKey(),amount:amt,currency:x.currency,method:met,txn_id:txn||null,note:r.querySelector("#pNote").value.trim()||null});
+    if(error){msg.textContent=/payments_txn_unique/.test(error.message)?"⚠ এই ট্রানজেকশন আইডি আগেই ব্যবহার হয়েছে — যাচাই করুন!":/duplicate|unique/.test(error.message)?"এই মাসের ফি আগেই জমা আছে।":"হয়নি: "+error.message;return;}
+    loadStudents();
+  };
+  r.querySelector("#pTxn").focus();
+}
+async function histRow(x,tr){
+  closeSubs();
+  const r=document.createElement("tr");r.className="sub";r.innerHTML='<td colspan="7" class="muted">লোড হচ্ছে…</td>';tr.after(r);
+  const {data,error}=await sb.from("payments").select("*").eq("student_id",x.id).order("month",{ascending:false});
+  if(error){r.innerHTML='<td colspan="7" class="err">'+error.message+'</td>';return;}
+  r.innerHTML=`<td colspan="7"><div class="hist"><b>${esc(x.name)} — ফি-র ইতিহাস (শুরু: ${new Date(x.start_date+"T00:00:00").toLocaleDateString("bn-BD")})</b>${data.length?data.map(p=>`<div><span>${new Date(p.month+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"})}</span><b>${money(p.amount,p.currency)}</b><span class="muted">${esc(p.method||"")} ${esc(p.txn_id||"")} · জমা: ${fmt(p.created_at)}</span>${p.note?`<span class="muted">${esc(p.note)}</span>`:""}<button class="ghost mini" data-pdel="${p.id}">মুছুন</button></div>`).join(""):'<div class="muted">এখনও কোনো ফি জমা নেই।</div>'}<div><button class="ghost mini" id="hClose">বন্ধ করুন</button></div></div></td>`;
+  r.querySelector("#hClose").onclick=closeSubs;
+  r.querySelectorAll("[data-pdel]").forEach(b=>b.onclick=async()=>{if(!confirm("এই ফি-র রেকর্ড মুছবেন?"))return;const {error}=await sb.from("payments").delete().eq("id",b.dataset.pdel);if(error)alert(error.message);loadStudents();});
+}
+function setF(id,v){$(id).value=v??"";}
+function openForm(x,pre){
+  editId=x?x.id:null; fromApp=pre&&pre.app||null;
+  $("sFormTitle").textContent=x?"শিক্ষার্থীর তথ্য সম্পাদনা":"নতুন শিক্ষার্থী";
+  const d=x||pre||{};
+  setF("f_name",d.name);setF("f_phone",d.phone);setF("f_guardian",d.guardian_name);setF("f_age",d.age);
+  setF("f_course",d.course||"");setF("f_plan",d.plan||"small");setF("f_batch",d.batch);setF("f_teacher",d.teacher);
+  setF("f_cur",d.currency||"BDT");setF("f_fee",d.monthly_fee??FEE[d.currency||"BDT"][d.plan||"small"]);
+  setF("f_start",d.start_date||new Date().toISOString().slice(0,10));setF("f_status",d.status||"active");setF("f_notes",d.notes);
+  $("fMsg").textContent="";$("sForm").hidden=false;$("sForm").scrollIntoView({behavior:"smooth",block:"start"});$("f_name").focus();
+}
+["f_plan","f_cur"].forEach(id=>$(id).addEventListener("change",()=>{if(!editId)$("f_fee").value=FEE[$("f_cur").value][$("f_plan").value];}));
+$("sNew").onclick=()=>openForm(null);
+$("fCancel").onclick=()=>{$("sForm").hidden=true;editId=null;fromApp=null;};
+$("fSave").onclick=async()=>{
+  const row={name:$("f_name").value.trim(),phone:$("f_phone").value.replace(/[^0-9+]/g,""),guardian_name:$("f_guardian").value.trim()||null,age:$("f_age").value?Number($("f_age").value):null,
+    course:$("f_course").value||null,plan:$("f_plan").value,batch:$("f_batch").value.trim()||null,teacher:$("f_teacher").value.trim()||null,
+    monthly_fee:Number($("f_fee").value)||0,currency:$("f_cur").value,start_date:$("f_start").value||null,status:$("f_status").value,notes:$("f_notes").value.trim()||null};
+  if(!row.name||row.phone.length<10){$("fMsg").textContent="নাম ও সঠিক নম্বর দিন।";return;}
+  $("fMsg").textContent="সেভ হচ্ছে…";
+  let error;
+  if(editId) ({error}=await sb.from("students").update(row).eq("id",editId));
+  else ({error}=await sb.from("students").insert({...row,application_id:fromApp}));
+  if(error){$("fMsg").textContent="হয়নি: "+error.message;return;}
+  if(fromApp){await sb.from("applications").update({status:"paid"}).eq("id",fromApp);const a=rows.find(r=>r.id==fromApp);if(a)a.status="paid";}
+  $("sForm").hidden=true;editId=null;fromApp=null;loadStudents();
+};
+function enrollFrom(r){
+  document.querySelector('.tab[data-tab="students"]').click();
+  const sar=(r.phone||"").startsWith("+966")||(r.phone||"").startsWith("966");
+  openForm(null,{app:r.id,name:r.student_name,phone:r.phone,guardian_name:r.guardian_name,age:r.age,course:r.course,plan:r.plan||"small",currency:sar?"SAR":"BDT"});
+}
+$("sCsv").onclick=()=>{
+  const head=["নাম","ফোন","অভিভাবক","কোর্স","ব্যাচ","শিক্ষক","মাসিক ফি","মুদ্রা","অবস্থা",monthBn()+" — জমা","পরিমাণ","মাধ্যম","ট্রানজেকশন আইডি"];
+  const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const lines=[head.map(q).join(",")].concat(STU.map(x=>{const p=PAY[x.id];return [x.name,x.phone,x.guardian_name,COURSE[x.course]||"",x.batch,x.teacher,x.monthly_fee,x.currency,SST[x.status],p?"হ্যাঁ":"না",p?p.amount:"",p?p.method:"",p?p.txn_id:""].map(q).join(",");}));
+  const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="students-"+monthKey().slice(0,7)+".csv";a.click();
+};
 init();
 </script>
 </body>
