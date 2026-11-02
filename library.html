@@ -390,6 +390,49 @@ footer .ft>.ar-foot,footer .ft>.ft-copy{grid-column:1/-1}
 .recfile{font-size:15px;color:var(--muted);display:grid;gap:6px;justify-items:center}
 .recbox audio{width:100%;max-width:420px}
 .alt-send{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+
+/* ---- v4: library cards & shelves ---- */
+.shelf{background:var(--surface-2);border-bottom:1px solid var(--line)}
+.shelf-head{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:flex-end;justify-content:space-between}
+.shelf-head .lead{margin:0}
+.shelf .btn-ghost{color:var(--brand);border-color:var(--gold)}
+.shelf .btn-ghost:hover{background:var(--brand);color:var(--gold-2)}
+.lib-grid{display:grid;gap:20px;grid-template-columns:1fr;margin-top:28px}
+@media(min-width:640px){.lib-grid{grid-template-columns:1fr 1fr}}
+@media(min-width:980px){.lib-grid{grid-template-columns:repeat(3,1fr)}.lib-grid.feat>.li:first-child{grid-column:1/-1;flex-direction:row}.lib-grid.feat>.li:first-child .md{flex:0 0 62%;aspect-ratio:16/9}.lib-grid.feat>.li:first-child .bd{padding:30px 32px;align-content:center;gap:10px}.lib-grid.feat>.li:first-child h3{font-size:24px;-webkit-line-clamp:3}.lib-grid.feat>.li:first-child p{font-size:15px;-webkit-line-clamp:4}}
+.li{background:var(--surface);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s}
+.li:hover{transform:translateY(-3px);box-shadow:0 16px 36px rgba(0,0,0,.1)}
+.li .md{aspect-ratio:16/9;background:var(--surface-2);display:grid;place-items:center;position:relative;overflow:hidden}
+.li .md>a,.li .md>.yt{display:block;width:100%;height:100%}
+.li .md img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.li:hover .md img{transform:scale(1.04)}
+.li .badge{position:absolute;top:12px;inset-inline-start:12px;z-index:2;background:rgba(10,20,25,.78);color:#fff;font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;backdrop-filter:blur(4px);pointer-events:none}
+.li .yt{border:0;padding:0;background:#000;cursor:pointer;position:relative}
+.li .yt img{opacity:.88}
+.li .yt::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(0,0,0,.45))}
+.li .yt .pl{position:absolute;inset:0;display:grid;place-items:center;z-index:1}
+.li .yt .pl i{width:68px;height:68px;border-radius:50%;background:rgba(255,255,255,.95);display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:transform .2s}
+.li .yt:hover .pl i{transform:scale(1.08)}
+.li .yt .pl svg{width:26px;height:26px;color:#C62828;margin-inline-start:4px}
+.li .md iframe,.li .md video{width:100%;height:100%;border:0;background:#000;display:block}
+.li-audio .md{background:linear-gradient(135deg,var(--brand-2),var(--teal-deep));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:18px}
+.li-audio .md .ic{width:64px;height:64px;border-radius:50%;border:2px solid var(--gold);display:grid;place-items:center;color:var(--gold-2)}
+.li-audio .md .ic svg{width:28px;height:28px}
+.li-audio .md audio{width:100%;max-width:340px}
+.li-pdf .md,.li-link .md{background:linear-gradient(135deg,var(--surface-2),var(--bg))}
+.doc{width:92px;height:116px;background:#fff;border-radius:6px 22px 6px 6px;box-shadow:0 10px 24px rgba(0,0,0,.12);position:relative;display:grid;place-items:end center;padding-bottom:16px;border:1px solid #eee}
+.doc::before{content:"";position:absolute;top:18px;left:14px;right:22px;height:44px;background:repeating-linear-gradient(180deg,#E5E7EB 0 4px,transparent 4px 10px)}
+.doc b{background:#C62828;color:#fff;font-size:13px;padding:3px 10px;border-radius:5px;letter-spacing:.04em}
+.li-link .doc b{background:var(--brand)}
+.li .bd{padding:16px 18px 18px;display:grid;gap:6px;align-content:start}
+.li .kd{font-size:12px;font-weight:700;color:var(--gold-deep)}
+.li h3{font-size:17px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.li p{font-size:14px;color:var(--muted);line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.li p a{color:var(--brand)}
+.li .act{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.li .act a{font-weight:700;font-size:14px;text-decoration:none;padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:var(--text)}
+.li .act a:first-child{background:var(--brand);color:var(--gold-2);border-color:var(--brand)}
+.li .act a:hover{border-color:var(--gold)}
 </style>
 <style>.prose{max-width:760px}.prose h2{margin-top:44px}.prose h3{font-size:20px;margin:26px 0 8px;color:var(--gold-deep)}.prose ul{padding-inline-start:22px;margin:8px 0 14px}.prose li{margin:6px 0}.prose p{margin:8px 0 14px}.prose table{width:100%;border-collapse:collapse;margin:12px 0 18px;background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}.prose th,.prose td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:start;font-size:16px;vertical-align:top}.prose th{background:var(--surface-2);font-weight:700}.prose tr:last-child td{border-bottom:0}</style>
 <script>
@@ -403,7 +446,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 <body>
 <header><div class="wrap nav">
   <a class="logo" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="var(--brand)"/><path d="M18 36h28v3H18z" fill="var(--accent)"/><path d="M20 36a12 12 0 0 1 24 0z" fill="var(--accent)"/><path d="M32 22l-1.5-5h3z" fill="var(--accent)"/><circle cx="32" cy="14" r="2" fill="var(--accent)"/><path d="M20 44l12 3 12-3v6l-12 3-12-3z" fill="#FBF7EE"/></svg><span><span>দারুল ইলম অনলাইন</span><small>ঘরে বসে দ্বীন শিক্ষা</small></span></a>
-  <nav class="links" aria-label="main"><a href="/">হোম</a><a href="/#courses">কোর্স</a><a href="/#pricing">ফি</a><a href="/rules">নিয়মাবলি</a><a href="/teachers">শিক্ষক নিয়োগ</a><a href="/#contact">যোগাযোগ</a></nav>
+  <nav class="links" aria-label="main"><a href="/">হোম</a><a href="/#courses">কোর্স</a><a href="/library">লাইব্রেরি</a><a href="/#pricing">ফি</a><a href="/rules">নিয়মাবলি</a><a href="/teachers">শিক্ষক নিয়োগ</a><a href="/#contact">যোগাযোগ</a></nav>
   <div class="nav-r"><button class="setbtn" id="setBtn" aria-label="থিম ও ফন্ট সেটিং" aria-expanded="false" aria-controls="setDrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="12" cy="7" r="1.2" fill="currentColor"/><circle cx="16.5" cy="10.5" r="1.2" fill="currentColor"/></svg>সাজসজ্জা</button><a class="btn btn-primary" style="padding:10px 18px;font-size:15px" href="/#apply">ভর্তি</a></div>
 </div></header>
 <div class="band" aria-hidden="true"></div>
@@ -516,34 +559,40 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 <script>(function(){fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/site_content?select=key,value&page=eq.links&lang=eq.bn",{headers:{apikey:"sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg",Authorization:"Bearer sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg"}}).then(r=>r.ok?r.json():[]).then(rows=>{const m={};rows.forEach(x=>m[x.key]=x.value);document.querySelectorAll("[data-link]").forEach(a=>{const v=m[a.dataset.link];if(v&&/^https?:\/\//.test(v)){a.href=v;a.hidden=false;}});}).catch(()=>{});})();</script>
 <script>
 (function(){
-const U="https://nlylwrbxejjxnfljcztv.supabase.co",K="sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg";
-const KIND={image:"ছবি",pdf:"PDF",video:"ভিডিও",audio:"অডিও",link:"লিংক"};
-const COURSE={noorani:"নূরানী কায়দা",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ ও আমল",arabic:"আরবি ভাষা"};
+
+const LBL={bn:{image:"ছবি",pdf:"PDF",video:"ভিডিও",audio:"অডিও",link:"লিংক",read:"পড়ুন",dl:"ডাউনলোড",open:"খুলুন",watch:"YouTube-এ দেখুন",c:{noorani:"নূরানী কায়দা",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ ও আমল",arabic:"আরবি ভাষা"}},
+ en:{image:"Photo",pdf:"PDF",video:"Video",audio:"Audio",link:"Link",read:"Read",dl:"Download",open:"Open",watch:"Watch on YouTube",c:{noorani:"Noorani Qaida",tajweed:"Tajweed",hifz:"Hifz",salah:"Salah & amal",arabic:"Arabic"}},
+ ar:{image:"صورة",pdf:"PDF",video:"فيديو",audio:"صوت",link:"رابط",read:"اقرأ",dl:"تحميل",open:"افتح",watch:"شاهد على يوتيوب",c:{noorani:"القاعدة النورانية",tajweed:"التجويد",hifz:"الحفظ",salah:"الصلاة",arabic:"العربية"}}};
+const dEsc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const dYt=u=>{const m=String(u).match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);return m?m[1]:null;};
+const dLink=t=>dEsc(t).replace(/https?:\/\/[^\s<]+/g,u=>`<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\/(www\.)?/,"")}</a>`);
+const PLAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg>';
+const NOTE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
+function dLang(){const l=document.documentElement.lang;return LBL[l]?l:"bn";}
+function dCard(x){
+  const L=LBL[dLang()],u=dEsc(x.url),id=x.kind==="video"?dYt(x.url):null;let md="";
+  if(x.kind==="image") md=`<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="${dEsc(x.title)}" loading="lazy"></a>`;
+  else if(x.kind==="video") md=id?`<button class="yt" data-id="${id}" aria-label="${dEsc(x.title)}"><img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy"><span class="pl"><i>${PLAY}</i></span></button>`:`<video src="${u}" controls preload="metadata"></video>`;
+  else if(x.kind==="audio") md=`<span class="ic">${NOTE}</span><audio src="${u}" controls preload="none"></audio>`;
+  else md=`<span class="doc"><b>${x.kind==="pdf"?"PDF":"LINK"}</b></span>`;
+  let act="";
+  if(x.kind==="pdf") act=`<a href="${u}" target="_blank" rel="noopener">${L.read}</a><a href="${u}" download>${L.dl}</a>`;
+  else if(x.kind==="video"&&id) act=`<a href="${u}" target="_blank" rel="noopener">${L.watch}</a>`;
+  else if(x.kind==="link") act=`<a href="${u}" target="_blank" rel="noopener">${L.open}</a>`;
+  else act=`<a href="${u}" target="_blank" rel="noopener" download>${L.dl}</a>`;
+  const c=x.course&&L.c[x.course]?L.c[x.course]:"";
+  return `<article class="li li-${x.kind}"><div class="md">${md}<span class="badge">${L[x.kind]||""}</span></div><div class="bd">${c?`<span class="kd">${c}</span>`:""}<h3>${dEsc(x.title)}</h3>${x.description?`<p>${dLink(x.description)}</p>`:""}<div class="act">${act}</div></div></article>`;
+}
+function dWire(root){root.querySelectorAll(".yt").forEach(b=>b.onclick=()=>{b.outerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="video"></iframe>`;});}
+
 let all=[],kind="",course="";
-const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const yt=u=>{const m=String(u).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/);return m?m[1]:null;};
-function media(x){
-  const u=esc(x.url);
-  if(x.kind==="image") return `<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="${esc(x.title)}" loading="lazy"></a>`;
-  if(x.kind==="video"){const id=yt(x.url); if(id) return `<button class="yt" data-id="${id}" aria-label="ভিডিও চালান"><img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy"><span><i>▶</i></span></button>`; return `<video src="${u}" controls preload="metadata"></video>`;}
-  if(x.kind==="audio") return `<audio src="${u}" controls preload="none"></audio>`;
-  if(x.kind==="pdf") return `<span class="big-ic pdf">PDF</span>`;
-  return `<span class="big-ic lnk">↗</span>`;
-}
-function acts(x){const u=esc(x.url);
-  if(x.kind==="pdf") return `<a href="${u}" target="_blank" rel="noopener">পড়ুন</a><a href="${u}" download>ডাউনলোড</a>`;
-  if(x.kind==="link"||(x.kind==="video"&&yt(x.url))) return `<a href="${u}" target="_blank" rel="noopener">খুলুন</a>`;
-  return `<a href="${u}" target="_blank" rel="noopener" download>ডাউনলোড</a>`;}
-function render(){
-  const g=document.getElementById("libGrid");
-  const list=all.filter(x=>(!kind||x.kind===kind)&&(!course||x.course===course));
-  if(!list.length){g.innerHTML='<p class="muted">এখানে এখনও কিছু নেই। শীঘ্রই যোগ হবে ইনশাআল্লাহ।</p>';return;}
-  g.innerHTML=list.map(x=>`<article class="li"><div class="md">${media(x)}</div><div class="bd"><span class="kd">${KIND[x.kind]||""}${x.course&&COURSE[x.course]?" · "+COURSE[x.course]:""}</span><h3>${esc(x.title)}</h3>${x.description?`<p>${esc(x.description)}</p>`:""}<div class="act">${acts(x)}</div></div></article>`).join("");
-  g.querySelectorAll(".yt").forEach(b=>b.onclick=()=>{b.outerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.id}?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen title="video"></iframe>`;});
-}
+const g=document.getElementById("libGrid");
+function render(){const list=all.filter(x=>(!kind||x.kind===kind)&&(!course||x.course===course));
+  if(!list.length){g.classList.remove("feat");g.innerHTML='<p class="muted">এখানে এখনও কিছু নেই। শীঘ্রই যোগ হবে ইনশাআল্লাহ।</p>';return;}
+  g.classList.toggle("feat",!kind&&!course&&list.length>=3);g.innerHTML=list.map(dCard).join("");dWire(g);}
 document.querySelectorAll(".lib-tabs button").forEach(b=>b.onclick=()=>{kind=b.dataset.k;document.querySelectorAll(".lib-tabs button").forEach(x=>x.setAttribute("aria-selected",String(x===b)));render();});
 document.getElementById("libCourse").onchange=e=>{course=e.target.value;render();};
-fetch(U+"/rest/v1/media?select=*&published=eq.true&order=created_at.desc",{headers:{apikey:K,Authorization:"Bearer "+K}}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{all=d;render();}).catch(()=>{document.getElementById("libGrid").innerHTML='<p class="muted">লাইব্রেরি এখন লোড করা যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।</p>';});
+fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/media?select=*&published=eq.true&order=created_at.desc",{headers:{apikey:"sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg",Authorization:"Bearer sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg"}}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{all=d;render();}).catch(()=>{g.innerHTML='<p class="muted">লাইব্রেরি এখন লোড করা যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।</p>';});
 })();
 </script>
 </body></html>
