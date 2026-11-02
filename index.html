@@ -5,6 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>দারুল ইলম অনলাইন — ঘরে বসে দ্বীন শিক্ষা</title>
 <meta name="description" content="বাংলাদেশের অনলাইন মাদরাসা। নূরানী কায়দা, তাজবীদ, হিফয, নামাজ ও আরবি — লাইভ ও রেকর্ডেড ক্লাস। প্রথম ৩ দিন ফ্রি।">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#0B3D4A">
+<link rel="canonical" href="https://darulilmonline.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="দারুল ইলম অনলাইন">
+<meta property="og:title" content="দারুল ইলম অনলাইন — ঘরে বসে দ্বীন শিক্ষা">
+<meta property="og:description" content="বাংলাদেশের অনলাইন মাদরাসা। নূরানী কায়দা, তাজবীদ, হিফয, নামাজ ও আরবি — লাইভ ও রেকর্ডেড ক্লাস। প্রথম ৩ দিন ফ্রি।">
+<meta property="og:url" content="https://darulilmonline.com/">
+<meta property="og:image" content="https://darulilmonline.com/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="bn_BD">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://darulilmonline.com/og.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -434,6 +450,35 @@ footer .ft>.ar-foot,footer .ft>.ft-copy{grid-column:1/-1}
 .li .act a{font-weight:700;font-size:14px;text-decoration:none;padding:7px 14px;border-radius:999px;border:1px solid var(--line);color:var(--text)}
 .li .act a:first-child{background:var(--brand);color:var(--gold-2);border-color:var(--brand)}
 .li .act a:hover{border-color:var(--gold)}
+
+/* ---- v5: about, faculty, privacy ---- */
+.prose{max-width:760px}
+.prose h2{margin-top:44px}.prose h3{font-size:20px;margin:24px 0 8px;color:var(--gold-deep)}
+.prose p{margin:8px 0 14px}.prose ul{padding-inline-start:22px;margin:8px 0 14px}.prose li{margin:6px 0}
+.pillars{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:28px}
+.pillars>div{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px;border-top:4px solid var(--gold)}
+.pillars h3{font-size:18px;margin-bottom:6px}.pillars p{color:var(--muted);font-size:15px}
+.founder{display:grid;gap:18px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;margin-top:28px}
+@media(min-width:700px){.founder{grid-template-columns:auto 1fr}}
+.founder .av{width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,var(--brand-2),var(--teal-deep));color:var(--gold-2);display:grid;place-items:center;font-size:40px;font-weight:700;box-shadow:0 0 0 4px var(--surface),0 0 0 5.5px var(--gold)}
+.founder h3{font-size:21px}.founder .ti{color:var(--gold-deep);font-weight:700;font-size:15px}.founder p{color:var(--muted);margin-top:8px;white-space:pre-line}
+.fac-grid{display:grid;gap:22px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));margin-top:30px}
+.fac{background:var(--surface);border:1px solid var(--line);border-radius:50% 50% 18px 18px/110px 110px 18px 18px;padding:34px 22px 24px;text-align:center;position:relative}
+.fac::before{content:"";position:absolute;inset:8px;border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);border-radius:50% 50% 12px 12px/103px 103px 12px 12px;pointer-events:none}
+.fac .ph{width:120px;height:120px;border-radius:50%;margin:0 auto 16px;overflow:hidden;background:linear-gradient(135deg,var(--brand-2),var(--teal-deep));display:grid;place-items:center;color:var(--gold-2);font-size:46px;font-weight:700;box-shadow:0 0 0 4px var(--surface),0 0 0 5.5px var(--gold)}
+.fac .ph img{width:100%;height:100%;object-fit:cover}
+.fac h3{font-size:19px}.fac .ti{color:var(--gold-deep);font-weight:700;font-size:14px;margin-top:2px}
+.fac .q{font-size:14px;color:var(--text);margin-top:10px}.fac .bio{font-size:14px;color:var(--muted);margin-top:8px}
+.fac .cs{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:12px}
+.fac .cs span{font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--surface-2);color:var(--brand)}
+.empty-cta{background:var(--surface);border:1px dashed var(--line);border-radius:18px;padding:30px;text-align:center;margin-top:30px}
+.empty-cta p{color:var(--muted);margin:8px 0 18px}
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin-top:20px}
+.toc a{color:var(--brand)}
+.prose .pillars{grid-template-columns:1fr}
+@media(min-width:600px){.prose .pillars{grid-template-columns:1fr 1fr}}
+.prose .pillars h3,.prose .founder h3{margin:0 0 6px;color:var(--text)}
+
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
@@ -530,6 +575,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
       <a class="course" href="/salah" data-slug="salah"><div class="ar-glyph">ص</div><div><h3 data-i18n="c4.h">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</h3><p data-i18n="c4.p">সহীহ নামাজ, অযু-গোসল, মাসনুন দোয়া, এবং সকাল-সন্ধ্যার আমল — দলিলসহ।</p><div class="for" data-i18n="c4.for">সবার জন্য</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
       <a class="course" href="/arabic" data-slug="arabic"><div class="ar-glyph">ع</div><div><h3 data-i18n="c5.h">আরবি ভাষা (প্রাথমিক)</h3><p data-i18n="c5.p">কুরআন বোঝার জন্য প্রয়োজনীয় শব্দভাণ্ডার ও ব্যাকরণ। সহজ ধাপে ধাপে।</p><div class="for" data-i18n="c5.for">বড়দের জন্য</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
     </div>
+    <div style="text-align:center;margin-top:30px"><a class="btn btn-primary" href="/courses" data-i18n="courses.all">সব কোর্স দেখুন — ১৬টি</a></div>
   </div>
 </section>
 
@@ -597,6 +643,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
           <option value="hifz" data-i18n="c3.h">হিফযুল কুরআন</option>
           <option value="salah" data-i18n="c4.h">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</option>
           <option value="arabic" data-i18n="c5.h">আরবি ভাষা (প্রাথমিক)</option>
+          <option value="quran-words" data-i18n="o.quran-words">কুরআন শব্দে শব্দে শিক্ষা</option><option value="tafsir" data-i18n="o.tafsir">তাফসীর শিক্ষা</option><option value="hadith-words" data-i18n="o.hadith-words">হাদীস শব্দে শব্দে শিক্ষা</option><option value="dua-words" data-i18n="o.dua-words">দোয়া শব্দে শব্দে শিক্ষা</option><option value="aqidah" data-i18n="o.aqidah">আকীদা — ঈমানের মৌলিক শিক্ষা</option><option value="fiqh" data-i18n="o.fiqh">ফিকহ ও মাসায়েল</option><option value="seerah" data-i18n="o.seerah">সীরাতুন নবী ﷺ</option><option value="akhlaq" data-i18n="o.akhlaq">আদব ও আখলাক</option><option value="history" data-i18n="o.history">নবীদের কাহিনী ও ইসলামের ইতিহাস</option><option value="english" data-i18n="o.english">ইংরেজি শিক্ষা (ইসলামিক পরিবেশে)</option><option value="math" data-i18n="o.math">গণিত শিক্ষা (ইসলামিক পরিবেশে)</option>
         </select></label>
       <details class="more-f"><summary data-i18n="f.more">আরও তথ্য দিন (ঐচ্ছিক)</summary><div class="mf-in">
         <div class="row">
@@ -649,7 +696,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 <div class="band" aria-hidden="true"></div>
 <footer><div class="wrap ft">
   <div class="ft-brand"><strong data-i18n="brand">দারুল ইলম অনলাইন</strong><span>darulilmonline.com</span></div>
-  <nav class="ft-links" aria-label="footer"><a href="/rules">নিয়মাবলি</a><a href="/teachers">শিক্ষক নিয়োগ</a><a href="/library">লাইব্রেরি</a><a href="/record">তিলাওয়াত পাঠান</a></nav>
+  <nav class="ft-links" aria-label="footer"><a href="/about">আমাদের সম্পর্কে</a><a href="/faculty">শিক্ষকমণ্ডলী</a><a href="/library">লাইব্রেরি</a><a href="/record">তিলাওয়াত পাঠান</a><a href="/rules">নিয়মাবলি</a><a href="/teachers">শিক্ষক নিয়োগ</a><a href="/privacy">গোপনীয়তা নীতি</a></nav>
   <div class="ft-soc"><a class="ic-wa" href="https://wa.me/8801329173444" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.2 1.2z"/></svg></a><a class="ic-tg" data-link="telegram_channel" href="#" hidden target="_blank" rel="noopener" aria-label="Telegram channel"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.5c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.4-1.5zM8.7 14.3l9.4-5.9c.4-.3.8-.1.5.2l-7.8 7-.3 3.3z"/></svg></a><a class="ic-tg" data-link="telegram_group" href="#" hidden target="_blank" rel="noopener" aria-label="Telegram group"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.4 4.6 2.9 11.7c-1.3.5-1.2 1.2-.2 1.5l4.7 1.5 1.8 5.5c.2.6.1.9.8.9.5 0 .7-.2 1-.5l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.2-15c.3-1.3-.5-1.9-1.4-1.5zM8.7 14.3l9.4-5.9c.4-.3.8-.1.5.2l-7.8 7-.3 3.3z"/></svg></a></div>
   <div class="ar-foot">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
   <div class="ft-copy" data-i18n="foot">© ২০২৬ দারুল ইলম অনলাইন। সর্বস্বত্ব সংরক্ষিত।</div>
@@ -820,9 +867,9 @@ form.addEventListener("submit",async e=>{
 (function(){
 const boxes=[...document.querySelectorAll("[data-lib-shelf]")]; if(!boxes.length) return;
 
-const LBL={bn:{image:"ছবি",pdf:"PDF",video:"ভিডিও",audio:"অডিও",link:"লিংক",read:"পড়ুন",dl:"ডাউনলোড",open:"খুলুন",watch:"YouTube-এ দেখুন",c:{noorani:"নূরানী কায়দা",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ ও আমল",arabic:"আরবি ভাষা"}},
- en:{image:"Photo",pdf:"PDF",video:"Video",audio:"Audio",link:"Link",read:"Read",dl:"Download",open:"Open",watch:"Watch on YouTube",c:{noorani:"Noorani Qaida",tajweed:"Tajweed",hifz:"Hifz",salah:"Salah & amal",arabic:"Arabic"}},
- ar:{image:"صورة",pdf:"PDF",video:"فيديو",audio:"صوت",link:"رابط",read:"اقرأ",dl:"تحميل",open:"افتح",watch:"شاهد على يوتيوب",c:{noorani:"القاعدة النورانية",tajweed:"التجويد",hifz:"الحفظ",salah:"الصلاة",arabic:"العربية"}}};
+const LBL={bn:{image:"ছবি",pdf:"PDF",video:"ভিডিও",audio:"অডিও",link:"লিংক",read:"পড়ুন",dl:"ডাউনলোড",open:"খুলুন",watch:"YouTube-এ দেখুন",c:{noorani:"নূরানী কায়দা",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ ও আমল",arabic:"আরবি ভাষা","quran-words":"কুরআন শব্দে শব্দে শিক্ষা","tafsir":"তাফসীর শিক্ষা","hadith-words":"হাদীস শব্দে শব্দে শিক্ষা","dua-words":"দোয়া শব্দে শব্দে শিক্ষা","aqidah":"আকীদা — ঈমানের মৌলিক শিক্ষা","fiqh":"ফিকহ ও মাসায়েল","seerah":"সীরাতুন নবী ﷺ","akhlaq":"আদব ও আখলাক","history":"নবীদের কাহিনী ও ইসলামের ইতিহাস","english":"ইংরেজি শিক্ষা (ইসলামিক পরিবেশে)","math":"গণিত শিক্ষা (ইসলামিক পরিবেশে)"}},
+ en:{image:"Photo",pdf:"PDF",video:"Video",audio:"Audio",link:"Link",read:"Read",dl:"Download",open:"Open",watch:"Watch on YouTube",c:{noorani:"Noorani Qaida",tajweed:"Tajweed",hifz:"Hifz",salah:"Salah & amal",arabic:"Arabic","quran-words":"Quran word by word","tafsir":"Tafsir (Quran commentary)","hadith-words":"Hadith word by word","dua-words":"Duas word by word","aqidah":"Aqidah — foundations of faith","fiqh":"Fiqh — Islamic rulings","seerah":"Seerah of the Prophet ﷺ","akhlaq":"Adab and Akhlaq — manners and character","history":"Stories of the Prophets and Islamic history","english":"English (in an Islamic setting)","math":"Mathematics (in an Islamic setting)"}},
+ ar:{image:"صورة",pdf:"PDF",video:"فيديو",audio:"صوت",link:"رابط",read:"اقرأ",dl:"تحميل",open:"افتح",watch:"شاهد على يوتيوب",c:{noorani:"القاعدة النورانية",tajweed:"التجويد",hifz:"الحفظ",salah:"الصلاة",arabic:"العربية","quran-words":"القرآن كلمةً كلمة","tafsir":"تفسير القرآن","hadith-words":"الحديث كلمةً كلمة","dua-words":"الأدعية كلمةً كلمة","aqidah":"العقيدة — أصول الإيمان","fiqh":"الفقه والمسائل","seerah":"السيرة النبوية ﷺ","akhlaq":"الآداب والأخلاق","history":"قصص الأنبياء والتاريخ الإسلامي","english":"اللغة الإنجليزية (في بيئة إسلامية)","math":"الرياضيات (في بيئة إسلامية)"}}};
 const dEsc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const dYt=u=>{const m=String(u).match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);return m?m[1]:null;};
 const dLink=t=>dEsc(t).replace(/https?:\/\/[^\s<]+/g,u=>`<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\/(www\.)?/,"")}</a>`);
