@@ -595,6 +595,22 @@ body{background:var(--bg)}
 .step::before{background:var(--surface);color:var(--brand);border:1.5px solid var(--gold);clip-path:none;border-radius:50%}
 .setbtn{background:var(--surface);color:var(--brand);border-color:var(--line)}
 header{box-shadow:none}
+
+/* ---- v9: white, no mihrab ---- */
+:root:not([data-theme="dark"]){--bg:#FFFFFF;--surface:#FFFFFF;--surface-2:#FAF9F6;--line:#ECE7DD}
+.hero,.chero,.lux,.contact{background:#FFFFFF!important}
+:root[data-theme="dark"] .hero,:root[data-theme="dark"] .chero,:root[data-theme="dark"] .lux,:root[data-theme="dark"] .contact{background:var(--bg)!important}
+.mihrab2{display:none!important}
+.hero .wrap,.chero .wrap{grid-template-columns:1fr!important}
+.hero .wrap>div,.chero .wrap>div{max-width:780px}
+.hero{padding:56px 0 60px}
+.chero{padding:44px 0 48px}
+.courses .course,.lx,.fac{border-radius:16px!important}
+.courses .course::before,.lx::before,.fac::before{display:none!important}
+.courses .course,.lx,.fac{padding-top:28px!important}
+.lx{background:#fff!important;border:1px solid var(--line)!important;box-shadow:none}
+.lx:hover,.lx:focus-visible{box-shadow:0 10px 24px rgba(0,0,0,.06);border-color:var(--gold)!important}
+.course{box-shadow:none}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
