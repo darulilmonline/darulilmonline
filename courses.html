@@ -493,6 +493,51 @@ footer .ft>.ar-foot,footer .ft>.ft-copy{grid-column:1/-1}
 .cat-count{color:var(--muted);font-weight:600}
 .courses .course .ar-glyph.sm{font-size:24px}
 .cat-h{margin:40px 0 0;font-size:22px;color:var(--gold-deep)}
+
+/* ---- v7: luxury catalog ---- */
+.lux{position:relative;overflow:hidden;color:#F5EBD3;padding:70px 0 90px;background:radial-gradient(1200px 520px at 50% -8%,var(--brand-2) 0%,var(--brand) 42%,var(--teal-deep) 100%);border-top:1px solid color-mix(in srgb,var(--gold) 45%,transparent)}
+.lux::before{content:"";position:absolute;inset:0;background:var(--gold);opacity:.06;-webkit-mask:var(--star) 0 0/140px 140px repeat;mask:var(--star) 0 0/140px 140px repeat;pointer-events:none}
+.lux::after{content:"";position:absolute;inset:0;background:radial-gradient(900px 400px at 50% 100%,rgba(0,0,0,.35),transparent 70%);pointer-events:none}
+.lux .wrap{position:relative;z-index:1}
+.lux .cat-tools{justify-content:center;flex-direction:column;gap:14px}
+.lux .chipset{justify-content:center}
+.lux .chipset button{background:rgba(255,255,255,.05);border:1px solid color-mix(in srgb,var(--gold) 38%,transparent);color:#EADFC4;backdrop-filter:blur(4px);transition:background .2s,border-color .2s,color .2s}
+.lux .chipset button:hover{border-color:var(--gold);color:#fff}
+.lux .chipset button[aria-pressed="true"]{background:linear-gradient(180deg,var(--gold-2),var(--gold) 58%,var(--gold-deep));color:#2A1F05;border-color:transparent;box-shadow:0 6px 18px rgba(212,175,55,.3)}
+.lux .cat-count{color:var(--gold-2);letter-spacing:.02em}
+.lux #ageBtns{justify-content:center}
+.lx-h{display:grid;justify-items:center;text-align:center;gap:6px;margin:64px 0 28px}
+.lx-h .ar{font-family:var(--font-ar),"Amiri",serif;font-size:28px;line-height:1.3;color:var(--gold);direction:rtl}
+.lx-h h3{display:flex;align-items:center;gap:18px;font-size:clamp(24px,3vw,32px);color:#FFF7E3;letter-spacing:.01em}
+.lx-h h3::before,.lx-h h3::after{content:"";width:clamp(40px,8vw,110px);height:1px;background:linear-gradient(90deg,transparent,var(--gold))}
+.lx-h h3::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.lx-h .cnt{font-size:14px;color:rgba(245,235,211,.62)}
+.lx-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:24px}
+.lx-grid>.lx{flex:0 1 200px}
+@media(max-width:560px){.lx-grid{gap:14px}.lx-grid>.lx{flex:0 1 calc(50% - 7px)}.lx{padding:30px 10px 18px;border-radius:50% 50% 14px 14px/78px 78px 14px 14px}.lx::before{inset:6px;border-radius:50% 50% 10px 10px/72px 72px 10px 10px}.lx-g{font-size:44px;height:62px}.lx-g.sm{font-size:28px}.lx-d{width:56px}.lx h3{font-size:15px;margin:10px 0 0}.lx p{display:none}.lx-ages{margin-top:10px;gap:4px}.lx-ages span{font-size:10.5px;padding:2px 7px}.lx-cta{font-size:13px;margin-top:12px}.lx-h{margin:46px 0 20px}}
+.lx{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;padding:42px 20px 26px;color:inherit;text-decoration:none;
+  border:1.5px solid transparent;border-radius:50% 50% 18px 18px/122px 122px 18px 18px;
+  background:radial-gradient(120% 60% at 50% 0%,color-mix(in srgb,var(--brand-2) 70%,#fff 6%),transparent 70%) padding-box,linear-gradient(180deg,var(--brand-2),var(--teal-deep)) padding-box,linear-gradient(160deg,var(--gold-2),color-mix(in srgb,var(--gold) 18%,transparent) 42%,var(--gold-deep)) border-box;
+  box-shadow:0 22px 44px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.08);overflow:hidden;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.lx::before{content:"";position:absolute;inset:9px;border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);border-radius:50% 50% 12px 12px/114px 114px 12px 12px;pointer-events:none}
+.lx::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 32%,rgba(255,231,163,.2) 46%,transparent 60%);transform:translateX(-130%);transition:transform 1s ease;pointer-events:none}
+.lx:hover,.lx:focus-visible{transform:translateY(-7px);box-shadow:0 30px 64px rgba(0,0,0,.5),0 0 44px color-mix(in srgb,var(--gold) 22%,transparent)}
+.lx:hover::after{transform:translateX(130%)}
+.lx-g{font-family:var(--font-ar),"Amiri",serif;font-weight:700;font-size:60px;line-height:1.2;height:88px;display:grid;place-items:center;
+  background:linear-gradient(180deg,var(--gold-2),var(--gold) 55%,var(--gold-deep));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 16px rgba(212,175,55,.35))}
+.lx-g.sm{font-size:38px}
+.lx-d{position:relative;width:76px;height:10px;margin:6px 0 4px;background:linear-gradient(var(--gold),var(--gold)) left center/28px 1px no-repeat,linear-gradient(var(--gold),var(--gold)) right center/28px 1px no-repeat}
+.lx-d::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;background:var(--gold-2);transform:translate(-50%,-50%) rotate(45deg)}
+.lx h3{font-size:18px;line-height:1.4;color:#FFF7E3;margin:12px 0 8px}
+.lx p{flex:1;font-size:14px;line-height:1.7;color:rgba(245,235,211,.72)}
+.lx-ages{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px}
+.lx-ages span{font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px;border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);color:var(--gold-2)}
+.lx-cta{margin-top:18px;font-weight:700;font-size:14px;color:var(--gold-2);display:inline-flex;align-items:center;gap:6px;letter-spacing:.02em}
+.lx-cta::after{content:"›";font-size:20px;line-height:1;transition:transform .3s}
+html[dir="rtl"] .lx-cta::after{content:"‹"}
+.lx:hover .lx-cta::after{transform:translateX(4px)}
+html[dir="rtl"] .lx:hover .lx-cta::after{transform:translateX(-4px)}
+@media (prefers-reduced-motion:reduce){.lx,.lx::after{transition:none}}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
@@ -544,8 +589,8 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 <rect x="22" y="452" width="316" height="8" style="fill:var(--gold)" opacity=".85"/>
 </svg></figure>
 </div></section>
-<section><div class="wrap">
-  <div class="cat-tools"><div class="chipset" id="catBtns"><button data-cat="" aria-pressed="true" data-i18n="cat.all">সব</button><button data-cat="quran" aria-pressed="false" data-i18n="cat.quran">কুরআন</button><button data-cat="hadith" aria-pressed="false" data-i18n="cat.hadith">হাদীস ও দোয়া</button><button data-cat="deen" aria-pressed="false" data-i18n="cat.deen">দ্বীনি জ্ঞান</button><button data-cat="general" aria-pressed="false" data-i18n="cat.general">ভাষা ও সাধারণ শিক্ষা</button></div><span class="cat-count"><b id="catN">16</b> <span data-i18n="cnt">টি কোর্স</span></span></div>
+<section class="lux"><div class="wrap">
+  <div class="cat-tools"><div class="chipset" id="catBtns"><button data-cat="" aria-pressed="true" data-i18n="cat.all">সব</button><button data-cat="quran" aria-pressed="false" data-i18n="cat.quran">কুরআন</button><button data-cat="hadith" aria-pressed="false" data-i18n="cat.hadith">হাদীস ও দোয়া</button><button data-cat="deen" aria-pressed="false" data-i18n="cat.deen">দ্বীনি জ্ঞান</button><button data-cat="general" aria-pressed="false" data-i18n="cat.general">ভাষা ও সাধারণ শিক্ষা</button></div><span class="cat-count"><b id="catN">16</b><span data-i18n="cnt">টি কোর্স</span></span></div>
   <div class="chipset" id="ageBtns" style="margin-top:12px"><button data-age="" aria-pressed="true" data-i18n="age.all">সব বয়স</button><button data-age="c" aria-pressed="false" data-i18n="age.c">শিশু ৫–৮</button><button data-age="t" aria-pressed="false" data-i18n="age.t">কিশোর ৯–১৪</button><button data-age="a" aria-pressed="false" data-i18n="age.a">বড় ১৫+</button></div>
   <div id="catList"></div>
 </div></section>
@@ -684,16 +729,17 @@ const D=[{"s": "noorani", "g": "ا", "cat": "quran", "ages": ["c", "t", "a"], "b
 const CAT={"quran": {"bn": "কুরআন", "en": "Quran", "ar": "القرآن"}, "hadith": {"bn": "হাদীস ও দোয়া", "en": "Hadith & Duas", "ar": "الحديث والأدعية"}, "deen": {"bn": "দ্বীনি জ্ঞান", "en": "Islamic knowledge", "ar": "العلوم الشرعية"}, "general": {"bn": "ভাষা ও সাধারণ শিক্ষা", "en": "Languages & general", "ar": "اللغات والعلوم العامة"}};
 const AG={bn:{c:"শিশু",t:"কিশোর",a:"বড়"},en:{c:"Children",t:"Teens",a:"Adults"},ar:{c:"أطفال",t:"يافعون",a:"كبار"}};
 const MORE={bn:"বিস্তারিত দেখুন",en:"View details",ar:"عرض التفاصيل"};
+const CNT={bn:"টি কোর্স",en:"courses",ar:"دورات"};
 let cat="",age="";
 const L=()=>["bn","en","ar"].includes(document.documentElement.lang)?document.documentElement.lang:"bn";
 const e=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const num=n=>L()==="bn"?String(n).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]):L()==="ar"?String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]):String(n);
 function card(x){const l=L(),lang=new URLSearchParams(location.search).get("lang");const href="/"+x.s+(lang?"?lang="+lang:"");
-  return `<a class="course" href="${href}"><div class="ar-glyph${x.g.length>1?" sm":""}">${e(x.g)}</div><div><h3>${e(x[l][0])}</h3><p>${e(x[l][1])}</p><div class="for">${x.ages.map(a=>AG[l][a]).join(" · ")}</div><span class="more">${MORE[l]}</span></div></a>`;}
+  return `<a class="lx" href="${href}"><span class="lx-g${x.g.length>1?" sm":""}">${e(x.g)}</span><span class="lx-d"></span><h3>${e(x[l][0])}</h3><p>${e(x[l][1])}</p><span class="lx-ages">${x.ages.map(a=>`<span>${AG[l][a]}</span>`).join("")}</span><span class="lx-cta">${MORE[l]}</span></a>`;}
 function render(){const l=L();const list=D.filter(x=>(!cat||x.cat===cat)&&(!age||x.ages.includes(age)));
   document.getElementById("catN").textContent=num(list.length);
   const groups=cat?[cat]:Object.keys(CAT);
-  document.getElementById("catList").innerHTML=groups.map(g=>{const items=list.filter(x=>x.cat===g);if(!items.length)return"";return `<h3 class="cat-h">${e(CAT[g][l])}</h3><div class="courses">${items.map(card).join("")}</div>`;}).join("");}
+  document.getElementById("catList").innerHTML=groups.map(g=>{const items=list.filter(x=>x.cat===g);if(!items.length)return"";return `<div class="lx-h">${l!=="ar"?`<span class="ar">${e(CAT[g].ar)}</span>`:""}<h3>${e(CAT[g][l])}</h3><span class="cnt">${num(items.length)}${l==="bn"?"":" "}${CNT[l]}</span></div><div class="lx-grid">${items.map(card).join("")}</div>`;}).join("");}
 function wire(id,set){document.querySelectorAll("#"+id+" button").forEach(b=>b.onclick=()=>{set(b);document.querySelectorAll("#"+id+" button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render();});}
 wire("catBtns",b=>cat=b.dataset.cat);wire("ageBtns",b=>age=b.dataset.age);
 new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
