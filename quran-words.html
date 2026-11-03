@@ -631,6 +631,8 @@ header{background:rgba(255,255,255,.94)!important;backdrop-filter:blur(10px);-we
 .h2act{display:flex;gap:10px;margin-top:18px}
 .h2act .btn-primary{flex:1;justify-content:center;padding:14px}
 .h2act .btn-ghost{padding:14px 18px}
+
+.li h3 a{color:inherit;text-decoration:none}.li h3 a:hover{color:var(--grn,#0A7A55)}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
@@ -747,9 +749,9 @@ loadOverrides("course").then(()=>setLang(saved));
 window.dioShelf=(function(){
 const boxes=[...document.querySelectorAll("[data-lib-shelf]")]; if(!boxes.length) return;
 
-const LBL={bn:{image:"ছবি",pdf:"PDF",video:"ভিডিও",audio:"অডিও",link:"লিংক",read:"পড়ুন",dl:"ডাউনলোড",open:"খুলুন",watch:"YouTube-এ দেখুন",c:{noorani:"নূরানী কায়দা",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ ও আমল",arabic:"আরবি ভাষা","quran-words":"কুরআন শব্দে শব্দে শিক্ষা","tafsir":"তাফসীর শিক্ষা","hadith-words":"হাদীস শব্দে শব্দে শিক্ষা","dua-words":"দোয়া শব্দে শব্দে শিক্ষা","aqidah":"আকীদা — ঈমানের মৌলিক শিক্ষা","fiqh":"ফিকহ ও মাসায়েল","seerah":"সীরাতুন নবী ﷺ","akhlaq":"আদব ও আখলাক","history":"নবীদের কাহিনী ও ইসলামের ইতিহাস","english":"ইংরেজি শিক্ষা (ইসলামিক পরিবেশে)","math":"গণিত শিক্ষা (ইসলামিক পরিবেশে)"}},
- en:{image:"Photo",pdf:"PDF",video:"Video",audio:"Audio",link:"Link",read:"Read",dl:"Download",open:"Open",watch:"Watch on YouTube",c:{noorani:"Noorani Qaida",tajweed:"Tajweed",hifz:"Hifz",salah:"Salah & amal",arabic:"Arabic","quran-words":"Quran word by word","tafsir":"Tafsir (Quran commentary)","hadith-words":"Hadith word by word","dua-words":"Duas word by word","aqidah":"Aqidah — foundations of faith","fiqh":"Fiqh — Islamic rulings","seerah":"Seerah of the Prophet ﷺ","akhlaq":"Adab and Akhlaq — manners and character","history":"Stories of the Prophets and Islamic history","english":"English (in an Islamic setting)","math":"Mathematics (in an Islamic setting)"}},
- ar:{image:"صورة",pdf:"PDF",video:"فيديو",audio:"صوت",link:"رابط",read:"اقرأ",dl:"تحميل",open:"افتح",watch:"شاهد على يوتيوب",c:{noorani:"القاعدة النورانية",tajweed:"التجويد",hifz:"الحفظ",salah:"الصلاة",arabic:"العربية","quran-words":"القرآن كلمةً كلمة","tafsir":"تفسير القرآن","hadith-words":"الحديث كلمةً كلمة","dua-words":"الأدعية كلمةً كلمة","aqidah":"العقيدة — أصول الإيمان","fiqh":"الفقه والمسائل","seerah":"السيرة النبوية ﷺ","akhlaq":"الآداب والأخلاق","history":"قصص الأنبياء والتاريخ الإسلامي","english":"اللغة الإنجليزية (في بيئة إسلامية)","math":"الرياضيات (في بيئة إسلامية)"}}};
+const LBL={bn:{image:"ছবি",pdf:"PDF",video:"ভিডিও",audio:"অডিও",link:"লিংক",view:"দেখুন",read:"পড়ুন",dl:"ডাউনলোড",open:"খুলুন",watch:"YouTube-এ দেখুন",c:{noorani:"নূরানী কায়দা",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ ও আমল",arabic:"আরবি ভাষা","quran-words":"কুরআন শব্দে শব্দে শিক্ষা","tafsir":"তাফসীর শিক্ষা","hadith-words":"হাদীস শব্দে শব্দে শিক্ষা","dua-words":"দোয়া শব্দে শব্দে শিক্ষা","aqidah":"আকীদা — ঈমানের মৌলিক শিক্ষা","fiqh":"ফিকহ ও মাসায়েল","seerah":"সীরাতুন নবী ﷺ","akhlaq":"আদব ও আখলাক","history":"নবীদের কাহিনী ও ইসলামের ইতিহাস","english":"ইংরেজি শিক্ষা (ইসলামিক পরিবেশে)","math":"গণিত শিক্ষা (ইসলামিক পরিবেশে)"}},
+ en:{image:"Photo",pdf:"PDF",video:"Video",audio:"Audio",link:"Link",view:"View",read:"Read",dl:"Download",open:"Open",watch:"Watch on YouTube",c:{noorani:"Noorani Qaida",tajweed:"Tajweed",hifz:"Hifz",salah:"Salah & amal",arabic:"Arabic","quran-words":"Quran word by word","tafsir":"Tafsir (Quran commentary)","hadith-words":"Hadith word by word","dua-words":"Duas word by word","aqidah":"Aqidah — foundations of faith","fiqh":"Fiqh — Islamic rulings","seerah":"Seerah of the Prophet ﷺ","akhlaq":"Adab and Akhlaq — manners and character","history":"Stories of the Prophets and Islamic history","english":"English (in an Islamic setting)","math":"Mathematics (in an Islamic setting)"}},
+ ar:{image:"صورة",pdf:"PDF",video:"فيديو",audio:"صوت",link:"رابط",view:"عرض",read:"اقرأ",dl:"تحميل",open:"افتح",watch:"شاهد على يوتيوب",c:{noorani:"القاعدة النورانية",tajweed:"التجويد",hifz:"الحفظ",salah:"الصلاة",arabic:"العربية","quran-words":"القرآن كلمةً كلمة","tafsir":"تفسير القرآن","hadith-words":"الحديث كلمةً كلمة","dua-words":"الأدعية كلمةً كلمة","aqidah":"العقيدة — أصول الإيمان","fiqh":"الفقه والمسائل","seerah":"السيرة النبوية ﷺ","akhlaq":"الآداب والأخلاق","history":"قصص الأنبياء والتاريخ الإسلامي","english":"اللغة الإنجليزية (في بيئة إسلامية)","math":"الرياضيات (في بيئة إسلامية)"}}};
 const dEsc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const dYt=u=>{const m=String(u).match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);return m?m[1]:null;};
 const dLink=t=>dEsc(t).replace(/https?:\/\/[^\s<]+/g,u=>`<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\/(www\.)?/,"")}</a>`);
@@ -757,20 +759,18 @@ const PLAY='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7
 const NOTE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>';
 function dLang(){const l=document.documentElement.lang;return LBL[l]?l:"bn";}
 function dCard(x){
-  const L=LBL[dLang()],u=dEsc(x.url),id=x.kind==="video"?dYt(x.url):null;let md="";
-  if(x.kind==="image") md=`<a href="${u}" target="_blank" rel="noopener"><img src="${u}" alt="${dEsc(x.title)}" loading="lazy"></a>`;
-  else if(x.kind==="video") md=id?`<button class="yt" data-id="${id}" aria-label="${dEsc(x.title)}"><img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy"><span class="pl"><i>${PLAY}</i></span></button>`:`<video src="${u}" controls preload="metadata"></video>`;
+  const L=LBL[dLang()],u=dEsc(x.url),id=x.kind==="video"?dYt(x.url):null,pg="/library/"+x.id;let md="";
+  if(x.kind==="image") md=`<a href="${pg}"><img src="${u}" alt="${dEsc(x.title)}" loading="lazy"></a>`;
+  else if(x.kind==="video") md=id?`<a class="yt" href="${pg}" aria-label="${dEsc(x.title)}"><img src="https://img.youtube.com/vi/${id}/hqdefault.jpg" alt="" loading="lazy"><span class="pl"><i>${PLAY}</i></span></a>`:`<a class="yt" href="${pg}" aria-label="${dEsc(x.title)}" style="display:grid;place-items:center"><span class="pl"><i>${PLAY}</i></span></a>`;
   else if(x.kind==="audio") md=`<span class="ic">${NOTE}</span><audio src="${u}" controls preload="none"></audio>`;
-  else md=`<span class="doc"><b>${x.kind==="pdf"?"PDF":"LINK"}</b></span>`;
-  let act="";
-  if(x.kind==="pdf") act=`<a href="${u}" target="_blank" rel="noopener">${L.read}</a><a href="${u}" download>${L.dl}</a>`;
-  else if(x.kind==="video"&&id) act=`<a href="${u}" target="_blank" rel="noopener">${L.watch}</a>`;
-  else if(x.kind==="link") act=`<a href="${u}" target="_blank" rel="noopener">${L.open}</a>`;
-  else act=`<a href="${u}" target="_blank" rel="noopener" download>${L.dl}</a>`;
+  else md=`<a href="${pg}" style="display:grid;place-items:center"><span class="doc"><b>${x.kind==="pdf"?"PDF":"LINK"}</b></span></a>`;
+  let act=`<a href="${pg}">${L.view}</a>`;
+  if(x.kind==="pdf") act+=`<a href="${u}" download>${L.dl}</a>`;
+  else if(x.kind==="audio"||x.kind==="image") act+=`<a href="${u}" target="_blank" rel="noopener" download>${L.dl}</a>`;
   const c=x.course&&L.c[x.course]?L.c[x.course]:"";
-  return `<article class="li li-${x.kind}"><div class="md">${md}<span class="badge">${L[x.kind]||""}</span></div><div class="bd">${c?`<span class="kd">${c}</span>`:""}<h3>${dEsc(x.title)}</h3>${x.description?`<p>${dLink(x.description)}</p>`:""}<div class="act">${act}</div></div></article>`;
+  return `<article class="li li-${x.kind}"><div class="md">${md}<span class="badge">${L[x.kind]||""}</span></div><div class="bd">${c?`<span class="kd">${c}</span>`:""}<h3><a href="${pg}">${dEsc(x.title)}</a></h3>${x.description?`<p>${dLink(x.description)}</p>`:""}<div class="act">${act}</div></div></article>`;
 }
-function dWire(root){root.querySelectorAll(".yt").forEach(b=>b.onclick=()=>{b.outerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${b.dataset.id}?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="video"></iframe>`;});}
+function dWire(root){}
 
 let data=[];
 function render(){boxes.forEach(b=>{const c=b.dataset.course||"",n=+b.dataset.limit||6;const list=data.filter(x=>!c||x.course===c).slice(0,n);const sec=b.closest("section");if(!list.length){if(sec)sec.hidden=true;return;}if(sec)sec.hidden=false;b.classList.toggle("feat",list.length>=3);b.innerHTML=list.map(dCard).join("");dWire(b);});}

@@ -1,2 +1,3 @@
 /learn/:slug  /learn  200
 /c/:slug  /course  200
+/library/:id  /item  200
