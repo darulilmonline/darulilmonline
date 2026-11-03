@@ -54,6 +54,13 @@ a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
 .mgrid label input,.mgrid label select{width:100%}
 .mgrid textarea{font:inherit;min-height:60px;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
 .mini{padding:6px 10px;font-size:13px}
+.ai-b{background:linear-gradient(135deg,#0A7A55,#0B3D4A)!important;color:#fff!important;border:0!important}
+.ai-p{display:grid;gap:12px}
+.ai-p textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);line-height:1.7}
+.ai-st{display:inline-block;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px}
+.ai-st.d{background:#FEF3C7;color:#92400E}.ai-st.p{background:#DCFCE7;color:#166534}.ai-st.n{background:#E5E7EB;color:#374151}
+.ai-warn{background:#FFF7ED;border:1px solid #FED7AA;color:#9A3412;border-radius:10px;padding:10px 12px;font-size:14px}
+
 .fgrid{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
 .fgrid label{display:grid;gap:4px;font-size:14px;color:var(--muted)}
 .fgrid label.wide{grid-column:1/-1}
@@ -404,7 +411,7 @@ async function loadMedia(){
   if(data) MEDIA=Object.fromEntries(data.map(r=>[r.id,r]));
   if(error){$("mrows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+error.message+' (media.sql চালানো হয়েছে?)</td></tr>';return;}
   if(!data.length){$("mrows").innerHTML='<tr><td colspan="7" class="muted">এখনও কিছু নেই।</td></tr>';return;}
-  $("mrows").innerHTML=data.map(r=>`<tr><td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.title)}</b>${r.description?'<div class="muted">'+esc(r.description)+'</div>':""}</td><td>${KIND[r.kind]||r.kind}</td><td>${CBN[r.course]||"সাধারণ"}</td><td><a href="${esc(r.url)}" target="_blank" rel="noopener">খুলুন</a></td><td><input type="checkbox" data-pub="${r.id}" ${r.published?"checked":""}></td><td style="white-space:nowrap"><button class="mini" data-edit="${r.id}">সম্পাদনা</button> <button class="ghost mini" data-del="${r.id}" data-path="${esc(r.path||"")}">মুছুন</button></td></tr>`).join("");
+  $("mrows").innerHTML=data.map(r=>`<tr><td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.title)}</b>${r.description?'<div class="muted">'+esc(r.description)+'</div>':""}</td><td>${KIND[r.kind]||r.kind}</td><td>${CBN[r.course]||"সাধারণ"}</td><td><a href="${esc(r.url)}" target="_blank" rel="noopener">খুলুন</a></td><td><input type="checkbox" data-pub="${r.id}" ${r.published?"checked":""}></td><td style="white-space:nowrap">${r.kind==="video"&&aiYt(r.url)?`<button class="mini ai-b" data-ai="${r.id}">✨ AI লেখা</button> `:""}<button class="mini" data-edit="${r.id}">সম্পাদনা</button> <button class="ghost mini" data-del="${r.id}" data-path="${esc(r.path||"")}">মুছুন</button></td></tr>`).join("");
   document.querySelectorAll("[data-pub]").forEach(c=>c.onchange=async()=>{const {error}=await sb.from("media").update({published:c.checked}).eq("id",c.dataset.pub);if(error)alert(error.message);});
   document.querySelectorAll("#mrows [data-edit]").forEach(b=>b.onclick=()=>{
     const r=MEDIA[b.dataset.edit], tr=b.closest("tr");
@@ -432,6 +439,7 @@ async function loadMedia(){
     };
     tr.querySelector("#eT").focus();
   });
+  document.querySelectorAll("#mrows [data-ai]").forEach(b=>b.onclick=()=>aiPanel(MEDIA[b.dataset.ai],b.closest("tr")));
   document.querySelectorAll("#mrows [data-del]").forEach(b=>b.onclick=async()=>{
     if(!confirm("এটা মুছে ফেলবেন?"))return;
     if(b.dataset.path){const {error}=await sb.storage.from("media").remove([b.dataset.path]);if(error){alert(error.message);return;}}
@@ -792,6 +800,56 @@ async function saveCourse(){
   const {error}=cEdit?await sb.from("courses").update(row).eq("slug",cEdit):await sb.from("courses").insert({slug,...row});
   if(error){msg.textContent="হয়নি: "+error.message;return;}
   msg.textContent="সেভ হয়েছে ✓";$("cForm").hidden=true;cEdit=null;loadCoursesTab();
+}
+
+// ===== ভিডিওর AI লেখা ও সারাংশ =====
+const aiYt=u=>{const m=String(u||"").match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);return m?m[1]:null;};
+const AILANG={bn:"বাংলা",en:"ইংরেজি",ar:"আরবি",ur:"উর্দু",other:"অন্য ভাষা"};
+async function aiPanel(r,tr){
+  document.querySelectorAll("#mrows tr.ai-row").forEach(x=>x.remove());
+  const row=document.createElement("tr");row.className="ai-row sub";
+  row.innerHTML='<td colspan="7"><div class="muted">লোড হচ্ছে…</div></td>';tr.after(row);
+  const {data}=await sb.from("media_ai").select("*").eq("media_id",r.id).maybeSingle();
+  const d=data||{};
+  const st=d.status==="published"?'<span class="ai-st p">প্রকাশিত</span>':d.status==="draft"?'<span class="ai-st d">খসড়া — সাইটে দেখাচ্ছে না</span>':'<span class="ai-st n">এখনো তৈরি হয়নি</span>';
+  row.innerHTML=`<td colspan="7"><div class="ai-p">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b>✨ AI বাংলা লেখা ও সারাংশ — ${esc(r.title)}</b> ${st} <span class="muted" id="aiLang">${d.source_lang?"মূল ভাষা: "+(AILANG[d.source_lang]||d.source_lang):""}</span></div>
+    <div class="ai-warn">AI কুরআনের আয়াত, হাদীস ও আরবি পরিভাষায় ভুল করতে পারে। প্রকাশের আগে পুরোটা পড়ে নিন — বিশেষ করে আরবি অংশ। অন্যের চ্যানেলের ভিডিও হলে তাদের অনুমতি নিয়ে নিন।</div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button id="aiGen">${d.summary?"আবার তৈরি করুন":"AI দিয়ে তৈরি করুন"}</button><span class="muted" id="aiMsg">ভিডিওর দৈর্ঘ্য অনুযায়ী ১–৩ মিনিট লাগতে পারে। ভিডিও YouTube-এ Public হতে হবে।</span></div>
+    <label class="muted">সংক্ষিপ্ত সারাংশ<textarea id="aiSum" rows="5">${esc(d.summary||"")}</textarea></label>
+    <label class="muted">মূল কথা — প্রতি লাইনে একটি<textarea id="aiKp" rows="4">${esc(d.key_points||"")}</textarea></label>
+    <label class="muted">পূর্ণ লেখা — প্রতি লাইনে: [মিনিট:সেকেন্ড] লেখা<textarea id="aiTr" rows="14">${esc(d.transcript||"")}</textarea></label>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="ghost" id="aiDraft">খসড়া সেভ</button><button id="aiPub">প্রকাশ করুন</button>${d.status==="published"?'<button class="ghost" id="aiUnpub">সাইট থেকে সরান</button>':""}<button class="ghost" id="aiClose">বন্ধ</button><span class="muted" id="aiSaveMsg"></span></div>
+  </div></td>`;
+  let srcLang=d.source_lang||null,model=d.model||null;
+  $("aiClose").onclick=()=>row.remove();
+  $("aiGen").onclick=async()=>{
+    if(($("aiSum").value.trim()||$("aiTr").value.trim())&&!confirm("আগের লেখা বদলে নতুন করে তৈরি হবে। চালিয়ে যাবেন?"))return;
+    const b=$("aiGen"),m=$("aiMsg");b.disabled=true;let sec=0;const tick=setInterval(()=>{sec++;m.textContent="তৈরি হচ্ছে… "+sec+" সেকেন্ড";},1000);
+    try{
+      const {data:{session}}=await sb.auth.getSession();
+      const res=await fetch("/api/ai-video",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token},body:JSON.stringify({url:r.url})});
+      const out=await res.json().catch(()=>({error:"সার্ভার থেকে ঠিক উত্তর আসেনি ("+res.status+")"}));
+      if(!res.ok||out.error)throw new Error(out.error||res.status);
+      $("aiSum").value=out.summary_bn||"";
+      $("aiKp").value=(out.key_points_bn||[]).join("\n");
+      $("aiTr").value=(out.transcript||[]).map(s=>"["+(s.t||"")+"] "+(s.text||"").replace(/\s*\n\s*/g," ")).join("\n");
+      srcLang=out.source_language||null;model=out.model||null;
+      $("aiLang").textContent=srcLang?"মূল ভাষা: "+(AILANG[srcLang]||srcLang):"";
+      m.textContent="তৈরি হয়েছে ✓ — পড়ে দেখে খসড়া সেভ বা প্রকাশ করুন।"+(out.finish&&out.finish!=="STOP"?" (সতর্কতা: লেখা মাঝপথে থেমে থাকতে পারে — শেষ অংশ দেখুন)":"");
+    }catch(e){m.textContent="হয়নি: "+(e.message||e);}
+    clearInterval(tick);b.disabled=false;
+  };
+  const save=async status=>{
+    const sm=$("aiSaveMsg");const rowd={media_id:r.id,summary:$("aiSum").value.trim()||null,key_points:$("aiKp").value.trim()||null,transcript:$("aiTr").value.trim()||null,source_lang:srcLang,model,status,updated_at:new Date().toISOString()};
+    if(status==="published"&&!rowd.summary&&!rowd.transcript){sm.textContent="খালি লেখা প্রকাশ করা যাবে না।";return;}
+    sm.textContent="সেভ হচ্ছে…";
+    const {error}=await sb.from("media_ai").upsert(rowd);
+    sm.textContent=error?"হয়নি: "+error.message+" (ai.sql চালানো হয়েছে?)":(status==="published"?"প্রকাশিত ✓ — ভিডিওর পেজে দেখা যাচ্ছে":"খসড়া সেভ হয়েছে ✓");
+  };
+  $("aiDraft").onclick=()=>save("draft");
+  $("aiPub").onclick=()=>{if(confirm("পুরো লেখা পড়ে দেখেছেন? প্রকাশ করলে সবাই দেখতে পাবে।"))save("published");};
+  if($("aiUnpub"))$("aiUnpub").onclick=()=>save("draft");
 }
 init();
 </script>
