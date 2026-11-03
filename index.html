@@ -648,7 +648,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
       <a class="course" href="/salah" data-slug="salah"><div class="ar-glyph">ص</div><div><h3 data-i18n="c4.h">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</h3><p data-i18n="c4.p">সহীহ নামাজ, অযু-গোসল, মাসনুন দোয়া, এবং সকাল-সন্ধ্যার আমল — দলিলসহ।</p><div class="for" data-i18n="c4.for">সবার জন্য</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
       <a class="course" href="/arabic" data-slug="arabic"><div class="ar-glyph">ع</div><div><h3 data-i18n="c5.h">আরবি ভাষা (প্রাথমিক)</h3><p data-i18n="c5.p">কুরআন বোঝার জন্য প্রয়োজনীয় শব্দভাণ্ডার ও ব্যাকরণ। সহজ ধাপে ধাপে।</p><div class="for" data-i18n="c5.for">বড়দের জন্য</div><span class="more" data-i18n="c.more">বিস্তারিত দেখুন</span></div></a>
     </div>
-    <div style="text-align:center;margin-top:30px"><a class="btn btn-primary" href="/courses" data-i18n="courses.all">সব কোর্স দেখুন — ১৬টি</a> <a class="btn btn-ghost" href="/learn" data-i18n="nav.free2" style="color:var(--brand)">ফ্রি কোর্সে বিনামূল্যে শিখুন</a></div>
+    <div style="text-align:center;margin-top:30px"><a class="btn btn-primary" href="/courses" data-i18n="courses.all">সব কোর্স দেখুন</a> <a class="btn btn-ghost" href="/learn" data-i18n="nav.free2" style="color:var(--brand)">ফ্রি কোর্সে বিনামূল্যে শিখুন</a></div>
   </div>
 </section>
 
@@ -970,6 +970,9 @@ function render(){boxes.forEach(b=>{const c=b.dataset.course||"",n=+b.dataset.li
 fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/media?select=*&published=eq.true&order=created_at.desc&limit=60",{headers:{apikey:"sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg",Authorization:"Bearer sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg"}}).then(r=>r.ok?r.json():[]).then(d=>{data=d;render();}).catch(()=>{});
 new MutationObserver(render).observe(document.documentElement,{attributes:true,attributeFilter:["lang"]});
 })();
+</script>
+<script>
+fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/courses?select=slug,sort,cat,ages,glyph,content&published=eq.true&order=sort.asc",{headers:{apikey:"sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg",Authorization:"Bearer sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg"}}).then(r=>r.ok?r.json():null).then(d=>{if(!d)return;const sel=document.querySelector("#applyForm select[name=\"course\"]");if(!sel)return;const have=new Set([...sel.options].map(o=>o.value));d.forEach(c=>{if(!have.has(c.slug)){const o=document.createElement("option");o.value=c.slug;o.textContent=c.content.bn.t;sel.appendChild(o);}});const q=new URLSearchParams(location.search).get("course");if(q&&sel.name==="course")sel.value=q;}).catch(()=>{});
 </script>
 </body>
 </html>

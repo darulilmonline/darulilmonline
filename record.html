@@ -728,4 +728,7 @@ f.addEventListener("submit",async e=>{
 });
 })();
 </script>
+<script>
+fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/courses?select=slug,sort,cat,ages,glyph,content&published=eq.true&order=sort.asc",{headers:{apikey:"sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg",Authorization:"Bearer sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg"}}).then(r=>r.ok?r.json():null).then(d=>{if(!d)return;const sel=document.querySelector("#rForm select[name=\"course\"]");if(!sel)return;const have=new Set([...sel.options].map(o=>o.value));d.forEach(c=>{if(!have.has(c.slug)){const o=document.createElement("option");o.value=c.slug;o.textContent=c.content.bn.t;sel.appendChild(o);}});const q=new URLSearchParams(location.search).get("course");if(q&&sel.name==="course")sel.value=q;}).catch(()=>{});
+</script>
 </body></html>

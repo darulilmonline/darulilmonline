@@ -87,7 +87,7 @@ td audio{width:220px;height:36px}
       <div><h1>অ্যাডমিন প্যানেল — দারুল ইলম অনলাইন</h1><div class="muted" id="who"></div></div>
       <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
     </div>
-    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="courses">কোর্স</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
     <div id="panel-apps">
     <div class="stats" id="stats"></div>
     <div class="tools">
@@ -170,6 +170,13 @@ td audio{width:220px;height:36px}
       <div class="tbl"><table><thead><tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>কোর্স</th><th>দৈর্ঘ্য</th><th>নোট</th><th>শুনুন</th><th>অবস্থা</th><th></th></tr></thead><tbody id="rrows"></tbody></table></div>
     </div>
 
+    <div id="panel-courses" style="display:none">
+      <p class="muted" style="margin-bottom:12px">এখানে কোর্স যোগ, সম্পাদনা ও লুকানো যায়। পরিবর্তন সাথে সাথে সাইটের কোর্স পেজ, কোর্স তালিকা, ফ্রি কোর্স ও ভর্তি ফরমে চলে যাবে। নতুন কোর্সের ঠিকানা হবে <b>darulilmonline.com/c/কোর্স-কোড</b>।</p>
+      <div style="margin-bottom:14px"><button id="cNew">+ নতুন কোর্স</button></div>
+      <div class="card" id="cForm" hidden style="margin-bottom:18px"></div>
+      <div class="tbl"><table><thead><tr><th>ক্রম</th><th></th><th>কোর্স</th><th>বিভাগ</th><th>বয়স</th><th>সাইটে</th><th></th></tr></thead><tbody id="crows"></tbody></table></div>
+    </div>
+
     <div id="panel-learn" style="display:none">
       <div class="tools"><label class="muted" style="display:flex;gap:8px;align-items:center">কোর্স <select id="lnCourse"><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদসহ কুরআন তিলাওয়াত</option><option value="quran-words">কুরআন শব্দে শব্দে শিক্ষা</option><option value="tafsir">তাফসীর শিক্ষা</option><option value="hifz">হিফযুল কুরআন</option><option value="hadith-words">হাদীস শব্দে শব্দে শিক্ষা</option><option value="dua-words">দোয়া শব্দে শব্দে শিক্ষা</option><option value="salah">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</option><option value="aqidah">আকীদা — ঈমানের মৌলিক শিক্ষা</option><option value="fiqh">ফিকহ ও মাসায়েল</option><option value="seerah">সীরাতুন নবী ﷺ</option><option value="akhlaq">আদব ও আখলাক</option><option value="history">নবীদের কাহিনী ও ইসলামের ইতিহাস</option><option value="arabic">আরবি ভাষা (প্রাথমিক)</option><option value="english">ইংরেজি শিক্ষা (ইসলামিক পরিবেশে)</option><option value="math">গণিত শিক্ষা (ইসলামিক পরিবেশে)</option></select></label><a class="btn-s wa-b" id="lnView" target="_blank" rel="noopener" style="background:var(--teal,#0B3D4A)">সাইটে দেখুন ↗</a></div>
       <div class="card" style="margin:14px 0 18px">
@@ -247,7 +254,7 @@ $("logout").onclick=async()=>{ await sb.auth.signOut(); location.reload(); };
 $("reload").onclick=load;
 $("q").oninput=render; $("fStatus").onchange=render;
 
-function showApp(email){ setTimeout(autoClean,800); $("loginBox").style.display="none"; $("app").style.display="block"; $("who").textContent=email; }
+function showApp(email){ setTimeout(refreshCourses,0); setTimeout(autoClean,800); $("loginBox").style.display="none"; $("app").style.display="block"; $("who").textContent=email; }
 
 async function load(){
   const {data,error}=await sb.from("applications").select("*").order("created_at",{ascending:false});
@@ -401,7 +408,7 @@ async function loadMedia(){
   document.querySelectorAll("[data-pub]").forEach(c=>c.onchange=async()=>{const {error}=await sb.from("media").update({published:c.checked}).eq("id",c.dataset.pub);if(error)alert(error.message);});
   document.querySelectorAll("#mrows [data-edit]").forEach(b=>b.onclick=()=>{
     const r=MEDIA[b.dataset.edit], tr=b.closest("tr");
-    const courses=[["","সাধারণ / সব কোর্স"],["noorani","নূরানী কায়দা"],["tajweed","তাজবীদ"],["hifz","হিফয"],["salah","নামাজ ও আমল"],["arabic","আরবি ভাষা"],["quran-words","কুরআন শব্দে শব্দে"],["tafsir","তাফসীর"],["hadith-words","হাদীস শব্দে শব্দে"],["dua-words","দোয়া শব্দে শব্দে"],["aqidah","আকীদা"],["fiqh","ফিকহ"],["seerah","সীরাত"],["akhlaq","আদব-আখলাক"],["history","নবীদের কাহিনী ও ইতিহাস"],["english","ইংরেজি"],["math","গণিত"]];
+    const courses=[["","সাধারণ / সব কোর্স"],...CLIST.map(c=>[c.slug,c.content.bn.t])];
     const kinds=Object.entries(KIND);
     tr.innerHTML=`<td colspan="7"><div class="mgrid" style="max-width:none">
       <label class="muted">শিরোনাম<input id="eT" value="${esc(r.title)}"></label>
@@ -701,6 +708,90 @@ async function loadQs(){
       card.querySelector(".qa-m").textContent=error?"হয়নি: "+error.message:"সেভ হয়েছে ✓";if(!error)setTimeout(loadQs,700);};
     card.querySelector(".qa-del").onclick=async()=>{if(!confirm("প্রশ্নটি মুছবেন?"))return;const {error}=await sb.from("questions").delete().eq("id",id);if(error)alert(error.message);loadQs();};
   });
+}
+
+// ===== কোর্স (ডাটাবেস থেকে) =====
+const STATIC=["noorani", "tajweed", "quran-words", "tafsir", "hifz", "hadith-words", "dua-words", "salah", "aqidah", "fiqh", "seerah", "akhlaq", "history", "arabic", "english", "math"];
+const CATN={quran:"কুরআন",hadith:"হাদীস ও দোয়া",deen:"দ্বীনি জ্ঞান",general:"ভাষা ও সাধারণ শিক্ষা"};
+const AGEN={c:"শিশু",t:"কিশোর",a:"বড়"};
+let CLIST=[],cEdit=null;
+const cHref=s=>(STATIC.includes(s)?"/":"/c/")+s;
+async function refreshCourses(){
+  const {data,error}=await sb.from("courses").select("*").order("sort");
+  if(error||!data){return;}
+  CLIST=data;
+  data.forEach(c=>{const t=(c.content&&c.content.bn&&c.content.bn.t)||c.slug;COURSE[c.slug]=t;CBN[c.slug]=t;CBN2[c.slug]=t;});
+  const opts=blank=>(blank!=null?`<option value="">${blank}</option>`:"")+data.map(c=>`<option value="${c.slug}">${esc(c.content.bn.t)}${c.published?"":" (লুকানো)"}</option>`).join("");
+  const keep=(id,html)=>{const el=$(id);if(!el)return;const v=el.value;el.innerHTML=html;if([...el.options].some(o=>o.value===v))el.value=v;};
+  keep("mCourse",opts("সাধারণ / সব কোর্স"));keep("f_course",opts("—"));keep("lnCourse",opts(null));
+  const fc=$("fc_courses");if(fc){const checked=new Set([...fc.querySelectorAll("input:checked")].map(i=>i.value));fc.innerHTML=data.map(c=>`<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="${c.slug}" ${checked.has(c.slug)?"checked":""}> ${esc(c.content.bn.t)}</label>`).join("");}
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-courses").style.display=b.dataset.tab==="courses"?"block":"none";
+  if(b.dataset.tab==="courses") loadCoursesTab();
+}));
+async function loadCoursesTab(){
+  await refreshCourses();
+  $("crows").innerHTML=CLIST.length?CLIST.map(c=>`<tr><td>${c.sort}</td><td style="font-size:22px;color:var(--gold-deep,#A8862A)">${esc(c.glyph)}</td><td><b>${esc(c.content.bn.t)}</b><div class="muted" style="font-size:13px"><a href="${cHref(c.slug)}" target="_blank" rel="noopener">${cHref(c.slug)}</a></div></td><td>${CATN[c.cat]||c.cat}</td><td>${(c.ages||[]).map(x=>AGEN[x]).join(", ")}</td><td><input type="checkbox" data-cpub="${c.slug}" ${c.published?"checked":""}></td><td style="white-space:nowrap"><button class="mini" data-cedit="${c.slug}">সম্পাদনা</button> <button class="ghost mini" data-cdel="${c.slug}">মুছুন</button></td></tr>`).join(""):'<tr><td colspan="7" class="err">কোর্স লোড হয়নি — courses.sql চালানো হয়েছে?</td></tr>';
+  document.querySelectorAll("[data-cpub]").forEach(x=>x.onchange=async()=>{const {error}=await sb.from("courses").update({published:x.checked}).eq("slug",x.dataset.cpub);if(error)alert(error.message);refreshCourses();});
+  document.querySelectorAll("[data-cedit]").forEach(b=>b.onclick=()=>openCForm(CLIST.find(c=>c.slug===b.dataset.cedit)));
+  document.querySelectorAll("[data-cdel]").forEach(b=>b.onclick=async()=>{const c=CLIST.find(x=>x.slug===b.dataset.cdel);
+    if(!confirm("“"+c.content.bn.t+"” কোর্সটি একেবারে মুছে ফেলবেন?\nশুধু সাইট থেকে সরাতে চাইলে মুছবেন না — ‘সাইটে’ টিক তুলে দিন।"))return;
+    const {error}=await sb.from("courses").delete().eq("slug",c.slug);if(error)alert(error.message);loadCoursesTab();});
+}
+$("cNew").onclick=()=>openCForm(null);
+function langBlock(L,label,d,open){
+  d=d||{};const lv=d.lv||[];const faq=(d.faq||[]).map(x=>x.join(" || ")).join("\n");
+  const fld=(k,lab,v,ph,ta)=>`<label class="${ta?"wide":""}">${lab}${ta?`<textarea data-k="${k}" placeholder="${ph||""}">${esc(v||"")}</textarea>`:`<input data-k="${k}" value="${esc(v||"")}" placeholder="${ph||""}">`}</label>`;
+  return `<details ${open?"open":""} class="cl" data-lang="${L}" style="border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px"><summary style="font-weight:700;cursor:pointer">${label}</summary><div class="fgrid" style="margin-top:12px">
+    ${fld("t","কোর্সের নাম",d.t)}${fld("short","এক লাইনের বিবরণ (তালিকায় দেখায়)",d.short)}
+    ${fld("tag","উপরের আরবি আয়াত/হাদীস (ঐচ্ছিক)",d.tag)}${fld("lvl","স্তর (যেমন: সব বয়স, আলাদা স্তর)",d.lvl)}
+    ${fld("intro","বিস্তারিত পরিচিতি",d.intro,"",1)}
+    ${fld("lv0","শিশু (৫–৮) স্তরে কী শেখানো হয়",lv[0],"",1)}${fld("lv1","কিশোর (৯–১৪) স্তরে",lv[1],"",1)}${fld("lv2","বড় (১৫+) স্তরে",lv[2],"",1)}
+    ${fld("l","এই কোর্সে যা শিখবেন — প্রতি লাইনে একটি",(d.l||[]).join("\n"),"",1)}
+    ${fld("for","কাদের জন্য",d.for)}${fld("dur","সময়কাল",d.dur)}
+    ${fld("faq","প্রশ্নোত্তর — প্রতি লাইনে: প্রশ্ন || উত্তর",faq,"ক্লাস কত মিনিটের? || ৩০–৪০ মিনিট",1)}
+  </div></details>`;
+}
+function openCForm(c){
+  cEdit=c?c.slug:null;const box=$("cForm");box.hidden=false;
+  const ct=c?c.content:{};
+  box.innerHTML=`<h1 style="font-size:18px;margin-bottom:12px">${c?"কোর্স সম্পাদনা — "+esc(c.content.bn.t):"নতুন কোর্স"}</h1>
+    <div class="fgrid">
+      <label>কোর্স-কোড (ইংরেজি ছোট হাতের অক্ষর, - চলবে)<input id="c_slug" value="${c?c.slug:""}" ${c?"disabled":""} placeholder="যেমন: sirat-sahaba"></label>
+      <label>ক্রম (ছোট সংখ্যা আগে)<input id="c_sort" type="number" value="${c?c.sort:(CLIST.length?Math.max(...CLIST.map(x=>x.sort))+10:10)}"></label>
+      <label>বিভাগ<select id="c_cat">${Object.entries(CATN).map(([k,v])=>`<option value="${k}" ${c&&c.cat===k?"selected":""}>${v}</option>`).join("")}</select></label>
+      <label>আরবি অক্ষর (কার্ডে দেখায়)<input id="c_glyph" value="${esc(c?c.glyph:"ع")}" maxlength="6"></label>
+      <div class="wide" style="grid-column:1/-1;display:flex;gap:16px;flex-wrap:wrap;align-items:center"><span class="muted">বয়স:</span>${Object.entries(AGEN).map(([k,v])=>`<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" class="c_age" value="${k}" ${!c||(c.ages||[]).includes(k)?"checked":""} style="width:auto"> ${v}</label>`).join("")}
+        <label style="display:flex;gap:6px;align-items:center;margin-inline-start:auto"><input type="checkbox" id="c_pub" ${!c||c.published?"checked":""} style="width:auto"> সাইটে দেখাবে</label></div>
+    </div>
+    ${langBlock("bn","বাংলা (আবশ্যক)",ct.bn,true)}${langBlock("en","English (ঐচ্ছিক — না দিলে বাংলা দেখাবে)",ct.en,false)}${langBlock("ar","العربية (ঐচ্ছিক — না দিলে বাংলা দেখাবে)",ct.ar,false)}
+    <div style="display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap"><button id="cSave">সেভ করুন</button><button class="ghost" id="cCancel">বাতিল</button><span class="muted" id="cMsg"></span></div>`;
+  $("cCancel").onclick=()=>{box.hidden=true;cEdit=null;};
+  $("cSave").onclick=saveCourse;
+  box.scrollIntoView({behavior:"smooth"});
+}
+function readLang(L){
+  const el=document.querySelector(`#cForm details[data-lang="${L}"]`);const g=k=>(el.querySelector(`[data-k="${k}"]`).value||"").trim();
+  const d={t:g("t"),short:g("short"),tag:g("tag"),lvl:g("lvl"),intro:g("intro"),lv:[g("lv0"),g("lv1"),g("lv2")],
+    l:g("l").split("\n").map(x=>x.trim()).filter(Boolean),for:g("for"),dur:g("dur"),
+    faq:g("faq").split("\n").map(x=>x.split("||").map(y=>y.trim())).filter(x=>x.length>=2&&x[0]&&x[1]).map(x=>[x[0],x.slice(1).join(" || ")])};
+  if(!d.lv.some(Boolean))d.lv=[];
+  return d;
+}
+async function saveCourse(){
+  const msg=$("cMsg");const slug=cEdit||$("c_slug").value.trim().toLowerCase();
+  if(!/^[a-z0-9][a-z0-9-]{1,40}$/.test(slug)){msg.textContent="কোর্স-কোড শুধু ইংরেজি ছোট হাতের অক্ষর, সংখ্যা ও - দিয়ে (২–৪১ অক্ষর)।";return;}
+  if(!cEdit&&CLIST.some(c=>c.slug===slug)){msg.textContent="এই কোড আগেই আছে — অন্য কোড দিন।";return;}
+  const bn=readLang("bn");if(!bn.t||!bn.intro){msg.textContent="বাংলায় অন্তত কোর্সের নাম ও বিস্তারিত পরিচিতি দিন।";return;}
+  if(!bn.short)bn.short=bn.intro.split(/[।.—]/)[0].slice(0,140);
+  const content={bn};["en","ar"].forEach(L=>{const d=readLang(L);if(d.t)content[L]=d;});
+  const ages=[...document.querySelectorAll(".c_age:checked")].map(x=>x.value);
+  const row={sort:Number($("c_sort").value)||100,cat:$("c_cat").value,ages:ages.length?ages:["c","t","a"],glyph:$("c_glyph").value.trim()||"ع",content,published:$("c_pub").checked};
+  msg.textContent="সেভ হচ্ছে…";
+  const {error}=cEdit?await sb.from("courses").update(row).eq("slug",cEdit):await sb.from("courses").insert({slug,...row});
+  if(error){msg.textContent="হয়নি: "+error.message;return;}
+  msg.textContent="সেভ হয়েছে ✓";$("cForm").hidden=true;cEdit=null;loadCoursesTab();
 }
 init();
 </script>
