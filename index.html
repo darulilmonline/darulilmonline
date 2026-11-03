@@ -552,6 +552,60 @@ header{box-shadow:none}
 .lx{background:#fff!important;border:1px solid var(--line)!important;box-shadow:none}
 .lx:hover,.lx:focus-visible{box-shadow:0 10px 24px rgba(0,0,0,.06);border-color:var(--gold)!important}
 .course{box-shadow:none}
+
+/* ---- v11: pill menu, yellow buttons, new home hero ---- */
+:root{--yel:#F6B91A;--yel-d:#E4A50A;--grn:#0A7A55}
+header{background:rgba(255,255,255,.94)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{height:76px}
+.links{background:#F5F6F4;border:1px solid var(--line);border-radius:999px;padding:5px;gap:2px!important}
+.links a{padding:8px 15px;border-radius:999px;color:#3D4B50!important;font-weight:600;font-size:15px;transition:background .15s}
+.links a::after{display:none!important}
+.links a:hover{background:#fff;color:var(--text)!important}
+.links a.on{background:#fff;color:var(--text)!important;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.btn{border-radius:14px;font-weight:800;letter-spacing:.01em}
+.btn-primary,.hero .btn-primary,.chero .btn-primary{background:var(--yel);color:#1A1A1A;border-color:var(--yel);box-shadow:0 8px 18px rgba(246,185,26,.32);filter:none}
+.btn-primary:hover{background:var(--yel-d);border-color:var(--yel-d);box-shadow:0 10px 22px rgba(246,185,26,.4);filter:none}
+.btn-ghost,.hero .btn-ghost,.chero .btn-ghost,.shelf .btn-ghost{background:#fff;color:var(--text)!important;border:1.5px solid #DCE2DF}
+.btn-ghost:hover{border-color:var(--grn)}
+.hdr-cta{padding:10px 18px!important;font-size:15px!important;white-space:nowrap}
+.lang{border-color:var(--line)!important;background:#fff}
+@media(max-width:760px){.hdr-cta{display:none}}
+.wa-float{position:fixed;inset-inline-end:22px;bottom:24px;z-index:45;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 10px 26px rgba(37,211,102,.45)}
+.wa-float svg{width:30px;height:30px}
+.wa-float:hover{transform:scale(1.05)}
+@media(max-width:760px){.wa-float{display:none}}
+/* home hero */
+.hero.hero2{background:radial-gradient(700px 360px at 62% 30%,rgba(10,122,85,.07),transparent 70%),linear-gradient(rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,#FBFCFB!important;padding:64px 0 70px}
+.h2grid{display:grid;gap:40px;align-items:center}
+@media(min-width:1040px){.hero.hero2 .wrap.h2grid{grid-template-columns:1.25fr .9fr!important}}
+.hero2 .wrap>div{max-width:none}
+.h2badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #BFE3D2;background:#F1FAF5;color:#0B5E43;border-radius:999px;padding:7px 16px;font-size:15px;font-weight:600;margin-bottom:22px}
+.h2badge .ar{font-family:var(--font-ar),"Amiri",serif;font-size:18px}
+.h2badge i{width:6px;height:6px;border-radius:50%;background:#22A06B}
+.h2t{font-size:clamp(34px,4.7vw,58px)!important;line-height:1.12!important;letter-spacing:-.01em;margin-bottom:20px!important;color:#111!important}
+.h2t em{font-style:normal;color:var(--grn);display:block}
+.hero2 p{font-size:clamp(17px,1.6vw,20px)!important;color:#4A5558!important;max-width:620px}
+.hero2 .hero-cta .btn{padding:17px 28px;font-size:17px}
+.h2stats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:38px;padding-top:26px;border-top:1px solid var(--line)}
+@media(min-width:640px){.h2stats{grid-template-columns:repeat(4,1fr)}}
+.h2stats b{display:block;font-size:30px;line-height:1.1;color:var(--grn)}
+.h2stats span{font-size:14px;color:#56636A}
+.h2card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:0 24px 60px rgba(15,40,30,.10)}
+.h2ch{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.h2ch .lg{width:42px;height:42px;border-radius:12px;background:#0F1B1E;color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px;flex:none}
+.h2ch b{display:block;font-size:17px}
+.h2ch small{color:#13865C;font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px}
+.h2ch small::before{content:"";width:7px;height:7px;border-radius:50%;background:#22C55E}
+.h2ch .chip{margin-inline-start:auto;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;background:#F7F8F6;white-space:nowrap}
+.h2why{font-size:13px;font-weight:800;letter-spacing:.06em;color:#7A858A;margin:20px 0 12px}
+.h2f{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.h2f div{border:1px solid var(--line);border-radius:14px;padding:12px 13px}
+.h2f b{display:flex;align-items:center;gap:8px;font-size:15px}
+.h2f b i{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;flex:none;font-style:normal;font-size:13px}
+.h2f span{display:block;font-size:13px;color:#69757A;margin-top:3px;line-height:1.45}
+.h2act{display:flex;gap:10px;margin-top:18px}
+.h2act .btn-primary{flex:1;justify-content:center;padding:14px}
+.h2act .btn-ghost{padding:14px 18px}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
@@ -577,7 +631,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
       <a href="#apply" data-i18n="nav.apply">ভর্তি</a>
       <a href="#contact" data-i18n="nav.contact">যোগাযোগ</a>
     </nav>
-    <div class="nav-r"><div class="lang" role="group" aria-label="Language">
+    <div class="nav-r"><a class="btn btn-primary hdr-cta" href="/#apply" data-i18n="hdr.cta">ফ্রি ক্লাস বুক করুন</a><div class="lang" role="group" aria-label="Language">
       <button data-lang="bn" aria-pressed="true">বাংলা</button>
       <button data-lang="en" aria-pressed="false">EN</button>
       <button data-lang="ar" aria-pressed="false">عربي</button>
@@ -587,45 +641,33 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 <div class="band" aria-hidden="true"></div>
 
 <main id="top">
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <div class="bismillah-h" aria-label="Bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-      <h1 data-i18n="hero.h1">ঘরে বসেই শিখুন কুরআন, নামাজ ও আরবি</h1>
+<section class="hero hero2">
+  <div class="wrap h2grid">
+    <div class="h2l">
+      <span class="h2badge"><span class="ar">دَارُ الْعِلْمِ</span><i></i><span data-i18n="hb.badge">জ্ঞানের ঘর — অনলাইন মাদরাসা</span></span>
+      <h1 class="h2t"><span data-i18n="hb.t1">ঘরে বসেই শিখুন কুরআন ও দ্বীন,</span> <em data-i18n="hb.t2">অভিজ্ঞ শিক্ষকের কাছে</em></h1>
       <p data-i18n="hero.p">অভিজ্ঞ শিক্ষকের সাথে ঘরে বসে লাইভ ক্লাস — শিশু ও বড় সবার জন্য। প্রথম ৩ দিন ফ্রি।</p>
-      <div class="hero-cta">
-        <a class="btn btn-primary" href="#apply" data-i18n="hero.cta1">৩ দিন ফ্রি ক্লাস শুরু করুন</a>
-        <a class="btn btn-ghost" href="https://wa.me/8801329173444" target="_blank" rel="noopener" data-i18n="hero.cta2">WhatsApp-এ কথা বলুন</a>
-      </div>
-      <div class="facts">
-        <span data-i18n="hero.f1">লাইভ + রেকর্ডেড ক্লাস</span>
-        <span data-i18n="hero.f2">শিশু ও প্রাপ্তবয়স্ক</span>
-        <span data-i18n="hero.f3">bKash · Nagad · Rocket · ব্যাংক</span>
+      <div class="hero-cta"><a class="btn btn-primary" href="#apply" data-i18n="hb.cta">৩ দিন ফ্রি ক্লাস বুক করুন →</a><a class="btn btn-ghost" href="/courses" data-i18n="hb.all">সব কোর্স দেখুন</a></div>
+      <div class="h2stats">
+        <div><b data-i18n="hb.n1">১৬+</b><span data-i18n="hb.s1">বিষয়ে কোর্স</span></div>
+        <div><b data-i18n="hb.n2">৩</b><span data-i18n="hb.s2">ভাষায় পুরো সাইট</span></div>
+        <div><b data-i18n="hb.n3">৩ দিন</b><span data-i18n="hb.s3">ফ্রি ট্রায়াল ক্লাস</span></div>
+        <div><b data-i18n="hb.n4">লাইভ</b><span data-i18n="hb.s4">শিক্ষকের সাথে সরাসরি ক্লাস</span></div>
       </div>
     </div>
-    <figure class="mihrab2"><svg viewBox="0 0 360 474" role="img" aria-label="اقْرَأْ" xmlns="http://www.w3.org/2000/svg">
-<defs>
-<linearGradient id="hqg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--gold-2)"/><stop offset=".55" style="stop-color:var(--gold)"/><stop offset="1" style="stop-color:var(--gold-deep)"/></linearGradient>
-<radialGradient id="hqglow"><stop offset="0" stop-color="#FFE7A3" stop-opacity=".55"/><stop offset="1" stop-color="#FFE7A3" stop-opacity="0"/></radialGradient>
-<radialGradient id="hqin" cx=".5" cy=".42" r=".7"><stop offset="0" stop-color="#fff" stop-opacity=".09"/><stop offset="1" stop-color="#000" stop-opacity=".28"/></radialGradient>
-<pattern id='hqp' width='28' height='28' patternUnits='userSpaceOnUse'><polygon points='14.0,6.0 16.3,8.3 19.7,8.3 19.7,11.7 22.0,14.0 19.7,16.3 19.7,19.7 16.3,19.7 14.0,22.0 11.7,19.7 8.3,19.7 8.3,16.3 6.0,14.0 8.3,11.7 8.3,8.3 11.7,8.3' fill='none' style='stroke:var(--gold)' stroke-width='.8' opacity='.75'/><polygon points='0.0,-5.0 1.5,-3.5 3.5,-3.5 3.5,-1.5 5.0,0.0 3.5,1.5 3.5,3.5 1.5,3.5 0.0,5.0 -1.5,3.5 -3.5,3.5 -3.5,1.5 -5.0,0.0 -3.5,-1.5 -3.5,-3.5 -1.5,-3.5' fill='none' style='stroke:var(--gold)' stroke-width='.6' opacity='.5'/><polygon points='28.0,-5.0 29.5,-3.5 31.5,-3.5 31.5,-1.5 33.0,0.0 31.5,1.5 31.5,3.5 29.5,3.5 28.0,5.0 26.5,3.5 24.5,3.5 24.5,1.5 23.0,0.0 24.5,-1.5 24.5,-3.5 26.5,-3.5' fill='none' style='stroke:var(--gold)' stroke-width='.6' opacity='.5'/><polygon points='0.0,23.0 1.5,24.5 3.5,24.5 3.5,26.5 5.0,28.0 3.5,29.5 3.5,31.5 1.5,31.5 0.0,33.0 -1.5,31.5 -3.5,31.5 -3.5,29.5 -5.0,28.0 -3.5,26.5 -3.5,24.5 -1.5,24.5' fill='none' style='stroke:var(--gold)' stroke-width='.6' opacity='.5'/><polygon points='28.0,23.0 29.5,24.5 31.5,24.5 31.5,26.5 33.0,28.0 31.5,29.5 31.5,31.5 29.5,31.5 28.0,33.0 26.5,31.5 24.5,31.5 24.5,29.5 23.0,28.0 24.5,26.5 24.5,24.5 26.5,24.5' fill='none' style='stroke:var(--gold)' stroke-width='.6' opacity='.5'/></pattern>
-</defs>
-<rect x="6" y="6" width="348" height="462" rx="4" fill="rgba(0,0,0,.18)" style="stroke:var(--gold)" stroke-width="2"/>
-<rect x="14" y="14" width="332" height="446" rx="2" fill="none" style="stroke:var(--gold-2)" stroke-width=".8" opacity=".7"/>
-<rect x="22" y="22" width="316" height="430" fill="none" style="stroke:var(--gold)" stroke-width="1" opacity=".55"/>
-<path d="M22,22 H338 V214 H312 C312,136 244,86 180,40 C116,86 48,136 48,214 H22 Z" fill="url(#hqp)"/>
-<path d="M48,452 V214 C48,136 116,86 180,40 C244,86 312,136 312,214 V452 Z" fill="url(#hqin)"/>
-<path d="M48,452 V214 C48,136 116,86 180,40 C244,86 312,136 312,214 V452" fill="none" style="stroke:var(--gold)" stroke-width="2.6"/>
-<path d="M64,452 V218 C64,148 124,104 180,64 C236,104 296,148 296,218 V452" fill="none" style="stroke:var(--gold-2)" stroke-width="1.2" opacity=".85"/>
-<path d="M74,452 V221 C74,155 129,114 180,78 C231,114 286,155 286,221 V452" fill="none" style="stroke:var(--gold)" stroke-width=".7" opacity=".5" stroke-dasharray="2 4"/>
-<g style="fill:var(--gold)"><rect x="40" y="206" width="32" height="9" rx="1"/><rect x="288" y="206" width="32" height="9" rx="1"/><rect x="40" y="436" width="32" height="10" rx="1"/><rect x="288" y="436" width="32" height="10" rx="1"/></g>
-<path d="M180,26 l6,8 -6,8 -6,-8 z" style="fill:var(--gold-2)"/>
-<g style='color:var(--gold-2)'><line x1='180' y1='78' x2='180' y2='112' stroke='currentColor' stroke-width='1.2'/><circle cx='180' cy='86' r='2' fill='currentColor'/><circle cx='180' cy='96' r='2' fill='currentColor'/><circle cx='180' cy='106' r='2' fill='currentColor'/><circle cx='180' cy='138' r='34' fill='url(#hqglow)'/><path d='M168,114 H192 L196,120 H164 Z' fill='currentColor'/><path d='M164,120 C160,136 166,150 180,156 C194,150 200,136 196,120 Z' fill='none' stroke='currentColor' stroke-width='1.6'/><path d='M171,128 L180,122 L189,128 L189,140 L180,148 L171,140 Z' fill='none' stroke='currentColor' stroke-width='1'/><path d='M174,156 H186 L182,163 H178 Z' fill='currentColor'/></g>
-<text x="180" y="320" text-anchor="middle" font-size="108" font-weight="700" fill="url(#hqg)" style="font-family:var(--font-ar,'Amiri'),'Amiri',serif;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))">اقْرَأْ</text>
-<g style="stroke:var(--gold)" stroke-width="1.2" opacity=".9"><line x1="112" y1="358" x2="166" y2="358"/><line x1="194" y1="358" x2="248" y2="358"/></g>
-<path d="M180,350 l8,8 -8,8 -8,-8 z" style="fill:var(--gold)"/>
-<rect x="22" y="452" width="316" height="8" style="fill:var(--gold)" opacity=".85"/>
-</svg><figcaption data-i18n="hero.iqra">“পড়ো” — সূরা আলাক, প্রথম ওহী</figcaption></figure>
+    <aside class="h2card">
+      <div class="h2ch"><span class="lg">দই</span><div><b data-i18n="brand">দারুল ইলম অনলাইন</b><small data-i18n="hb.live">লাইভ অনলাইন মাদরাসা</small></div><span class="chip" data-i18n="hb.chip">ভর্তি চলছে</span></div>
+      <div class="h2why" data-i18n="hb.why">কেন দারুল ইলম অনলাইন</div>
+      <div class="h2f">
+        <div><b><i style="background:#E8F5EE;color:#0A7A55">▶</i><span data-i18n="hb.f1">লাইভ ক্লাস</span></b><span data-i18n="hb.f1d">Zoom/Meet-এ সরাসরি শিক্ষকের সাথে</span></div>
+        <div><b><i style="background:#FDF3DC;color:#B7791F">●</i><span data-i18n="hb.f2">রেকর্ডিং</span></b><span data-i18n="hb.f2d">প্রতিটি ক্লাস পরে আবার দেখা যায়</span></div>
+        <div><b><i style="background:#EEF2FF;color:#4F46E5">✓</i><span data-i18n="hb.f3">মাসিক রিপোর্ট</span></b><span data-i18n="hb.f3d">অভিভাবকের জন্য লিখিত অগ্রগতি</span></div>
+        <div><b><i style="background:#FDECEC;color:#C0392B">♟</i><span data-i18n="hb.f4">ছোট ব্যাচ বা একক</span></b><span data-i18n="hb.f4d">প্রত্যেকে মনোযোগ পায়</span></div>
+        <div><b><i style="background:#E8F5EE;color:#0A7A55">ع</i><span data-i18n="hb.f5">তিন ভাষা</span></b><span data-i18n="hb.f5d">বাংলা, English ও আরবিতে সাইট</span></div>
+        <div><b><i style="background:#FDF3DC;color:#B7791F">★</i><span data-i18n="hb.f6">ফ্রি কোর্স</span></b><span data-i18n="hb.f6d">বিনামূল্যে পাঠ ও প্রশ্নোত্তর</span></div>
+      </div>
+      <div class="h2act"><a class="btn btn-primary" href="#apply" data-i18n="hb.cta2">৩ দিন ফ্রি ক্লাস বুক করুন</a><a class="btn btn-ghost" href="tel:+8801329173444" data-i18n="hb.call">কল</a></div>
+    </aside>
   </div>
 </section>
 
@@ -776,62 +818,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 </div></footer>
 
 <script>
-const T={
-bn:{},
-en:{"mb.apply":"Enrol","nav.lib":"Library","cn.wa.s":"Send a message, voice note, photo or PDF","cn.tgm.s":"Message us directly","cn.tgc":"Telegram channel","cn.tgc.s":"Lessons, announcements and new courses","cn.tgg":"Telegram group","cn.tgg.s":"Questions and discussion","cn.rec":"Send your recitation","cn.rec.s":"Record it or upload a voice file","cn.lib":"Library","cn.lib.s":"Photos, PDFs, videos and audio","f.more":"Add more details (optional)",
- "brand":"Darul Ilm Online","tagline":"Learn deen from home",
- "nav.courses":"Courses","nav.how":"How to start","nav.fee":"Fees","nav.faq":"FAQ","nav.contact":"Contact",
- "hero.h1":"Learn Quran, salah and Arabic from home","hero.p":"Live classes from home with experienced teachers — for children and adults. First 3 days free.",
- "hero.cta1":"Start 3 free days","hero.cta2":"Talk on WhatsApp","hero.f1":"Live + recorded classes","hero.f2":"Children and adults","hero.f3":"bKash · Nagad · Rocket · Bank",
- "hero.iqra":"“Read” — Surah Al-Alaq, the first revelation",
- "c.more":"View details","courses.h2":"Courses","courses.lead":"Every course has 3–5 live classes a week, a recording of each class, and a monthly progress report.",
- "c1.h":"Noorani Qaida","c1.p":"From recognising letters to reading the Quran correctly. From the very beginning.","c1.for":"Children and adults learning to read",
- "c2.h":"Quran recitation with Tajweed","c2.p":"Makharij, sifaat and the rules of tajweed for beautiful, accurate recitation.","c2.for":"For those who can read and want to perfect it",
- "c3.h":"Hifz ul-Quran","c3.p":"Daily memorisation and revision in the sabaq, sabqi and amukhta method. Individual supervision.","c3.for":"For serious students",
- "c4.h":"Salah, masnoon duas and daily amal","c4.p":"Correct salah, wudu and ghusl, masnoon duas, and morning-evening adhkar — with evidence.","c4.for":"For everyone",
- "c5.h":"Arabic language (beginner)","c5.p":"The vocabulary and grammar you need to understand the Quran. Step by step.","c5.for":"For adults",
- "how.h2":"How to start","how.lead":"From enrolment to your first class — usually within a day.",
- "s1.h":"Fill in the form","s1.p":"Name, age, course and preferred time. Takes 2 minutes.","s2.h":"Free trial classes","s2.p":"Join live classes for 3 days and check the teacher and method.","s3.h":"Send the fee","s3.p":"Pay via bKash, Nagad, Rocket or bank and share the transaction ID.","s4.h":"Regular classes","s4.p":"Live classes at your set time, recordings and a monthly report.",
- "fee.h2":"Monthly fees","fee.lead":"No admission fee. First 3 days free — if it’s not for you, you pay nothing.","fee.mo":"/month","fee.cta":"Take the free trial",
- "p1.price":"৳500","p2.price":"৳1,000","p3.price":"৳1,500","p1.h":"Group class","p1.l1":"3 live classes a week","p1.l2":"Groups of 8–10","p1.l3":"All class recordings","p1.l4":"Monthly progress report",
- "p2.tag":"Most popular","p2.h":"Small group","p2.l1":"5 live classes a week","p2.l2":"Groups of 3–4","p2.l3":"All class recordings","p2.l4":"Monthly call with parents",
- "p3.h":"One-to-one","p3.l1":"5 days a week, just for you","p3.l2":"Your own schedule","p3.l3":"Ideal for hifz","p3.l4":"Weekly progress report",
- "fee.note":"20% off for a second student from the same family. Fees are reviewed once a year.",
- "why.h2":"Why Darul Ilm Online","w1.h":"Verified teachers","w1.p":"Every teacher is certified by a recognised madrasa and selected through interview.","w2.h":"Recordings if you miss a class","w2.p":"Every live class is recorded — watch it again any time.","w3.h":"Reports for parents","w3.p":"How far your child has come and where they need help — a written report every month.","w4.h":"Female teachers for girls","w4.p":"Female teachers are available for girls and women on request.",
- "faq.h2":"Common questions","q1":"Where are classes held?","a1":"On Zoom or Google Meet. After enrolment you receive the class link and time on WhatsApp. Join from a phone or computer.","q2":"My child is very young — can they manage?","a2":"We enrol from age 5. Children’s classes are 25–30 minutes and taught through play. See for yourself in the 3-day trial.","q3":"When are classes?","a3":"Several batches in the morning, afternoon and evening. We match times for students abroad.","q4":"How do I pay?","a4":"By bKash, Nagad, Rocket or bank transfer. Send the transaction ID on WhatsApp and it’s confirmed within 24 hours.","q5":"What if I want to stop?","a5":"You can stop in any month. No commitment.",
- "ct.h2":"Talk to us about enrolment or anything else","ct.p":"Available on WhatsApp and phone every day, 9am to 10pm.","ct.bank":"Bank transfer","ct.wa":"Message on WhatsApp","ct.hint":"In your message include: student’s name, age, course, preferred time.",
- "nav.apply":"Apply","ap.h2":"Apply for admission","ap.lead":"Fill in the form — we’ll contact you on WhatsApp within 24 hours with your free trial class time.",
- "f.name":"Student’s name","f.age":"Age","f.guardian":"Guardian’s name (for children)","f.phone":"WhatsApp number","f.course":"Course","f.choose":"Choose","f.plan":"Class type","f.time":"Preferred time","t.m":"Morning (7–11am)","t.a":"Afternoon (3–6pm)","t.e":"Evening (7–10pm)","f.note":"Anything else (optional)","f.submit":"Submit application",
- "f.ok":"Application received. We’ll message you on WhatsApp soon, in sha Allah.","f.err":"Couldn’t submit. Check your name, number and course, or message us on WhatsApp.","f.sending":"Sending…",
- "foot":"© 2026 Darul Ilm Online. All rights reserved."
-},
-ar:{"mb.apply":"سجّل الآن","nav.lib":"المكتبة","cn.wa.s":"أرسل رسالة أو صوتًا أو صورة أو PDF","cn.tgm.s":"راسلنا مباشرة","cn.tgc":"قناة تيليجرام","cn.tgc.s":"دروس وإعلانات ودورات جديدة","cn.tgg":"مجموعة تيليجرام","cn.tgg.s":"أسئلة ونقاش","cn.rec":"أرسل تلاوتك","cn.rec.s":"سجّلها أو ارفع ملفًا صوتيًا","cn.lib":"المكتبة","cn.lib.s":"صور وPDF وفيديو وصوت","f.more":"معلومات إضافية (اختياري)",
- "brand":"دار العلم أونلاين","tagline":"تعلّم الدين من بيتك",
- "nav.courses":"الدورات","nav.how":"كيف تبدأ","nav.fee":"الرسوم","nav.faq":"الأسئلة","nav.contact":"تواصل",
- "hero.h1":"تعلّم القرآن والصلاة والعربية من بيتك","hero.p":"دروس مباشرة من بيتك مع معلمين ذوي خبرة — للأطفال والكبار. أول ثلاثة أيام مجانًا.",
- "hero.cta1":"ابدأ ثلاثة أيام مجانية","hero.cta2":"تحدّث عبر واتساب","hero.f1":"دروس مباشرة ومسجّلة","hero.f2":"للأطفال والكبار","hero.f3":"تحويل بنكي · STC Pay · بيكاش",
- "hero.iqra":"سورة العلق — أول ما نزل من الوحي",
- "c.more":"عرض التفاصيل","courses.h2":"الدورات","courses.lead":"كل دورة فيها ٣–٥ دروس مباشرة أسبوعيًا، وتسجيل لكل درس، وتقرير تقدّم شهري.",
- "c1.h":"القاعدة النورانية","c1.p":"من معرفة الحروف إلى قراءة القرآن قراءة صحيحة. من البداية تمامًا.","c1.for":"للأطفال والكبار المبتدئين",
- "c2.h":"تلاوة القرآن بالتجويد","c2.p":"المخارج والصفات وأحكام التجويد لتلاوة جميلة وصحيحة.","c2.for":"لمن يقرأ ويريد الإتقان",
- "c3.h":"حفظ القرآن","c3.p":"حفظ ومراجعة يومية بطريقة السبق والسبقي والمراجعة. إشراف فردي.","c3.for":"للطلاب الجادّين",
- "c4.h":"الصلاة والأدعية المأثورة والأعمال اليومية","c4.p":"الصلاة الصحيحة، الوضوء والغسل، الأدعية المأثورة، وأذكار الصباح والمساء — بالدليل.","c4.for":"للجميع",
- "c5.h":"اللغة العربية (مبتدئ)","c5.p":"المفردات والقواعد اللازمة لفهم القرآن. خطوة بخطوة.","c5.for":"للكبار",
- "how.h2":"كيف تبدأ","how.lead":"من التسجيل إلى أول درس — عادة خلال يوم واحد.",
- "s1.h":"املأ النموذج","s1.p":"الاسم والعمر والدورة والوقت المفضّل. دقيقتان فقط.","s2.h":"دروس تجريبية مجانية","s2.p":"احضر الدروس المباشرة ثلاثة أيام وتأكّد من المعلم والطريقة.","s3.h":"أرسل الرسوم","s3.p":"عبر بيكاش أو ناجاد أو روكيت أو البنك وأرسل رقم العملية.","s4.h":"دروس منتظمة","s4.p":"دروس مباشرة في وقتك المحدد، مع التسجيلات وتقرير شهري.",
- "fee.h2":"الرسوم الشهرية","fee.lead":"لا رسوم تسجيل. أول ثلاثة أيام مجانًا — إن لم يعجبك فلا تدفع شيئًا.","fee.mo":"/شهر","fee.cta":"جرّب مجانًا",
- "p1.price":"٢٠ ر.س","p2.price":"٤٠ ر.س","p3.price":"٦٠ ر.س","p1.h":"مجموعة","p1.l1":"٣ دروس مباشرة أسبوعيًا","p1.l2":"مجموعات من ٨–١٠","p1.l3":"تسجيل كل الدروس","p1.l4":"تقرير تقدّم شهري",
- "p2.tag":"الأكثر طلبًا","p2.h":"مجموعة صغيرة","p2.l1":"٥ دروس مباشرة أسبوعيًا","p2.l2":"مجموعات من ٣–٤","p2.l3":"تسجيل كل الدروس","p2.l4":"مكالمة شهرية مع ولي الأمر",
- "p3.h":"درس فردي","p3.l1":"٥ أيام أسبوعيًا، لك وحدك","p3.l2":"في الوقت الذي يناسبك","p3.l3":"مناسب للحفظ","p3.l4":"تقرير تقدّم أسبوعي",
- "fee.note":"الأسعار بالريال السعودي للمقيمين في الخليج (ما يعادل ٥٠٠ / ١٠٠٠ / ١٥٠٠ تاكا). خصم ٢٠٪ للطالب الثاني من نفس الأسرة.",
- "why.h2":"لماذا دار العلم أونلاين","w1.h":"معلمون موثوقون","w1.p":"كل معلم حاصل على إجازة من مدرسة معتمدة ومختار بعد مقابلة.","w2.h":"تسجيل إن فاتك الدرس","w2.p":"كل درس مباشر مسجّل — شاهده في أي وقت.","w3.h":"تقارير لأولياء الأمور","w3.p":"ما الذي تعلّمه ابنك وأين يحتاج مساعدة — تقرير مكتوب كل شهر.","w4.h":"معلمات للبنات","w4.p":"تتوفر معلمات للبنات والنساء عند الطلب.",
- "faq.h2":"أسئلة شائعة","q1":"أين تُقام الدروس؟","a1":"عبر زووم أو جوجل ميت. بعد التسجيل يصلك رابط الدرس ووقته على واتساب. من الهاتف أو الحاسوب.","q2":"طفلي صغير جدًا، هل يستطيع؟","a2":"نقبل من عمر ٥ سنوات. دروس الأطفال ٢٥–٣٠ دقيقة بأسلوب اللعب. جرّب ثلاثة أيام وقرّر.","q3":"متى الدروس؟","a3":"عدة مجموعات صباحًا وظهرًا ومساءً. ونوفّق الأوقات للمقيمين في الخارج.","q4":"كيف أدفع؟","a4":"عبر بيكاش أو ناجاد أو روكيت أو تحويل بنكي. أرسل رقم العملية على واتساب ويُؤكَّد خلال ٢٤ ساعة.","q5":"ماذا لو أردت التوقف؟","a5":"يمكنك التوقف في أي شهر. لا التزام.",
- "ct.h2":"تواصل معنا للتسجيل أو لأي سؤال","ct.p":"متاحون على واتساب والهاتف يوميًا من ٩ صباحًا حتى ١٠ مساءً.","ct.bank":"تحويل بنكي / STC Pay","ct.wa":"راسلنا على واتساب","ct.hint":"اكتب في رسالتك: اسم الطالب، العمر، الدورة، الوقت المفضّل.",
- "nav.apply":"التسجيل","ap.h2":"طلب التسجيل","ap.lead":"املأ النموذج — سنتواصل معك على واتساب خلال ٢٤ ساعة بموعد الدرس التجريبي المجاني.",
- "f.name":"اسم الطالب","f.age":"العمر","f.guardian":"اسم ولي الأمر (للأطفال)","f.phone":"رقم واتساب","f.course":"الدورة","f.choose":"اختر","f.plan":"نوع الدرس","f.time":"الوقت المفضّل","t.m":"صباحًا (٧–١١)","t.a":"عصرًا (٣–٦)","t.e":"مساءً (٧–١٠)","f.note":"أي ملاحظة (اختياري)","f.submit":"إرسال الطلب",
- "f.ok":"وصل طلبك. سنراسلك على واتساب قريبًا إن شاء الله.","f.err":"تعذّر الإرسال. تحقّق من الاسم والرقم والدورة، أو راسلنا على واتساب.","f.sending":"جارٍ الإرسال…",
- "foot":"© ٢٠٢٦ دار العلم أونلاين. جميع الحقوق محفوظة."
-}};
+const T={"bn": {}, "en": {"mb.apply": "Enrol", "nav.lib": "Library", "cn.wa.s": "Send a message, voice note, photo or PDF", "cn.tgm.s": "Message us directly", "cn.tgc": "Telegram channel", "cn.tgc.s": "Lessons, announcements and new courses", "cn.tgg": "Telegram group", "cn.tgg.s": "Questions and discussion", "cn.rec": "Send your recitation", "cn.rec.s": "Record it or upload a voice file", "cn.lib": "Library", "cn.lib.s": "Photos, PDFs, videos and audio", "f.more": "Add more details (optional)", "brand": "Darul Ilm Online", "tagline": "Learn deen from home", "nav.courses": "Courses", "nav.how": "How to start", "nav.fee": "Fees", "nav.faq": "FAQ", "nav.contact": "Contact", "hero.h1": "Learn Quran, salah and Arabic from home", "hero.p": "Live classes from home with experienced teachers — for children and adults. First 3 days free.", "hero.cta1": "Start 3 free days", "hero.cta2": "Talk on WhatsApp", "hero.f1": "Live + recorded classes", "hero.f2": "Children and adults", "hero.f3": "bKash · Nagad · Rocket · Bank", "hero.iqra": "“Read” — Surah Al-Alaq, the first revelation", "c.more": "View details", "courses.h2": "Courses", "courses.lead": "Every course has 3–5 live classes a week, a recording of each class, and a monthly progress report.", "c1.h": "Noorani Qaida", "c1.p": "From recognising letters to reading the Quran correctly. From the very beginning.", "c1.for": "Children and adults learning to read", "c2.h": "Quran recitation with Tajweed", "c2.p": "Makharij, sifaat and the rules of tajweed for beautiful, accurate recitation.", "c2.for": "For those who can read and want to perfect it", "c3.h": "Hifz ul-Quran", "c3.p": "Daily memorisation and revision in the sabaq, sabqi and amukhta method. Individual supervision.", "c3.for": "For serious students", "c4.h": "Salah, masnoon duas and daily amal", "c4.p": "Correct salah, wudu and ghusl, masnoon duas, and morning-evening adhkar — with evidence.", "c4.for": "For everyone", "c5.h": "Arabic language (beginner)", "c5.p": "The vocabulary and grammar you need to understand the Quran. Step by step.", "c5.for": "For adults", "how.h2": "How to start", "how.lead": "From enrolment to your first class — usually within a day.", "s1.h": "Fill in the form", "s1.p": "Name, age, course and preferred time. Takes 2 minutes.", "s2.h": "Free trial classes", "s2.p": "Join live classes for 3 days and check the teacher and method.", "s3.h": "Send the fee", "s3.p": "Pay via bKash, Nagad, Rocket or bank and share the transaction ID.", "s4.h": "Regular classes", "s4.p": "Live classes at your set time, recordings and a monthly report.", "fee.h2": "Monthly fees", "fee.lead": "No admission fee. First 3 days free — if it’s not for you, you pay nothing.", "fee.mo": "/month", "fee.cta": "Take the free trial", "p1.price": "৳500", "p2.price": "৳1,000", "p3.price": "৳1,500", "p1.h": "Group class", "p1.l1": "3 live classes a week", "p1.l2": "Groups of 8–10", "p1.l3": "All class recordings", "p1.l4": "Monthly progress report", "p2.tag": "Most popular", "p2.h": "Small group", "p2.l1": "5 live classes a week", "p2.l2": "Groups of 3–4", "p2.l3": "All class recordings", "p2.l4": "Monthly call with parents", "p3.h": "One-to-one", "p3.l1": "5 days a week, just for you", "p3.l2": "Your own schedule", "p3.l3": "Ideal for hifz", "p3.l4": "Weekly progress report", "fee.note": "20% off for a second student from the same family. Fees are reviewed once a year.", "why.h2": "Why Darul Ilm Online", "w1.h": "Verified teachers", "w1.p": "Every teacher is certified by a recognised madrasa and selected through interview.", "w2.h": "Recordings if you miss a class", "w2.p": "Every live class is recorded — watch it again any time.", "w3.h": "Reports for parents", "w3.p": "How far your child has come and where they need help — a written report every month.", "w4.h": "Female teachers for girls", "w4.p": "Female teachers are available for girls and women on request.", "faq.h2": "Common questions", "q1": "Where are classes held?", "a1": "On Zoom or Google Meet. After enrolment you receive the class link and time on WhatsApp. Join from a phone or computer.", "q2": "My child is very young — can they manage?", "a2": "We enrol from age 5. Children’s classes are 25–30 minutes and taught through play. See for yourself in the 3-day trial.", "q3": "When are classes?", "a3": "Several batches in the morning, afternoon and evening. We match times for students abroad.", "q4": "How do I pay?", "a4": "By bKash, Nagad, Rocket or bank transfer. Send the transaction ID on WhatsApp and it’s confirmed within 24 hours.", "q5": "What if I want to stop?", "a5": "You can stop in any month. No commitment.", "ct.h2": "Talk to us about enrolment or anything else", "ct.p": "Available on WhatsApp and phone every day, 9am to 10pm.", "ct.bank": "Bank transfer", "ct.wa": "Message on WhatsApp", "ct.hint": "In your message include: student’s name, age, course, preferred time.", "nav.apply": "Apply", "ap.h2": "Apply for admission", "ap.lead": "Fill in the form — we’ll contact you on WhatsApp within 24 hours with your free trial class time.", "f.name": "Student’s name", "f.age": "Age", "f.guardian": "Guardian’s name (for children)", "f.phone": "WhatsApp number", "f.course": "Course", "f.choose": "Choose", "f.plan": "Class type", "f.time": "Preferred time", "t.m": "Morning (7–11am)", "t.a": "Afternoon (3–6pm)", "t.e": "Evening (7–10pm)", "f.note": "Anything else (optional)", "f.submit": "Submit application", "f.ok": "Application received. We’ll message you on WhatsApp soon, in sha Allah.", "f.err": "Couldn’t submit. Check your name, number and course, or message us on WhatsApp.", "f.sending": "Sending…", "foot": "© 2026 Darul Ilm Online. All rights reserved.", "hdr.cta": "Book free class", "hb.badge": "The House of Knowledge — online madrasa", "hb.t1": "Learn the Quran and deen from home,", "hb.t2": "with experienced teachers", "hb.cta": "Book 3 free classes →", "hb.all": "View all courses", "hb.n1": "16+", "hb.s1": "subjects", "hb.n2": "3", "hb.s2": "languages across the site", "hb.n3": "3 days", "hb.s3": "free trial classes", "hb.n4": "Live", "hb.s4": "classes directly with a teacher", "hb.live": "Live online madrasa", "hb.chip": "Admissions open", "hb.why": "Why Darul Ilm Online", "hb.f1": "Live classes", "hb.f1d": "Directly with a teacher on Zoom/Meet", "hb.f2": "Recordings", "hb.f2d": "Watch every class again later", "hb.f3": "Monthly report", "hb.f3d": "Written progress for parents", "hb.f4": "Small batch or 1-on-1", "hb.f4d": "Everyone gets attention", "hb.f5": "Three languages", "hb.f5d": "Site in Bangla, English and Arabic", "hb.f6": "Free courses", "hb.f6d": "Free lessons with Q&A", "hb.cta2": "Book 3 free classes", "hb.call": "Call"}, "ar": {"mb.apply": "سجّل الآن", "nav.lib": "المكتبة", "cn.wa.s": "أرسل رسالة أو صوتًا أو صورة أو PDF", "cn.tgm.s": "راسلنا مباشرة", "cn.tgc": "قناة تيليجرام", "cn.tgc.s": "دروس وإعلانات ودورات جديدة", "cn.tgg": "مجموعة تيليجرام", "cn.tgg.s": "أسئلة ونقاش", "cn.rec": "أرسل تلاوتك", "cn.rec.s": "سجّلها أو ارفع ملفًا صوتيًا", "cn.lib": "المكتبة", "cn.lib.s": "صور وPDF وفيديو وصوت", "f.more": "معلومات إضافية (اختياري)", "brand": "دار العلم أونلاين", "tagline": "تعلّم الدين من بيتك", "nav.courses": "الدورات", "nav.how": "كيف تبدأ", "nav.fee": "الرسوم", "nav.faq": "الأسئلة", "nav.contact": "تواصل", "hero.h1": "تعلّم القرآن والصلاة والعربية من بيتك", "hero.p": "دروس مباشرة من بيتك مع معلمين ذوي خبرة — للأطفال والكبار. أول ثلاثة أيام مجانًا.", "hero.cta1": "ابدأ ثلاثة أيام مجانية", "hero.cta2": "تحدّث عبر واتساب", "hero.f1": "دروس مباشرة ومسجّلة", "hero.f2": "للأطفال والكبار", "hero.f3": "تحويل بنكي · STC Pay · بيكاش", "hero.iqra": "سورة العلق — أول ما نزل من الوحي", "c.more": "عرض التفاصيل", "courses.h2": "الدورات", "courses.lead": "كل دورة فيها ٣–٥ دروس مباشرة أسبوعيًا، وتسجيل لكل درس، وتقرير تقدّم شهري.", "c1.h": "القاعدة النورانية", "c1.p": "من معرفة الحروف إلى قراءة القرآن قراءة صحيحة. من البداية تمامًا.", "c1.for": "للأطفال والكبار المبتدئين", "c2.h": "تلاوة القرآن بالتجويد", "c2.p": "المخارج والصفات وأحكام التجويد لتلاوة جميلة وصحيحة.", "c2.for": "لمن يقرأ ويريد الإتقان", "c3.h": "حفظ القرآن", "c3.p": "حفظ ومراجعة يومية بطريقة السبق والسبقي والمراجعة. إشراف فردي.", "c3.for": "للطلاب الجادّين", "c4.h": "الصلاة والأدعية المأثورة والأعمال اليومية", "c4.p": "الصلاة الصحيحة، الوضوء والغسل، الأدعية المأثورة، وأذكار الصباح والمساء — بالدليل.", "c4.for": "للجميع", "c5.h": "اللغة العربية (مبتدئ)", "c5.p": "المفردات والقواعد اللازمة لفهم القرآن. خطوة بخطوة.", "c5.for": "للكبار", "how.h2": "كيف تبدأ", "how.lead": "من التسجيل إلى أول درس — عادة خلال يوم واحد.", "s1.h": "املأ النموذج", "s1.p": "الاسم والعمر والدورة والوقت المفضّل. دقيقتان فقط.", "s2.h": "دروس تجريبية مجانية", "s2.p": "احضر الدروس المباشرة ثلاثة أيام وتأكّد من المعلم والطريقة.", "s3.h": "أرسل الرسوم", "s3.p": "عبر بيكاش أو ناجاد أو روكيت أو البنك وأرسل رقم العملية.", "s4.h": "دروس منتظمة", "s4.p": "دروس مباشرة في وقتك المحدد، مع التسجيلات وتقرير شهري.", "fee.h2": "الرسوم الشهرية", "fee.lead": "لا رسوم تسجيل. أول ثلاثة أيام مجانًا — إن لم يعجبك فلا تدفع شيئًا.", "fee.mo": "/شهر", "fee.cta": "جرّب مجانًا", "p1.price": "٢٠ ر.س", "p2.price": "٤٠ ر.س", "p3.price": "٦٠ ر.س", "p1.h": "مجموعة", "p1.l1": "٣ دروس مباشرة أسبوعيًا", "p1.l2": "مجموعات من ٨–١٠", "p1.l3": "تسجيل كل الدروس", "p1.l4": "تقرير تقدّم شهري", "p2.tag": "الأكثر طلبًا", "p2.h": "مجموعة صغيرة", "p2.l1": "٥ دروس مباشرة أسبوعيًا", "p2.l2": "مجموعات من ٣–٤", "p2.l3": "تسجيل كل الدروس", "p2.l4": "مكالمة شهرية مع ولي الأمر", "p3.h": "درس فردي", "p3.l1": "٥ أيام أسبوعيًا، لك وحدك", "p3.l2": "في الوقت الذي يناسبك", "p3.l3": "مناسب للحفظ", "p3.l4": "تقرير تقدّم أسبوعي", "fee.note": "الأسعار بالريال السعودي للمقيمين في الخليج (ما يعادل ٥٠٠ / ١٠٠٠ / ١٥٠٠ تاكا). خصم ٢٠٪ للطالب الثاني من نفس الأسرة.", "why.h2": "لماذا دار العلم أونلاين", "w1.h": "معلمون موثوقون", "w1.p": "كل معلم حاصل على إجازة من مدرسة معتمدة ومختار بعد مقابلة.", "w2.h": "تسجيل إن فاتك الدرس", "w2.p": "كل درس مباشر مسجّل — شاهده في أي وقت.", "w3.h": "تقارير لأولياء الأمور", "w3.p": "ما الذي تعلّمه ابنك وأين يحتاج مساعدة — تقرير مكتوب كل شهر.", "w4.h": "معلمات للبنات", "w4.p": "تتوفر معلمات للبنات والنساء عند الطلب.", "faq.h2": "أسئلة شائعة", "q1": "أين تُقام الدروس؟", "a1": "عبر زووم أو جوجل ميت. بعد التسجيل يصلك رابط الدرس ووقته على واتساب. من الهاتف أو الحاسوب.", "q2": "طفلي صغير جدًا، هل يستطيع؟", "a2": "نقبل من عمر ٥ سنوات. دروس الأطفال ٢٥–٣٠ دقيقة بأسلوب اللعب. جرّب ثلاثة أيام وقرّر.", "q3": "متى الدروس؟", "a3": "عدة مجموعات صباحًا وظهرًا ومساءً. ونوفّق الأوقات للمقيمين في الخارج.", "q4": "كيف أدفع؟", "a4": "عبر بيكاش أو ناجاد أو روكيت أو تحويل بنكي. أرسل رقم العملية على واتساب ويُؤكَّد خلال ٢٤ ساعة.", "q5": "ماذا لو أردت التوقف؟", "a5": "يمكنك التوقف في أي شهر. لا التزام.", "ct.h2": "تواصل معنا للتسجيل أو لأي سؤال", "ct.p": "متاحون على واتساب والهاتف يوميًا من ٩ صباحًا حتى ١٠ مساءً.", "ct.bank": "تحويل بنكي / STC Pay", "ct.wa": "راسلنا على واتساب", "ct.hint": "اكتب في رسالتك: اسم الطالب، العمر، الدورة، الوقت المفضّل.", "nav.apply": "التسجيل", "ap.h2": "طلب التسجيل", "ap.lead": "املأ النموذج — سنتواصل معك على واتساب خلال ٢٤ ساعة بموعد الدرس التجريبي المجاني.", "f.name": "اسم الطالب", "f.age": "العمر", "f.guardian": "اسم ولي الأمر (للأطفال)", "f.phone": "رقم واتساب", "f.course": "الدورة", "f.choose": "اختر", "f.plan": "نوع الدرس", "f.time": "الوقت المفضّل", "t.m": "صباحًا (٧–١١)", "t.a": "عصرًا (٣–٦)", "t.e": "مساءً (٧–١٠)", "f.note": "أي ملاحظة (اختياري)", "f.submit": "إرسال الطلب", "f.ok": "وصل طلبك. سنراسلك على واتساب قريبًا إن شاء الله.", "f.err": "تعذّر الإرسال. تحقّق من الاسم والرقم والدورة، أو راسلنا على واتساب.", "f.sending": "جارٍ الإرسال…", "foot": "© ٢٠٢٦ دار العلم أونلاين. جميع الحقوق محفوظة.", "hdr.cta": "احجز درسًا مجانيًا", "hb.badge": "بيت العلم — مدرسة إلكترونية", "hb.t1": "تعلّم القرآن والدين من بيتك،", "hb.t2": "مع معلمين ذوي خبرة", "hb.cta": "احجز ثلاثة دروس مجانية ←", "hb.all": "عرض كل الدورات", "hb.n1": "+١٦", "hb.s1": "مادة", "hb.n2": "٣", "hb.s2": "لغات في الموقع كله", "hb.n3": "٣ أيام", "hb.s3": "دروس تجريبية مجانية", "hb.n4": "مباشر", "hb.s4": "دروس مباشرة مع المعلم", "hb.live": "مدرسة إلكترونية مباشرة", "hb.chip": "التسجيل مفتوح", "hb.why": "لماذا دار العلم أونلاين", "hb.f1": "دروس مباشرة", "hb.f1d": "مع المعلم مباشرة عبر زووم/ميت", "hb.f2": "التسجيلات", "hb.f2d": "شاهد كل درس مرة أخرى", "hb.f3": "تقرير شهري", "hb.f3d": "تقدّم مكتوب لولي الأمر", "hb.f4": "مجموعة صغيرة أو فردي", "hb.f4d": "كل طالب يحظى بالاهتمام", "hb.f5": "ثلاث لغات", "hb.f5d": "الموقع بالبنغالية والإنجليزية والعربية", "hb.f6": "دورات مجانية", "hb.f6d": "دروس مجانية مع أسئلة وأجوبة", "hb.cta2": "احجز ثلاثة دروس مجانية", "hb.call": "اتصال"}};
 // store Bangla originals
 document.querySelectorAll("[data-i18n]").forEach(el=>{T.bn[el.dataset.i18n]=el.textContent;});
 T.bn["f.ok"]="আবেদন জমা হয়েছে। ইনশাআল্লাহ শীঘ্রই WhatsApp-এ মেসেজ পাবেন।";T.bn["f.err"]="জমা হয়নি। নাম, নম্বর ও কোর্স ঠিক আছে কি না দেখুন, অথবা WhatsApp-এ মেসেজ দিন।";T.bn["f.sending"]="পাঠানো হচ্ছে…";
@@ -974,5 +961,7 @@ new MutationObserver(render).observe(document.documentElement,{attributes:true,a
 <script>
 fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/courses?select=slug,sort,cat,ages,glyph,content&published=eq.true&order=sort.asc",{headers:{apikey:"sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg",Authorization:"Bearer sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg"}}).then(r=>r.ok?r.json():null).then(d=>{if(!d)return;const sel=document.querySelector("#applyForm select[name=\"course\"]");if(!sel)return;const have=new Set([...sel.options].map(o=>o.value));d.forEach(c=>{if(!have.has(c.slug)){const o=document.createElement("option");o.value=c.slug;o.textContent=c.content.bn.t;sel.appendChild(o);}});const q=new URLSearchParams(location.search).get("course");if(q&&sel.name==="course")sel.value=q;}).catch(()=>{});
 </script>
+<a class="wa-float" href="https://wa.me/8801329173444" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.2 1.2z"/></svg></a>
+<script>document.querySelectorAll(".links a").forEach(function(a){try{var r=a.getAttribute("href")||"";if(r.charAt(0)!=="/"||r.indexOf("#")>=0)return;var p=new URL(a.href,location.href).pathname.replace(/\.html$/,"").replace(/\/$/,"");var q=location.pathname.replace(/\.html$/,"").replace(/\/$/,"");if(p&&p===q)a.classList.add("on");}catch(e){}});</script>
 </body>
 </html>

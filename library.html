@@ -552,6 +552,60 @@ header{box-shadow:none}
 .lx{background:#fff!important;border:1px solid var(--line)!important;box-shadow:none}
 .lx:hover,.lx:focus-visible{box-shadow:0 10px 24px rgba(0,0,0,.06);border-color:var(--gold)!important}
 .course{box-shadow:none}
+
+/* ---- v11: pill menu, yellow buttons, new home hero ---- */
+:root{--yel:#F6B91A;--yel-d:#E4A50A;--grn:#0A7A55}
+header{background:rgba(255,255,255,.94)!important;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.nav{height:76px}
+.links{background:#F5F6F4;border:1px solid var(--line);border-radius:999px;padding:5px;gap:2px!important}
+.links a{padding:8px 15px;border-radius:999px;color:#3D4B50!important;font-weight:600;font-size:15px;transition:background .15s}
+.links a::after{display:none!important}
+.links a:hover{background:#fff;color:var(--text)!important}
+.links a.on{background:#fff;color:var(--text)!important;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.btn{border-radius:14px;font-weight:800;letter-spacing:.01em}
+.btn-primary,.hero .btn-primary,.chero .btn-primary{background:var(--yel);color:#1A1A1A;border-color:var(--yel);box-shadow:0 8px 18px rgba(246,185,26,.32);filter:none}
+.btn-primary:hover{background:var(--yel-d);border-color:var(--yel-d);box-shadow:0 10px 22px rgba(246,185,26,.4);filter:none}
+.btn-ghost,.hero .btn-ghost,.chero .btn-ghost,.shelf .btn-ghost{background:#fff;color:var(--text)!important;border:1.5px solid #DCE2DF}
+.btn-ghost:hover{border-color:var(--grn)}
+.hdr-cta{padding:10px 18px!important;font-size:15px!important;white-space:nowrap}
+.lang{border-color:var(--line)!important;background:#fff}
+@media(max-width:760px){.hdr-cta{display:none}}
+.wa-float{position:fixed;inset-inline-end:22px;bottom:24px;z-index:45;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;display:grid;place-items:center;box-shadow:0 10px 26px rgba(37,211,102,.45)}
+.wa-float svg{width:30px;height:30px}
+.wa-float:hover{transform:scale(1.05)}
+@media(max-width:760px){.wa-float{display:none}}
+/* home hero */
+.hero.hero2{background:radial-gradient(700px 360px at 62% 30%,rgba(10,122,85,.07),transparent 70%),linear-gradient(rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,#FBFCFB!important;padding:64px 0 70px}
+.h2grid{display:grid;gap:40px;align-items:center}
+@media(min-width:1040px){.hero.hero2 .wrap.h2grid{grid-template-columns:1.25fr .9fr!important}}
+.hero2 .wrap>div{max-width:none}
+.h2badge{display:inline-flex;align-items:center;gap:10px;border:1px solid #BFE3D2;background:#F1FAF5;color:#0B5E43;border-radius:999px;padding:7px 16px;font-size:15px;font-weight:600;margin-bottom:22px}
+.h2badge .ar{font-family:var(--font-ar),"Amiri",serif;font-size:18px}
+.h2badge i{width:6px;height:6px;border-radius:50%;background:#22A06B}
+.h2t{font-size:clamp(34px,4.7vw,58px)!important;line-height:1.12!important;letter-spacing:-.01em;margin-bottom:20px!important;color:#111!important}
+.h2t em{font-style:normal;color:var(--grn);display:block}
+.hero2 p{font-size:clamp(17px,1.6vw,20px)!important;color:#4A5558!important;max-width:620px}
+.hero2 .hero-cta .btn{padding:17px 28px;font-size:17px}
+.h2stats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:38px;padding-top:26px;border-top:1px solid var(--line)}
+@media(min-width:640px){.h2stats{grid-template-columns:repeat(4,1fr)}}
+.h2stats b{display:block;font-size:30px;line-height:1.1;color:var(--grn)}
+.h2stats span{font-size:14px;color:#56636A}
+.h2card{background:#fff;border:1px solid var(--line);border-radius:26px;padding:24px;box-shadow:0 24px 60px rgba(15,40,30,.10)}
+.h2ch{display:flex;align-items:center;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.h2ch .lg{width:42px;height:42px;border-radius:12px;background:#0F1B1E;color:#fff;display:grid;place-items:center;font-weight:800;font-size:15px;flex:none}
+.h2ch b{display:block;font-size:17px}
+.h2ch small{color:#13865C;font-weight:600;font-size:13px;display:flex;align-items:center;gap:6px}
+.h2ch small::before{content:"";width:7px;height:7px;border-radius:50%;background:#22C55E}
+.h2ch .chip{margin-inline-start:auto;border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;background:#F7F8F6;white-space:nowrap}
+.h2why{font-size:13px;font-weight:800;letter-spacing:.06em;color:#7A858A;margin:20px 0 12px}
+.h2f{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.h2f div{border:1px solid var(--line);border-radius:14px;padding:12px 13px}
+.h2f b{display:flex;align-items:center;gap:8px;font-size:15px}
+.h2f b i{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;flex:none;font-style:normal;font-size:13px}
+.h2f span{display:block;font-size:13px;color:#69757A;margin-top:3px;line-height:1.45}
+.h2act{display:flex;gap:10px;margin-top:18px}
+.h2act .btn-primary{flex:1;justify-content:center;padding:14px}
+.h2act .btn-ghost{padding:14px 18px}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
@@ -565,7 +619,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 <header><div class="wrap nav">
   <a class="logo" href="/"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="31" fill="var(--brand)"/><path d="M18 36h28v3H18z" fill="var(--accent)"/><path d="M20 36a12 12 0 0 1 24 0z" fill="var(--accent)"/><path d="M32 22l-1.5-5h3z" fill="var(--accent)"/><circle cx="32" cy="14" r="2" fill="var(--accent)"/><path d="M20 44l12 3 12-3v6l-12 3-12-3z" fill="#FBF7EE"/></svg><span><span>দারুল ইলম অনলাইন</span><small>ঘরে বসে দ্বীন শিক্ষা</small></span></a>
   <nav class="links" aria-label="main"><a href="/">হোম</a><a href="/#courses">কোর্স</a><a href="/library">লাইব্রেরি</a><a href="/#pricing">ফি</a><a href="/rules">নিয়মাবলি</a><a href="/teachers">শিক্ষক নিয়োগ</a><a href="/#contact">যোগাযোগ</a></nav>
-  <div class="nav-r"><button class="setbtn" id="setBtn" aria-label="থিম ও ফন্ট সেটিং" aria-expanded="false" aria-controls="setDrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="12" cy="7" r="1.2" fill="currentColor"/><circle cx="16.5" cy="10.5" r="1.2" fill="currentColor"/></svg>সাজসজ্জা</button><a class="btn btn-primary" style="padding:10px 18px;font-size:15px" href="/#apply">ভর্তি</a></div>
+  <div class="nav-r"><button class="setbtn" id="setBtn" aria-label="থিম ও ফন্ট সেটিং" aria-expanded="false" aria-controls="setDrawer"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22a10 10 0 1 1 10-10c0 2.8-2.2 4-4 4h-2a2 2 0 0 0-1.5 3.3A2 2 0 0 1 12 22z"/><circle cx="7.5" cy="10.5" r="1.2" fill="currentColor"/><circle cx="12" cy="7" r="1.2" fill="currentColor"/><circle cx="16.5" cy="10.5" r="1.2" fill="currentColor"/></svg>সাজসজ্জা</button><a class="btn btn-primary hdr-cta" href="/#apply">ফ্রি ক্লাস বুক করুন</a></div>
 </div></header>
 <div class="band" aria-hidden="true"></div>
 <main>
@@ -716,4 +770,6 @@ fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/media?select=*&published
 <script>
 fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/courses?select=slug,sort,cat,ages,glyph,content&published=eq.true&order=sort.asc",{headers:{apikey:"sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg",Authorization:"Bearer sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg"}}).then(r=>r.ok?r.json():null).then(d=>{if(!d)return;const sel=document.querySelector("#libCourse");if(!sel)return;const have=new Set([...sel.options].map(o=>o.value));d.forEach(c=>{if(!have.has(c.slug)){const o=document.createElement("option");o.value=c.slug;o.textContent=c.content.bn.t;sel.appendChild(o);}});const q=new URLSearchParams(location.search).get("course");if(q&&sel.name==="course")sel.value=q;}).catch(()=>{});
 </script>
+<a class="wa-float" href="https://wa.me/8801329173444" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.2 1.2z"/></svg></a>
+<script>document.querySelectorAll(".links a").forEach(function(a){try{var r=a.getAttribute("href")||"";if(r.charAt(0)!=="/"||r.indexOf("#")>=0)return;var p=new URL(a.href,location.href).pathname.replace(/\.html$/,"").replace(/\/$/,"");var q=location.pathname.replace(/\.html$/,"").replace(/\/$/,"");if(p&&p===q)a.classList.add("on");}catch(e){}});</script>
 </body></html>
