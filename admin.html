@@ -87,7 +87,7 @@ td audio{width:220px;height:36px}
       <div><h1>অ্যাডমিন প্যানেল — দারুল ইলম অনলাইন</h1><div class="muted" id="who"></div></div>
       <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
     </div>
-    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
     <div id="panel-apps">
     <div class="stats" id="stats"></div>
     <div class="tools">
@@ -168,6 +168,29 @@ td audio{width:220px;height:36px}
     <div id="panel-recs" style="display:none">
       <p class="muted" style="margin-bottom:6px">শিক্ষার্থীদের পাঠানো তিলাওয়াত। "শুনুন" চাপলে এখানেই বাজবে।</p><p class="muted" id="cleanNote" style="margin-bottom:12px">৩০ দিনের পুরোনো তিলাওয়াত অ্যাডমিন প্যানেল খুললেই নিজে মুছে যায়, যাতে জায়গা ভরে না যায়।</p>
       <div class="tbl"><table><thead><tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>কোর্স</th><th>দৈর্ঘ্য</th><th>নোট</th><th>শুনুন</th><th>অবস্থা</th><th></th></tr></thead><tbody id="rrows"></tbody></table></div>
+    </div>
+
+    <div id="panel-learn" style="display:none">
+      <div class="tools"><label class="muted" style="display:flex;gap:8px;align-items:center">কোর্স <select id="lnCourse"><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদসহ কুরআন তিলাওয়াত</option><option value="quran-words">কুরআন শব্দে শব্দে শিক্ষা</option><option value="tafsir">তাফসীর শিক্ষা</option><option value="hifz">হিফযুল কুরআন</option><option value="hadith-words">হাদীস শব্দে শব্দে শিক্ষা</option><option value="dua-words">দোয়া শব্দে শব্দে শিক্ষা</option><option value="salah">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</option><option value="aqidah">আকীদা — ঈমানের মৌলিক শিক্ষা</option><option value="fiqh">ফিকহ ও মাসায়েল</option><option value="seerah">সীরাতুন নবী ﷺ</option><option value="akhlaq">আদব ও আখলাক</option><option value="history">নবীদের কাহিনী ও ইসলামের ইতিহাস</option><option value="arabic">আরবি ভাষা (প্রাথমিক)</option><option value="english">ইংরেজি শিক্ষা (ইসলামিক পরিবেশে)</option><option value="math">গণিত শিক্ষা (ইসলামিক পরিবেশে)</option></select></label><a class="btn-s wa-b" id="lnView" target="_blank" rel="noopener" style="background:var(--teal,#0B3D4A)">সাইটে দেখুন ↗</a></div>
+      <div class="card" style="margin:14px 0 18px">
+        <h1 style="font-size:18px;margin-bottom:12px" id="lnFormT">নতুন পাঠ</h1>
+        <div class="fgrid">
+          <label>অধ্যায় / মডিউল<input id="ln_mod" list="lnMods" placeholder="যেমন: অধ্যায় ১: দৈনন্দিন দোয়া"></label>
+          <label>ক্রম (ছোট সংখ্যা আগে)<input id="ln_sort" type="number" value="10"></label>
+          <label class="wide">পাঠের শিরোনাম<input id="ln_title"></label>
+          <label>ধরন<select id="ln_kind"><option value="article">লেখা</option><option value="video">ভিডিও</option><option value="pdf">PDF</option><option value="audio">অডিও</option><option value="link">লিংক</option></select></label>
+          <label>সময় (মিনিট, ঐচ্ছিক)<input id="ln_min" type="number" min="1"></label>
+          <label class="wide">লিংক — YouTube / PDF / অডিও (ঐচ্ছিক)<input id="ln_url" placeholder="https://..."></label>
+          <label class="wide">অথবা ফাইল আপলোড — PDF, অডিও (সর্বোচ্চ ৫০MB)<input id="ln_file" type="file" accept="application/pdf,audio/*,.opus,.ogg,.m4a,video/*"></label>
+          <label class="wide">লেখা / বিবরণ<textarea id="ln_body" style="min-height:200px" placeholder="# শিরোনাম&#10;সাধারণ লেখা...&#10;&#10;আরবি লাইন আলাদা অনুচ্ছেদে লিখলে বড় করে দেখাবে&#10;&#10;- তালিকা&#10;**মোটা লেখা**&#10;> উদ্ধৃতি"></textarea></label>
+          <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="ln_pub" checked style="width:auto"> সাইটে দেখাবে</label>
+        </div><datalist id="lnMods"></datalist>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="lnSave">সেভ করুন</button><button class="ghost" id="lnCancel" hidden>বাতিল</button><span class="muted" id="lnMsg"></span></div>
+        <p class="muted" style="margin-top:8px;font-size:13px">লেখার নিয়ম: # শিরোনাম · - তালিকা · **মোটা** · &gt; উদ্ধৃতি · খালি লাইন দিয়ে অনুচ্ছেদ আলাদা। শুধু আরবি অনুচ্ছেদ নিজে থেকেই বড় আরবি অক্ষরে দেখাবে।</p>
+      </div>
+      <div class="tbl" style="margin-bottom:26px"><table><thead><tr><th>ক্রম</th><th>অধ্যায়</th><th>শিরোনাম</th><th>ধরন</th><th>সাইটে</th><th></th></tr></thead><tbody id="lnrows"></tbody></table></div>
+      <h1 style="font-size:18px;margin-bottom:10px">প্রশ্নোত্তর <span class="muted" id="qCount"></span></h1>
+      <div id="qlist"></div>
     </div>
 
     <div id="panel-media" style="display:none">
@@ -614,6 +637,71 @@ $("fcSave").onclick=async()=>{
   }catch(e){msg.textContent="হয়নি: "+(e.message||e);}
   $("fcSave").disabled=false;
 };
+
+// ===== পাঠ ও প্রশ্নোত্তর =====
+const LK={article:"লেখা",video:"ভিডিও",pdf:"PDF",audio:"অডিও",link:"লিংক"};
+let LNS=[],lnEdit=null,lnOld=null;
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-learn").style.display=b.dataset.tab==="learn"?"block":"none";
+  if(b.dataset.tab==="learn") loadLearn();
+}));
+$("lnCourse").onchange=()=>{lnReset();loadLearn();};
+function lnReset(){lnEdit=null;lnOld=null;["ln_mod","ln_title","ln_min","ln_url","ln_body"].forEach(i=>$(i).value="");$("ln_kind").value="article";$("ln_file").value="";$("ln_pub").checked=true;
+  $("ln_sort").value=(LNS.length?Math.max(...LNS.map(x=>x.sort))+10:10);$("lnFormT").textContent="নতুন পাঠ";$("lnCancel").hidden=true;}
+$("lnCancel").onclick=()=>{lnReset();$("lnMsg").textContent="";};
+async function loadLearn(){
+  const c=$("lnCourse").value;$("lnView").href="/learn/"+c;
+  const {data,error}=await sb.from("lessons").select("*").eq("course",c).order("sort").order("id");
+  if(error){$("lnrows").innerHTML='<tr><td colspan="6" class="err">লোড হয়নি: '+error.message+' (learn.sql চালানো হয়েছে?)</td></tr>';return;}
+  LNS=data;if(!lnEdit)$("ln_sort").value=(data.length?Math.max(...data.map(x=>x.sort))+10:10);
+  $("lnMods").innerHTML=[...new Set(data.map(x=>x.module).filter(Boolean))].map(m=>`<option value="${esc(m)}">`).join("");
+  $("lnrows").innerHTML=data.length?data.map(x=>`<tr><td>${x.sort}</td><td class="muted">${esc(x.module||"")}</td><td><b>${esc(x.title)}</b></td><td>${LK[x.kind]}</td><td><input type="checkbox" data-lpub="${x.id}" ${x.published?"checked":""}></td><td style="white-space:nowrap"><button class="mini" data-ledit="${x.id}">সম্পাদনা</button> <button class="ghost mini" data-ldel="${x.id}">মুছুন</button></td></tr>`).join(""):'<tr><td colspan="6" class="muted">এই কোর্সে এখনও পাঠ নেই — উপরের ফর্ম দিয়ে প্রথম পাঠ যোগ করুন।</td></tr>';
+  document.querySelectorAll("[data-lpub]").forEach(c=>c.onchange=async()=>{const {error}=await sb.from("lessons").update({published:c.checked}).eq("id",c.dataset.lpub);if(error)alert(error.message);});
+  document.querySelectorAll("[data-ledit]").forEach(b=>b.onclick=()=>{const x=LNS.find(y=>y.id==b.dataset.ledit);lnEdit=x.id;lnOld=x;
+    $("ln_mod").value=x.module||"";$("ln_sort").value=x.sort;$("ln_title").value=x.title;$("ln_kind").value=x.kind;$("ln_min").value=x.minutes||"";$("ln_url").value=x.path?"":(x.url||"");$("ln_body").value=x.body||"";$("ln_pub").checked=x.published;$("ln_file").value="";
+    $("lnFormT").textContent="পাঠ সম্পাদনা"+(x.path?" (আপলোড করা ফাইল আছে — নতুন ফাইল দিলে বদলাবে)":"");$("lnCancel").hidden=false;$("panel-learn").scrollIntoView({behavior:"smooth"});});
+  document.querySelectorAll("[data-ldel]").forEach(b=>b.onclick=async()=>{const x=LNS.find(y=>y.id==b.dataset.ldel);if(!confirm("“"+x.title+"” মুছে ফেলবেন?"))return;
+    if(x.path)await sb.storage.from("media").remove([x.path]);const {error}=await sb.from("lessons").delete().eq("id",x.id);if(error)alert(error.message);loadLearn();});
+  loadQs();
+}
+$("lnSave").onclick=async()=>{
+  const title=$("ln_title").value.trim(),msg=$("lnMsg");if(!title){msg.textContent="শিরোনাম দিন।";return;}
+  const row={course:$("lnCourse").value,module:$("ln_mod").value.trim()||null,sort:Number($("ln_sort").value)||100,title,kind:$("ln_kind").value,minutes:$("ln_min").value?Number($("ln_min").value):null,body:$("ln_body").value.trim()||null,published:$("ln_pub").checked};
+  const url=$("ln_url").value.trim(),f=$("ln_file").files[0];
+  if(url&&!/^https?:\/\//.test(url)){msg.textContent="লিংক https:// দিয়ে শুরু হতে হবে।";return;}
+  if(row.kind!=="article"&&!url&&!f&&!(lnOld&&lnOld.path)){msg.textContent="এই ধরনের পাঠে লিংক বা ফাইল দিন।";return;}
+  if(row.kind==="article"&&!row.body){msg.textContent="লেখা পাঠে লেখা দিন।";return;}
+  $("lnSave").disabled=true;msg.textContent="সেভ হচ্ছে…";
+  try{
+    if(f){if(f.size>50*1024*1024)throw new Error("ফাইল ৫০MB-এর বেশি — YouTube/Drive লিংক দিন।");
+      const path="lessons/"+row.course+"/"+Date.now()+"-"+f.name.replace(/[^\w.\-]+/g,"_").slice(-50);
+      const up=await sb.storage.from("media").upload(path,f,{contentType:f.type||"application/octet-stream",upsert:false});if(up.error)throw up.error;
+      row.path=path;row.url=sb.storage.from("media").getPublicUrl(path).data.publicUrl;
+      if(lnOld&&lnOld.path)await sb.storage.from("media").remove([lnOld.path]);
+    } else if(url){row.url=url;if(lnOld&&lnOld.path){await sb.storage.from("media").remove([lnOld.path]);row.path=null;}}
+    else if(!lnOld){row.url=null;}
+    const {error}=lnEdit?await sb.from("lessons").update(row).eq("id",lnEdit):await sb.from("lessons").insert(row);if(error)throw error;
+    msg.textContent="সেভ হয়েছে ✓";const keepMod=row.module;lnReset();$("ln_mod").value=keepMod||"";loadLearn();
+  }catch(e){msg.textContent="হয়নি: "+(e.message||e);}
+  $("lnSave").disabled=false;
+};
+async function loadQs(){
+  const {data,error}=await sb.from("questions").select("*").eq("course",$("lnCourse").value).order("created_at",{ascending:false});
+  if(error){$("qlist").innerHTML='<p class="err">'+error.message+'</p>';return;}
+  const open=data.filter(q=>!q.answer).length;$("qCount").textContent=data.length?`(${data.length}টি, উত্তর বাকি ${open}টি)`:"";
+  $("qlist").innerHTML=data.length?data.map(q=>`<div class="card" style="margin-bottom:10px" data-qid="${q.id}">
+    <div class="muted" style="font-size:13px">${fmt(q.created_at)} · ${esc(q.name||"নাম নেই")}${q.answer?' · <b style="color:#15803D">উত্তর দেওয়া</b>':' · <b style="color:#B91C1C">উত্তর বাকি</b>'}</div>
+    <p style="font-weight:700;margin:6px 0 10px">${esc(q.question)}</p>
+    <textarea class="qa-ans" style="width:100%;min-height:80px;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)" placeholder="উত্তর লিখুন">${esc(q.answer||"")}</textarea>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" class="qa-pub" ${q.published?"checked":""} style="width:auto"> সাইটে প্রকাশ</label><button class="mini qa-save">সেভ</button><button class="ghost mini qa-del">মুছুন</button><span class="muted qa-m"></span></div></div>`).join(""):'<p class="muted">এই কোর্সে এখনও কোনো প্রশ্ন আসেনি।</p>';
+  document.querySelectorAll("[data-qid]").forEach(card=>{const id=card.dataset.qid;
+    card.querySelector(".qa-save").onclick=async()=>{const ans=card.querySelector(".qa-ans").value.trim(),pub=card.querySelector(".qa-pub").checked;
+      if(pub&&!ans){card.querySelector(".qa-m").textContent="উত্তর ছাড়া প্রকাশ করা যাবে না।";return;}
+      const {error}=await sb.from("questions").update({answer:ans||null,answered_at:ans?new Date().toISOString():null,published:pub}).eq("id",id);
+      card.querySelector(".qa-m").textContent=error?"হয়নি: "+error.message:"সেভ হয়েছে ✓";if(!error)setTimeout(loadQs,700);};
+    card.querySelector(".qa-del").onclick=async()=>{if(!confirm("প্রশ্নটি মুছবেন?"))return;const {error}=await sb.from("questions").delete().eq("id",id);if(error)alert(error.message);loadQs();};
+  });
+}
 init();
 </script>
 </body>
