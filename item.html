@@ -636,6 +636,13 @@ header{background:rgba(255,255,255,.94)!important;backdrop-filter:blur(10px);-we
 .it-meta{font-size:14px;color:var(--muted);margin-top:14px;line-height:1.8}
 .it-rel{margin-top:44px}
 .it-rel h2{font-size:24px}
+
+/* ---- v12: framed video player ---- */
+.it-media.vid,.lrn .media{position:relative;overflow:visible;padding:8px;border:3px solid transparent;border-radius:24px;
+  background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box;
+  box-shadow:0 22px 48px rgba(15,40,30,.16),0 4px 12px rgba(15,40,30,.06)}
+.it-media.vid iframe,.it-media.vid video,.lrn .media iframe,.lrn .media video{border-radius:16px;background:#000;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.it-media.vid::after,.lrn .media::after{content:"";position:absolute;inset:8px;border-radius:16px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12);pointer-events:none}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
