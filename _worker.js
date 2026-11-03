@@ -23,59 +23,45 @@ Return ONLY valid JSON, no markdown, in exactly this shape:
 const json = (o, s = 200) =>
   new Response(JSON.stringify(o), { status: s, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store" } });
 
-// Gemini দিয়ে ভিডিও থেকে লেখা তৈরি — সফল হলে ফলাফল, না হলে {error}
-async function runAI(url, env) {
-  const m = String(url || "").match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);
-  if (!m) return { error: "এটা সঠিক YouTube লিংক নয়" };
-  const yt = "https://www.youtube.com/watch?v=" + m[1];
-  const model = env.GEMINI_MODEL || "gemini-flash-latest";
-  const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
-    method: "POST",
-    headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
-    body: JSON.stringify({
-      contents: [{ parts: [{ file_data: { file_uri: yt } }, { text: PROMPT }] }],
-      generationConfig: { responseMimeType: "application/json", temperature: 0.2, maxOutputTokens: 32768 }
-    })
-  });
-  const d = await r.json().catch(() => ({}));
-  if (!r.ok) return { error: "Gemini: " + ((d.error && d.error.message) || r.status) };
-  const cand = (d.candidates || [])[0] || {};
-  const text = ((cand.content && cand.content.parts) || []).map(p => p.text || "").join("");
-  if (!text) return { error: "Gemini কোনো লেখা দেয়নি (" + (cand.finishReason || "অজানা কারণ") + ")। ভিডিওটি Public কি না দেখুন।" };
-  let out;
-  try { out = JSON.parse(text); }
-  catch (_) {
-    try { const a = text.indexOf("{"), b = text.lastIndexOf("}"); out = JSON.parse(text.slice(a, b + 1)); }
-    catch (__) { return { error: "Gemini-এর লেখা অসম্পূর্ণ এসেছে (" + (cand.finishReason || "") + ")। ভিডিও খুব লম্বা হলে ছোট অংশে ভাগ করে চেষ্টা করুন।" }; }
+async function aiVideo(request, env) {
+  try {
+    // ১) শুধু লগইন করা admin
+    const auth = request.headers.get("Authorization") || "";
+    if (!auth.startsWith("Bearer ")) return json({ error: "লগইন প্রয়োজন" }, 401);
+    const who = await fetch(SB + "/auth/v1/user", { headers: { apikey: PK, Authorization: auth } });
+    if (!who.ok) return json({ error: "অনুমতি নেই — admin-এ আবার লগইন করুন" }, 401);
+    if (!env.GEMINI_API_KEY) return json({ error: "Cloudflare-এ GEMINI_API_KEY সেট করা হয়নি" }, 500);
+
+    // ২) YouTube লিংক যাচাই
+    const { url } = await request.json();
+    const m = String(url || "").match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);
+    if (!m) return json({ error: "এটা সঠিক YouTube লিংক নয়" }, 400);
+    const yt = "https://www.youtube.com/watch?v=" + m[1];
+
+    // ৩) Gemini-কে পাঠানো
+    const model = env.GEMINI_MODEL || "gemini-flash-latest";
+    const r = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "x-goog-api-key": env.GEMINI_API_KEY },
+      body: JSON.stringify({
+        contents: [{ parts: [{ file_data: { file_uri: yt } }, { text: PROMPT }] }],
+        generationConfig: { responseMimeType: "application/json", temperature: 0.2, maxOutputTokens: 32768 }
+      })
+    });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) return json({ error: "Gemini: " + ((d.error && d.error.message) || r.status) }, 502);
+
+    const cand = (d.candidates || [])[0] || {};
+    const text = ((cand.content && cand.content.parts) || []).map(p => p.text || "").join("");
+    if (!text) return json({ error: "Gemini কোনো লেখা দেয়নি (" + (cand.finishReason || "অজানা কারণ") + ")। ভিডিওটি Public কি না দেখুন।" }, 502);
+    let out;
+    try { out = JSON.parse(text); }
+    catch (_) { const a = text.indexOf("{"), b = text.lastIndexOf("}"); out = JSON.parse(text.slice(a, b + 1)); }
+
+    return json({ ok: true, model, finish: cand.finishReason || "", ...out });
+  } catch (e) {
+    return json({ error: String((e && e.message) || e) }, 500);
   }
-  return { ok: true, model, finish: cand.finishReason || "", ...out };
-}
-
-async function aiVideo(request, env, ctx) {
-  // ১) শুধু লগইন করা admin
-  const auth = request.headers.get("Authorization") || "";
-  if (!auth.startsWith("Bearer ")) return json({ error: "লগইন প্রয়োজন" }, 401);
-  const who = await fetch(SB + "/auth/v1/user", { headers: { apikey: PK, Authorization: auth } });
-  if (!who.ok) return json({ error: "অনুমতি নেই — admin-এ আবার লগইন করুন" }, 401);
-  if (!env.GEMINI_API_KEY) return json({ error: "Cloudflare-এ GEMINI_API_KEY সেট করা হয়নি" }, 500);
-  let url;
-  try { ({ url } = await request.json()); } catch (_) { return json({ error: "ভুল অনুরোধ" }, 400); }
-
-  // ২) সাথে সাথে উত্তর শুরু, Gemini কাজ করার সময় প্রতি ১০ সেকেন্ডে একটা ফাঁকা অক্ষর পাঠানো
-  //    (Cloudflare ১০০ সেকেন্ড চুপ থাকলে সংযোগ কেটে দেয় — তাই এই ব্যবস্থা)
-  const { readable, writable } = new TransformStream();
-  const w = writable.getWriter(), enc = new TextEncoder();
-  w.write(enc.encode(" ")).catch(() => {});
-  const beat = setInterval(() => { w.write(enc.encode(" ")).catch(() => {}); }, 10000);
-  const job = (async () => {
-    let result;
-    try { result = await runAI(url, env); }
-    catch (e) { result = { error: String((e && e.message) || e) }; }
-    clearInterval(beat);
-    try { await w.write(enc.encode(JSON.stringify(result))); await w.close(); } catch (_) {}
-  })();
-  if (ctx && ctx.waitUntil) ctx.waitUntil(job);
-  return new Response(readable, { status: 200, headers: { "content-type": "application/json; charset=utf-8", "cache-control": "no-store", "x-accel-buffering": "no" } });
 }
 
 // পরিষ্কার লিংকগুলো (যেমন /learn/noorani) সঠিক পেজে পাঠানো
@@ -86,10 +72,10 @@ const REWRITES = [
 ];
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     if (url.pathname === "/api/ai-video") {
-      if (request.method === "POST") return aiVideo(request, env, ctx);
+      if (request.method === "POST") return aiVideo(request, env);
       if (request.method === "GET") return json({ ok: true, ready: !!env.GEMINI_API_KEY });
       return json({ error: "Method Not Allowed" }, 405);
     }
