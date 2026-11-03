@@ -218,7 +218,7 @@ td audio{width:220px;height:36px}
           <input id="mUrl" placeholder="অথবা লিংক দিন — YouTube, Google Drive, Facebook ইত্যাদি">
         </div>
         <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="mSave">যোগ করুন</button><span id="mMsg" class="muted"></span></div>
-        <p class="muted" style="margin-top:8px">বড় ভিডিও YouTube-এ (Unlisted) আপলোড করে লিংক দিন — দ্রুত চলবে, জায়গাও বাঁচবে।</p>
+        <p class="muted" style="margin-top:8px">বড় ভিডিও YouTube-এ আপলোড করে লিংক দিন — দ্রুত চলবে, জায়গাও বাঁচবে। AI লেখা চাইলে ভিডিও Public রাখুন।</p>
       </div>
       <div class="tbl"><table><thead><tr><th>তারিখ</th><th>শিরোনাম</th><th>ধরন</th><th>কোর্স</th><th>দেখুন</th><th>সাইটে দেখাবে</th><th></th></tr></thead><tbody id="mrows"></tbody></table></div>
     </div>
@@ -803,6 +803,47 @@ async function saveCourse(){
 }
 
 // ===== ভিডিওর AI লেখা ও সারাংশ =====
+// Gemini সরাসরি admin-এর ব্রাউজার থেকে — চাবি শুধু এই কম্পিউটারের ব্রাউজারে থাকে
+const AI_PROMPT=`You are an expert transcriber and translator working for an Islamic education website in Bangladesh. Carefully listen to and watch this YouTube video.
+
+1. Detect the main spoken language: "bn", "en", "ar", "ur" or "other".
+2. Produce a COMPLETE and FAITHFUL Bangla (Bengali script) transcript of everything said, in order.
+   - If the speech is Bangla, transcribe it accurately in standard Bangla spelling.
+   - If it is English, Arabic, Urdu or any other language, translate it faithfully into clear, natural Bangla. Do not shorten or summarise in this part.
+3. When Quran verses, hadith text, duas or Arabic phrases are recited, write the Arabic exactly in Arabic script, followed by its Bangla meaning in parentheses. Never invent, complete or "correct" a verse. If you are not certain of the exact words, write [অস্পষ্ট].
+4. Do not add anything that is not said in the video. Mark unclear audio as [অস্পষ্ট]. Keep the speaker's meaning and Islamic terminology (e.g. নামাজ, তাজবীদ, মাখরাজ) as used in Bangladesh.
+5. Split the transcript into segments of roughly 20–60 seconds. Each segment starts at its timestamp in MM:SS (or H:MM:SS for videos over an hour).
+6. Write a concise Bangla summary of 4–7 sentences covering the main teaching of the video, and 3–6 short key takeaways in Bangla.
+
+Return ONLY valid JSON, no markdown, in exactly this shape:
+{"source_language":"bn","title_bn":"...","summary_bn":"...","key_points_bn":["...","..."],"transcript":[{"t":"00:00","text":"..."}]}`;
+function aiKey(force){
+  let k=null;try{k=localStorage.getItem("dio_gemini_key");}catch(_){}
+  if(!k||force){
+    k=prompt("Google AI Studio থেকে পাওয়া Gemini API key এখানে পেস্ট করুন।\nএটা শুধু এই কম্পিউটারের ব্রাউজারে জমা থাকবে — সাইটে বা GitHub-এ কোথাও যাবে না।",force?"":"");
+    if(!k)return null;k=k.trim();try{localStorage.setItem("dio_gemini_key",k);}catch(_){}
+  }
+  return k;
+}
+async function geminiVideo(url){
+  const id=aiYt(url);if(!id)throw new Error("এটা সঠিক YouTube লিংক নয়");
+  const key=aiKey(false);if(!key)throw new Error("Gemini চাবি দেওয়া হয়নি");
+  let model="gemini-flash-latest";try{model=localStorage.getItem("dio_gemini_model")||model;}catch(_){}
+  const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+model+":generateContent",{method:"POST",
+    headers:{"Content-Type":"application/json","x-goog-api-key":key},
+    body:JSON.stringify({contents:[{parts:[{file_data:{file_uri:"https://www.youtube.com/watch?v="+id}},{text:AI_PROMPT}]}],
+      generationConfig:{responseMimeType:"application/json",temperature:0.2,maxOutputTokens:32768}})});
+  const d=await r.json().catch(()=>({}));
+  if(!r.ok){const msg=(d.error&&d.error.message)||String(r.status);
+    if(/api key/i.test(msg)){try{localStorage.removeItem("dio_gemini_key");}catch(_){}throw new Error("চাবিটা ঠিক নয় — আবার চেষ্টা করলে নতুন চাবি চাইবে। ("+msg+")");}
+    throw new Error("Gemini: "+msg);}
+  const cand=(d.candidates||[])[0]||{};
+  const text=((cand.content&&cand.content.parts)||[]).map(p=>p.text||"").join("");
+  if(!text)throw new Error("Gemini কোনো লেখা দেয়নি ("+(cand.finishReason||"অজানা কারণ")+")। ভিডিওটি Public কি না দেখুন।");
+  let out;try{out=JSON.parse(text);}catch(_){try{out=JSON.parse(text.slice(text.indexOf("{"),text.lastIndexOf("}")+1));}catch(__){throw new Error("লেখা অসম্পূর্ণ এসেছে ("+(cand.finishReason||"")+")। খুব লম্বা ভিডিও হলে ছোট ভিডিও দিয়ে চেষ্টা করুন।");}}
+  return Object.assign({ok:true,model,finish:cand.finishReason||""},out);
+}
+
 const aiYt=u=>{const m=String(u||"").match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);return m?m[1]:null;};
 const AILANG={bn:"বাংলা",en:"ইংরেজি",ar:"আরবি",ur:"উর্দু",other:"অন্য ভাষা"};
 async function aiPanel(r,tr){
@@ -815,7 +856,7 @@ async function aiPanel(r,tr){
   row.innerHTML=`<td colspan="7"><div class="ai-p">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b>✨ AI বাংলা লেখা ও সারাংশ — ${esc(r.title)}</b> ${st} <span class="muted" id="aiLang">${d.source_lang?"মূল ভাষা: "+(AILANG[d.source_lang]||d.source_lang):""}</span></div>
     <div class="ai-warn">AI কুরআনের আয়াত, হাদীস ও আরবি পরিভাষায় ভুল করতে পারে। প্রকাশের আগে পুরোটা পড়ে নিন — বিশেষ করে আরবি অংশ। অন্যের চ্যানেলের ভিডিও হলে তাদের অনুমতি নিয়ে নিন।</div>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button id="aiGen">${d.summary?"আবার তৈরি করুন":"AI দিয়ে তৈরি করুন"}</button><span class="muted" id="aiMsg">ভিডিওর দৈর্ঘ্য অনুযায়ী ১–৩ মিনিট লাগতে পারে। ভিডিও YouTube-এ Public হতে হবে।</span></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button id="aiGen">${d.summary?"আবার তৈরি করুন":"AI দিয়ে তৈরি করুন"}</button><span class="muted" id="aiMsg">ভিডিওর দৈর্ঘ্য অনুযায়ী ১–৪ মিনিট লাগতে পারে। ভিডিও YouTube-এ Public হতে হবে।</span><a href="#" id="aiKeyChg" class="muted" style="margin-inline-start:auto;font-size:13px">Gemini চাবি বদলান</a></div>
     <label class="muted">সংক্ষিপ্ত সারাংশ<textarea id="aiSum" rows="5">${esc(d.summary||"")}</textarea></label>
     <label class="muted">মূল কথা — প্রতি লাইনে একটি<textarea id="aiKp" rows="4">${esc(d.key_points||"")}</textarea></label>
     <label class="muted">পূর্ণ লেখা — প্রতি লাইনে: [মিনিট:সেকেন্ড] লেখা<textarea id="aiTr" rows="14">${esc(d.transcript||"")}</textarea></label>
@@ -823,14 +864,12 @@ async function aiPanel(r,tr){
   </div></td>`;
   let srcLang=d.source_lang||null,model=d.model||null;
   $("aiClose").onclick=()=>row.remove();
+  $("aiKeyChg").onclick=e=>{e.preventDefault();if(aiKey(true))$("aiMsg").textContent="নতুন চাবি রাখা হয়েছে ✓";};
   $("aiGen").onclick=async()=>{
     if(($("aiSum").value.trim()||$("aiTr").value.trim())&&!confirm("আগের লেখা বদলে নতুন করে তৈরি হবে। চালিয়ে যাবেন?"))return;
     const b=$("aiGen"),m=$("aiMsg");b.disabled=true;let sec=0;const tick=setInterval(()=>{sec++;m.textContent="তৈরি হচ্ছে… "+sec+" সেকেন্ড";},1000);
     try{
-      const {data:{session}}=await sb.auth.getSession();
-      const res=await fetch("/api/ai-video",{method:"POST",headers:{"Content-Type":"application/json",Authorization:"Bearer "+session.access_token},body:JSON.stringify({url:r.url})});
-      const out=await res.json().catch(()=>({error:"সার্ভার থেকে ঠিক উত্তর আসেনি ("+res.status+")"}));
-      if(!res.ok||out.error)throw new Error(out.error||res.status);
+      const out=await geminiVideo(r.url);
       $("aiSum").value=out.summary_bn||"";
       $("aiKp").value=(out.key_points_bn||[]).join("\n");
       $("aiTr").value=(out.transcript||[]).map(s=>"["+(s.t||"")+"] "+(s.text||"").replace(/\s*\n\s*/g," ")).join("\n");
