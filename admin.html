@@ -817,26 +817,43 @@ const AI_PROMPT=`You are an expert transcriber and translator working for an Isl
 
 Return ONLY valid JSON, no markdown, in exactly this shape:
 {"source_language":"bn","title_bn":"...","summary_bn":"...","key_points_bn":["...","..."],"transcript":[{"t":"00:00","text":"..."}]}`;
-function aiKey(force){
-  let k=null;try{k=localStorage.getItem("dio_gemini_key");}catch(_){}
-  if(!k||force){
-    k=prompt("Google AI Studio থেকে পাওয়া Gemini API key এখানে পেস্ট করুন।\nএটা শুধু এই কম্পিউটারের ব্রাউজারে জমা থাকবে — সাইটে বা GitHub-এ কোথাও যাবে না।",force?"":"");
-    if(!k)return null;k=k.trim();try{localStorage.setItem("dio_gemini_key",k);}catch(_){}
-  }
-  return k;
+function aiKeyUI(){
+  const box=$("aiKeyRow");if(!box)return;const k=aiKey();
+  if(k){box.innerHTML='<span>🔑 Gemini চাবি এই কম্পিউটারে রাখা আছে ✓</span><a href="#" id="aiKeyChg" style="margin-inline-start:auto;font-size:13px">চাবি বদলান</a>';
+    $("aiKeyChg").onclick=e=>{e.preventDefault();aiKeySet("");aiKeyUI();};}
+  else{box.innerHTML='<b>🔑 Gemini চাবি:</b><input id="aiKeyIn" type="password" autocomplete="off" placeholder="AIza... দিয়ে শুরু হওয়া চাবি পেস্ট করুন" style="flex:1;min-width:240px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font:inherit"><button id="aiKeySave" class="mini">চাবি সেভ</button><span class="muted" style="font-size:12px;width:100%">চাবি শুধু এই কম্পিউটারের ব্রাউজারে থাকবে — সাইটে বা GitHub-এ কোথাও যাবে না।</span>';
+    $("aiKeySave").onclick=()=>{const v=$("aiKeyIn").value.trim();if(!/^AIza[\w-]{20,}$/.test(v)){alert("চাবিটা ঠিক মনে হচ্ছে না — AIza দিয়ে শুরু হওয়া পুরো চাবি পেস্ট করুন।");return;}aiKeySet(v);aiKeyUI();};}
 }
+function aiKey(){try{return localStorage.getItem("dio_gemini_key")||"";}catch(_){return "";}}
+function aiKeySet(k){try{if(k)localStorage.setItem("dio_gemini_key",k);else localStorage.removeItem("dio_gemini_key");}catch(_){}}
 async function geminiVideo(url){
   const id=aiYt(url);if(!id)throw new Error("এটা সঠিক YouTube লিংক নয়");
-  const key=aiKey(false);if(!key)throw new Error("Gemini চাবি দেওয়া হয়নি");
-  let model="gemini-flash-latest";try{model=localStorage.getItem("dio_gemini_model")||model;}catch(_){}
-  const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+model+":generateContent",{method:"POST",
-    headers:{"Content-Type":"application/json","x-goog-api-key":key},
-    body:JSON.stringify({contents:[{parts:[{file_data:{file_uri:"https://www.youtube.com/watch?v="+id}},{text:AI_PROMPT}]}],
-      generationConfig:{responseMimeType:"application/json",temperature:0.2,maxOutputTokens:32768}})});
-  const d=await r.json().catch(()=>({}));
-  if(!r.ok){const msg=(d.error&&d.error.message)||String(r.status);
-    if(/api key/i.test(msg)){try{localStorage.removeItem("dio_gemini_key");}catch(_){}throw new Error("চাবিটা ঠিক নয় — আবার চেষ্টা করলে নতুন চাবি চাইবে। ("+msg+")");}
-    throw new Error("Gemini: "+msg);}
+  const key=aiKey();if(!key)throw new Error("আগে উপরের ঘরে Gemini চাবি দিয়ে \"চাবি সেভ\" চাপুন");
+  let first="gemini-flash-latest";try{first=localStorage.getItem("dio_gemini_model")||first;}catch(_){}
+  const models=[first,"gemini-flash-lite-latest","gemini-pro-latest"].filter((m,k,arr)=>arr.indexOf(m)===k);
+  const body=JSON.stringify({contents:[{parts:[{file_data:{file_uri:"https://www.youtube.com/watch?v="+id}},{text:AI_PROMPT}]}],
+      generationConfig:{responseMimeType:"application/json",temperature:0.2,maxOutputTokens:32768}});
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const note=t=>{const m=document.getElementById("aiMsg");if(m)m.dataset.note=t;};
+  let d=null,model=null,lastErr="";
+  outer: for(const m of models){
+    for(let attempt=1;attempt<=3;attempt++){
+      note(m!==first?"বিকল্প মডেলে চেষ্টা চলছে":(attempt>1?"Google-এ চাপ বেশি — আবার চেষ্টা ("+attempt+"/৩)":""));
+      const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+m+":generateContent",{method:"POST",
+        headers:{"Content-Type":"application/json","x-goog-api-key":key},body});
+      const j=await r.json().catch(()=>({}));
+      if(r.ok){d=j;model=m;break outer;}
+      const msg=(j.error&&j.error.message)||String(r.status);lastErr=msg;
+      if(/api key/i.test(msg)){aiKeySet("");aiKeyUI();throw new Error("চাবিটা ঠিক নয় — উপরের ঘরে সঠিক চাবি দিন। ("+msg+")");}
+      const busy=r.status===503||r.status===429||r.status===500||/overload|high demand|unavailable|try again/i.test(msg);
+      const noModel=r.status===404||/not found|not supported/i.test(msg);
+      if(noModel)continue outer;
+      if(!busy)throw new Error("Gemini: "+msg);
+      if(attempt<3)await sleep(attempt*15000);
+    }
+  }
+  note("");
+  if(!d)throw new Error("Google-এ এখন খুব বেশি চাপ — কিছুক্ষণ পর আবার চেষ্টা করুন। ("+lastErr+")");
   const cand=(d.candidates||[])[0]||{};
   const text=((cand.content&&cand.content.parts)||[]).map(p=>p.text||"").join("");
   if(!text)throw new Error("Gemini কোনো লেখা দেয়নি ("+(cand.finishReason||"অজানা কারণ")+")। ভিডিওটি Public কি না দেখুন।");
@@ -856,7 +873,8 @@ async function aiPanel(r,tr){
   row.innerHTML=`<td colspan="7"><div class="ai-p">
     <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b>✨ AI বাংলা লেখা ও সারাংশ — ${esc(r.title)}</b> ${st} <span class="muted" id="aiLang">${d.source_lang?"মূল ভাষা: "+(AILANG[d.source_lang]||d.source_lang):""}</span></div>
     <div class="ai-warn">AI কুরআনের আয়াত, হাদীস ও আরবি পরিভাষায় ভুল করতে পারে। প্রকাশের আগে পুরোটা পড়ে নিন — বিশেষ করে আরবি অংশ। অন্যের চ্যানেলের ভিডিও হলে তাদের অনুমতি নিয়ে নিন।</div>
-    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button id="aiGen">${d.summary?"আবার তৈরি করুন":"AI দিয়ে তৈরি করুন"}</button><span class="muted" id="aiMsg">ভিডিওর দৈর্ঘ্য অনুযায়ী ১–৪ মিনিট লাগতে পারে। ভিডিও YouTube-এ Public হতে হবে।</span><a href="#" id="aiKeyChg" class="muted" style="margin-inline-start:auto;font-size:13px">Gemini চাবি বদলান</a></div>
+    <div id="aiKeyRow" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#F1FAF5;border:1px solid #BFE3D2;border-radius:10px;padding:10px 12px"></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button id="aiGen">${d.summary?"আবার তৈরি করুন":"AI দিয়ে তৈরি করুন"}</button><span class="muted" id="aiMsg">ভিডিওর দৈর্ঘ্য অনুযায়ী ১–৪ মিনিট লাগতে পারে। ভিডিও YouTube-এ Public হতে হবে।</span></div>
     <label class="muted">সংক্ষিপ্ত সারাংশ<textarea id="aiSum" rows="5">${esc(d.summary||"")}</textarea></label>
     <label class="muted">মূল কথা — প্রতি লাইনে একটি<textarea id="aiKp" rows="4">${esc(d.key_points||"")}</textarea></label>
     <label class="muted">পূর্ণ লেখা — প্রতি লাইনে: [মিনিট:সেকেন্ড] লেখা<textarea id="aiTr" rows="14">${esc(d.transcript||"")}</textarea></label>
@@ -864,10 +882,10 @@ async function aiPanel(r,tr){
   </div></td>`;
   let srcLang=d.source_lang||null,model=d.model||null;
   $("aiClose").onclick=()=>row.remove();
-  $("aiKeyChg").onclick=e=>{e.preventDefault();if(aiKey(true))$("aiMsg").textContent="নতুন চাবি রাখা হয়েছে ✓";};
+  aiKeyUI();
   $("aiGen").onclick=async()=>{
     if(($("aiSum").value.trim()||$("aiTr").value.trim())&&!confirm("আগের লেখা বদলে নতুন করে তৈরি হবে। চালিয়ে যাবেন?"))return;
-    const b=$("aiGen"),m=$("aiMsg");b.disabled=true;let sec=0;const tick=setInterval(()=>{sec++;m.textContent="তৈরি হচ্ছে… "+sec+" সেকেন্ড";},1000);
+    const b=$("aiGen"),m=$("aiMsg");b.disabled=true;let sec=0;const tick=setInterval(()=>{sec++;m.textContent="তৈরি হচ্ছে… "+sec+" সেকেন্ড"+(m.dataset.note?" — "+m.dataset.note:"");},1000);
     try{
       const out=await geminiVideo(r.url);
       $("aiSum").value=out.summary_bn||"";
