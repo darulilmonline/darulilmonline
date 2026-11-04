@@ -94,7 +94,7 @@ td audio{width:220px;height:36px}
       <div><h1>অ্যাডমিন প্যানেল — দারুল ইলম অনলাইন</h1><div class="muted" id="who"></div></div>
       <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
     </div>
-    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="courses">কোর্স</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="batches">ব্যাচ ও রুটিন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="courses">কোর্স</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
     <div id="panel-apps">
     <div class="stats" id="stats"></div>
     <div class="tools">
@@ -147,6 +147,7 @@ td audio{width:220px;height:36px}
         <div class="fgrid">
           <label>নাম<input id="fc_name" placeholder="যেমন: হাফেজ কারী আব্দুর রহমান"></label>
           <label>পদবি<input id="fc_title" placeholder="যেমন: কুরআন শিক্ষক"></label>
+          <label>WhatsApp নম্বর (পোর্টালের জন্য, সাইটে দেখাবে না)<input id="fc_phone" placeholder="01XXXXXXXXX"></label>
           <label>লিঙ্গ<select id="fc_gender"><option value="male">পুরুষ</option><option value="female">মহিলা</option></select></label>
           <label>ক্রম (ছোট সংখ্যা আগে)<input id="fc_sort" type="number" value="100"></label>
           <label class="wide">যোগ্যতা<input id="fc_q" placeholder="যেমন: দাওরায়ে হাদীস, জামিয়া ...; তাজবীদে সনদপ্রাপ্ত"></label>
@@ -165,6 +166,13 @@ td audio{width:220px;height:36px}
         <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="fcSave">সেভ করুন</button><button class="ghost" id="fcCancel" hidden>বাতিল</button><span class="muted" id="fcMsg"></span></div>
       </div>
       <div class="tbl"><table><thead><tr><th>ক্রম</th><th>নাম</th><th>পদবি · যোগ্যতা</th><th>কোর্স</th><th>সাইটে</th><th></th></tr></thead><tbody id="fcrows"></tbody></table></div>
+    </div>
+
+    <div id="panel-batches" style="display:none">
+      <p class="muted" style="margin-bottom:12px">প্রতিটি ব্যাচের দিন, সময় (বাংলাদেশ), শিক্ষক আর ক্লাসের লিংক এখানে দিন। শিক্ষার্থীর "ব্যাচ" ঘরে হুবহু একই নাম থাকলে সে ওই ব্যাচে গণ্য হবে। শিক্ষক পোর্টাল: <b>darulilmonline.com/ustad</b> · অভিভাবক পোর্টাল: <b>darulilmonline.com/portal</b></p>
+      <div style="margin-bottom:14px"><button id="bNew">+ নতুন ব্যাচ</button></div>
+      <div class="card" id="bForm" hidden style="margin-bottom:18px"></div>
+      <div class="tbl"><table><thead><tr><th>ব্যাচ</th><th>কোর্স</th><th>শিক্ষক</th><th>দিন ও সময়</th><th>শিক্ষার্থী</th><th>লিংক</th><th></th></tr></thead><tbody id="brows"></tbody></table></div>
     </div>
 
     <div id="panel-teachers" style="display:none">
@@ -425,6 +433,7 @@ async function loadMedia(){
       </div>
       <label class="muted">বিবরণ<textarea id="eD">${esc(r.description||"")}</textarea></label>
       ${r.path?'<p class="muted">এটা আপলোড করা ফাইল — ফাইল বদলাতে চাইলে এটা মুছে নতুন করে যোগ করুন।</p>':`<label class="muted">লিংক<input id="eU" value="${esc(r.url)}"></label>`}
+      ${r.kind==="video"?`<label class="muted">অডিও সংস্করণ — MP3 (ঐচ্ছিক, শুধু নিজের ভিডিওর)${r.audio_url?' — <a href="'+esc(r.audio_url)+'" target="_blank" rel="noopener">বর্তমান অডিও</a>':""}<input id="eA" type="file" accept="audio/*,.mp3,.m4a"></label>${r.audio_url?'<label class="muted" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="eArm" style="width:auto"> অডিও সরিয়ে দিন</label>':""}`:""}
       <div style="display:flex;gap:10px;align-items:center"><button id="eSave">সেভ করুন</button><button class="ghost" id="eCancel">বাতিল</button><span id="eMsg" class="muted"></span></div>
     </div></td>`;
     tr.querySelector("#eCancel").onclick=loadMedia;
@@ -433,6 +442,14 @@ async function loadMedia(){
       const upd={title:t,course:tr.querySelector("#eC").value||null,kind:tr.querySelector("#eK").value,description:tr.querySelector("#eD").value.trim()||null};
       const u=tr.querySelector("#eU"); if(u){ if(!/^https?:\/\//.test(u.value.trim())){tr.querySelector("#eMsg").textContent="সঠিক লিংক দিন (https:// দিয়ে শুরু)।";return;} upd.url=u.value.trim(); }
       tr.querySelector("#eMsg").textContent="সেভ হচ্ছে…";
+      const af=tr.querySelector("#eA")&&tr.querySelector("#eA").files[0],arm=tr.querySelector("#eArm")&&tr.querySelector("#eArm").checked;
+      if(af){if(af.size>50*1024*1024){tr.querySelector("#eMsg").textContent="অডিও ৫০MB-এর বেশি।";return;}
+        const ap="audio/"+Date.now()+"-"+af.name.replace(/[^\w.\-]+/g,"_").slice(-40);
+        const up=await sb.storage.from("media").upload(ap,af,{contentType:af.type||"audio/mpeg",upsert:false});
+        if(up.error){tr.querySelector("#eMsg").textContent="অডিও আপলোড হয়নি: "+up.error.message;return;}
+        if(r.audio_path)await sb.storage.from("media").remove([r.audio_path]);
+        upd.audio_path=ap;upd.audio_url=sb.storage.from("media").getPublicUrl(ap).data.publicUrl;
+      } else if(arm){if(r.audio_path)await sb.storage.from("media").remove([r.audio_path]);upd.audio_path=null;upd.audio_url=null;}
       const {error}=await sb.from("media").update(upd).eq("id",r.id);
       if(error){tr.querySelector("#eMsg").textContent="হয়নি: "+error.message;return;}
       loadMedia();
@@ -504,7 +521,8 @@ async function loadStudents(){
   const batches=[...new Set(STU.map(x=>x.batch).filter(Boolean))].sort(), teachers=[...new Set(STU.map(x=>x.teacher).filter(Boolean))].sort();
   const cur=$("sBatch").value;
   $("sBatch").innerHTML='<option value="">সব ব্যাচ</option>'+batches.map(b=>`<option ${b===cur?"selected":""}>${esc(b)}</option>`).join("");
-  $("batchList").innerHTML=batches.map(b=>`<option value="${esc(b)}">`).join("");
+  const {data:bt}=await sb.from("batches").select("name").eq("active",true);
+  $("batchList").innerHTML=[...new Set([...(bt||[]).map(x=>x.name),...batches])].map(b=>`<option value="${esc(b)}">`).join("");
   $("teacherList").innerHTML=teachers.map(b=>`<option value="${esc(b)}">`).join("");
   $("sMonthHead").textContent=monthBn();
   renderStudents();
@@ -530,10 +548,11 @@ function renderStudents(){
       <td>${COURSE[x.course]||"—"}<div class="muted" style="font-size:13px">${PLAN[x.plan]||""}</div></td>
       <td>${esc(x.batch||"—")}<div class="muted" style="font-size:13px">${esc(x.teacher||"")}</div></td>
       <td>${money(x.monthly_fee,x.currency)}</td><td>${st}</td>
-      <td style="white-space:nowrap">${x.status==="active"&&!p?`<button class="mini" data-pay="${x.id}">ফি জমা</button> <a class="btn-s wa-b" href="${remind}" target="_blank" rel="noopener">রিমাইন্ডার</a>`:""}${p?`<a class="btn-s wa-b" href="${receipt}" target="_blank" rel="noopener">রসিদ পাঠান</a>`:""} <button class="ghost mini" data-hist="${x.id}">ইতিহাস</button> <button class="ghost mini" data-sedit="${x.id}">সম্পাদনা</button></td></tr>`;
+      <td style="white-space:nowrap">${x.status==="active"&&!p?`<button class="mini" data-pay="${x.id}">ফি জমা</button> <a class="btn-s wa-b" href="${remind}" target="_blank" rel="noopener">রিমাইন্ডার</a>`:""}${p?`<a class="btn-s wa-b" href="${receipt}" target="_blank" rel="noopener">রসিদ পাঠান</a>`:""} <button class="ghost mini" data-portal="${x.id}">পোর্টাল কোড</button> <button class="ghost mini" data-hist="${x.id}">ইতিহাস</button> <button class="ghost mini" data-sedit="${x.id}">সম্পাদনা</button></td></tr>`;
   }).join("");
   document.querySelectorAll("[data-pay]").forEach(b=>b.onclick=()=>payRow(STU.find(x=>x.id==b.dataset.pay),b.closest("tr")));
   document.querySelectorAll("[data-hist]").forEach(b=>b.onclick=()=>histRow(STU.find(x=>x.id==b.dataset.hist),b.closest("tr")));
+  document.querySelectorAll("[data-portal]").forEach(b=>b.onclick=()=>sendPortal("students",STU.find(x=>x.id==b.dataset.portal)));
   document.querySelectorAll("[data-sedit]").forEach(b=>b.onclick=()=>openForm(STU.find(x=>x.id==b.dataset.sedit)));
 }
 function closeSubs(){document.querySelectorAll("#srows tr.sub").forEach(r=>r.remove());}
@@ -567,6 +586,11 @@ async function histRow(x,tr){
   if(error){r.innerHTML='<td colspan="7" class="err">'+error.message+'</td>';return;}
   r.innerHTML=`<td colspan="7"><div class="hist"><b>${esc(x.name)} — ফি-র ইতিহাস (শুরু: ${new Date(x.start_date+"T00:00:00").toLocaleDateString("bn-BD")})</b>${data.length?data.map(p=>`<div><span>${new Date(p.month+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"})}</span><b>${money(p.amount,p.currency)}</b><span class="muted">${esc(p.method||"")} ${esc(p.txn_id||"")} · জমা: ${fmt(p.created_at)}</span>${p.note?`<span class="muted">${esc(p.note)}</span>`:""}<button class="ghost mini" data-pdel="${p.id}">মুছুন</button></div>`).join(""):'<div class="muted">এখনও কোনো ফি জমা নেই।</div>'}<div><button class="ghost mini" id="hClose">বন্ধ করুন</button></div></div></td>`;
   r.querySelector("#hClose").onclick=closeSubs;
+  (async()=>{const since=new Date(Date.now()-30*864e5).toISOString().slice(0,10);
+    const [{data:att},{data:rep}]=await Promise.all([sb.from("attendance").select("date,status").eq("student_id",x.id).gte("date",since),sb.from("reports").select("month,body,written_by").eq("student_id",x.id).order("month",{ascending:false}).limit(3)]);
+    const c=k=>(att||[]).filter(a=>a.status===k).length;const box=document.createElement("div");box.style.marginTop="10px";
+    box.innerHTML=`<b>গত ৩০ দিনের হাজিরা:</b> উপস্থিত ${c("present")} · অনুপস্থিত ${c("absent")} · দেরি ${c("late")} · ছুটি ${c("excused")}`+((rep||[]).length?`<div style="margin-top:8px"><b>সর্বশেষ রিপোর্ট (${new Date(rep[0].month+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"})}${rep[0].written_by?" — "+esc(rep[0].written_by):""}):</b><div style="white-space:pre-line">${esc(rep[0].body)}</div></div>`:"");
+    r.querySelector(".hist").appendChild(box);})();
   r.querySelectorAll("[data-pdel]").forEach(b=>b.onclick=async()=>{if(!confirm("এই ফি-র রেকর্ড মুছবেন?"))return;const {error}=await sb.from("payments").delete().eq("id",b.dataset.pdel);if(error)alert(error.message);loadStudents();});
 }
 function setF(id,v){$(id).value=v??"";}
@@ -616,7 +640,7 @@ document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
   if(b.dataset.tab==="faculty") loadFaculty();
 }));
 const CBN2={noorani:"নূরানী",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ",arabic:"আরবি","quran-words":"কুরআন শব্দে শব্দে","tafsir":"তাফসীর","hadith-words":"হাদীস শব্দে শব্দে","dua-words":"দোয়া শব্দে শব্দে","aqidah":"আকীদা","fiqh":"ফিকহ","seerah":"সীরাত","akhlaq":"আদব-আখলাক","history":"নবীদের কাহিনী ও ইতিহাস","english":"ইংরেজি","math":"গণিত"};
-function fcReset(){fcEdit=null;fcOld=null;["fc_name","fc_title","fc_q","fc_bio"].forEach(i=>$(i).value="");$("fc_sort").value=100;$("fc_gender").value="male";$("fc_photo").value="";$("fc_pub").checked=true;
+function fcReset(){fcEdit=null;fcOld=null;["fc_name","fc_title","fc_q","fc_bio","fc_phone"].forEach(i=>$(i).value="");$("fc_sort").value=100;$("fc_gender").value="male";$("fc_photo").value="";$("fc_pub").checked=true;
   document.querySelectorAll("#fc_courses input").forEach(c=>c.checked=false);$("facTitle").textContent="নতুন শিক্ষক";$("fcCancel").hidden=true;}
 $("fcCancel").onclick=()=>{fcReset();$("fcMsg").textContent="";};
 async function loadFaculty(){
@@ -624,19 +648,20 @@ async function loadFaculty(){
   if(error){$("fcrows").innerHTML='<tr><td colspan="6" class="err">লোড হয়নি: '+error.message+' (faculty.sql চালানো হয়েছে?)</td></tr>';return;}
   FAC=data;
   if(!data.length){$("fcrows").innerHTML='<tr><td colspan="6" class="muted">এখনও কোনো শিক্ষক যোগ করা হয়নি।</td></tr>';return;}
-  $("fcrows").innerHTML=data.map(x=>`<tr><td>${x.sort}</td><td><b>${esc(x.name)}</b>${x.photo_url?' <span class="muted">· ছবি আছে</span>':''}</td><td>${esc(x.title||"")}<div class="muted" style="font-size:13px">${esc(x.qualification||"")}</div></td><td>${(x.courses||[]).map(c=>CBN2[c]||c).join(", ")}</td><td><input type="checkbox" data-fpub="${x.id}" ${x.published?"checked":""}></td><td style="white-space:nowrap"><button class="mini" data-fedit="${x.id}">সম্পাদনা</button> <button class="ghost mini" data-fdel="${x.id}">মুছুন</button></td></tr>`).join("");
+  $("fcrows").innerHTML=data.map(x=>`<tr><td>${x.sort}</td><td><b>${esc(x.name)}</b>${x.photo_url?' <span class="muted">· ছবি আছে</span>':''}</td><td>${esc(x.title||"")}<div class="muted" style="font-size:13px">${esc(x.qualification||"")}</div></td><td>${(x.courses||[]).map(c=>CBN2[c]||c).join(", ")}</td><td><input type="checkbox" data-fpub="${x.id}" ${x.published?"checked":""}></td><td style="white-space:nowrap"><button class="ghost mini" data-fportal="${x.id}">পোর্টাল কোড</button> <button class="mini" data-fedit="${x.id}">সম্পাদনা</button> <button class="ghost mini" data-fdel="${x.id}">মুছুন</button></td></tr>`).join("");
   document.querySelectorAll("[data-fpub]").forEach(c=>c.onchange=async()=>{const {error}=await sb.from("faculty").update({published:c.checked}).eq("id",c.dataset.fpub);if(error)alert(error.message);});
   document.querySelectorAll("[data-fedit]").forEach(b=>b.onclick=()=>{const x=FAC.find(y=>y.id==b.dataset.fedit);fcEdit=x.id;fcOld=x;
-    $("fc_name").value=x.name;$("fc_title").value=x.title||"";$("fc_q").value=x.qualification||"";$("fc_bio").value=x.bio||"";$("fc_sort").value=x.sort;$("fc_gender").value=x.gender||"male";$("fc_pub").checked=x.published;$("fc_photo").value="";
+    $("fc_name").value=x.name;$("fc_phone").value=x.phone||"";$("fc_title").value=x.title||"";$("fc_q").value=x.qualification||"";$("fc_bio").value=x.bio||"";$("fc_sort").value=x.sort;$("fc_gender").value=x.gender||"male";$("fc_pub").checked=x.published;$("fc_photo").value="";
     document.querySelectorAll("#fc_courses input").forEach(c=>c.checked=(x.courses||[]).includes(c.value));
     $("facTitle").textContent="শিক্ষকের তথ্য সম্পাদনা"+(x.photo_url?" (নতুন ছবি দিলে পুরোনোটা বদলাবে)":"");$("fcCancel").hidden=false;$("panel-faculty").scrollIntoView({behavior:"smooth"});});
+  document.querySelectorAll("[data-fportal]").forEach(b=>b.onclick=()=>sendPortal("faculty",FAC.find(y=>y.id==b.dataset.fportal)));
   document.querySelectorAll("[data-fdel]").forEach(b=>b.onclick=async()=>{const x=FAC.find(y=>y.id==b.dataset.fdel);if(!confirm(x.name+" — মুছে ফেলবেন?"))return;
     if(x.photo_path)await sb.storage.from("media").remove([x.photo_path]);
     const {error}=await sb.from("faculty").delete().eq("id",x.id);if(error)alert(error.message);loadFaculty();});
 }
 $("fcSave").onclick=async()=>{
   const name=$("fc_name").value.trim(),msg=$("fcMsg");if(!name){msg.textContent="নাম দিন।";return;}
-  const row={name,title:$("fc_title").value.trim()||null,qualification:$("fc_q").value.trim()||null,bio:$("fc_bio").value.trim()||null,gender:$("fc_gender").value,sort:Number($("fc_sort").value)||100,published:$("fc_pub").checked,
+  const row={name,phone:$("fc_phone").value.replace(/[^0-9+]/g,"")||null,title:$("fc_title").value.trim()||null,qualification:$("fc_q").value.trim()||null,bio:$("fc_bio").value.trim()||null,gender:$("fc_gender").value,sort:Number($("fc_sort").value)||100,published:$("fc_pub").checked,
     courses:[...document.querySelectorAll("#fc_courses input:checked")].map(c=>c.value)};
   $("fcSave").disabled=true;msg.textContent="সেভ হচ্ছে…";
   try{
@@ -832,7 +857,7 @@ async function geminiVideo(url){
   let first="gemini-flash-latest";try{first=localStorage.getItem("dio_gemini_model")||first;}catch(_){}
   const models=[first,"gemini-flash-lite-latest","gemini-pro-latest"].filter((m,k,arr)=>arr.indexOf(m)===k);
   const body=JSON.stringify({contents:[{parts:[{file_data:{file_uri:"https://www.youtube.com/watch?v="+id}},{text:AI_PROMPT}]}],
-      generationConfig:{responseMimeType:"application/json",temperature:0.2,maxOutputTokens:32768}});
+      generationConfig:{responseMimeType:"application/json",temperature:0.2,maxOutputTokens:32768,mediaResolution:"MEDIA_RESOLUTION_LOW"}});
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   const note=t=>{const m=document.getElementById("aiMsg");if(m)m.dataset.note=t;};
   let d=null,model=null,lastErr="";
@@ -845,15 +870,16 @@ async function geminiVideo(url){
       if(r.ok){d=j;model=m;break outer;}
       const msg=(j.error&&j.error.message)||String(r.status);lastErr=msg;
       if(/api key/i.test(msg)){aiKeySet("");aiKeyUI();throw new Error("চাবিটা ঠিক নয় — উপরের ঘরে সঠিক চাবি দিন। ("+msg+")");}
-      const busy=r.status===503||r.status===429||r.status===500||/overload|high demand|unavailable|try again/i.test(msg);
+      const quota=/quota|exceeded|rate.?limit|resource.?exhausted/i.test(msg);
       const noModel=r.status===404||/not found|not supported/i.test(msg);
-      if(noModel)continue outer;
+      if(quota||noModel){lastErr=quota?"QUOTA":msg;continue outer;}
+      const busy=r.status===503||r.status===500||/overload|high demand|unavailable|try again/i.test(msg);
       if(!busy)throw new Error("Gemini: "+msg);
       if(attempt<3)await sleep(attempt*15000);
     }
   }
   note("");
-  if(!d)throw new Error("Google-এ এখন খুব বেশি চাপ — কিছুক্ষণ পর আবার চেষ্টা করুন। ("+lastErr+")");
+  if(!d)throw new Error(lastErr==="QUOTA"?"আজকের বিনামূল্যের সীমা শেষ (Google দিনে নির্দিষ্ট সংখ্যক অনুরোধ ফ্রি দেয়) — কাল আবার চেষ্টা করুন, অথবা Google AI Studio-তে Billing চালু করুন।":"Google-এ এখন খুব বেশি চাপ — কিছুক্ষণ পর আবার চেষ্টা করুন। ("+lastErr+")");
   const cand=(d.candidates||[])[0]||{};
   const text=((cand.content&&cand.content.parts)||[]).map(p=>p.text||"").join("");
   if(!text)throw new Error("Gemini কোনো লেখা দেয়নি ("+(cand.finishReason||"অজানা কারণ")+")। ভিডিওটি Public কি না দেখুন।");
@@ -907,6 +933,67 @@ async function aiPanel(r,tr){
   $("aiDraft").onclick=()=>save("draft");
   $("aiPub").onclick=()=>{if(confirm("পুরো লেখা পড়ে দেখেছেন? প্রকাশ করলে সবাই দেখতে পাবে।"))save("published");};
   if($("aiUnpub"))$("aiUnpub").onclick=()=>save("draft");
+}
+
+// ===== পোর্টাল কোড =====
+function newCode(){const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",r=new Uint32Array(8);crypto.getRandomValues(r);return [...r].map(v=>A[v%A.length]).join("");}
+async function sendPortal(table,x){
+  if(!x)return;
+  if(!x.phone){alert(table==="faculty"?"আগে শিক্ষকের WhatsApp নম্বর দিন (সম্পাদনা → WhatsApp নম্বর)।":"এই শিক্ষার্থীর নম্বর নেই।");return;}
+  let code=x.portal_code;
+  if(code&&!confirm("কোড আগেই আছে: "+code+"\n\nOK = একই কোড আবার পাঠান\nCancel = নতুন কোড তৈরি করুন (পুরোনোটা আর চলবে না)")){code=null;}
+  if(!code){code=newCode();const {error}=await sb.from(table).update({portal_code:code}).eq("id",x.id);if(error){alert("হয়নি: "+error.message+" (portal.sql চালানো হয়েছে?)");return;}x.portal_code=code;}
+  const isT=table==="faculty";
+  const msg=isT?`আসসালামু আলাইকুম ${x.name}।\nদারুল ইলম অনলাইনের শিক্ষক পোর্টাল — আপনার ব্যাচ, হাজিরা ও মাসিক রিপোর্ট:\nhttps://darulilmonline.com/ustad\nনম্বর: ${x.phone}\nগোপন কোড: ${code}\nকোডটি কাউকে দেবেন না।`
+    :`আসসালামু আলাইকুম।\n${x.name}-এর ক্লাসের রুটিন, হাজিরা, ফি ও মাসিক রিপোর্ট দেখুন অভিভাবক পোর্টালে:\nhttps://darulilmonline.com/portal\nনম্বর: ${x.phone}\nগোপন কোড: ${code}\nকোডটি কাউকে দেবেন না। — দারুল ইলম অনলাইন`;
+  window.open(waText(x.phone,msg),"_blank","noopener");
+}
+// ===== ব্যাচ ও রুটিন =====
+const BDAYS=[["sat","শনি"],["sun","রবি"],["mon","সোম"],["tue","মঙ্গল"],["wed","বুধ"],["thu","বৃহঃ"],["fri","শুক্র"]];
+let BAT=[],bEdit=null,FACL=[];
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-batches").style.display=b.dataset.tab==="batches"?"block":"none";
+  if(b.dataset.tab==="batches") loadBatches();
+}));
+async function loadBatches(){
+  const [{data,error},{data:fac},{data:st}]=await Promise.all([sb.from("batches").select("*").order("name"),sb.from("faculty").select("id,name").order("sort"),sb.from("students").select("batch,status")]);
+  if(error){$("brows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+error.message+' (portal.sql চালানো হয়েছে?)</td></tr>';return;}
+  BAT=data;FACL=fac||[];
+  const cnt=n=>(st||[]).filter(s=>s.batch===n&&s.status==="active").length;
+  $("brows").innerHTML=data.length?data.map(b=>`<tr><td><b>${esc(b.name)}</b>${b.active?"":' <span class="muted">(বন্ধ)</span>'}</td><td>${COURSE[b.course]||"—"}</td><td>${esc((FACL.find(f=>f.id===b.teacher_id)||{}).name||"—")}</td>
+    <td>${(b.days||[]).map(d=>(BDAYS.find(x=>x[0]===d)||[])[1]).join(", ")||"—"}<div class="muted" style="font-size:13px">${b.start_time?b.start_time.slice(0,5)+" · "+b.duration_min+" মিনিট":""}</div></td>
+    <td>${cnt(b.name)}</td><td>${b.meet_url?`<a href="${esc(b.meet_url)}" target="_blank" rel="noopener">খুলুন</a>`:"—"}</td>
+    <td style="white-space:nowrap"><button class="mini" data-bedit="${b.id}">সম্পাদনা</button> <button class="ghost mini" data-bdel="${b.id}">মুছুন</button></td></tr>`).join(""):'<tr><td colspan="7" class="muted">এখনো কোনো ব্যাচ নেই — "+ নতুন ব্যাচ" চাপুন।</td></tr>';
+  document.querySelectorAll("[data-bedit]").forEach(x=>x.onclick=()=>openBForm(BAT.find(b=>b.id==x.dataset.bedit)));
+  document.querySelectorAll("[data-bdel]").forEach(x=>x.onclick=async()=>{const b=BAT.find(y=>y.id==x.dataset.bdel);if(!confirm("“"+b.name+"” ব্যাচ মুছবেন? শিক্ষার্থীরা মুছবে না।"))return;const {error}=await sb.from("batches").delete().eq("id",b.id);if(error)alert(error.message);loadBatches();});
+}
+$("bNew").onclick=()=>openBForm(null);
+function openBForm(b){
+  bEdit=b?b.id:null;const box=$("bForm");box.hidden=false;
+  box.innerHTML=`<h1 style="font-size:18px;margin-bottom:12px">${b?"ব্যাচ সম্পাদনা":"নতুন ব্যাচ"}</h1><div class="fgrid">
+    <label>ব্যাচের নাম<input id="b_name" value="${esc(b?b.name:"")}" placeholder="যেমন: নূরানী-সকাল-১"></label>
+    <label>কোর্স<select id="b_course"><option value="">—</option>${CLIST.map(c=>`<option value="${c.slug}" ${b&&b.course===c.slug?"selected":""}>${esc(c.content.bn.t)}</option>`).join("")}</select></label>
+    <label>শিক্ষক<select id="b_teacher"><option value="">—</option>${FACL.map(f=>`<option value="${f.id}" ${b&&b.teacher_id===f.id?"selected":""}>${esc(f.name)}</option>`).join("")}</select></label>
+    <label>শুরুর সময় (বাংলাদেশ)<input id="b_time" type="time" value="${b&&b.start_time?b.start_time.slice(0,5):"19:00"}"></label>
+    <label>সময়কাল (মিনিট)<input id="b_dur" type="number" min="10" value="${b?b.duration_min:40}"></label>
+    <label class="wide">ক্লাসের লিংক (Meet/Zoom)<input id="b_meet" value="${esc(b&&b.meet_url||"")}" placeholder="https://meet.google.com/..."></label>
+    <div class="wide" style="grid-column:1/-1;display:flex;gap:14px;flex-wrap:wrap;align-items:center"><span class="muted">দিন:</span>${BDAYS.map(([k,n])=>`<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" class="b_day" value="${k}" ${b&&(b.days||[]).includes(k)?"checked":""} style="width:auto"> ${n}</label>`).join("")}
+      <label style="display:flex;gap:6px;align-items:center;margin-inline-start:auto"><input type="checkbox" id="b_active" ${!b||b.active?"checked":""} style="width:auto"> চালু</label></div>
+  </div><div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="bSave">সেভ করুন</button><button class="ghost" id="bCancel">বাতিল</button><span class="muted" id="bMsg"></span></div>`;
+  $("bCancel").onclick=()=>{box.hidden=true;bEdit=null;};
+  $("bSave").onclick=async()=>{
+    const name=$("b_name").value.trim(),meet=$("b_meet").value.trim();
+    if(!name){$("bMsg").textContent="ব্যাচের নাম দিন।";return;}
+    if(meet&&!/^https?:\/\//.test(meet)){$("bMsg").textContent="লিংক https:// দিয়ে শুরু হতে হবে।";return;}
+    const row={name,course:$("b_course").value||null,teacher_id:$("b_teacher").value?Number($("b_teacher").value):null,start_time:$("b_time").value||null,duration_min:Number($("b_dur").value)||40,meet_url:meet||null,days:[...document.querySelectorAll(".b_day:checked")].map(x=>x.value),active:$("b_active").checked};
+    $("bMsg").textContent="সেভ হচ্ছে…";
+    const old=bEdit?BAT.find(x=>x.id===bEdit):null;
+    const {error}=bEdit?await sb.from("batches").update(row).eq("id",bEdit):await sb.from("batches").insert(row);
+    if(error){$("bMsg").textContent="হয়নি: "+(/duplicate|unique/.test(error.message)?"এই নামে ব্যাচ আগেই আছে":error.message);return;}
+    if(old&&old.name!==name&&confirm("ব্যাচের নাম বদলেছে। এই ব্যাচের শিক্ষার্থীদের নামও বদলে দেব?"))await sb.from("students").update({batch:name}).eq("batch",old.name);
+    box.hidden=true;bEdit=null;loadBatches();
+  };
+  box.scrollIntoView({behavior:"smooth"});
 }
 init();
 </script>

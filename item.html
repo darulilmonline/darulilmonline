@@ -666,6 +666,21 @@ header{background:rgba(255,255,255,.94)!important;backdrop-filter:blur(10px);-we
 .ts{flex:none;font:inherit;font-size:13px;font-weight:800;color:#0A7A55;background:#ECF8F2;border:1px solid #CDE9DA;border-radius:8px;padding:2px 8px;cursor:pointer;font-variant-numeric:tabular-nums;direction:ltr}
 .ts:hover{background:#0A7A55;color:#fff}
 .ai-note{font-size:13px;color:var(--muted)}.ai-note a{color:var(--brand)}
+
+/* ---- clean video cover + audio ---- */
+.it-media.vid{position:relative}
+.vcover{position:relative;display:block;width:100%;height:100%;padding:0;border:0;border-radius:16px;overflow:hidden;cursor:pointer;background:#000}
+.vcover img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.vcover::after{content:"";position:absolute;inset:0;background:radial-gradient(60% 60% at 50% 50%,rgba(0,0,0,.05),rgba(0,0,0,.35))}
+.vcover:hover img{transform:scale(1.03)}
+.vpb{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:1;width:84px;height:84px;border-radius:50%;background:rgba(255,255,255,.96);display:grid;place-items:center;box-shadow:0 12px 34px rgba(0,0,0,.35);transition:transform .2s}
+.vcover:hover .vpb{transform:translate(-50%,-50%) scale(1.07)}
+.vpb svg{width:34px;height:34px;color:#0A7A55;margin-inline-start:5px}
+#vbox iframe{width:100%;height:100%;border:0;border-radius:16px;display:block}
+.vload{position:absolute;inset:8px;display:grid;place-items:center;color:#fff;background:#000;border-radius:16px;font-size:15px}
+.it-aud2{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin-top:16px;padding:14px 18px;border:1px solid #CDE9DA;background:#F3FBF7;border-radius:16px}
+.it-aud2 div{display:grid}.it-aud2 span{font-size:13px}
+.it-aud2 audio{flex:1;min-width:240px}
 </style>
 <script>
 window.DIO_FONTS={"Tiro Bangla":"Tiro+Bangla:ital@0;1","Noto Serif Bengali":"Noto+Serif+Bengali:wght@400;600;700","Noto Sans Bengali":"Noto+Sans+Bengali:wght@400;600;700","Anek Bangla":"Anek+Bangla:wght@400;600;700","Baloo Da 2":"Baloo+Da+2:wght@400;600;700","Atma":"Atma:wght@400;600;700","Mina":"Mina:wght@400;700","Galada":"Galada","Inter":"Inter:wght@400;600;700","Poppins":"Poppins:wght@400;600;700","Montserrat":"Montserrat:wght@400;600;700","Nunito":"Nunito:wght@400;600;700","Lora":"Lora:wght@400;600;700","Merriweather":"Merriweather:wght@400;700","Playfair Display":"Playfair+Display:wght@400;600;700","Noto Naskh Arabic":"Noto+Naskh+Arabic:wght@400;600;700","Scheherazade New":"Scheherazade+New:wght@400;700","Lateef":"Lateef:wght@400;700","Markazi Text":"Markazi+Text:wght@400;600;700","Reem Kufi":"Reem+Kufi:wght@400;600;700","Cairo":"Cairo:wght@400;600;700","Tajawal":"Tajawal:wght@400;700","Aref Ruqaa":"Aref+Ruqaa:wght@400;700"};
@@ -792,9 +807,53 @@ const segs=location.pathname.split("/").filter(Boolean);
 const ID=(segs[0]==="library"&&segs[1])?segs[1]:new URLSearchParams(location.search).get("id");
 const get=p=>fetch(U+"/rest/v1/"+p,{headers:H}).then(r=>r.ok?r.json():Promise.reject(r.status));
 
+
+// ===== পরিষ্কার ভিডিও প্লেয়ার (YouTube-এর নিয়ম মেনে) =====
+let ytReady=null;
+function ytApi(){if(ytReady)return ytReady;ytReady=new Promise(res=>{if(window.YT&&window.YT.Player)return res();const p=window.onYouTubeIframeAPIReady;window.onYouTubeIframeAPIReady=()=>{p&&p();res();};const sc=document.createElement("script");sc.src="https://www.youtube.com/iframe_api";document.head.appendChild(sc);});return ytReady;}
+async function startPlayer(at){
+  const id=window.dioVid,box=document.getElementById("vbox");if(!id||!box)return;
+  if(window.dioYT){window.dioYT.seekTo(at||0,true);window.dioYT.playVideo();return;}
+  box.innerHTML='<div class="vload">লোড হচ্ছে…</div><div id="ytp"></div>';
+  await ytApi();
+  let capOff=false;
+  const kill=p=>{try{p.unloadModule("captions");}catch(_){}try{p.unloadModule("cc");}catch(_){}};
+  window.dioYT=new YT.Player("ytp",{videoId:id,host:"https://www.youtube-nocookie.com",
+    playerVars:{autoplay:1,rel:0,iv_load_policy:3,cc_load_policy:0,playsinline:1,modestbranding:1,hl:"bn",start:Math.floor(at||0),origin:location.origin},
+    events:{onReady:ev=>{const l=box.querySelector(".vload");if(l)l.remove();kill(ev.target);ev.target.playVideo();},
+      onStateChange:ev=>{if(ev.data===1&&!capOff){capOff=true;kill(ev.target);setTimeout(()=>kill(ev.target),800);}}}});
+}
+// ===== লেখার PDF (ব্রাউজারের "PDF হিসেবে সেভ") =====
+function makePDF(item,d,lines,kp){
+  const w=window.open("","_blank");if(!w){alert("পপআপ আটকানো আছে — ব্রাউজারে এই সাইটের জন্য পপআপ চালু করুন।");return;}
+  const here=location.origin+"/library/"+item.id;
+  const lang=d.source_lang&&d.source_lang!=="bn"?"মূল ভাষা: "+(AIL[d.source_lang]||d.source_lang)+" — বাংলায় অনুবাদ":"";
+  w.document.write(`<!doctype html><html lang="bn"><head><meta charset="utf-8"><title>${e(item.title)} — দারুল ইলম অনলাইন</title>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Amiri&display=swap" rel="stylesheet">
+  <style>@page{size:A4;margin:16mm 15mm}body{font-family:"Hind Siliguri",sans-serif;color:#1F2A2E;font-size:12.5pt;line-height:1.75;margin:0}
+  .hd{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #C9A13B;padding-bottom:8px;margin-bottom:14px}
+  .hd b{font-size:15pt;color:#0B3D4A}.hd span{font-size:10pt;color:#5F6B6E}
+  h1{font-size:19pt;line-height:1.35;margin:4px 0 6px}.meta{font-size:10pt;color:#5F6B6E;margin-bottom:14px}
+  .sum{background:#F3FBF7;border:1px solid #CDE9DA;border-radius:8px;padding:10px 14px;margin-bottom:12px}
+  h2{font-size:13.5pt;color:#0A7A55;margin:16px 0 6px}ul{margin:4px 0;padding-left:22px}
+  .ln{display:flex;gap:10px;padding:4px 0;border-bottom:1px dashed #E6DCC8;break-inside:avoid}.ln i{font-style:normal;font-weight:700;color:#0A7A55;min-width:44px;font-size:10.5pt}
+  .ar{font-family:Amiri,serif}.ft{margin-top:18px;font-size:9.5pt;color:#7A858A;border-top:1px solid #E6DCC8;padding-top:8px}
+  @media screen{body{max-width:780px;margin:24px auto;padding:0 18px}.bar{position:sticky;top:0;background:#fff;padding:10px 0;text-align:right}.bar button{font:inherit;font-weight:700;padding:10px 18px;border-radius:10px;border:0;background:#F6B91A;cursor:pointer}}
+  @media print{.bar{display:none}}</style></head><body>
+  <div class="bar"><button onclick="print()">PDF হিসেবে সেভ / প্রিন্ট</button></div>
+  <div class="hd"><b>দারুল ইলম অনলাইন</b><span>darulilmonline.com</span></div>
+  <h1>${e(item.title)}</h1><div class="meta">ভিডিও: ${e(here)}${lang?" · "+lang:""}</div>
+  ${d.summary?`<div class="sum"><b>সারাংশ</b><div>${e(d.summary)}</div></div>`:""}
+  ${kp.length?`<h2>মূল কথা</h2><ul>${kp.map(k=>`<li>${e(k)}</li>`).join("")}</ul>`:""}
+  ${lines.length?`<h2>পূর্ণ লেখা</h2>${lines.map(l=>`<div class="ln">${l.t?`<i>${e(l.t)}</i>`:""}<span>${e(l.x)}</span></div>`).join("")}`:""}
+  <div class="ft">এই লেখা AI-এর সাহায্যে তৈরি এবং দেখে প্রকাশ করা হয়েছে। কোনো ভুল চোখে পড়লে জানান — WhatsApp: 01329-173444</div>
+  <script>document.fonts&&document.fonts.ready.then(()=>setTimeout(()=>print(),300));<\/script></body></html>`);
+  w.document.close();
+}
 const AIL={bn:"বাংলা",en:"ইংরেজি",ar:"আরবি",ur:"উর্দু",other:"অন্য ভাষা"};
 const toSec=t=>{const p=t.split(":").map(Number);return p.length===3?p[0]*3600+p[1]*60+p[2]:p[0]*60+p[1];};
-async function aiRender(mid){
+async function aiRender(item){
+  const mid=item.id;
   let d;try{[d]=await get("media_ai?select=summary,key_points,transcript,source_lang&status=eq.published&media_id=eq."+mid);}catch(_){return;}
   if(!d||(!d.summary&&!d.transcript))return;
   const kp=(d.key_points||"").split("\n").map(x=>x.trim()).filter(Boolean);
@@ -808,9 +867,11 @@ async function aiRender(mid){
       <div class="ai-lines">${lines.map(l=>`<p>${l.s!=null?`<button type="button" class="ts" data-s="${l.s}">${e(l.t)}</button>`:""}<span>${e(l.x)}</span></p>`).join("")}</div></details>`:""}
     <p class="ai-note">এই লেখা ও সারাংশ AI-এর সাহায্যে তৈরি এবং দেখে প্রকাশ করা হয়েছে। কোনো ভুল চোখে পড়লে <a href="https://wa.me/8801329173444" target="_blank" rel="noopener">WhatsApp-এ জানান</a>।</p>
   </section>`;
-  box.querySelectorAll(".ts").forEach(b=>b.onclick=()=>{const f=document.getElementById("ytp");if(!f)return;const w=f.contentWindow,sec=+b.dataset.s;
-    w.postMessage(JSON.stringify({event:"command",func:"seekTo",args:[sec,true]}),"*");w.postMessage(JSON.stringify({event:"command",func:"playVideo",args:[]}),"*");
-    f.scrollIntoView({behavior:"smooth",block:"center"});});
+  box.querySelectorAll(".ts").forEach(b=>b.onclick=()=>{const sec=+b.dataset.s;
+    if(window.dioYT&&window.dioYT.seekTo){window.dioYT.seekTo(sec,true);window.dioYT.playVideo();}else startPlayer(sec);
+    const vb=document.getElementById("vbox");if(vb)vb.scrollIntoView({behavior:"smooth",block:"center"});});
+  const act=document.getElementById("itAct");
+  if(act){const pb=document.createElement("button");pb.type="button";pb.className="btn btn-ghost";pb.textContent="লেখা PDF ডাউনলোড";pb.onclick=()=>makePDF(item,d,lines,kp);act.appendChild(pb);}
   const q=box.querySelector(".ai-q");if(q)q.oninput=()=>{const v=q.value.trim();box.querySelectorAll(".ai-lines p").forEach(p=>{p.hidden=v&&!p.textContent.includes(v);});};
 }
 let CN={};
@@ -822,7 +883,7 @@ async function go(){
   if(!x){app.innerHTML='<h1>পোস্টটি পাওয়া যায়নি</h1><p class="muted">হয়তো সরানো হয়েছে।</p><p style="margin-top:16px"><a class="btn btn-primary" href="/library">লাইব্রেরিতে ফিরুন</a></p>';return;}
   document.title=x.title+" — লাইব্রেরি — দারুল ইলম অনলাইন";
   const u=e(x.url),id=x.kind==="video"?yt(x.url):null;let media="";
-  if(x.kind==="video") media=id?`<div class="it-media vid"><iframe id="ytp" src="https://www.youtube-nocookie.com/embed/${id}?rel=0&enablejsapi=1&origin=${encodeURIComponent(location.origin)}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen title="${e(x.title)}"></iframe></div>`:`<div class="it-media vid"><video src="${u}" controls preload="metadata"></video></div>`;
+  if(x.kind==="video") media=id?`<div class="it-media vid" id="vbox"><button type="button" class="vcover" id="vplay" aria-label="ভিডিও চালান — ${e(x.title)}"><img src="https://i.ytimg.com/vi/${id}/maxresdefault.jpg" alt="" onerror="this.onerror=null;this.src='https://i.ytimg.com/vi/${id}/hqdefault.jpg'"><span class="vpb"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l13-7.5z"/></svg></span></button></div>`:`<div class="it-media vid"><video src="${u}" controls preload="metadata"></video></div>`;
   else if(x.kind==="pdf") media=`<div class="it-media pdf"><iframe src="${u}" title="${e(x.title)}"></iframe></div>`;
   else if(x.kind==="image") media=`<div class="it-media img"><img src="${u}" alt="${e(x.title)}"></div>`;
   else if(x.kind==="audio") media=`<div class="it-media aud"><audio src="${u}" controls preload="metadata"></audio></div>`;
@@ -836,7 +897,7 @@ async function go(){
   app.innerHTML=`<div class="it"><div class="crumb"><a href="/">হোম</a> › <a href="/library">লাইব্রেরি</a> › ${e(x.title)}</div>
     <div class="it-top"><span class="badge2">${KIND[x.kind]||""}</span>${crs}</div>
     <h1>${e(x.title)}</h1>
-    <div class="it-grid"><div>${media}<div class="it-act">${acts}</div>${x.description?`<div class="it-desc">${link(x.description)}</div>`:""}<div id="aiBox"></div></div>
+    <div class="it-grid"><div>${media}${x.audio_url?`<div class="it-aud2"><div><b>🎧 অডিও সংস্করণ</b><span class="muted">শুধু শুনতে চাইলে — কম ডেটায়</span></div><audio src="${e(x.audio_url)}" controls preload="none"></audio></div>`:""}<div class="it-act" id="itAct">${acts}${x.audio_url?`<a class="btn btn-ghost" href="${e(x.audio_url)}" download target="_blank" rel="noopener">অডিও ডাউনলোড</a>`:""}</div>${x.description?`<div class="it-desc">${link(x.description)}</div>`:""}<div id="aiBox"></div></div>
       <aside class="it-side"><h3>শেয়ার করুন</h3><div class="share">
         <a class="w" href="https://wa.me/?text=${txt}" target="_blank" rel="noopener">WhatsApp</a>
         <a class="fb" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(here)}" target="_blank" rel="noopener">Facebook</a>
@@ -845,7 +906,8 @@ async function go(){
         <div class="it-meta">প্রকাশ: ${new Date(x.created_at).toLocaleDateString("bn-BD",{day:"numeric",month:"long",year:"numeric"})}${crs?"<br>কোর্স: "+e(CN[x.course]):""}</div>
         ${x.course?`<p style="margin-top:14px"><a class="btn btn-primary" href="/learn/${x.course}" style="width:100%;justify-content:center">এই কোর্সের ফ্রি পাঠ</a></p>`:""}</aside></div>
     <div class="it-rel" id="rel" hidden><h2>আরও দেখুন</h2><div class="lib-grid" id="relG"></div></div></div>`;
-  aiRender(x.id);
+  if(x.kind==="video"&&id){window.dioVid=id;const vp=document.getElementById("vplay");if(vp)vp.onclick=()=>startPlayer(0);}
+  aiRender(x);
   document.getElementById("cpy").onclick=async ev=>{try{await navigator.clipboard.writeText(here);ev.target.textContent="কপি হয়েছে ✓";}catch(_){prompt("লিংক কপি করুন:",here);}};
   try{
     let rel=x.course?await get(`media?select=*&published=eq.true&course=eq.${x.course}&id=neq.${x.id}&order=created_at.desc&limit=6`):[];
