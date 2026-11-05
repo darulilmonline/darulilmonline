@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>অ্যাডমিন — দারুল ইলম অনলাইন</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<style>
+:root{--teal:#0F4C5C;--ink:#1B2A2F;--bg:#FBF7EE;--surface:#fff;--text:#1B2A2F;--muted:#5A6A6F;--line:#DED5BF;--accent:#E0A526;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0D1A1F;--surface:#13252B;--text:#F2EDE1;--muted:#A9B5B9;--line:#2A3F47}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0D1A1F;--surface:#13252B;--text:#F2EDE1;--muted:#A9B5B9;--line:#2A3F47}
+*{box-sizing:inherit;margin:0}
+body{background:var(--bg);color:var(--text);font-family:"Hind Siliguri",system-ui,sans-serif;font-size:16px;line-height:1.5}
+.wrap{max-width:1100px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin-bottom:4px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:20px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.login{max-width:380px;margin:60px auto;display:grid;gap:12px}
+input,select,button{font:inherit;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
+button{background:var(--accent);color:var(--ink);border:0;font-weight:700;cursor:pointer}
+button.ghost{background:transparent;border:1px solid var(--line);color:var(--text);font-weight:600}
+.stats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 16px}
+.stat b{font-size:22px;display:block}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.tools input{flex:1;min-width:180px}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:900px}
+th,td{padding:10px 12px;text-align:start;border-bottom:1px solid var(--line);vertical-align:top;font-size:15px}
+th{color:var(--muted);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.st{padding:4px 8px;border-radius:999px;font-size:13px;font-weight:700;border:0}
+.st-new{background:#FDE68A;color:#78350F}.st-trial{background:#BFDBFE;color:#1E3A8A}.st-paid{background:#BBF7D0;color:#14532D}.st-closed{background:#E5E7EB;color:#374151}
+a.wa{color:#1FAF5A;font-weight:700;text-decoration:none}
+.err{color:#B91C1C;font-weight:600}
+.muted{color:var(--muted);font-size:14px}
+.tab.active{background:var(--accent);color:var(--ink);border:0}
+.cms{display:grid;gap:10px}
+.cms .item{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:grid;gap:8px}
+.cms .k{font-size:12px;color:var(--muted)}
+.cms .d{font-size:14px;color:var(--muted);white-space:pre-wrap}
+.cms textarea{font:inherit;width:100%;min-height:44px;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);resize:vertical}
+.cms .item.changed{border-color:var(--accent)}
+.cms .act{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cms .act button{padding:7px 12px;font-size:14px}
+.cms .saved{color:#15803D;font-size:13px}
+.cms textarea[dir="rtl"]{text-align:right}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.mgrid{display:grid;gap:10px;max-width:640px}
+.mgrid label{display:grid;gap:4px}
+.mgrid label input,.mgrid label select{width:100%}
+.mgrid textarea{font:inherit;min-height:60px;padding:11px 13px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
+.mini{padding:6px 10px;font-size:13px}
+.ai-b{background:linear-gradient(135deg,#0A7A55,#0B3D4A)!important;color:#fff!important;border:0!important}
+.ai-p{display:grid;gap:12px}
+.ai-p textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);line-height:1.7}
+.ai-st{display:inline-block;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px}
+.ai-st.d{background:#FEF3C7;color:#92400E}.ai-st.p{background:#DCFCE7;color:#166534}.ai-st.n{background:#E5E7EB;color:#374151}
+.ai-warn{background:#FFF7ED;border:1px solid #FED7AA;color:#9A3412;border-radius:10px;padding:10px 12px;font-size:14px}
+
+.fgrid{display:grid;gap:10px 14px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+.fgrid label{display:grid;gap:4px;font-size:14px;color:var(--muted)}
+.fgrid label.wide{grid-column:1/-1}
+.fgrid input,.fgrid select,.fgrid textarea{width:100%;font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)}
+.btn-s{display:inline-block;padding:6px 10px;border-radius:9px;font-size:13px;font-weight:700;text-decoration:none}
+.wa-b{background:#1FAF5A;color:#fff}
+.pill{display:inline-block;padding:4px 10px;border-radius:999px;font-size:13px;font-weight:700}
+.pill.ok{background:#BBF7D0;color:#14532D}.pill.due{background:#FECACA;color:#7F1D1D}.pill.off{background:#E5E7EB;color:#374151}
+tr.sub td{background:var(--bg)}
+.payf{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.payf input,.payf select{padding:8px 10px;font-size:14px}
+.hist{display:grid;gap:6px;font-size:14px}
+.hist div{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+td audio{width:220px;height:36px}
+</style>
+<style id="darkfix">/* dark-fix v31 */
+:root[data-theme="dark"] .st-new{background:#31312C!important;color:#C2A493!important}
+:root[data-theme="dark"] .st-paid{background:#2A3332!important;color:#95B2A0!important}
+:root[data-theme="dark"] .st-closed{background:#2E3135!important;color:var(--text)!important}
+:root[data-theme="dark"] .err{color:#E09999!important}
+:root[data-theme="dark"] .cms .saved{color:#96C6A8!important}
+:root[data-theme="dark"] .ai-st.d{background:#313232!important;color:#CEA993!important}
+:root[data-theme="dark"] .ai-st.p{background:#2D3335!important;color:#96BAA4!important}
+:root[data-theme="dark"] .ai-st.n{background:#2E3135!important;color:var(--text)!important}
+:root[data-theme="dark"] .ai-warn{background:#313335!important;border:1px solid var(--line)!important;color:#D2A494!important}
+:root[data-theme="dark"] .pill.ok{background:#2A3332!important;color:#95B2A0!important}
+:root[data-theme="dark"] .pill.off{background:#2E3135!important;color:var(--text)!important}
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) .st-new{background:#31312C!important;color:#C2A493!important}
+:root:not([data-theme="light"]) .st-paid{background:#2A3332!important;color:#95B2A0!important}
+:root:not([data-theme="light"]) .st-closed{background:#2E3135!important;color:var(--text)!important}
+:root:not([data-theme="light"]) .err{color:#E09999!important}
+:root:not([data-theme="light"]) .cms .saved{color:#96C6A8!important}
+:root:not([data-theme="light"]) .ai-st.d{background:#313232!important;color:#CEA993!important}
+:root:not([data-theme="light"]) .ai-st.p{background:#2D3335!important;color:#96BAA4!important}
+:root:not([data-theme="light"]) .ai-st.n{background:#2E3135!important;color:var(--text)!important}
+:root:not([data-theme="light"]) .ai-warn{background:#313335!important;border:1px solid var(--line)!important;color:#D2A494!important}
+:root:not([data-theme="light"]) .pill.ok{background:#2A3332!important;color:#95B2A0!important}
+:root:not([data-theme="light"]) .pill.off{background:#2E3135!important;color:var(--text)!important}
+}</style>
+</head>
+<body>
+<div class="wrap">
+  <div id="loginBox" class="card login">
+    <h1>অ্যাডমিন লগইন</h1>
+    <p class="muted">দারুল ইলম অনলাইন — ভর্তির আবেদন</p>
+    <input id="email" type="email" placeholder="ইমেইল" autocomplete="username">
+    <input id="pass" type="password" placeholder="পাসওয়ার্ড" autocomplete="current-password">
+    <button id="loginBtn">লগইন</button>
+    <div id="loginErr" class="err"></div>
+  </div>
+
+  <div id="app" style="display:none">
+    <div class="top">
+      <div><h1>অ্যাডমিন প্যানেল — দারুল ইলম অনলাইন</h1><div class="muted" id="who"></div></div>
+      <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
+    </div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="batches">ব্যাচ ও রুটিন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="courses">কোর্স</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="quiz">কুইজ</button><button class="tab ghost" data-tab="certs">সনদ</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div id="panel-apps">
+    <div class="stats" id="stats"></div>
+    <div class="tools">
+      <input id="q" placeholder="নাম বা নম্বর দিয়ে খুঁজুন">
+      <select id="fStatus"><option value="">সব অবস্থা</option><option value="new">নতুন</option><option value="trial">ট্রায়ালে</option><option value="paid">ভর্তি হয়েছে</option><option value="closed">বন্ধ</option></select>
+    </div>
+    <div class="tbl"><table>
+      <thead><tr><th>তারিখ</th><th>শিক্ষার্থী</th><th>বয়স</th><th>অভিভাবক</th><th>ফোন</th><th>কোর্স</th><th>ধরন</th><th>সময়</th><th>নোট</th><th>অবস্থা</th><th>কাজ</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table></div>
+    </div>
+
+    <div id="panel-students" style="display:none">
+      <div class="tools">
+        <label class="muted" style="display:flex;align-items:center;gap:8px">মাস <input type="month" id="sMonth"></label>
+        <input id="sq" placeholder="নাম বা নম্বর দিয়ে খুঁজুন">
+        <select id="sBatch"><option value="">সব ব্যাচ</option></select>
+        <select id="sFilter"><option value="active">সক্রিয় শিক্ষার্থী</option><option value="due">শুধু বকেয়া</option><option value="paid">শুধু পরিশোধিত</option><option value="all">সব (বন্ধসহ)</option></select>
+        <button id="sNew">+ নতুন শিক্ষার্থী</button>
+        <button class="ghost" id="sCsv">CSV ডাউনলোড</button>
+      </div>
+      <div class="stats" id="sStats"></div>
+      <div class="card" id="sForm" hidden style="margin-bottom:18px">
+        <h1 style="font-size:18px;margin-bottom:12px" id="sFormTitle">নতুন শিক্ষার্থী</h1>
+        <div class="fgrid">
+          <label>নাম<input id="f_name"></label>
+          <label>WhatsApp নম্বর<input id="f_phone" placeholder="01XXXXXXXXX বা +966..."></label>
+          <label>অভিভাবক<input id="f_guardian"></label>
+          <label>বয়স<input id="f_age" type="number" min="3" max="99"></label>
+          <label>কোর্স<select id="f_course"><option value="">—</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option><option value="quran-words">কুরআন শব্দে শব্দে</option><option value="tafsir">তাফসীর</option><option value="hadith-words">হাদীস শব্দে শব্দে</option><option value="dua-words">দোয়া শব্দে শব্দে</option><option value="aqidah">আকীদা</option><option value="fiqh">ফিকহ</option><option value="seerah">সীরাত</option><option value="akhlaq">আদব-আখলাক</option><option value="history">নবীদের কাহিনী ও ইতিহাস</option><option value="english">ইংরেজি</option><option value="math">গণিত</option></select></label>
+          <label>ক্লাসের ধরন<select id="f_plan"><option value="group">গ্রুপ</option><option value="small">ছোট গ্রুপ</option><option value="one">একক</option></select></label>
+          <label>ব্যাচ<input id="f_batch" list="batchList" placeholder="যেমন: নূরানী-সকাল-১"></label>
+          <label>শিক্ষক<input id="f_teacher" list="teacherList"></label>
+          <label>মাসিক ফি<input id="f_fee" type="number" min="0" step="1"></label>
+          <label>মুদ্রা<select id="f_cur"><option value="BDT">৳ টাকা</option><option value="SAR">ر.س রিয়াল</option></select></label>
+          <label>শুরুর তারিখ<input id="f_start" type="date"></label>
+          <label>অবস্থা<select id="f_status"><option value="active">সক্রিয়</option><option value="paused">বিরতিতে</option><option value="left">বন্ধ</option></select></label>
+          <label class="wide">নোট<textarea id="f_notes"></textarea></label>
+        </div>
+        <datalist id="batchList"></datalist><datalist id="teacherList"></datalist>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="fSave">সেভ করুন</button><button class="ghost" id="fCancel">বাতিল</button><span class="muted" id="fMsg"></span></div>
+      </div>
+      <div class="tbl"><table><thead><tr><th>শিক্ষার্থী</th><th>ফোন</th><th>কোর্স</th><th>ব্যাচ · শিক্ষক</th><th>মাসিক ফি</th><th id="sMonthHead">এই মাস</th><th>কাজ</th></tr></thead><tbody id="srows"></tbody></table></div>
+    </div>
+
+    <div id="panel-faculty" style="display:none">
+      <p class="muted" style="margin-bottom:12px">এখানে যোগ করা শিক্ষকরা সাইটের <b>darulilmonline.com/faculty</b> পেজে দেখাবেন। ছবি ঐচ্ছিক — না দিলে নামের প্রথম অক্ষর দেখাবে। মহিলা শিক্ষিকার ছবি না দেওয়াই ভালো।</p>
+      <div class="card" style="margin-bottom:18px">
+        <h1 style="font-size:18px;margin-bottom:12px" id="facTitle">নতুন শিক্ষক</h1>
+        <div class="fgrid">
+          <label>নাম<input id="fc_name" placeholder="যেমন: হাফেজ কারী আব্দুর রহমান"></label>
+          <label>পদবি<input id="fc_title" placeholder="যেমন: কুরআন শিক্ষক"></label>
+          <label>WhatsApp নম্বর (পোর্টালের জন্য, সাইটে দেখাবে না)<input id="fc_phone" placeholder="01XXXXXXXXX"></label>
+          <label>লিঙ্গ<select id="fc_gender"><option value="male">পুরুষ</option><option value="female">মহিলা</option></select></label>
+          <label>ক্রম (ছোট সংখ্যা আগে)<input id="fc_sort" type="number" value="100"></label>
+          <label class="wide">যোগ্যতা<input id="fc_q" placeholder="যেমন: দাওরায়ে হাদীস, জামিয়া ...; তাজবীদে সনদপ্রাপ্ত"></label>
+          <label class="wide">ছোট পরিচয়<textarea id="fc_bio" placeholder="২–৩ লাইন: অভিজ্ঞতা, কতদিন পড়াচ্ছেন"></textarea></label>
+          <div class="wide" style="grid-column:1/-1"><div class="muted" style="font-size:14px;margin-bottom:6px">যে কোর্স পড়ান</div>
+            <div style="display:flex;flex-wrap:wrap;gap:14px" id="fc_courses">
+              <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="noorani"> নূরানী</label>
+              <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="tajweed"> তাজবীদ</label>
+              <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="hifz"> হিফয</label>
+              <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="salah"> নামাজ ও আমল</label>
+              <label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="arabic"> আরবি</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="quran-words"> কুরআন শব্দে শব্দে</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="tafsir"> তাফসীর</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="hadith-words"> হাদীস শব্দে শব্দে</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="dua-words"> দোয়া শব্দে শব্দে</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="aqidah"> আকীদা</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="fiqh"> ফিকহ</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="seerah"> সীরাত</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="akhlaq"> আদব-আখলাক</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="history"> নবীদের কাহিনী ও ইতিহাস</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="english"> ইংরেজি</label><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="math"> গণিত</label>
+            </div></div>
+          <label class="wide">ছবি (ঐচ্ছিক, বর্গাকার হলে ভালো)<input id="fc_photo" type="file" accept="image/*"></label>
+          <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="fc_pub" checked style="width:auto"> সাইটে দেখাবে</label>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="fcSave">সেভ করুন</button><button class="ghost" id="fcCancel" hidden>বাতিল</button><span class="muted" id="fcMsg"></span></div>
+      </div>
+      <div class="tbl"><table><thead><tr><th>ক্রম</th><th>নাম</th><th>পদবি · যোগ্যতা</th><th>কোর্স</th><th>সাইটে</th><th></th></tr></thead><tbody id="fcrows"></tbody></table></div>
+    </div>
+
+    <div id="panel-batches" style="display:none">
+      <p class="muted" style="margin-bottom:12px">প্রতিটি ব্যাচের দিন, সময় (বাংলাদেশ), শিক্ষক আর ক্লাসের লিংক এখানে দিন। শিক্ষার্থীর "ব্যাচ" ঘরে হুবহু একই নাম থাকলে সে ওই ব্যাচে গণ্য হবে। শিক্ষক পোর্টাল: <b>darulilmonline.com/ustad</b> · অভিভাবক পোর্টাল: <b>darulilmonline.com/portal</b></p>
+      <div style="margin-bottom:14px"><button id="bNew">+ নতুন ব্যাচ</button></div>
+      <div class="card" id="bForm" hidden style="margin-bottom:18px"></div>
+      <div class="tbl"><table><thead><tr><th>ব্যাচ</th><th>কোর্স</th><th>শিক্ষক</th><th>দিন ও সময়</th><th>শিক্ষার্থী</th><th>লিংক</th><th></th></tr></thead><tbody id="brows"></tbody></table></div>
+    </div>
+
+    <div id="panel-quiz" style="display:none">
+      <p class="muted" style="margin-bottom:12px">প্রতিটি অধ্যায়ের শেষে MCQ। সঠিক উত্তর শিক্ষার্থী জমা দেওয়ার আগে দেখতে পায় না। ফ্রি কোর্সের চূড়ান্ত পরীক্ষা = কোর্সের সব প্রকাশিত প্রশ্ন; ৭০% পেলে সনদ।</p>
+      <div class="tools" style="flex-wrap:wrap;gap:8px"><select id="qzC"></select><select id="qzM"><option value="">— অধ্যায় বাছুন —</option></select><button id="qzNew">+ নতুন প্রশ্ন</button><button class="ghost" id="qzAI">✨ AI দিয়ে ৬টি প্রশ্ন</button><button class="ghost" id="qzPub">সব প্রকাশ করুন</button><span class="muted" id="qzMsg"></span></div>
+      <div class="card" id="qzForm" hidden style="margin:14px 0"></div>
+      <div class="tbl"><table><thead><tr><th>অধ্যায়</th><th>প্রশ্ন</th><th>সঠিক উত্তর</th><th>সাইটে</th><th></th></tr></thead><tbody id="qzRows"></tbody></table></div>
+    </div>
+
+    <div id="panel-certs" style="display:none">
+      <div class="card" style="margin-bottom:16px"><h1 style="font-size:18px;margin-bottom:10px">নতুন কোর্স সমাপনী সনদ</h1>
+        <div class="fgrid"><label>শিক্ষার্থীর নাম (সনদে যেভাবে থাকবে)<input id="ctN" list="ctNames"><datalist id="ctNames"></datalist></label>
+        <label>কোর্স<select id="ctC"></select></label>
+        <label>ফলাফল<input id="ctG" list="ctGrades" placeholder="যেমন: মুমতায (অসাধারণ)"><datalist id="ctGrades"><option value="মুমতায (অসাধারণ)"><option value="জায়্যিদ জিদ্দান (খুব ভালো)"><option value="জায়্যিদ (ভালো)"><option value="মাকবুল (উত্তীর্ণ)"></datalist></label>
+        <label>মন্তব্য (ঐচ্ছিক, সনদে দেখাবে না)<input id="ctNote"></label></div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px"><button id="ctGo">সনদ তৈরি ও প্রিন্ট</button><span class="muted" id="ctMsg"></span></div></div>
+      <div class="tools"><input id="ctQ" placeholder="নাম বা সনদ নম্বর দিয়ে খুঁজুন"></div>
+      <div class="tbl"><table><thead><tr><th>নম্বর</th><th>নাম</th><th>কোর্স</th><th>ধরন</th><th>ফলাফল</th><th>তারিখ</th><th></th></tr></thead><tbody id="ctRows"></tbody></table></div>
+    </div>
+
+    <div id="panel-teachers" style="display:none">
+      <div class="tools"><input id="tq" placeholder="নাম বা নম্বর দিয়ে খুঁজুন"><select id="tfStatus"><option value="">সব অবস্থা</option><option value="new">নতুন</option><option value="interview">সাক্ষাৎকার</option><option value="demo">ডেমো ক্লাস</option><option value="hired">নিয়োগ</option><option value="rejected">বাদ</option></select></div>
+      <div class="tbl"><table><thead><tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>পদ</th><th>লিঙ্গ</th><th>অবস্থান</th><th>বয়স</th><th>যোগ্যতা</th><th>অভিজ্ঞতা</th><th>সময়</th><th>ডিভাইস</th><th>অবস্থা</th></tr></thead><tbody id="trows"></tbody></table></div>
+    </div>
+
+    <div id="panel-recs" style="display:none">
+      <p class="muted" style="margin-bottom:6px">শিক্ষার্থীদের পাঠানো তিলাওয়াত। "শুনুন" চাপলে এখানেই বাজবে।</p><p class="muted" id="cleanNote" style="margin-bottom:12px">৩০ দিনের পুরোনো তিলাওয়াত অ্যাডমিন প্যানেল খুললেই নিজে মুছে যায়, যাতে জায়গা ভরে না যায়।</p>
+      <div class="tbl"><table><thead><tr><th>তারিখ</th><th>নাম</th><th>ফোন</th><th>কোর্স</th><th>দৈর্ঘ্য</th><th>নোট</th><th>শুনুন</th><th>অবস্থা</th><th></th></tr></thead><tbody id="rrows"></tbody></table></div>
+    </div>
+
+    <div id="panel-courses" style="display:none">
+      <p class="muted" style="margin-bottom:12px">এখানে কোর্স যোগ, সম্পাদনা ও লুকানো যায়। পরিবর্তন সাথে সাথে সাইটের কোর্স পেজ, কোর্স তালিকা, ফ্রি কোর্স ও ভর্তি ফরমে চলে যাবে। নতুন কোর্সের ঠিকানা হবে <b>darulilmonline.com/c/কোর্স-কোড</b>।</p>
+      <div style="margin-bottom:14px"><button id="cNew">+ নতুন কোর্স</button></div>
+      <div class="card" id="cForm" hidden style="margin-bottom:18px"></div>
+      <div class="tbl"><table><thead><tr><th>ক্রম</th><th></th><th>কোর্স</th><th>বিভাগ</th><th>বয়স</th><th>সাইটে</th><th></th></tr></thead><tbody id="crows"></tbody></table></div>
+    </div>
+
+    <div id="panel-learn" style="display:none">
+      <div class="tools"><label class="muted" style="display:flex;gap:8px;align-items:center">কোর্স <select id="lnCourse"><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদসহ কুরআন তিলাওয়াত</option><option value="quran-words">কুরআন শব্দে শব্দে শিক্ষা</option><option value="tafsir">তাফসীর শিক্ষা</option><option value="hifz">হিফযুল কুরআন</option><option value="hadith-words">হাদীস শব্দে শব্দে শিক্ষা</option><option value="dua-words">দোয়া শব্দে শব্দে শিক্ষা</option><option value="salah">নামাজ, মাসনুন দোয়া ও দৈনন্দিন আমল</option><option value="aqidah">আকীদা — ঈমানের মৌলিক শিক্ষা</option><option value="fiqh">ফিকহ ও মাসায়েল</option><option value="seerah">সীরাতুন নবী ﷺ</option><option value="akhlaq">আদব ও আখলাক</option><option value="history">নবীদের কাহিনী ও ইসলামের ইতিহাস</option><option value="arabic">আরবি ভাষা (প্রাথমিক)</option><option value="english">ইংরেজি শিক্ষা (ইসলামিক পরিবেশে)</option><option value="math">গণিত শিক্ষা (ইসলামিক পরিবেশে)</option></select></label><a class="btn-s wa-b" id="lnView" target="_blank" rel="noopener" style="background:var(--teal,#0B3D4A)">সাইটে দেখুন ↗</a></div>
+      <div class="card" style="margin:14px 0 18px">
+        <h1 style="font-size:18px;margin-bottom:12px" id="lnFormT">নতুন পাঠ</h1>
+        <div class="fgrid">
+          <label>অধ্যায় / মডিউল<input id="ln_mod" list="lnMods" placeholder="যেমন: অধ্যায় ১: দৈনন্দিন দোয়া"></label>
+          <label>ক্রম (ছোট সংখ্যা আগে)<input id="ln_sort" type="number" value="10"></label>
+          <label class="wide">পাঠের শিরোনাম<input id="ln_title"></label>
+          <label>ধরন<select id="ln_kind"><option value="article">লেখা</option><option value="video">ভিডিও</option><option value="pdf">PDF</option><option value="audio">অডিও</option><option value="link">লিংক</option></select></label>
+          <label>সময় (মিনিট, ঐচ্ছিক)<input id="ln_min" type="number" min="1"></label>
+          <label class="wide">লিংক — YouTube / PDF / অডিও (ঐচ্ছিক)<input id="ln_url" placeholder="https://..."></label>
+          <label class="wide">অথবা ফাইল আপলোড — PDF, অডিও (সর্বোচ্চ ৫০MB)<input id="ln_file" type="file" accept="application/pdf,audio/*,.opus,.ogg,.m4a,video/*"></label>
+          <label class="wide">লেখা / বিবরণ<textarea id="ln_body" style="min-height:200px" placeholder="# শিরোনাম&#10;সাধারণ লেখা...&#10;&#10;আরবি লাইন আলাদা অনুচ্ছেদে লিখলে বড় করে দেখাবে&#10;&#10;- তালিকা&#10;**মোটা লেখা**&#10;> উদ্ধৃতি"></textarea></label>
+          <label style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="ln_pub" checked style="width:auto"> সাইটে দেখাবে</label>
+        </div><datalist id="lnMods"></datalist>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="lnSave">সেভ করুন</button><button class="ghost" id="lnCancel" hidden>বাতিল</button><span class="muted" id="lnMsg"></span></div>
+        <p class="muted" style="margin-top:8px;font-size:13px">লেখার নিয়ম: # শিরোনাম · - তালিকা · **মোটা** · &gt; উদ্ধৃতি · খালি লাইন দিয়ে অনুচ্ছেদ আলাদা। শুধু আরবি অনুচ্ছেদ নিজে থেকেই বড় আরবি অক্ষরে দেখাবে।</p>
+      </div>
+      <div class="tbl" style="margin-bottom:26px"><table><thead><tr><th>ক্রম</th><th>অধ্যায়</th><th>শিরোনাম</th><th>ধরন</th><th>সাইটে</th><th></th></tr></thead><tbody id="lnrows"></tbody></table></div>
+      <h1 style="font-size:18px;margin-bottom:10px">প্রশ্নোত্তর <span class="muted" id="qCount"></span></h1>
+      <div id="qlist"></div>
+    </div>
+
+    <div id="panel-media" style="display:none">
+      <div class="card" style="margin-bottom:18px">
+        <h1 style="font-size:18px;margin-bottom:12px">লাইব্রেরিতে নতুন কনটেন্ট</h1>
+        <div class="mgrid">
+          <input id="mTitle" placeholder="শিরোনাম — যেমন: সূরা ফাতিহা (তাজবীদসহ)">
+          <select id="mCourse"><option value="">সাধারণ / সব কোর্স</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option><option value="quran-words">কুরআন শব্দে শব্দে</option><option value="tafsir">তাফসীর</option><option value="hadith-words">হাদীস শব্দে শব্দে</option><option value="dua-words">দোয়া শব্দে শব্দে</option><option value="aqidah">আকীদা</option><option value="fiqh">ফিকহ</option><option value="seerah">সীরাত</option><option value="akhlaq">আদব-আখলাক</option><option value="history">নবীদের কাহিনী ও ইতিহাস</option><option value="english">ইংরেজি</option><option value="math">গণিত</option></select>
+          <textarea id="mDesc" placeholder="ছোট বিবরণ (ঐচ্ছিক)"></textarea>
+          <label class="muted">ফাইল বেছে নিন — ছবি, PDF, অডিও, ছোট ভিডিও (সর্বোচ্চ ৫০MB)<input id="mFile" type="file" accept="image/*,application/pdf,audio/*,video/*,.opus,.ogg,.m4a" style="margin-top:6px"></label>
+          <input id="mUrl" placeholder="অথবা লিংক দিন — YouTube, Google Drive, Facebook ইত্যাদি">
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="mSave">যোগ করুন</button><span id="mMsg" class="muted"></span></div>
+        <p class="muted" style="margin-top:8px">বড় ভিডিও YouTube-এ আপলোড করে লিংক দিন — দ্রুত চলবে, জায়গাও বাঁচবে। AI লেখা চাইলে ভিডিও Public রাখুন।</p>
+      </div>
+      <div class="tbl"><table><thead><tr><th>তারিখ</th><th>শিরোনাম</th><th>ধরন</th><th>কোর্স</th><th>দেখুন</th><th>সাইটে দেখাবে</th><th></th></tr></thead><tbody id="mrows"></tbody></table></div>
+    </div>
+
+    <div id="panel-cms" style="display:none">
+      <div class="tools">
+        <select id="cmsPage"><option value="home">হোম পেজ</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option><option value="quran-words">কুরআন শব্দে শব্দে</option><option value="tafsir">তাফসীর</option><option value="hadith-words">হাদীস শব্দে শব্দে</option><option value="dua-words">দোয়া শব্দে শব্দে</option><option value="aqidah">আকীদা</option><option value="fiqh">ফিকহ</option><option value="seerah">সীরাত</option><option value="akhlaq">আদব-আখলাক</option><option value="history">নবীদের কাহিনী ও ইতিহাস</option><option value="english">ইংরেজি</option><option value="math">গণিত</option><option value="links">লিংক (Telegram চ্যানেল, গ্রুপ)</option><option value="about">আমাদের সম্পর্কে (পরিচালক, ঠিকানা)</option></select>
+        <select id="cmsLang"><option value="bn">বাংলা</option><option value="en">English</option><option value="ar">العربية</option></select>
+        <input id="cmsQ" placeholder="লেখা খুঁজুন">
+      </div>
+      <p class="muted" style="margin-bottom:12px">যে লেখাটা বদলাতে চান, ঘরে নতুন লেখা লিখে <b>সেভ</b> চাপুন। সাইটে সাথে সাথে বদলে যাবে। <b>আসল লেখায় ফিরুন</b> চাপলে পরিবর্তন মুছে যায়। (দাম বদলাতে তিন ভাষায় আলাদা করে বদলাতে হবে।)</p>
+      <div id="cmsList" class="cms"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SB_URL="https://nlylwrbxejjxnfljcztv.supabase.co";
+const SB_KEY="sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg";
+const sb=supabase.createClient(SB_URL,SB_KEY);
+const COURSE={noorani:"নূরানী কায়দা",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ ও আমল",arabic:"আরবি","quran-words":"কুরআন শব্দে শব্দে","tafsir":"তাফসীর","hadith-words":"হাদীস শব্দে শব্দে","dua-words":"দোয়া শব্দে শব্দে","aqidah":"আকীদা","fiqh":"ফিকহ","seerah":"সীরাত","akhlaq":"আদব-আখলাক","history":"নবীদের কাহিনী ও ইতিহাস","english":"ইংরেজি","math":"গণিত"};
+const PLAN={group:"গ্রুপ",small:"ছোট গ্রুপ",one:"একক"};
+const TIME={morning:"সকাল",afternoon:"বিকাল",evening:"সন্ধ্যা/রাত"};
+const STATUS={new:"নতুন",trial:"ট্রায়ালে",paid:"ভর্তি হয়েছে",closed:"বন্ধ"};
+let rows=[];
+const $=id=>document.getElementById(id);
+
+async function init(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(session){ showApp(session.user.email); load(); }
+}
+$("loginBtn").onclick=async()=>{
+  $("loginErr").textContent="";
+  const {data,error}=await sb.auth.signInWithPassword({email:$("email").value.trim(),password:$("pass").value});
+  if(error){ $("loginErr").textContent="ইমেইল বা পাসওয়ার্ড ভুল।"; return; }
+  showApp(data.user.email); load();
+};
+$("pass").addEventListener("keydown",e=>{if(e.key==="Enter")$("loginBtn").click();});
+$("logout").onclick=async()=>{ await sb.auth.signOut(); location.reload(); };
+$("reload").onclick=load;
+$("q").oninput=render; $("fStatus").onchange=render;
+
+function showApp(email){ setTimeout(refreshCourses,0); setTimeout(autoClean,800); $("loginBox").style.display="none"; $("app").style.display="block"; $("who").textContent=email; }
+
+async function load(){
+  const {data,error}=await sb.from("applications").select("*").order("created_at",{ascending:false});
+  if(error){ $("rows").innerHTML='<tr><td colspan="10" class="err">লোড করা যায়নি: '+error.message+'</td></tr>'; return; }
+  rows=data; render();
+}
+function fmt(d){ return new Date(d).toLocaleString("bn-BD",{dateStyle:"medium",timeStyle:"short"}); }
+function esc(s){ return String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function render(){
+  const q=$("q").value.trim().toLowerCase(), fs=$("fStatus").value;
+  const list=rows.filter(r=>(!fs||r.status===fs)&&(!q||r.student_name.toLowerCase().includes(q)||(r.phone||"").includes(q)||(r.guardian_name||"").toLowerCase().includes(q)));
+  const c={new:0,trial:0,paid:0,closed:0}; rows.forEach(r=>c[r.status]=(c[r.status]||0)+1);
+  $("stats").innerHTML=`<div class="stat"><b>${rows.length}</b>মোট আবেদন</div><div class="stat"><b>${c.new||0}</b>নতুন</div><div class="stat"><b>${c.trial||0}</b>ট্রায়ালে</div><div class="stat"><b>${c.paid||0}</b>ভর্তি</div>`;
+  if(!list.length){ $("rows").innerHTML='<tr><td colspan="11" class="muted">কোনো আবেদন নেই।</td></tr>'; return; }
+  $("rows").innerHTML=list.map(r=>{
+    const wa=r.phone.startsWith("+")?r.phone.slice(1):(r.phone.startsWith("0")?"88"+r.phone:r.phone);
+    const opts=Object.entries(STATUS).map(([k,v])=>`<option value="${k}" ${r.status===k?"selected":""}>${v}</option>`).join("");
+    return `<tr>
+      <td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.student_name)}</b></td><td>${r.age??""}</td><td>${esc(r.guardian_name)}</td>
+      <td><a class="wa" href="https://wa.me/${wa}" target="_blank" rel="noopener">${esc(r.phone)}</a></td>
+      <td>${COURSE[r.course]||esc(r.course)}</td><td>${PLAN[r.plan]||esc(r.plan)}</td><td>${TIME[r.preferred_time]||esc(r.preferred_time)}</td>
+      <td style="max-width:220px">${esc(r.note)}</td>
+      <td><select class="st st-${r.status}" data-id="${r.id}">${opts}</select></td>
+      <td style="white-space:nowrap"><a class="btn-s wa-b" href="${welcomeLink(r)}" target="_blank" rel="noopener">স্বাগত মেসেজ</a> <button class="mini" data-enroll="${r.id}">ভর্তি করুন</button></td></tr>`;
+  }).join("");
+  document.querySelectorAll("#rows select.st").forEach(sel=>sel.onchange=async()=>{
+    const {error}=await sb.from("applications").update({status:sel.value}).eq("id",sel.dataset.id);
+    if(error){ alert("সেভ হয়নি: "+error.message); return; }
+    const r=rows.find(x=>x.id==sel.dataset.id); r.status=sel.value; render();
+  });
+  document.querySelectorAll("#rows [data-enroll]").forEach(b=>b.onclick=()=>enrollFrom(rows.find(x=>x.id==b.dataset.enroll)));
+}
+
+// ===== সাইটের লেখা (CMS) =====
+let DEF=null, OVR={};
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll(".tab").forEach(x=>{x.classList.toggle("active",x===b);x.classList.toggle("ghost",x!==b);});
+  $("panel-apps").style.display=b.dataset.tab==="apps"?"block":"none";
+  $("panel-cms").style.display=b.dataset.tab==="cms"?"block":"none";
+  $("panel-teachers").style.display=b.dataset.tab==="teachers"?"block":"none";
+  if(b.dataset.tab==="cms") loadCms();
+  if(b.dataset.tab==="teachers") loadTeachers();
+});
+$("cmsPage").onchange=loadCms; $("cmsLang").onchange=renderCms; $("cmsQ").oninput=renderCms;
+async function loadCms(){
+  if(!DEF){ try{ DEF=await (await fetch("/content.json?v="+Date.now())).json(); }catch(e){ $("cmsList").innerHTML='<p class="err">content.json লোড হয়নি।</p>'; return; } }
+  const page=$("cmsPage").value;
+  const {data,error}=await sb.from("site_content").select("key,lang,value").eq("page",page);
+  if(error){ $("cmsList").innerHTML='<p class="err">'+error.message+'</p>'; return; }
+  OVR={}; (data||[]).forEach(r=>OVR[r.lang+"|"+r.key]=r.value);
+  renderCms();
+}
+function renderCms(){
+  if(!DEF) return;
+  const page=$("cmsPage").value, lang=$("cmsLang").value, q=$("cmsQ").value.trim().toLowerCase();
+  const d=DEF[page]||{}; const keys=Object.keys(d.bn||{});
+  const dir=lang==="ar"?"rtl":"ltr";
+  $("cmsList").innerHTML=keys.filter(k=>{const t=(d[lang]||{})[k]||d.bn[k]||""; return !q||t.toLowerCase().includes(q)||k.includes(q);}).map(k=>{
+    const def=(d[lang]||{})[k]??d.bn[k]??""; const cur=OVR[lang+"|"+k]; const val=cur??def;
+    return `<div class="item ${cur!==undefined?"changed":""}" data-key="${k}">
+      <div class="k">${k}</div>
+      <textarea dir="${dir}">${esc(val)}</textarea>
+      <div class="act"><button class="save">সেভ</button>${cur!==undefined?'<button class="ghost reset">আসল লেখায় ফিরুন</button><span class="muted">আসল: '+esc(def)+'</span>':''}<span class="saved"></span></div>
+    </div>`;}).join("")||'<p class="muted">কিছু পাওয়া যায়নি।</p>';
+  $("cmsList").querySelectorAll(".item").forEach(it=>{
+    const k=it.dataset.key, ta=it.querySelector("textarea");
+    it.querySelector(".save").onclick=async()=>{
+      const v=ta.value.trim(); if(!v){alert("খালি রাখা যাবে না।");return;}
+      const {error}=await sb.from("site_content").upsert({page,key:k,lang,value:v,updated_at:new Date().toISOString()});
+      if(error){alert("সেভ হয়নি: "+error.message);return;}
+      OVR[lang+"|"+k]=v; it.classList.add("changed"); it.querySelector(".saved").textContent="সেভ হয়েছে ✓"; setTimeout(renderCms,800);
+    };
+    const rs=it.querySelector(".reset"); if(rs) rs.onclick=async()=>{
+      const {error}=await sb.from("site_content").delete().match({page,key:k,lang});
+      if(error){alert(error.message);return;} delete OVR[lang+"|"+k]; renderCms();
+    };
+  });
+}
+
+// ===== শিক্ষক আবেদন =====
+const TPOS={qari:"কারী",female:"মহিলা শিক্ষিকা",alim:"আলেম"},TG={male:"পুরুষ",female:"মহিলা"},TAV={morning:"সকাল",afternoon:"বিকাল",evening:"রাত",flexible:"যেকোনো"},TDEV={phone:"ফোন",laptop:"ল্যাপটপ",both:"দুটোই"};
+const TST={new:"নতুন",interview:"সাক্ষাৎকার",demo:"ডেমো ক্লাস",hired:"নিয়োগ",rejected:"বাদ"};
+let trows=[];
+$("tq").oninput=renderT; $("tfStatus").onchange=renderT;
+async function loadTeachers(){
+  const {data,error}=await sb.from("teacher_applications").select("*").order("created_at",{ascending:false});
+  if(error){ $("trows").innerHTML='<tr><td colspan="12" class="err">লোড হয়নি: '+error.message+' (teachers.sql চালানো হয়েছে?)</td></tr>'; return; }
+  trows=data; renderT();
+}
+function renderT(){
+  const q=$("tq").value.trim().toLowerCase(), fs=$("tfStatus").value;
+  const list=trows.filter(r=>(!fs||r.status===fs)&&(!q||r.full_name.toLowerCase().includes(q)||(r.phone||"").includes(q)));
+  if(!list.length){ $("trows").innerHTML='<tr><td colspan="12" class="muted">কোনো আবেদন নেই।</td></tr>'; return; }
+  $("trows").innerHTML=list.map(r=>{
+    const wa=r.phone.startsWith("+")?r.phone.slice(1):(r.phone.startsWith("0")?"88"+r.phone:r.phone);
+    const opts=Object.entries(TST).map(([k,v])=>`<option value="${k}" ${r.status===k?"selected":""}>${v}</option>`).join("");
+    return `<tr><td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.full_name)}</b></td><td><a class="wa" href="https://wa.me/${wa}" target="_blank" rel="noopener">${esc(r.phone)}</a></td><td>${TPOS[r.position]||esc(r.position)}</td><td>${TG[r.gender]||""}</td><td>${esc(r.location)}</td><td>${r.age??""}</td><td style="max-width:220px">${esc(r.qualification)}</td><td style="max-width:200px">${esc(r.experience)}</td><td>${TAV[r.availability]||""}</td><td>${TDEV[r.device]||""}</td><td><select class="st st-${r.status==='hired'?'paid':r.status==='new'?'new':r.status==='rejected'?'closed':'trial'}" data-tid="${r.id}">${opts}</select></td></tr>`;
+  }).join("");
+  document.querySelectorAll("select[data-tid]").forEach(sel=>sel.onchange=async()=>{
+    const {error}=await sb.from("teacher_applications").update({status:sel.value}).eq("id",sel.dataset.tid);
+    if(error){alert("সেভ হয়নি: "+error.message);return;} const r=trows.find(x=>x.id==sel.dataset.tid); r.status=sel.value; renderT();
+  });
+}
+
+// ===== লাইব্রেরি ও তিলাওয়াত =====
+const KIND={image:"ছবি",pdf:"PDF",video:"ভিডিও",audio:"অডিও",link:"লিংক"};
+const RST={new:"নতুন",heard:"শোনা হয়েছে",replied:"উত্তর দেওয়া"};
+const CBN={noorani:"নূরানী",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ",arabic:"আরবি","quran-words":"কুরআন শব্দে শব্দে","tafsir":"তাফসীর","hadith-words":"হাদীস শব্দে শব্দে","dua-words":"দোয়া শব্দে শব্দে","aqidah":"আকীদা","fiqh":"ফিকহ","seerah":"সীরাত","akhlaq":"আদব-আখলাক","history":"নবীদের কাহিনী ও ইতিহাস","english":"ইংরেজি","math":"গণিত"};
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-media").style.display=b.dataset.tab==="media"?"block":"none";
+  $("panel-recs").style.display=b.dataset.tab==="recs"?"block":"none";
+  if(b.dataset.tab==="media") loadMedia();
+  if(b.dataset.tab==="recs") loadRecs();
+}));
+const waOf=p=>"https://wa.me/"+(p.startsWith("+")?p.slice(1):(p.startsWith("0")?"88"+p:p)).replace(/\D/g,"");
+function kindOfFile(f){const t=f.type||"",e=(f.name.split(".").pop()||"").toLowerCase();
+  if(t.startsWith("image/"))return"image"; if(t==="application/pdf"||e==="pdf")return"pdf";
+  if(t.startsWith("audio/")||["opus","ogg","m4a","mp3","wav","aac"].includes(e))return"audio";
+  if(t.startsWith("video/"))return"video"; return"link";}
+function kindOfUrl(u){u=u.toLowerCase();
+  if(/youtu\.?be|vimeo|facebook\.com\/.*video|\.mp4($|\?)/.test(u))return"video";
+  if(/\.pdf($|\?)/.test(u))return"pdf"; if(/\.(jpe?g|png|webp|gif)($|\?)/.test(u))return"image";
+  if(/\.(mp3|m4a|ogg|opus|wav)($|\?)/.test(u))return"audio"; return"link";}
+$("mSave").onclick=async()=>{
+  const title=$("mTitle").value.trim(),file=$("mFile").files[0],url=$("mUrl").value.trim(),msg=$("mMsg");
+  if(!title){msg.textContent="শিরোনাম দিন।";return;}
+  if(!file&&!/^https?:\/\//.test(url)){msg.textContent="একটা ফাইল বেছে নিন অথবা লিংক দিন।";return;}
+  $("mSave").disabled=true;msg.textContent="যোগ হচ্ছে…";
+  try{
+    let row={title,course:$("mCourse").value||null,description:$("mDesc").value.trim()||null};
+    if(file){
+      if(file.size>50*1024*1024) throw new Error("ফাইল ৫০MB-এর বেশি — YouTube/Drive লিংক দিন।");
+      const kind=kindOfFile(file),safe=file.name.replace(/[^\w.\-]+/g,"_").slice(-60),path=kind+"/"+Date.now()+"-"+safe;
+      const ct=file.type||(kind==="audio"?"audio/ogg":"application/octet-stream");
+      const up=await sb.storage.from("media").upload(path,file,{contentType:ct,upsert:false});
+      if(up.error) throw up.error;
+      row={...row,kind,path,url:sb.storage.from("media").getPublicUrl(path).data.publicUrl};
+    } else row={...row,kind:kindOfUrl(url),url};
+    const {error}=await sb.from("media").insert(row); if(error) throw error;
+    msg.textContent="যোগ হয়েছে ✓ — সাইটের লাইব্রেরিতে দেখা যাচ্ছে।";["mTitle","mDesc","mUrl"].forEach(i=>$(i).value="");$("mFile").value="";loadMedia();
+  }catch(e){msg.textContent="হয়নি: "+(e.message||e);}
+  $("mSave").disabled=false;
+};
+let MEDIA={};
+async function loadMedia(){
+  const {data,error}=await sb.from("media").select("*").order("created_at",{ascending:false});
+  if(data) MEDIA=Object.fromEntries(data.map(r=>[r.id,r]));
+  if(error){$("mrows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+error.message+' (media.sql চালানো হয়েছে?)</td></tr>';return;}
+  if(!data.length){$("mrows").innerHTML='<tr><td colspan="7" class="muted">এখনও কিছু নেই।</td></tr>';return;}
+  $("mrows").innerHTML=data.map(r=>`<tr><td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.title)}</b>${r.description?'<div class="muted">'+esc(r.description)+'</div>':""}</td><td>${KIND[r.kind]||r.kind}</td><td>${CBN[r.course]||"সাধারণ"}</td><td><a href="${esc(r.url)}" target="_blank" rel="noopener">খুলুন</a></td><td><input type="checkbox" data-pub="${r.id}" ${r.published?"checked":""}></td><td style="white-space:nowrap">${r.kind==="video"&&aiYt(r.url)?`<button class="mini ai-b" data-ai="${r.id}">✨ AI লেখা</button> `:""}<button class="mini" data-edit="${r.id}">সম্পাদনা</button> <button class="ghost mini" data-del="${r.id}" data-path="${esc(r.path||"")}">মুছুন</button></td></tr>`).join("");
+  document.querySelectorAll("[data-pub]").forEach(c=>c.onchange=async()=>{const {error}=await sb.from("media").update({published:c.checked}).eq("id",c.dataset.pub);if(error)alert(error.message);});
+  document.querySelectorAll("#mrows [data-edit]").forEach(b=>b.onclick=()=>{
+    const r=MEDIA[b.dataset.edit], tr=b.closest("tr");
+    const courses=[["","সাধারণ / সব কোর্স"],...CLIST.map(c=>[c.slug,c.content.bn.t])];
+    const kinds=Object.entries(KIND);
+    tr.innerHTML=`<td colspan="7"><div class="mgrid" style="max-width:none">
+      <label class="muted">শিরোনাম<input id="eT" value="${esc(r.title)}"></label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <label class="muted" style="flex:1;min-width:180px">কোর্স<select id="eC">${courses.map(([v,l])=>`<option value="${v}" ${(r.course||"")===v?"selected":""}>${l}</option>`).join("")}</select></label>
+        <label class="muted" style="flex:1;min-width:140px">ধরন<select id="eK">${kinds.map(([v,l])=>`<option value="${v}" ${r.kind===v?"selected":""}>${l}</option>`).join("")}</select></label>
+      </div>
+      <label class="muted">বিবরণ<textarea id="eD">${esc(r.description||"")}</textarea></label>
+      ${r.path?'<p class="muted">এটা আপলোড করা ফাইল — ফাইল বদলাতে চাইলে এটা মুছে নতুন করে যোগ করুন।</p>':`<label class="muted">লিংক<input id="eU" value="${esc(r.url)}"></label>`}
+      ${r.kind==="video"?`<label class="muted">অডিও সংস্করণ — MP3 (ঐচ্ছিক, শুধু নিজের ভিডিওর)${r.audio_url?' — <a href="'+esc(r.audio_url)+'" target="_blank" rel="noopener">বর্তমান অডিও</a>':""}<input id="eA" type="file" accept="audio/*,.mp3,.m4a"></label>${r.audio_url?'<label class="muted" style="display:flex;gap:6px;align-items:center"><input type="checkbox" id="eArm" style="width:auto"> অডিও সরিয়ে দিন</label>':""}`:""}
+      <div style="display:flex;gap:10px;align-items:center"><button id="eSave">সেভ করুন</button><button class="ghost" id="eCancel">বাতিল</button><span id="eMsg" class="muted"></span></div>
+    </div></td>`;
+    tr.querySelector("#eCancel").onclick=loadMedia;
+    tr.querySelector("#eSave").onclick=async()=>{
+      const t=tr.querySelector("#eT").value.trim(); if(!t){tr.querySelector("#eMsg").textContent="শিরোনাম খালি রাখা যাবে না।";return;}
+      const upd={title:t,course:tr.querySelector("#eC").value||null,kind:tr.querySelector("#eK").value,description:tr.querySelector("#eD").value.trim()||null};
+      const u=tr.querySelector("#eU"); if(u){ if(!/^https?:\/\//.test(u.value.trim())){tr.querySelector("#eMsg").textContent="সঠিক লিংক দিন (https:// দিয়ে শুরু)।";return;} upd.url=u.value.trim(); }
+      tr.querySelector("#eMsg").textContent="সেভ হচ্ছে…";
+      const af=tr.querySelector("#eA")&&tr.querySelector("#eA").files[0],arm=tr.querySelector("#eArm")&&tr.querySelector("#eArm").checked;
+      if(af){if(af.size>50*1024*1024){tr.querySelector("#eMsg").textContent="অডিও ৫০MB-এর বেশি।";return;}
+        const ap="audio/"+Date.now()+"-"+af.name.replace(/[^\w.\-]+/g,"_").slice(-40);
+        const up=await sb.storage.from("media").upload(ap,af,{contentType:af.type||"audio/mpeg",upsert:false});
+        if(up.error){tr.querySelector("#eMsg").textContent="অডিও আপলোড হয়নি: "+up.error.message;return;}
+        if(r.audio_path)await sb.storage.from("media").remove([r.audio_path]);
+        upd.audio_path=ap;upd.audio_url=sb.storage.from("media").getPublicUrl(ap).data.publicUrl;
+      } else if(arm){if(r.audio_path)await sb.storage.from("media").remove([r.audio_path]);upd.audio_path=null;upd.audio_url=null;}
+      const {error}=await sb.from("media").update(upd).eq("id",r.id);
+      if(error){tr.querySelector("#eMsg").textContent="হয়নি: "+error.message;return;}
+      loadMedia();
+    };
+    tr.querySelector("#eT").focus();
+  });
+  document.querySelectorAll("#mrows [data-ai]").forEach(b=>b.onclick=()=>aiPanel(MEDIA[b.dataset.ai],b.closest("tr")));
+  document.querySelectorAll("#mrows [data-del]").forEach(b=>b.onclick=async()=>{
+    if(!confirm("এটা মুছে ফেলবেন?"))return;
+    if(b.dataset.path){const {error}=await sb.storage.from("media").remove([b.dataset.path]);if(error){alert(error.message);return;}}
+    const {error}=await sb.from("media").delete().eq("id",b.dataset.del);if(error)alert(error.message);loadMedia();});
+}
+async function loadRecs(){
+  const {data,error}=await sb.from("recordings").select("*").order("created_at",{ascending:false});
+  if(error){$("rrows").innerHTML='<tr><td colspan="9" class="err">লোড হয়নি: '+error.message+' (media.sql চালানো হয়েছে?)</td></tr>';return;}
+  if(!data.length){$("rrows").innerHTML='<tr><td colspan="9" class="muted">এখনও কোনো তিলাওয়াত আসেনি।</td></tr>';return;}
+  $("rrows").innerHTML=data.map(r=>{const opts=Object.entries(RST).map(([k,v])=>`<option value="${k}" ${r.status===k?"selected":""}>${v}</option>`).join("");
+    return `<tr><td class="muted">${fmt(r.created_at)}</td><td><b>${esc(r.name)}</b></td><td><a class="wa" href="${waOf(r.phone)}" target="_blank" rel="noopener">${esc(r.phone)}</a></td><td>${CBN[r.course]||"—"}</td><td>${r.seconds?Math.floor(r.seconds/60)+":"+String(r.seconds%60).padStart(2,"0"):"—"}</td><td style="max-width:200px">${esc(r.note)}</td><td><button class="mini" data-play="${esc(r.path)}">শুনুন</button></td><td><select class="st st-${r.status==="new"?"new":r.status==="replied"?"paid":"trial"}" data-rid="${r.id}">${opts}</select></td><td><button class="ghost mini" data-rdel="${r.id}" data-path="${esc(r.path)}">মুছুন</button></td></tr>`;}).join("");
+  document.querySelectorAll("[data-play]").forEach(b=>b.onclick=async()=>{
+    const {data,error}=await sb.storage.from("recordings").createSignedUrl(b.dataset.play,3600);
+    if(error){alert(error.message);return;}
+    b.outerHTML=`<audio controls autoplay src="${data.signedUrl}"></audio> <a href="${data.signedUrl}" download>ডাউনলোড</a>`;});
+  document.querySelectorAll("[data-rid]").forEach(s=>s.onchange=async()=>{const {error}=await sb.from("recordings").update({status:s.value}).eq("id",s.dataset.rid);if(error)alert(error.message);else loadRecs();});
+  document.querySelectorAll("[data-rdel]").forEach(b=>b.onclick=async()=>{
+    if(!confirm("এই তিলাওয়াত মুছে ফেলবেন?"))return;
+    await sb.storage.from("recordings").remove([b.dataset.path]);
+    const {error}=await sb.from("recordings").delete().eq("id",b.dataset.rdel);if(error)alert(error.message);loadRecs();});
+}
+
+// ===== ৩০ দিনের পুরোনো তিলাওয়াত স্বয়ংক্রিয় মোছা =====
+async function autoClean(){
+  try{
+    const cut=new Date(Date.now()-30*864e5).toISOString();
+    const {data,error}=await sb.from("recordings").select("id,path").lt("created_at",cut).limit(200);
+    if(error||!data||!data.length) return;
+    const paths=data.map(r=>r.path).filter(Boolean);
+    if(paths.length){const {error:e}=await sb.storage.from("recordings").remove(paths); if(e){console.warn(e);return;}}
+    const {error:e2}=await sb.from("recordings").delete().in("id",data.map(r=>r.id));
+    if(!e2) $("cleanNote").textContent="৩০ দিনের পুরোনো "+data.length+"টা তিলাওয়াত আজ নিজে মুছে গেছে। নতুনগুলো নিরাপদ আছে।";
+  }catch(err){console.warn(err);}
+}
+
+// ===== শিক্ষার্থী ও ফি =====
+const SST={active:"সক্রিয়",paused:"বিরতিতে",left:"বন্ধ"};
+const CUR={BDT:"৳",SAR:"ر.س"};
+const FEE={BDT:{group:500,small:1000,one:1500},SAR:{group:20,small:40,one:60}};
+let STU=[],PAY={},editId=null,fromApp=null;
+const money=(n,c)=>(c==="SAR"?"":"৳")+Number(n||0).toLocaleString("bn-BD")+(c==="SAR"?" ر.س":"");
+const monthKey=()=>($("sMonth").value||new Date().toISOString().slice(0,7))+"-01";
+const monthBn=()=>new Date(monthKey()+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"});
+const waNum=p=>(p.startsWith("+")?p.slice(1):(p.startsWith("0")?"88"+p:p)).replace(/\D/g,"");
+const waText=(p,t)=>"https://wa.me/"+waNum(p)+"?text="+encodeURIComponent(t);
+function welcomeLink(r){
+  return waText(r.phone,`আসসালামু আলাইকুম। দারুল ইলম অনলাইনে আবেদনের জন্য জাযাকাল্লাহু খাইরান।\n${COURSE[r.course]||"কোর্স"}-এর ৩ দিনের ফ্রি ক্লাস শুরু হবে:\nতারিখ: \nসময় (বাংলাদেশ): \nশিক্ষক: \nক্লাসের লিংক ক্লাসের ১০ মিনিট আগে এখানে পাঠানো হবে।\nনিয়মাবলি: darulilmonline.com/rules`);
+}
+$("sMonth").value=new Date().toISOString().slice(0,7);
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-students").style.display=b.dataset.tab==="students"?"block":"none";
+  if(b.dataset.tab==="students") loadStudents();
+}));
+["sMonth"].forEach(id=>$(id).onchange=loadStudents);
+["sq","sBatch","sFilter"].forEach(id=>$(id).addEventListener(id==="sq"?"input":"change",renderStudents));
+async function loadStudents(){
+  const s=await sb.from("students").select("*").order("name");
+  if(s.error){$("srows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+s.error.message+' (students.sql চালানো হয়েছে?)</td></tr>';return;}
+  STU=s.data;
+  const p=await sb.from("payments").select("*").eq("month",monthKey());
+  PAY={}; (p.data||[]).forEach(x=>PAY[x.student_id]=x);
+  const batches=[...new Set(STU.map(x=>x.batch).filter(Boolean))].sort(), teachers=[...new Set(STU.map(x=>x.teacher).filter(Boolean))].sort();
+  const cur=$("sBatch").value;
+  $("sBatch").innerHTML='<option value="">সব ব্যাচ</option>'+batches.map(b=>`<option ${b===cur?"selected":""}>${esc(b)}</option>`).join("");
+  const {data:bt}=await sb.from("batches").select("name").eq("active",true);
+  $("batchList").innerHTML=[...new Set([...(bt||[]).map(x=>x.name),...batches])].map(b=>`<option value="${esc(b)}">`).join("");
+  $("teacherList").innerHTML=teachers.map(b=>`<option value="${esc(b)}">`).join("");
+  $("sMonthHead").textContent=monthBn();
+  renderStudents();
+}
+function renderStudents(){
+  const q=$("sq").value.trim().toLowerCase(),bt=$("sBatch").value,fl=$("sFilter").value;
+  const act=STU.filter(x=>x.status==="active");
+  const paid=act.filter(x=>PAY[x.id]),due=act.filter(x=>!PAY[x.id]&&Number(x.monthly_fee)>0);
+  const tot={}; Object.values(PAY).forEach(p=>tot[p.currency]=(tot[p.currency]||0)+Number(p.amount));
+  const dueTot={}; due.forEach(x=>dueTot[x.currency]=(dueTot[x.currency]||0)+Number(x.monthly_fee));
+  const fmtTot=o=>Object.entries(o).map(([c,n])=>money(n,c)).join(" · ")||"০";
+  $("sStats").innerHTML=`<div class="stat"><b>${act.length}</b>সক্রিয় শিক্ষার্থী</div><div class="stat"><b>${paid.length}</b>${monthBn()}-এ দিয়েছে</div><div class="stat"><b style="color:#B91C1C">${due.length}</b>বকেয়া</div><div class="stat"><b>${fmtTot(tot)}</b>আদায় হয়েছে</div><div class="stat"><b>${fmtTot(dueTot)}</b>বাকি আছে</div>`;
+  let list=STU.filter(x=>(fl==="all"||x.status==="active")&&(!bt||x.batch===bt)&&(!q||x.name.toLowerCase().includes(q)||x.phone.includes(q)||(x.guardian_name||"").toLowerCase().includes(q)));
+  if(fl==="due") list=list.filter(x=>!PAY[x.id]); if(fl==="paid") list=list.filter(x=>PAY[x.id]);
+  if(!list.length){$("srows").innerHTML='<tr><td colspan="7" class="muted">কোনো শিক্ষার্থী নেই। উপরে "+ নতুন শিক্ষার্থী" অথবা ভর্তির আবেদন থেকে "ভর্তি করুন" চাপুন।</td></tr>';return;}
+  $("srows").innerHTML=list.map(x=>{
+    const p=PAY[x.id];
+    const st=x.status!=="active"?`<span class="pill off">${SST[x.status]}</span>`:p?`<span class="pill ok">✓ ${money(p.amount,p.currency)}</span><div class="muted" style="font-size:12px">${esc(p.method||"")} ${esc(p.txn_id||"")}</div>`:`<span class="pill due">বকেয়া</span>`;
+    const remind=waText(x.phone,`আসসালামু আলাইকুম। ${x.name}-এর ${monthBn()} মাসের ফি ${money(x.monthly_fee,x.currency)} এখনও বাকি আছে।\n${x.currency==="SAR"?"পেমেন্টের মাধ্যম জানতে এই মেসেজের উত্তর দিন।":"bKash/Nagad: 01329-173444 (Send Money)"}\nপাঠিয়ে ট্রানজেকশন আইডি এখানে লিখুন। জাযাকাল্লাহু খাইরান।`);
+    const receipt=p?waText(x.phone,`আলহামদুলিল্লাহ। ${x.name}-এর ${monthBn()} মাসের ফি ${money(p.amount,p.currency)} পেয়েছি${p.txn_id?" (TxnID: "+p.txn_id+")":""}। জাযাকাল্লাহু খাইরান।\n— দারুল ইলম অনলাইন`):"";
+    return `<tr data-sid="${x.id}"><td><b>${esc(x.name)}</b>${x.guardian_name?`<div class="muted" style="font-size:13px">অভিভাবক: ${esc(x.guardian_name)}</div>`:""}</td>
+      <td><a class="wa" href="https://wa.me/${waNum(x.phone)}" target="_blank" rel="noopener">${esc(x.phone)}</a></td>
+      <td>${COURSE[x.course]||"—"}<div class="muted" style="font-size:13px">${PLAN[x.plan]||""}</div></td>
+      <td>${esc(x.batch||"—")}<div class="muted" style="font-size:13px">${esc(x.teacher||"")}</div></td>
+      <td>${money(x.monthly_fee,x.currency)}</td><td>${st}</td>
+      <td style="white-space:nowrap">${x.status==="active"&&!p?`<button class="mini" data-pay="${x.id}">ফি জমা</button> <a class="btn-s wa-b" href="${remind}" target="_blank" rel="noopener">রিমাইন্ডার</a>`:""}${p?`<a class="btn-s wa-b" href="${receipt}" target="_blank" rel="noopener">রসিদ পাঠান</a>`:""} <button class="ghost mini" data-portal="${x.id}">পোর্টাল কোড</button> <button class="ghost mini" data-hist="${x.id}">ইতিহাস</button> <button class="ghost mini" data-sedit="${x.id}">সম্পাদনা</button></td></tr>`;
+  }).join("");
+  document.querySelectorAll("[data-pay]").forEach(b=>b.onclick=()=>payRow(STU.find(x=>x.id==b.dataset.pay),b.closest("tr")));
+  document.querySelectorAll("[data-hist]").forEach(b=>b.onclick=()=>histRow(STU.find(x=>x.id==b.dataset.hist),b.closest("tr")));
+  document.querySelectorAll("[data-portal]").forEach(b=>b.onclick=()=>sendPortal("students",STU.find(x=>x.id==b.dataset.portal)));
+  document.querySelectorAll("[data-sedit]").forEach(b=>b.onclick=()=>openForm(STU.find(x=>x.id==b.dataset.sedit)));
+}
+function closeSubs(){document.querySelectorAll("#srows tr.sub").forEach(r=>r.remove());}
+function payRow(x,tr){
+  closeSubs();
+  const r=document.createElement("tr");r.className="sub";
+  r.innerHTML=`<td colspan="7"><div class="payf"><b>${monthBn()} — ফি জমা:</b>
+    <input type="number" id="pAmt" value="${Number(x.monthly_fee)}" style="width:110px"> ${CUR[x.currency]}
+    <select id="pMet"><option>bKash</option><option>Nagad</option><option>Rocket</option><option>ব্যাংক</option><option>STC Pay</option><option>নগদ হাতে</option></select>
+    <input id="pTxn" placeholder="ট্রানজেকশন আইডি" style="width:170px">
+    <input id="pNote" placeholder="নোট (ঐচ্ছিক)" style="width:150px">
+    <button id="pSave">জমা করুন</button><button class="ghost" id="pCancel">বাতিল</button><span id="pMsg" class="muted"></span></div>
+    <div class="muted" style="font-size:13px;margin-top:6px">জমা করার আগে নিজের bKash/Nagad অ্যাপে টাকা এসেছে কি না মিলিয়ে নিন।</div></td>`;
+  tr.after(r);
+  r.querySelector("#pCancel").onclick=closeSubs;
+  r.querySelector("#pSave").onclick=async()=>{
+    const amt=Number(r.querySelector("#pAmt").value),met=r.querySelector("#pMet").value,txn=r.querySelector("#pTxn").value.trim(),msg=r.querySelector("#pMsg");
+    if(!(amt>0)){msg.textContent="সঠিক পরিমাণ দিন।";return;}
+    if(!txn&&met!=="নগদ হাতে"){msg.textContent="ট্রানজেকশন আইডি দিন।";return;}
+    msg.textContent="জমা হচ্ছে…";
+    const {error}=await sb.from("payments").insert({student_id:x.id,month:monthKey(),amount:amt,currency:x.currency,method:met,txn_id:txn||null,note:r.querySelector("#pNote").value.trim()||null});
+    if(error){msg.textContent=/payments_txn_unique/.test(error.message)?"⚠ এই ট্রানজেকশন আইডি আগেই ব্যবহার হয়েছে — যাচাই করুন!":/duplicate|unique/.test(error.message)?"এই মাসের ফি আগেই জমা আছে।":"হয়নি: "+error.message;return;}
+    loadStudents();
+  };
+  r.querySelector("#pTxn").focus();
+}
+async function histRow(x,tr){
+  closeSubs();
+  const r=document.createElement("tr");r.className="sub";r.innerHTML='<td colspan="7" class="muted">লোড হচ্ছে…</td>';tr.after(r);
+  const {data,error}=await sb.from("payments").select("*").eq("student_id",x.id).order("month",{ascending:false});
+  if(error){r.innerHTML='<td colspan="7" class="err">'+error.message+'</td>';return;}
+  r.innerHTML=`<td colspan="7"><div class="hist"><b>${esc(x.name)} — ফি-র ইতিহাস (শুরু: ${new Date(x.start_date+"T00:00:00").toLocaleDateString("bn-BD")})</b>${data.length?data.map(p=>`<div><span>${new Date(p.month+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"})}</span><b>${money(p.amount,p.currency)}</b><span class="muted">${esc(p.method||"")} ${esc(p.txn_id||"")} · জমা: ${fmt(p.created_at)}</span>${p.note?`<span class="muted">${esc(p.note)}</span>`:""}<button class="ghost mini" data-pdel="${p.id}">মুছুন</button></div>`).join(""):'<div class="muted">এখনও কোনো ফি জমা নেই।</div>'}<div><button class="ghost mini" id="hClose">বন্ধ করুন</button></div></div></td>`;
+  r.querySelector("#hClose").onclick=closeSubs;
+  (async()=>{const since=new Date(Date.now()-30*864e5).toISOString().slice(0,10);
+    const [{data:att},{data:rep}]=await Promise.all([sb.from("attendance").select("date,status").eq("student_id",x.id).gte("date",since),sb.from("reports").select("month,body,written_by").eq("student_id",x.id).order("month",{ascending:false}).limit(3)]);
+    const c=k=>(att||[]).filter(a=>a.status===k).length;const box=document.createElement("div");box.style.marginTop="10px";
+    box.innerHTML=`<b>গত ৩০ দিনের হাজিরা:</b> উপস্থিত ${c("present")} · অনুপস্থিত ${c("absent")} · দেরি ${c("late")} · ছুটি ${c("excused")}`+((rep||[]).length?`<div style="margin-top:8px"><b>সর্বশেষ রিপোর্ট (${new Date(rep[0].month+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"})}${rep[0].written_by?" — "+esc(rep[0].written_by):""}):</b><div style="white-space:pre-line">${esc(rep[0].body)}</div></div>`:"");
+    r.querySelector(".hist").appendChild(box);})();
+  r.querySelectorAll("[data-pdel]").forEach(b=>b.onclick=async()=>{if(!confirm("এই ফি-র রেকর্ড মুছবেন?"))return;const {error}=await sb.from("payments").delete().eq("id",b.dataset.pdel);if(error)alert(error.message);loadStudents();});
+}
+function setF(id,v){$(id).value=v??"";}
+function openForm(x,pre){
+  editId=x?x.id:null; fromApp=pre&&pre.app||null;
+  $("sFormTitle").textContent=x?"শিক্ষার্থীর তথ্য সম্পাদনা":"নতুন শিক্ষার্থী";
+  const d=x||pre||{};
+  setF("f_name",d.name);setF("f_phone",d.phone);setF("f_guardian",d.guardian_name);setF("f_age",d.age);
+  setF("f_course",d.course||"");setF("f_plan",d.plan||"small");setF("f_batch",d.batch);setF("f_teacher",d.teacher);
+  setF("f_cur",d.currency||"BDT");setF("f_fee",d.monthly_fee??FEE[d.currency||"BDT"][d.plan||"small"]);
+  setF("f_start",d.start_date||new Date().toISOString().slice(0,10));setF("f_status",d.status||"active");setF("f_notes",d.notes);
+  $("fMsg").textContent="";$("sForm").hidden=false;$("sForm").scrollIntoView({behavior:"smooth",block:"start"});$("f_name").focus();
+}
+["f_plan","f_cur"].forEach(id=>$(id).addEventListener("change",()=>{if(!editId)$("f_fee").value=FEE[$("f_cur").value][$("f_plan").value];}));
+$("sNew").onclick=()=>openForm(null);
+$("fCancel").onclick=()=>{$("sForm").hidden=true;editId=null;fromApp=null;};
+$("fSave").onclick=async()=>{
+  const row={name:$("f_name").value.trim(),phone:$("f_phone").value.replace(/[^0-9+]/g,""),guardian_name:$("f_guardian").value.trim()||null,age:$("f_age").value?Number($("f_age").value):null,
+    course:$("f_course").value||null,plan:$("f_plan").value,batch:$("f_batch").value.trim()||null,teacher:$("f_teacher").value.trim()||null,
+    monthly_fee:Number($("f_fee").value)||0,currency:$("f_cur").value,start_date:$("f_start").value||null,status:$("f_status").value,notes:$("f_notes").value.trim()||null};
+  if(!row.name||row.phone.length<10){$("fMsg").textContent="নাম ও সঠিক নম্বর দিন।";return;}
+  $("fMsg").textContent="সেভ হচ্ছে…";
+  let error;
+  if(editId) ({error}=await sb.from("students").update(row).eq("id",editId));
+  else ({error}=await sb.from("students").insert({...row,application_id:fromApp}));
+  if(error){$("fMsg").textContent="হয়নি: "+error.message;return;}
+  if(fromApp){await sb.from("applications").update({status:"paid"}).eq("id",fromApp);const a=rows.find(r=>r.id==fromApp);if(a)a.status="paid";}
+  $("sForm").hidden=true;editId=null;fromApp=null;loadStudents();
+};
+function enrollFrom(r){
+  document.querySelector('.tab[data-tab="students"]').click();
+  const sar=(r.phone||"").startsWith("+966")||(r.phone||"").startsWith("966");
+  openForm(null,{app:r.id,name:r.student_name,phone:r.phone,guardian_name:r.guardian_name,age:r.age,course:r.course,plan:r.plan||"small",currency:sar?"SAR":"BDT"});
+}
+$("sCsv").onclick=()=>{
+  const head=["নাম","ফোন","অভিভাবক","কোর্স","ব্যাচ","শিক্ষক","মাসিক ফি","মুদ্রা","অবস্থা",monthBn()+" — জমা","পরিমাণ","মাধ্যম","ট্রানজেকশন আইডি"];
+  const q=v=>'"'+String(v??"").replace(/"/g,'""')+'"';
+  const lines=[head.map(q).join(",")].concat(STU.map(x=>{const p=PAY[x.id];return [x.name,x.phone,x.guardian_name,COURSE[x.course]||"",x.batch,x.teacher,x.monthly_fee,x.currency,SST[x.status],p?"হ্যাঁ":"না",p?p.amount:"",p?p.method:"",p?p.txn_id:""].map(q).join(",");}));
+  const blob=new Blob(["\ufeff"+lines.join("\n")],{type:"text/csv;charset=utf-8"});
+  const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="students-"+monthKey().slice(0,7)+".csv";a.click();
+};
+
+// ===== শিক্ষকমণ্ডলী =====
+let FAC=[],fcEdit=null,fcOld=null;
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-faculty").style.display=b.dataset.tab==="faculty"?"block":"none";
+  if(b.dataset.tab==="faculty") loadFaculty();
+}));
+const CBN2={noorani:"নূরানী",tajweed:"তাজবীদ",hifz:"হিফয",salah:"নামাজ",arabic:"আরবি","quran-words":"কুরআন শব্দে শব্দে","tafsir":"তাফসীর","hadith-words":"হাদীস শব্দে শব্দে","dua-words":"দোয়া শব্দে শব্দে","aqidah":"আকীদা","fiqh":"ফিকহ","seerah":"সীরাত","akhlaq":"আদব-আখলাক","history":"নবীদের কাহিনী ও ইতিহাস","english":"ইংরেজি","math":"গণিত"};
+function fcReset(){fcEdit=null;fcOld=null;["fc_name","fc_title","fc_q","fc_bio","fc_phone"].forEach(i=>$(i).value="");$("fc_sort").value=100;$("fc_gender").value="male";$("fc_photo").value="";$("fc_pub").checked=true;
+  document.querySelectorAll("#fc_courses input").forEach(c=>c.checked=false);$("facTitle").textContent="নতুন শিক্ষক";$("fcCancel").hidden=true;}
+$("fcCancel").onclick=()=>{fcReset();$("fcMsg").textContent="";};
+async function loadFaculty(){
+  const {data,error}=await sb.from("faculty").select("*").order("sort").order("created_at");
+  if(error){$("fcrows").innerHTML='<tr><td colspan="6" class="err">লোড হয়নি: '+error.message+' (faculty.sql চালানো হয়েছে?)</td></tr>';return;}
+  FAC=data;
+  if(!data.length){$("fcrows").innerHTML='<tr><td colspan="6" class="muted">এখনও কোনো শিক্ষক যোগ করা হয়নি।</td></tr>';return;}
+  $("fcrows").innerHTML=data.map(x=>`<tr><td>${x.sort}</td><td><b>${esc(x.name)}</b>${x.photo_url?' <span class="muted">· ছবি আছে</span>':''}</td><td>${esc(x.title||"")}<div class="muted" style="font-size:13px">${esc(x.qualification||"")}</div></td><td>${(x.courses||[]).map(c=>CBN2[c]||c).join(", ")}</td><td><input type="checkbox" data-fpub="${x.id}" ${x.published?"checked":""}></td><td style="white-space:nowrap"><button class="ghost mini" data-fportal="${x.id}">পোর্টাল কোড</button> <button class="mini" data-fedit="${x.id}">সম্পাদনা</button> <button class="ghost mini" data-fdel="${x.id}">মুছুন</button></td></tr>`).join("");
+  document.querySelectorAll("[data-fpub]").forEach(c=>c.onchange=async()=>{const {error}=await sb.from("faculty").update({published:c.checked}).eq("id",c.dataset.fpub);if(error)alert(error.message);});
+  document.querySelectorAll("[data-fedit]").forEach(b=>b.onclick=()=>{const x=FAC.find(y=>y.id==b.dataset.fedit);fcEdit=x.id;fcOld=x;
+    $("fc_name").value=x.name;$("fc_phone").value=x.phone||"";$("fc_title").value=x.title||"";$("fc_q").value=x.qualification||"";$("fc_bio").value=x.bio||"";$("fc_sort").value=x.sort;$("fc_gender").value=x.gender||"male";$("fc_pub").checked=x.published;$("fc_photo").value="";
+    document.querySelectorAll("#fc_courses input").forEach(c=>c.checked=(x.courses||[]).includes(c.value));
+    $("facTitle").textContent="শিক্ষকের তথ্য সম্পাদনা"+(x.photo_url?" (নতুন ছবি দিলে পুরোনোটা বদলাবে)":"");$("fcCancel").hidden=false;$("panel-faculty").scrollIntoView({behavior:"smooth"});});
+  document.querySelectorAll("[data-fportal]").forEach(b=>b.onclick=()=>sendPortal("faculty",FAC.find(y=>y.id==b.dataset.fportal)));
+  document.querySelectorAll("[data-fdel]").forEach(b=>b.onclick=async()=>{const x=FAC.find(y=>y.id==b.dataset.fdel);if(!confirm(x.name+" — মুছে ফেলবেন?"))return;
+    if(x.photo_path)await sb.storage.from("media").remove([x.photo_path]);
+    const {error}=await sb.from("faculty").delete().eq("id",x.id);if(error)alert(error.message);loadFaculty();});
+}
+$("fcSave").onclick=async()=>{
+  const name=$("fc_name").value.trim(),msg=$("fcMsg");if(!name){msg.textContent="নাম দিন।";return;}
+  const row={name,phone:$("fc_phone").value.replace(/[^0-9+]/g,"")||null,title:$("fc_title").value.trim()||null,qualification:$("fc_q").value.trim()||null,bio:$("fc_bio").value.trim()||null,gender:$("fc_gender").value,sort:Number($("fc_sort").value)||100,published:$("fc_pub").checked,
+    courses:[...document.querySelectorAll("#fc_courses input:checked")].map(c=>c.value)};
+  $("fcSave").disabled=true;msg.textContent="সেভ হচ্ছে…";
+  try{
+    const f=$("fc_photo").files[0];
+    if(f){ if(f.size>5*1024*1024) throw new Error("ছবি ৫MB-এর বেশি।");
+      const path="faculty/"+Date.now()+"-"+f.name.replace(/[^\w.\-]+/g,"_").slice(-40);
+      const up=await sb.storage.from("media").upload(path,f,{contentType:f.type||"image/jpeg",upsert:false}); if(up.error) throw up.error;
+      row.photo_path=path;row.photo_url=sb.storage.from("media").getPublicUrl(path).data.publicUrl;
+      if(fcOld&&fcOld.photo_path) await sb.storage.from("media").remove([fcOld.photo_path]); }
+    const {error}=fcEdit?await sb.from("faculty").update(row).eq("id",fcEdit):await sb.from("faculty").insert(row);
+    if(error) throw error;
+    msg.textContent="সেভ হয়েছে ✓ — সাইটে দেখা যাচ্ছে।";fcReset();loadFaculty();
+  }catch(e){msg.textContent="হয়নি: "+(e.message||e);}
+  $("fcSave").disabled=false;
+};
+
+// ===== পাঠ ও প্রশ্নোত্তর =====
+const LK={article:"লেখা",video:"ভিডিও",pdf:"PDF",audio:"অডিও",link:"লিংক"};
+let LNS=[],lnEdit=null,lnOld=null;
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-learn").style.display=b.dataset.tab==="learn"?"block":"none";
+  if(b.dataset.tab==="learn") loadLearn();
+}));
+$("lnCourse").onchange=()=>{lnReset();loadLearn();};
+function lnReset(){lnEdit=null;lnOld=null;["ln_mod","ln_title","ln_min","ln_url","ln_body"].forEach(i=>$(i).value="");$("ln_kind").value="article";$("ln_file").value="";$("ln_pub").checked=true;
+  $("ln_sort").value=(LNS.length?Math.max(...LNS.map(x=>x.sort))+10:10);$("lnFormT").textContent="নতুন পাঠ";$("lnCancel").hidden=true;}
+$("lnCancel").onclick=()=>{lnReset();$("lnMsg").textContent="";};
+async function loadLearn(){
+  const c=$("lnCourse").value;$("lnView").href="/learn/"+c;
+  const {data,error}=await sb.from("lessons").select("*").eq("course",c).order("sort").order("id");
+  if(error){$("lnrows").innerHTML='<tr><td colspan="6" class="err">লোড হয়নি: '+error.message+' (learn.sql চালানো হয়েছে?)</td></tr>';return;}
+  LNS=data;if(!lnEdit)$("ln_sort").value=(data.length?Math.max(...data.map(x=>x.sort))+10:10);
+  $("lnMods").innerHTML=[...new Set(data.map(x=>x.module).filter(Boolean))].map(m=>`<option value="${esc(m)}">`).join("");
+  $("lnrows").innerHTML=data.length?data.map(x=>`<tr><td>${x.sort}</td><td class="muted">${esc(x.module||"")}</td><td><b>${esc(x.title)}</b></td><td>${LK[x.kind]}</td><td><input type="checkbox" data-lpub="${x.id}" ${x.published?"checked":""}></td><td style="white-space:nowrap"><button class="mini" data-ledit="${x.id}">সম্পাদনা</button> <button class="ghost mini" data-ldel="${x.id}">মুছুন</button></td></tr>`).join(""):'<tr><td colspan="6" class="muted">এই কোর্সে এখনও পাঠ নেই — উপরের ফর্ম দিয়ে প্রথম পাঠ যোগ করুন।</td></tr>';
+  document.querySelectorAll("[data-lpub]").forEach(c=>c.onchange=async()=>{const {error}=await sb.from("lessons").update({published:c.checked}).eq("id",c.dataset.lpub);if(error)alert(error.message);});
+  document.querySelectorAll("[data-ledit]").forEach(b=>b.onclick=()=>{const x=LNS.find(y=>y.id==b.dataset.ledit);lnEdit=x.id;lnOld=x;
+    $("ln_mod").value=x.module||"";$("ln_sort").value=x.sort;$("ln_title").value=x.title;$("ln_kind").value=x.kind;$("ln_min").value=x.minutes||"";$("ln_url").value=x.path?"":(x.url||"");$("ln_body").value=x.body||"";$("ln_pub").checked=x.published;$("ln_file").value="";
+    $("lnFormT").textContent="পাঠ সম্পাদনা"+(x.path?" (আপলোড করা ফাইল আছে — নতুন ফাইল দিলে বদলাবে)":"");$("lnCancel").hidden=false;$("panel-learn").scrollIntoView({behavior:"smooth"});});
+  document.querySelectorAll("[data-ldel]").forEach(b=>b.onclick=async()=>{const x=LNS.find(y=>y.id==b.dataset.ldel);if(!confirm("“"+x.title+"” মুছে ফেলবেন?"))return;
+    if(x.path)await sb.storage.from("media").remove([x.path]);const {error}=await sb.from("lessons").delete().eq("id",x.id);if(error)alert(error.message);loadLearn();});
+  loadQs();
+}
+$("lnSave").onclick=async()=>{
+  const title=$("ln_title").value.trim(),msg=$("lnMsg");if(!title){msg.textContent="শিরোনাম দিন।";return;}
+  const row={course:$("lnCourse").value,module:$("ln_mod").value.trim()||null,sort:Number($("ln_sort").value)||100,title,kind:$("ln_kind").value,minutes:$("ln_min").value?Number($("ln_min").value):null,body:$("ln_body").value.trim()||null,published:$("ln_pub").checked};
+  const url=$("ln_url").value.trim(),f=$("ln_file").files[0];
+  if(url&&!/^https?:\/\//.test(url)){msg.textContent="লিংক https:// দিয়ে শুরু হতে হবে।";return;}
+  if(row.kind!=="article"&&!url&&!f&&!(lnOld&&lnOld.path)){msg.textContent="এই ধরনের পাঠে লিংক বা ফাইল দিন।";return;}
+  if(row.kind==="article"&&!row.body){msg.textContent="লেখা পাঠে লেখা দিন।";return;}
+  $("lnSave").disabled=true;msg.textContent="সেভ হচ্ছে…";
+  try{
+    if(f){if(f.size>50*1024*1024)throw new Error("ফাইল ৫০MB-এর বেশি — YouTube/Drive লিংক দিন।");
+      const path="lessons/"+row.course+"/"+Date.now()+"-"+f.name.replace(/[^\w.\-]+/g,"_").slice(-50);
+      const up=await sb.storage.from("media").upload(path,f,{contentType:f.type||"application/octet-stream",upsert:false});if(up.error)throw up.error;
+      row.path=path;row.url=sb.storage.from("media").getPublicUrl(path).data.publicUrl;
+      if(lnOld&&lnOld.path)await sb.storage.from("media").remove([lnOld.path]);
+    } else if(url){row.url=url;if(lnOld&&lnOld.path){await sb.storage.from("media").remove([lnOld.path]);row.path=null;}}
+    else if(!lnOld){row.url=null;}
+    const {error}=lnEdit?await sb.from("lessons").update(row).eq("id",lnEdit):await sb.from("lessons").insert(row);if(error)throw error;
+    msg.textContent="সেভ হয়েছে ✓";const keepMod=row.module;lnReset();$("ln_mod").value=keepMod||"";loadLearn();
+  }catch(e){msg.textContent="হয়নি: "+(e.message||e);}
+  $("lnSave").disabled=false;
+};
+async function loadQs(){
+  const {data,error}=await sb.from("questions").select("*").eq("course",$("lnCourse").value).order("created_at",{ascending:false});
+  if(error){$("qlist").innerHTML='<p class="err">'+error.message+'</p>';return;}
+  const open=data.filter(q=>!q.answer).length;$("qCount").textContent=data.length?`(${data.length}টি, উত্তর বাকি ${open}টি)`:"";
+  $("qlist").innerHTML=data.length?data.map(q=>`<div class="card" style="margin-bottom:10px" data-qid="${q.id}">
+    <div class="muted" style="font-size:13px">${fmt(q.created_at)} · ${esc(q.name||"নাম নেই")}${q.answer?' · <b style="color:#15803D">উত্তর দেওয়া</b>':' · <b style="color:#B91C1C">উত্তর বাকি</b>'}</div>
+    <p style="font-weight:700;margin:6px 0 10px">${esc(q.question)}</p>
+    <textarea class="qa-ans" style="width:100%;min-height:80px;font:inherit;padding:10px;border:1px solid var(--line);border-radius:9px;background:var(--bg);color:var(--text)" placeholder="উত্তর লিখুন">${esc(q.answer||"")}</textarea>
+    <div style="display:flex;gap:10px;align-items:center;margin-top:8px;flex-wrap:wrap"><label style="display:flex;gap:6px;align-items:center"><input type="checkbox" class="qa-pub" ${q.published?"checked":""} style="width:auto"> সাইটে প্রকাশ</label><button class="mini qa-save">সেভ</button><button class="ghost mini qa-del">মুছুন</button><span class="muted qa-m"></span></div></div>`).join(""):'<p class="muted">এই কোর্সে এখনও কোনো প্রশ্ন আসেনি।</p>';
+  document.querySelectorAll("[data-qid]").forEach(card=>{const id=card.dataset.qid;
+    card.querySelector(".qa-save").onclick=async()=>{const ans=card.querySelector(".qa-ans").value.trim(),pub=card.querySelector(".qa-pub").checked;
+      if(pub&&!ans){card.querySelector(".qa-m").textContent="উত্তর ছাড়া প্রকাশ করা যাবে না।";return;}
+      const {error}=await sb.from("questions").update({answer:ans||null,answered_at:ans?new Date().toISOString():null,published:pub}).eq("id",id);
+      card.querySelector(".qa-m").textContent=error?"হয়নি: "+error.message:"সেভ হয়েছে ✓";if(!error)setTimeout(loadQs,700);};
+    card.querySelector(".qa-del").onclick=async()=>{if(!confirm("প্রশ্নটি মুছবেন?"))return;const {error}=await sb.from("questions").delete().eq("id",id);if(error)alert(error.message);loadQs();};
+  });
+}
+
+// ===== কোর্স (ডাটাবেস থেকে) =====
+const STATIC=["noorani", "tajweed", "quran-words", "tafsir", "hifz", "hadith-words", "dua-words", "salah", "aqidah", "fiqh", "seerah", "akhlaq", "history", "arabic", "english", "math"];
+const CATN={quran:"কুরআন",hadith:"হাদীস ও দোয়া",deen:"দ্বীনি জ্ঞান",general:"ভাষা ও সাধারণ শিক্ষা"};
+const AGEN={c:"শিশু",t:"কিশোর",a:"বড়"};
+let CLIST=[],cEdit=null;
+const cHref=s=>(STATIC.includes(s)?"/":"/c/")+s;
+async function refreshCourses(){
+  const {data,error}=await sb.from("courses").select("*").order("sort");
+  if(error||!data){return;}
+  CLIST=data;
+  data.forEach(c=>{const t=(c.content&&c.content.bn&&c.content.bn.t)||c.slug;COURSE[c.slug]=t;CBN[c.slug]=t;CBN2[c.slug]=t;});
+  const opts=blank=>(blank!=null?`<option value="">${blank}</option>`:"")+data.map(c=>`<option value="${c.slug}">${esc(c.content.bn.t)}${c.published?"":" (লুকানো)"}</option>`).join("");
+  const keep=(id,html)=>{const el=$(id);if(!el)return;const v=el.value;el.innerHTML=html;if([...el.options].some(o=>o.value===v))el.value=v;};
+  keep("mCourse",opts("সাধারণ / সব কোর্স"));keep("f_course",opts("—"));keep("lnCourse",opts(null));
+  const fc=$("fc_courses");if(fc){const checked=new Set([...fc.querySelectorAll("input:checked")].map(i=>i.value));fc.innerHTML=data.map(c=>`<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" value="${c.slug}" ${checked.has(c.slug)?"checked":""}> ${esc(c.content.bn.t)}</label>`).join("");}
+}
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-courses").style.display=b.dataset.tab==="courses"?"block":"none";
+  if(b.dataset.tab==="courses") loadCoursesTab();
+}));
+async function loadCoursesTab(){
+  await refreshCourses();
+  $("crows").innerHTML=CLIST.length?CLIST.map(c=>`<tr><td>${c.sort}</td><td style="font-size:22px;color:var(--gold-deep,#A8862A)">${esc(c.glyph)}</td><td><b>${esc(c.content.bn.t)}</b><div class="muted" style="font-size:13px"><a href="${cHref(c.slug)}" target="_blank" rel="noopener">${cHref(c.slug)}</a></div></td><td>${CATN[c.cat]||c.cat}</td><td>${(c.ages||[]).map(x=>AGEN[x]).join(", ")}</td><td><input type="checkbox" data-cpub="${c.slug}" ${c.published?"checked":""}></td><td style="white-space:nowrap"><button class="mini" data-cedit="${c.slug}">সম্পাদনা</button> <button class="ghost mini" data-cdel="${c.slug}">মুছুন</button></td></tr>`).join(""):'<tr><td colspan="7" class="err">কোর্স লোড হয়নি — courses.sql চালানো হয়েছে?</td></tr>';
+  document.querySelectorAll("[data-cpub]").forEach(x=>x.onchange=async()=>{const {error}=await sb.from("courses").update({published:x.checked}).eq("slug",x.dataset.cpub);if(error)alert(error.message);refreshCourses();});
+  document.querySelectorAll("[data-cedit]").forEach(b=>b.onclick=()=>openCForm(CLIST.find(c=>c.slug===b.dataset.cedit)));
+  document.querySelectorAll("[data-cdel]").forEach(b=>b.onclick=async()=>{const c=CLIST.find(x=>x.slug===b.dataset.cdel);
+    if(!confirm("“"+c.content.bn.t+"” কোর্সটি একেবারে মুছে ফেলবেন?\nশুধু সাইট থেকে সরাতে চাইলে মুছবেন না — ‘সাইটে’ টিক তুলে দিন।"))return;
+    const {error}=await sb.from("courses").delete().eq("slug",c.slug);if(error)alert(error.message);loadCoursesTab();});
+}
+$("cNew").onclick=()=>openCForm(null);
+function langBlock(L,label,d,open){
+  d=d||{};const lv=d.lv||[];const faq=(d.faq||[]).map(x=>x.join(" || ")).join("\n");
+  const fld=(k,lab,v,ph,ta)=>`<label class="${ta?"wide":""}">${lab}${ta?`<textarea data-k="${k}" placeholder="${ph||""}">${esc(v||"")}</textarea>`:`<input data-k="${k}" value="${esc(v||"")}" placeholder="${ph||""}">`}</label>`;
+  return `<details ${open?"open":""} class="cl" data-lang="${L}" style="border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:12px"><summary style="font-weight:700;cursor:pointer">${label}</summary><div class="fgrid" style="margin-top:12px">
+    ${fld("t","কোর্সের নাম",d.t)}${fld("short","এক লাইনের বিবরণ (তালিকায় দেখায়)",d.short)}
+    ${fld("tag","উপরের আরবি আয়াত/হাদীস (ঐচ্ছিক)",d.tag)}${fld("lvl","স্তর (যেমন: সব বয়স, আলাদা স্তর)",d.lvl)}
+    ${fld("intro","বিস্তারিত পরিচিতি",d.intro,"",1)}
+    ${fld("lv0","শিশু (৫–৮) স্তরে কী শেখানো হয়",lv[0],"",1)}${fld("lv1","কিশোর (৯–১৪) স্তরে",lv[1],"",1)}${fld("lv2","বড় (১৫+) স্তরে",lv[2],"",1)}
+    ${fld("l","এই কোর্সে যা শিখবেন — প্রতি লাইনে একটি",(d.l||[]).join("\n"),"",1)}
+    ${fld("for","কাদের জন্য",d.for)}${fld("dur","সময়কাল",d.dur)}
+    ${fld("faq","প্রশ্নোত্তর — প্রতি লাইনে: প্রশ্ন || উত্তর",faq,"ক্লাস কত মিনিটের? || ৩০–৪০ মিনিট",1)}
+  </div></details>`;
+}
+function openCForm(c){
+  cEdit=c?c.slug:null;const box=$("cForm");box.hidden=false;
+  const ct=c?c.content:{};
+  box.innerHTML=`<h1 style="font-size:18px;margin-bottom:12px">${c?"কোর্স সম্পাদনা — "+esc(c.content.bn.t):"নতুন কোর্স"}</h1>
+    <div class="fgrid">
+      <label>কোর্স-কোড (ইংরেজি ছোট হাতের অক্ষর, - চলবে)<input id="c_slug" value="${c?c.slug:""}" ${c?"disabled":""} placeholder="যেমন: sirat-sahaba"></label>
+      <label>ক্রম (ছোট সংখ্যা আগে)<input id="c_sort" type="number" value="${c?c.sort:(CLIST.length?Math.max(...CLIST.map(x=>x.sort))+10:10)}"></label>
+      <label>বিভাগ<select id="c_cat">${Object.entries(CATN).map(([k,v])=>`<option value="${k}" ${c&&c.cat===k?"selected":""}>${v}</option>`).join("")}</select></label>
+      <label>আরবি অক্ষর (কার্ডে দেখায়)<input id="c_glyph" value="${esc(c?c.glyph:"ع")}" maxlength="6"></label>
+      <div class="wide" style="grid-column:1/-1;display:flex;gap:16px;flex-wrap:wrap;align-items:center"><span class="muted">বয়স:</span>${Object.entries(AGEN).map(([k,v])=>`<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" class="c_age" value="${k}" ${!c||(c.ages||[]).includes(k)?"checked":""} style="width:auto"> ${v}</label>`).join("")}
+        <label style="display:flex;gap:6px;align-items:center;margin-inline-start:auto"><input type="checkbox" id="c_pub" ${!c||c.published?"checked":""} style="width:auto"> সাইটে দেখাবে</label></div>
+    </div>
+    ${langBlock("bn","বাংলা (আবশ্যক)",ct.bn,true)}${langBlock("en","English (ঐচ্ছিক — না দিলে বাংলা দেখাবে)",ct.en,false)}${langBlock("ar","العربية (ঐচ্ছিক — না দিলে বাংলা দেখাবে)",ct.ar,false)}
+    <div style="display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap"><button id="cSave">সেভ করুন</button><button class="ghost" id="cCancel">বাতিল</button><span class="muted" id="cMsg"></span></div>`;
+  $("cCancel").onclick=()=>{box.hidden=true;cEdit=null;};
+  $("cSave").onclick=saveCourse;
+  box.scrollIntoView({behavior:"smooth"});
+}
+function readLang(L){
+  const el=document.querySelector(`#cForm details[data-lang="${L}"]`);const g=k=>(el.querySelector(`[data-k="${k}"]`).value||"").trim();
+  const d={t:g("t"),short:g("short"),tag:g("tag"),lvl:g("lvl"),intro:g("intro"),lv:[g("lv0"),g("lv1"),g("lv2")],
+    l:g("l").split("\n").map(x=>x.trim()).filter(Boolean),for:g("for"),dur:g("dur"),
+    faq:g("faq").split("\n").map(x=>x.split("||").map(y=>y.trim())).filter(x=>x.length>=2&&x[0]&&x[1]).map(x=>[x[0],x.slice(1).join(" || ")])};
+  if(!d.lv.some(Boolean))d.lv=[];
+  return d;
+}
+async function saveCourse(){
+  const msg=$("cMsg");const slug=cEdit||$("c_slug").value.trim().toLowerCase();
+  if(!/^[a-z0-9][a-z0-9-]{1,40}$/.test(slug)){msg.textContent="কোর্স-কোড শুধু ইংরেজি ছোট হাতের অক্ষর, সংখ্যা ও - দিয়ে (২–৪১ অক্ষর)।";return;}
+  if(!cEdit&&CLIST.some(c=>c.slug===slug)){msg.textContent="এই কোড আগেই আছে — অন্য কোড দিন।";return;}
+  const bn=readLang("bn");if(!bn.t||!bn.intro){msg.textContent="বাংলায় অন্তত কোর্সের নাম ও বিস্তারিত পরিচিতি দিন।";return;}
+  if(!bn.short)bn.short=bn.intro.split(/[।.—]/)[0].slice(0,140);
+  const content={bn};["en","ar"].forEach(L=>{const d=readLang(L);if(d.t)content[L]=d;});
+  const ages=[...document.querySelectorAll(".c_age:checked")].map(x=>x.value);
+  const row={sort:Number($("c_sort").value)||100,cat:$("c_cat").value,ages:ages.length?ages:["c","t","a"],glyph:$("c_glyph").value.trim()||"ع",content,published:$("c_pub").checked};
+  msg.textContent="সেভ হচ্ছে…";
+  const {error}=cEdit?await sb.from("courses").update(row).eq("slug",cEdit):await sb.from("courses").insert({slug,...row});
+  if(error){msg.textContent="হয়নি: "+error.message;return;}
+  msg.textContent="সেভ হয়েছে ✓";$("cForm").hidden=true;cEdit=null;loadCoursesTab();
+}
+
+// ===== ভিডিওর AI লেখা ও সারাংশ =====
+// Gemini সরাসরি admin-এর ব্রাউজার থেকে — চাবি শুধু এই কম্পিউটারের ব্রাউজারে থাকে
+const AI_PROMPT=`You are an expert transcriber and translator working for an Islamic education website in Bangladesh. Carefully listen to and watch this YouTube video.
+
+1. Detect the main spoken language: "bn", "en", "ar", "ur" or "other".
+2. Produce a COMPLETE and FAITHFUL Bangla (Bengali script) transcript of everything said, in order.
+   - If the speech is Bangla, transcribe it accurately in standard Bangla spelling.
+   - If it is English, Arabic, Urdu or any other language, translate it faithfully into clear, natural Bangla. Do not shorten or summarise in this part.
+3. When Quran verses, hadith text, duas or Arabic phrases are recited, write the Arabic exactly in Arabic script, followed by its Bangla meaning in parentheses. Never invent, complete or "correct" a verse. If you are not certain of the exact words, write [অস্পষ্ট].
+4. Do not add anything that is not said in the video. Mark unclear audio as [অস্পষ্ট]. Keep the speaker's meaning and Islamic terminology (e.g. নামাজ, তাজবীদ, মাখরাজ) as used in Bangladesh.
+5. Split the transcript into segments of roughly 20–60 seconds. Each segment starts at its timestamp in MM:SS (or H:MM:SS for videos over an hour).
+6. Write a concise Bangla summary of 4–7 sentences covering the main teaching of the video, and 3–6 short key takeaways in Bangla.
+
+Return ONLY valid JSON, no markdown, in exactly this shape:
+{"source_language":"bn","title_bn":"...","summary_bn":"...","key_points_bn":["...","..."],"transcript":[{"t":"00:00","text":"..."}]}`;
+function aiKeyUI(){
+  const box=$("aiKeyRow");if(!box)return;const k=aiKey();
+  if(k){box.innerHTML='<span>🔑 Gemini চাবি এই কম্পিউটারে রাখা আছে ✓</span><a href="#" id="aiKeyChg" style="margin-inline-start:auto;font-size:13px">চাবি বদলান</a>';
+    $("aiKeyChg").onclick=e=>{e.preventDefault();aiKeySet("");aiKeyUI();};}
+  else{box.innerHTML='<b>🔑 Gemini চাবি:</b><input id="aiKeyIn" type="password" autocomplete="off" placeholder="AIza... দিয়ে শুরু হওয়া চাবি পেস্ট করুন" style="flex:1;min-width:240px;padding:9px 12px;border:1px solid var(--line);border-radius:9px;font:inherit"><button id="aiKeySave" class="mini">চাবি সেভ</button><span class="muted" style="font-size:12px;width:100%">চাবি শুধু এই কম্পিউটারের ব্রাউজারে থাকবে — সাইটে বা GitHub-এ কোথাও যাবে না।</span>';
+    $("aiKeySave").onclick=()=>{const v=$("aiKeyIn").value.trim();if(!/^AIza[\w-]{20,}$/.test(v)){alert("চাবিটা ঠিক মনে হচ্ছে না — AIza দিয়ে শুরু হওয়া পুরো চাবি পেস্ট করুন।");return;}aiKeySet(v);aiKeyUI();};}
+}
+function aiKey(){try{return localStorage.getItem("dio_gemini_key")||"";}catch(_){return "";}}
+function aiKeySet(k){try{if(k)localStorage.setItem("dio_gemini_key",k);else localStorage.removeItem("dio_gemini_key");}catch(_){}}
+async function geminiVideo(url){
+  const id=aiYt(url);if(!id)throw new Error("এটা সঠিক YouTube লিংক নয়");
+  const key=aiKey();if(!key)throw new Error("আগে উপরের ঘরে Gemini চাবি দিয়ে \"চাবি সেভ\" চাপুন");
+  let first="gemini-flash-latest";try{first=localStorage.getItem("dio_gemini_model")||first;}catch(_){}
+  const models=[first,"gemini-flash-lite-latest","gemini-pro-latest"].filter((m,k,arr)=>arr.indexOf(m)===k);
+  const body=JSON.stringify({contents:[{parts:[{file_data:{file_uri:"https://www.youtube.com/watch?v="+id}},{text:AI_PROMPT}]}],
+      generationConfig:{responseMimeType:"application/json",temperature:0.2,maxOutputTokens:32768,mediaResolution:"MEDIA_RESOLUTION_LOW"}});
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const note=t=>{const m=document.getElementById("aiMsg");if(m)m.dataset.note=t;};
+  let d=null,model=null,lastErr="";
+  outer: for(const m of models){
+    for(let attempt=1;attempt<=3;attempt++){
+      note(m!==first?"বিকল্প মডেলে চেষ্টা চলছে":(attempt>1?"Google-এ চাপ বেশি — আবার চেষ্টা ("+attempt+"/৩)":""));
+      const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+m+":generateContent",{method:"POST",
+        headers:{"Content-Type":"application/json","x-goog-api-key":key},body});
+      const j=await r.json().catch(()=>({}));
+      if(r.ok){d=j;model=m;break outer;}
+      const msg=(j.error&&j.error.message)||String(r.status);lastErr=msg;
+      if(/api key/i.test(msg)){aiKeySet("");aiKeyUI();throw new Error("চাবিটা ঠিক নয় — উপরের ঘরে সঠিক চাবি দিন। ("+msg+")");}
+      const quota=/quota|exceeded|rate.?limit|resource.?exhausted/i.test(msg);
+      const noModel=r.status===404||/not found|not supported/i.test(msg);
+      if(quota||noModel){lastErr=quota?"QUOTA":msg;continue outer;}
+      const busy=r.status===503||r.status===500||/overload|high demand|unavailable|try again/i.test(msg);
+      if(!busy)throw new Error("Gemini: "+msg);
+      if(attempt<3)await sleep(attempt*15000);
+    }
+  }
+  note("");
+  if(!d)throw new Error(lastErr==="QUOTA"?"আজকের বিনামূল্যের সীমা শেষ (Google দিনে নির্দিষ্ট সংখ্যক অনুরোধ ফ্রি দেয়) — কাল আবার চেষ্টা করুন, অথবা Google AI Studio-তে Billing চালু করুন।":"Google-এ এখন খুব বেশি চাপ — কিছুক্ষণ পর আবার চেষ্টা করুন। ("+lastErr+")");
+  const cand=(d.candidates||[])[0]||{};
+  const text=((cand.content&&cand.content.parts)||[]).map(p=>p.text||"").join("");
+  if(!text)throw new Error("Gemini কোনো লেখা দেয়নি ("+(cand.finishReason||"অজানা কারণ")+")। ভিডিওটি Public কি না দেখুন।");
+  let out;try{out=JSON.parse(text);}catch(_){try{out=JSON.parse(text.slice(text.indexOf("{"),text.lastIndexOf("}")+1));}catch(__){throw new Error("লেখা অসম্পূর্ণ এসেছে ("+(cand.finishReason||"")+")। খুব লম্বা ভিডিও হলে ছোট ভিডিও দিয়ে চেষ্টা করুন।");}}
+  return Object.assign({ok:true,model,finish:cand.finishReason||""},out);
+}
+
+const aiYt=u=>{const m=String(u||"").match(/(?:youtu\.be\/|v=|embed\/|shorts\/|live\/)([\w-]{11})/);return m?m[1]:null;};
+const AILANG={bn:"বাংলা",en:"ইংরেজি",ar:"আরবি",ur:"উর্দু",other:"অন্য ভাষা"};
+async function aiPanel(r,tr){
+  document.querySelectorAll("#mrows tr.ai-row").forEach(x=>x.remove());
+  const row=document.createElement("tr");row.className="ai-row sub";
+  row.innerHTML='<td colspan="7"><div class="muted">লোড হচ্ছে…</div></td>';tr.after(row);
+  const {data}=await sb.from("media_ai").select("*").eq("media_id",r.id).maybeSingle();
+  const d=data||{};
+  const st=d.status==="published"?'<span class="ai-st p">প্রকাশিত</span>':d.status==="draft"?'<span class="ai-st d">খসড়া — সাইটে দেখাচ্ছে না</span>':'<span class="ai-st n">এখনো তৈরি হয়নি</span>';
+  row.innerHTML=`<td colspan="7"><div class="ai-p">
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><b>✨ AI বাংলা লেখা ও সারাংশ — ${esc(r.title)}</b> ${st} <span class="muted" id="aiLang">${d.source_lang?"মূল ভাষা: "+(AILANG[d.source_lang]||d.source_lang):""}</span></div>
+    <div class="ai-warn">AI কুরআনের আয়াত, হাদীস ও আরবি পরিভাষায় ভুল করতে পারে। প্রকাশের আগে পুরোটা পড়ে নিন — বিশেষ করে আরবি অংশ। অন্যের চ্যানেলের ভিডিও হলে তাদের অনুমতি নিয়ে নিন।</div>
+    <div id="aiKeyRow" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:#F1FAF5;border:1px solid #BFE3D2;border-radius:10px;padding:10px 12px"></div>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button id="aiGen">${d.summary?"আবার তৈরি করুন":"AI দিয়ে তৈরি করুন"}</button><span class="muted" id="aiMsg">ভিডিওর দৈর্ঘ্য অনুযায়ী ১–৪ মিনিট লাগতে পারে। ভিডিও YouTube-এ Public হতে হবে।</span></div>
+    <label class="muted">সংক্ষিপ্ত সারাংশ<textarea id="aiSum" rows="5">${esc(d.summary||"")}</textarea></label>
+    <label class="muted">মূল কথা — প্রতি লাইনে একটি<textarea id="aiKp" rows="4">${esc(d.key_points||"")}</textarea></label>
+    <label class="muted">পূর্ণ লেখা — প্রতি লাইনে: [মিনিট:সেকেন্ড] লেখা<textarea id="aiTr" rows="14">${esc(d.transcript||"")}</textarea></label>
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><button class="ghost" id="aiDraft">খসড়া সেভ</button><button id="aiPub">প্রকাশ করুন</button>${d.status==="published"?'<button class="ghost" id="aiUnpub">সাইট থেকে সরান</button>':""}<button class="ghost" id="aiClose">বন্ধ</button><span class="muted" id="aiSaveMsg"></span></div>
+  </div></td>`;
+  let srcLang=d.source_lang||null,model=d.model||null;
+  $("aiClose").onclick=()=>row.remove();
+  aiKeyUI();
+  $("aiGen").onclick=async()=>{
+    if(($("aiSum").value.trim()||$("aiTr").value.trim())&&!confirm("আগের লেখা বদলে নতুন করে তৈরি হবে। চালিয়ে যাবেন?"))return;
+    const b=$("aiGen"),m=$("aiMsg");b.disabled=true;let sec=0;const tick=setInterval(()=>{sec++;m.textContent="তৈরি হচ্ছে… "+sec+" সেকেন্ড"+(m.dataset.note?" — "+m.dataset.note:"");},1000);
+    try{
+      const out=await geminiVideo(r.url);
+      $("aiSum").value=out.summary_bn||"";
+      $("aiKp").value=(out.key_points_bn||[]).join("\n");
+      $("aiTr").value=(out.transcript||[]).map(s=>"["+(s.t||"")+"] "+(s.text||"").replace(/\s*\n\s*/g," ")).join("\n");
+      srcLang=out.source_language||null;model=out.model||null;
+      $("aiLang").textContent=srcLang?"মূল ভাষা: "+(AILANG[srcLang]||srcLang):"";
+      m.textContent="তৈরি হয়েছে ✓ — পড়ে দেখে খসড়া সেভ বা প্রকাশ করুন।"+(out.finish&&out.finish!=="STOP"?" (সতর্কতা: লেখা মাঝপথে থেমে থাকতে পারে — শেষ অংশ দেখুন)":"");
+    }catch(e){m.textContent="হয়নি: "+(e.message||e);}
+    clearInterval(tick);b.disabled=false;
+  };
+  const save=async status=>{
+    const sm=$("aiSaveMsg");const rowd={media_id:r.id,summary:$("aiSum").value.trim()||null,key_points:$("aiKp").value.trim()||null,transcript:$("aiTr").value.trim()||null,source_lang:srcLang,model,status,updated_at:new Date().toISOString()};
+    if(status==="published"&&!rowd.summary&&!rowd.transcript){sm.textContent="খালি লেখা প্রকাশ করা যাবে না।";return;}
+    sm.textContent="সেভ হচ্ছে…";
+    const {error}=await sb.from("media_ai").upsert(rowd);
+    sm.textContent=error?"হয়নি: "+error.message+" (ai.sql চালানো হয়েছে?)":(status==="published"?"প্রকাশিত ✓ — ভিডিওর পেজে দেখা যাচ্ছে":"খসড়া সেভ হয়েছে ✓");
+  };
+  $("aiDraft").onclick=()=>save("draft");
+  $("aiPub").onclick=()=>{if(confirm("পুরো লেখা পড়ে দেখেছেন? প্রকাশ করলে সবাই দেখতে পাবে।"))save("published");};
+  if($("aiUnpub"))$("aiUnpub").onclick=()=>save("draft");
+}
+
+// ===== পোর্টাল কোড =====
+function newCode(){const A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",r=new Uint32Array(8);crypto.getRandomValues(r);return [...r].map(v=>A[v%A.length]).join("");}
+async function sendPortal(table,x){
+  if(!x)return;
+  if(!x.phone){alert(table==="faculty"?"আগে শিক্ষকের WhatsApp নম্বর দিন (সম্পাদনা → WhatsApp নম্বর)।":"এই শিক্ষার্থীর নম্বর নেই।");return;}
+  let code=x.portal_code;
+  if(code&&!confirm("কোড আগেই আছে: "+code+"\n\nOK = একই কোড আবার পাঠান\nCancel = নতুন কোড তৈরি করুন (পুরোনোটা আর চলবে না)")){code=null;}
+  if(!code){code=newCode();const {error}=await sb.from(table).update({portal_code:code}).eq("id",x.id);if(error){alert("হয়নি: "+error.message+" (portal.sql চালানো হয়েছে?)");return;}x.portal_code=code;}
+  const isT=table==="faculty";
+  const msg=isT?`আসসালামু আলাইকুম ${x.name}।\nদারুল ইলম অনলাইনের শিক্ষক পোর্টাল — আপনার ব্যাচ, হাজিরা ও মাসিক রিপোর্ট:\nhttps://darulilmonline.com/ustad\nনম্বর: ${x.phone}\nগোপন কোড: ${code}\nকোডটি কাউকে দেবেন না।`
+    :`আসসালামু আলাইকুম।\n${x.name}-এর ক্লাসের রুটিন, হাজিরা, ফি ও মাসিক রিপোর্ট দেখুন অভিভাবক পোর্টালে:\nhttps://darulilmonline.com/portal\nনম্বর: ${x.phone}\nগোপন কোড: ${code}\nকোডটি কাউকে দেবেন না। — দারুল ইলম অনলাইন`;
+  window.open(waText(x.phone,msg),"_blank","noopener");
+}
+// ===== ব্যাচ ও রুটিন =====
+const BDAYS=[["sat","শনি"],["sun","রবি"],["mon","সোম"],["tue","মঙ্গল"],["wed","বুধ"],["thu","বৃহঃ"],["fri","শুক্র"]];
+let BAT=[],bEdit=null,FACL=[];
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-batches").style.display=b.dataset.tab==="batches"?"block":"none";
+  if(b.dataset.tab==="batches") loadBatches();
+}));
+async function loadBatches(){
+  const [{data,error},{data:fac},{data:st}]=await Promise.all([sb.from("batches").select("*").order("name"),sb.from("faculty").select("id,name").order("sort"),sb.from("students").select("batch,status")]);
+  if(error){$("brows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+error.message+' (portal.sql চালানো হয়েছে?)</td></tr>';return;}
+  BAT=data;FACL=fac||[];
+  const cnt=n=>(st||[]).filter(s=>s.batch===n&&s.status==="active").length;
+  $("brows").innerHTML=data.length?data.map(b=>`<tr><td><b>${esc(b.name)}</b>${b.active?"":' <span class="muted">(বন্ধ)</span>'}</td><td>${COURSE[b.course]||"—"}</td><td>${esc((FACL.find(f=>f.id===b.teacher_id)||{}).name||"—")}</td>
+    <td>${(b.days||[]).map(d=>(BDAYS.find(x=>x[0]===d)||[])[1]).join(", ")||"—"}<div class="muted" style="font-size:13px">${b.start_time?b.start_time.slice(0,5)+" · "+b.duration_min+" মিনিট":""}</div></td>
+    <td>${cnt(b.name)}</td><td>${b.meet_url?`<a href="${esc(b.meet_url)}" target="_blank" rel="noopener">খুলুন</a>`:"—"}</td>
+    <td style="white-space:nowrap"><button class="mini" data-bedit="${b.id}">সম্পাদনা</button> <button class="ghost mini" data-bdel="${b.id}">মুছুন</button></td></tr>`).join(""):'<tr><td colspan="7" class="muted">এখনো কোনো ব্যাচ নেই — "+ নতুন ব্যাচ" চাপুন।</td></tr>';
+  document.querySelectorAll("[data-bedit]").forEach(x=>x.onclick=()=>openBForm(BAT.find(b=>b.id==x.dataset.bedit)));
+  document.querySelectorAll("[data-bdel]").forEach(x=>x.onclick=async()=>{const b=BAT.find(y=>y.id==x.dataset.bdel);if(!confirm("“"+b.name+"” ব্যাচ মুছবেন? শিক্ষার্থীরা মুছবে না।"))return;const {error}=await sb.from("batches").delete().eq("id",b.id);if(error)alert(error.message);loadBatches();});
+}
+$("bNew").onclick=()=>openBForm(null);
+function openBForm(b){
+  bEdit=b?b.id:null;const box=$("bForm");box.hidden=false;
+  box.innerHTML=`<h1 style="font-size:18px;margin-bottom:12px">${b?"ব্যাচ সম্পাদনা":"নতুন ব্যাচ"}</h1><div class="fgrid">
+    <label>ব্যাচের নাম<input id="b_name" value="${esc(b?b.name:"")}" placeholder="যেমন: নূরানী-সকাল-১"></label>
+    <label>কোর্স<select id="b_course"><option value="">—</option>${CLIST.map(c=>`<option value="${c.slug}" ${b&&b.course===c.slug?"selected":""}>${esc(c.content.bn.t)}</option>`).join("")}</select></label>
+    <label>শিক্ষক<select id="b_teacher"><option value="">—</option>${FACL.map(f=>`<option value="${f.id}" ${b&&b.teacher_id===f.id?"selected":""}>${esc(f.name)}</option>`).join("")}</select></label>
+    <label>শুরুর সময় (বাংলাদেশ)<input id="b_time" type="time" value="${b&&b.start_time?b.start_time.slice(0,5):"19:00"}"></label>
+    <label>সময়কাল (মিনিট)<input id="b_dur" type="number" min="10" value="${b?b.duration_min:40}"></label>
+    <label class="wide">ক্লাসের লিংক (Meet/Zoom)<input id="b_meet" value="${esc(b&&b.meet_url||"")}" placeholder="https://meet.google.com/..."></label>
+    <div class="wide" style="grid-column:1/-1;display:flex;gap:14px;flex-wrap:wrap;align-items:center"><span class="muted">দিন:</span>${BDAYS.map(([k,n])=>`<label style="display:flex;gap:6px;align-items:center"><input type="checkbox" class="b_day" value="${k}" ${b&&(b.days||[]).includes(k)?"checked":""} style="width:auto"> ${n}</label>`).join("")}
+      <label style="display:flex;gap:6px;align-items:center;margin-inline-start:auto"><input type="checkbox" id="b_active" ${!b||b.active?"checked":""} style="width:auto"> চালু</label></div>
+  </div><div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="bSave">সেভ করুন</button><button class="ghost" id="bCancel">বাতিল</button><span class="muted" id="bMsg"></span></div>`;
+  $("bCancel").onclick=()=>{box.hidden=true;bEdit=null;};
+  $("bSave").onclick=async()=>{
+    const name=$("b_name").value.trim(),meet=$("b_meet").value.trim();
+    if(!name){$("bMsg").textContent="ব্যাচের নাম দিন।";return;}
+    if(meet&&!/^https?:\/\//.test(meet)){$("bMsg").textContent="লিংক https:// দিয়ে শুরু হতে হবে।";return;}
+    const row={name,course:$("b_course").value||null,teacher_id:$("b_teacher").value?Number($("b_teacher").value):null,start_time:$("b_time").value||null,duration_min:Number($("b_dur").value)||40,meet_url:meet||null,days:[...document.querySelectorAll(".b_day:checked")].map(x=>x.value),active:$("b_active").checked};
+    $("bMsg").textContent="সেভ হচ্ছে…";
+    const old=bEdit?BAT.find(x=>x.id===bEdit):null;
+    const {error}=bEdit?await sb.from("batches").update(row).eq("id",bEdit):await sb.from("batches").insert(row);
+    if(error){$("bMsg").textContent="হয়নি: "+(/duplicate|unique/.test(error.message)?"এই নামে ব্যাচ আগেই আছে":error.message);return;}
+    if(old&&old.name!==name&&confirm("ব্যাচের নাম বদলেছে। এই ব্যাচের শিক্ষার্থীদের নামও বদলে দেব?"))await sb.from("students").update({batch:name}).eq("batch",old.name);
+    box.hidden=true;bEdit=null;loadBatches();
+  };
+  box.scrollIntoView({behavior:"smooth"});
+}
+
+// ===== কুইজ =====
+let QZ=[],qzEdit=null;
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-quiz").style.display=b.dataset.tab==="quiz"?"block":"none";
+  $("panel-certs").style.display=b.dataset.tab==="certs"?"block":"none";
+  if(b.dataset.tab==="quiz") qzInit();
+  if(b.dataset.tab==="certs") ctInit();
+}));
+const ctitle=slug=>{const c=CLIST.find(x=>x.slug===slug);return c?c.content.bn.t:(COURSE[slug]||slug);};
+async function qzInit(){
+  if(!$("qzC").options.length){$("qzC").innerHTML=CLIST.map(c=>`<option value="${c.slug}">${esc(c.content.bn.t)}</option>`).join("");$("qzC").onchange=qzLoad;$("qzM").onchange=qzRender;}
+  qzLoad();
+}
+async function qzLoad(){
+  const c=$("qzC").value;
+  const [{data,error},{data:ls}]=await Promise.all([sb.from("quizzes").select("*").eq("course",c).order("sort").order("id"),sb.from("lessons").select("module,sort").eq("course",c).order("sort")]);
+  if(error){$("qzRows").innerHTML='<tr><td colspan="5" class="err">লোড হয়নি: '+esc(error.message)+' (phase2-v35.sql চালানো হয়েছে?)</td></tr>';return;}
+  QZ=data;const mods=[...new Set([...(ls||[]).map(x=>x.module).filter(Boolean),...data.map(x=>x.module).filter(Boolean)])];
+  const cur=$("qzM").value;$("qzM").innerHTML='<option value="">— সব অধ্যায় —</option>'+mods.map(m=>`<option ${m===cur?"selected":""}>${esc(m)}</option>`).join("");
+  qzRender();
+}
+function qzRender(){
+  const m=$("qzM").value,rows=QZ.filter(x=>!m||x.module===m);
+  const pub=QZ.filter(x=>x.published).length;$("qzMsg").textContent=`মোট ${QZ.length}টি · প্রকাশিত ${pub}টি`;
+  $("qzRows").innerHTML=rows.length?rows.map(x=>`<tr><td class="muted" style="max-width:180px">${esc(x.module||"")}</td><td style="max-width:420px">${esc(x.question)}</td><td>${esc((x.options||[])[x.answer]||"")}</td><td><input type="checkbox" data-qp="${x.id}" ${x.published?"checked":""}></td><td style="white-space:nowrap"><button class="mini" data-qe="${x.id}">সম্পাদনা</button> <button class="ghost mini" data-qd="${x.id}">মুছুন</button></td></tr>`).join(""):'<tr><td colspan="5" class="muted">এই অধ্যায়ে এখনো প্রশ্ন নেই — “+ নতুন প্রশ্ন” বা “✨ AI দিয়ে” চাপুন।</td></tr>';
+  document.querySelectorAll("[data-qp]").forEach(x=>x.onchange=async()=>{await sb.from("quizzes").update({published:x.checked}).eq("id",+x.dataset.qp);const q=QZ.find(y=>y.id==x.dataset.qp);if(q)q.published=x.checked;qzRender();});
+  document.querySelectorAll("[data-qe]").forEach(x=>x.onclick=()=>qzOpen(QZ.find(y=>y.id==x.dataset.qe)));
+  document.querySelectorAll("[data-qd]").forEach(x=>x.onclick=async()=>{if(!confirm("প্রশ্নটি মুছবেন?"))return;await sb.from("quizzes").delete().eq("id",+x.dataset.qd);qzLoad();});
+}
+$("qzNew").onclick=()=>qzOpen(null);
+$("qzPub").onclick=async()=>{if(!confirm("এই কোর্সের সব প্রশ্ন প্রকাশ করবেন? (আগে দেখে নিয়েছেন তো?)"))return;await sb.from("quizzes").update({published:true}).eq("course",$("qzC").value);qzLoad();};
+function qzOpen(q){
+  qzEdit=q?q.id:null;const box=$("qzForm");box.hidden=false;const o=q?q.options:["","","",""];
+  box.innerHTML=`<h1 style="font-size:18px;margin-bottom:10px">${q?"প্রশ্ন সম্পাদনা":"নতুন প্রশ্ন"}</h1>
+  <label class="muted">অধ্যায়<input id="qfM" value="${esc(q?q.module||"":$("qzM").value)}" list="qfML"><datalist id="qfML">${[...$("qzM").options].slice(1).map(x=>`<option value="${esc(x.value)}">`).join("")}</datalist></label>
+  <label class="muted">প্রশ্ন<textarea id="qfQ" rows="2">${esc(q?q.question:"")}</textarea></label>
+  ${[0,1,2,3].map(i=>`<label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="qfA" value="${i}" ${q&&q.answer===i||(!q&&i===0)?"checked":""} style="width:auto"><input class="qfO" value="${esc(o[i]||"")}" placeholder="অপশন ${i+1}${i===0?" (সঠিকটির পাশে গোল চিহ্ন দিন)":""}"></label>`).join("")}
+  <label class="muted">ব্যাখ্যা (উত্তরের পর দেখাবে, ঐচ্ছিক)<input id="qfE" value="${esc(q?q.explain||"":"")}"></label>
+  <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="qfP" ${q&&q.published?"checked":""} style="width:auto"> সাইটে দেখাবে</label>
+  <div style="display:flex;gap:10px;margin-top:12px;align-items:center"><button id="qfS">সেভ</button><button class="ghost" id="qfX">বাতিল</button><span class="muted" id="qfMsg"></span></div>`;
+  $("qfX").onclick=()=>{box.hidden=true;};
+  $("qfS").onclick=async()=>{
+    const opts=[...document.querySelectorAll(".qfO")].map(x=>x.value.trim());const ans=+(document.querySelector('input[name=qfA]:checked')||{value:0}).value;
+    if(!$("qfQ").value.trim()||opts.filter(Boolean).length<2||!opts[ans]){$("qfMsg").textContent="প্রশ্ন, অন্তত দুটি অপশন ও সঠিক উত্তর দিন।";return;}
+    const keep=opts.map((x,i)=>({x,i})).filter(o=>o.x);const row={course:$("qzC").value,module:$("qfM").value.trim()||null,question:$("qfQ").value.trim(),options:keep.map(o=>o.x),answer:keep.findIndex(o=>o.i===ans),explain:$("qfE").value.trim()||null,published:$("qfP").checked};
+    if(!qzEdit)row.sort=(QZ.reduce((a,x)=>Math.max(a,x.sort||0),0))+10;
+    const {error}=qzEdit?await sb.from("quizzes").update(row).eq("id",qzEdit):await sb.from("quizzes").insert(row);
+    if(error){$("qfMsg").textContent="হয়নি: "+error.message;return;}box.hidden=true;qzLoad();
+  };
+  box.scrollIntoView({behavior:"smooth"});
+}
+async function geminiText(prompt){
+  const key=aiKey();if(!key)throw new Error("আগে লাইব্রেরি → ✨ AI লেখা প্যানেলে Gemini চাবি সেভ করুন");
+  let lastErr="";
+  for(const m of ["gemini-flash-latest","gemini-flash-lite-latest","gemini-pro-latest"]){
+    const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+m+":generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":key},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:"application/json",temperature:0.4,maxOutputTokens:8192}})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok){const t=((d.candidates||[])[0]?.content?.parts||[]).map(p=>p.text||"").join("");try{return JSON.parse(t);}catch(_){return JSON.parse(t.slice(t.indexOf("["),t.lastIndexOf("]")+1));}}
+    lastErr=(d.error&&d.error.message)||r.status;
+  }
+  throw new Error("Gemini: "+lastErr);
+}
+$("qzAI").onclick=async()=>{
+  const c=$("qzC").value,m=$("qzM").value;if(!m){alert("আগে একটি অধ্যায় বাছুন।");return;}
+  $("qzMsg").textContent="অধ্যায়ের পাঠ পড়ে প্রশ্ন তৈরি হচ্ছে… (৩০–৬০ সেকেন্ড)";
+  try{
+    const {data:ls}=await sb.from("lessons").select("title,body").eq("course",c).eq("module",m).order("sort");
+    const text=(ls||[]).map(x=>"### "+x.title+"\n"+(x.body||"")).join("\n\n").slice(0,60000);
+    if(!text.trim())throw new Error("এই অধ্যায়ে লেখা পাঠ নেই");
+    const prompt=`You are an Islamic studies teacher writing a quiz in Bangla for an online madrasa. Based ONLY on the lesson text below, write 6 multiple-choice questions in clear, simple Bangla.
+Rules: each question has exactly 4 options; exactly one is correct; wrong options must be plausible but clearly wrong according to the text; do not invent facts, rulings or hadith not present in the text; vary difficulty; keep Arabic words exactly as in the text.
+Return ONLY a JSON array: [{"q":"প্রশ্ন","options":["ক","খ","গ","ঘ"],"answer":0,"explain":"সংক্ষিপ্ত ব্যাখ্যা"}] — answer is the 0-based index.
+
+LESSONS:
+${text}`;
+    const arr=await geminiText(prompt);
+    let sort=(QZ.reduce((a,x)=>Math.max(a,x.sort||0),0));
+    const rows=(arr||[]).filter(x=>x&&x.q&&Array.isArray(x.options)&&x.options.length>=2&&Number.isInteger(x.answer)&&x.options[x.answer]).map(x=>({course:c,module:m,question:String(x.q),options:x.options.map(String).slice(0,4),answer:Math.min(x.answer,3),explain:x.explain?String(x.explain):null,published:false,sort:(sort+=10)}));
+    if(!rows.length)throw new Error("AI ঠিকমতো প্রশ্ন দেয়নি — আবার চেষ্টা করুন");
+    const {error}=await sb.from("quizzes").insert(rows);if(error)throw error;
+    $("qzMsg").textContent=rows.length+"টি খসড়া প্রশ্ন যোগ হয়েছে ✓ — প্রতিটি দেখে “সাইটে” টিক দিন";qzLoad();
+  }catch(err){$("qzMsg").textContent="হয়নি: "+(err.message||err);}
+};
+// ===== সনদ =====
+let CT=[];
+async function ctInit(){
+  if(!$("ctC").options.length)$("ctC").innerHTML=CLIST.map(c=>`<option value="${c.slug}">${esc(c.content.bn.t)}</option>`).join("");
+  const {data:st}=await sb.from("students").select("name").order("name");$("ctNames").innerHTML=(st||[]).map(x=>`<option value="${esc(x.name)}">`).join("");
+  const {data,error}=await sb.from("certificates").select("*").order("created_at",{ascending:false}).limit(300);
+  if(error){$("ctRows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+esc(error.message)+' (phase2-v35.sql চালানো হয়েছে?)</td></tr>';return;}
+  CT=data;ctRender();
+}
+$("ctQ").oninput=()=>ctRender();
+function ctRender(){
+  const q=$("ctQ").value.trim().toLowerCase(),rows=CT.filter(x=>!q||x.name.toLowerCase().includes(q)||x.code.toLowerCase().includes(q));
+  $("ctRows").innerHTML=rows.length?rows.map(x=>`<tr${x.revoked?' style="opacity:.55"':""}><td><b>${esc(x.code)}</b></td><td>${esc(x.name)}</td><td>${esc(ctitle(x.course))}</td><td>${x.kind==="free"?"ফ্রি কোর্স":"ক্লাস"}</td><td>${x.grade?esc(x.grade):(x.score!=null?x.score+"%":"")}</td><td class="muted">${new Date(x.created_at).toLocaleDateString("bn-BD")}</td>
+  <td style="white-space:nowrap"><button class="mini" data-cp="${esc(x.code)}">প্রিন্ট</button> <button class="ghost mini" data-cl="${esc(x.code)}">লিংক</button> <button class="ghost mini" data-cr="${esc(x.code)}">${x.revoked?"পুনর্বহাল":"বাতিল"}</button></td></tr>`).join(""):'<tr><td colspan="7" class="muted">এখনো কোনো সনদ নেই।</td></tr>';
+  document.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>{const x=CT.find(y=>y.code===b.dataset.cp);dioCert({code:x.code,name:x.name,course:x.course,course_title:ctitle(x.course),kind:x.kind,score:x.score,grade:x.grade,date:x.created_at});});
+  document.querySelectorAll("[data-cl]").forEach(b=>b.onclick=async()=>{const u="https://darulilmonline.com/verify?c="+b.dataset.cl;try{await navigator.clipboard.writeText(u);b.textContent="কপি ✓";}catch(_){prompt("যাচাইয়ের লিংক:",u);}});
+  document.querySelectorAll("[data-cr]").forEach(b=>b.onclick=async()=>{const x=CT.find(y=>y.code===b.dataset.cr);if(!confirm(x.revoked?"সনদটি আবার বৈধ করবেন?":"সনদটি বাতিল করবেন? যাচাই পেজে “বাতিল” দেখাবে।"))return;await sb.from("certificates").update({revoked:!x.revoked}).eq("code",x.code);ctInit();});
+}
+$("ctGo").onclick=async()=>{
+  const name=$("ctN").value.trim(),course=$("ctC").value;if(name.length<3){$("ctMsg").textContent="নাম লিখুন।";return;}
+  $("ctMsg").textContent="তৈরি হচ্ছে…";let code,error;
+  for(let i=0;i<3;i++){code="DIO-"+newCode();({error}=await sb.from("certificates").insert({code,name,course,kind:"class",grade:$("ctG").value.trim()||null,note:$("ctNote").value.trim()||null,issued_by:"admin"}));if(!error)break;}
+  if(error){$("ctMsg").textContent="হয়নি: "+error.message;return;}
+  $("ctMsg").textContent="তৈরি হয়েছে ✓ "+code;dioCert({code,name,course,course_title:ctitle(course),kind:"class",grade:$("ctG").value.trim(),date:new Date().toISOString()});
+  $("ctN").value="";$("ctG").value="";$("ctNote").value="";ctInit();
+};
+init();
+</script>
+<script src="/cert.js"></script>
+</body>
+</html>
