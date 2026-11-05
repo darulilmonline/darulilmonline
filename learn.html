@@ -679,6 +679,111 @@ try{var R=document.documentElement,S=localStorage,t=S.getItem("dio-theme"),p=S.g
 if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute("data-palette",p);
 ["bn","en","ar"].forEach(function(k){var v=S.getItem("dio-font-"+k);if(v){R.style.setProperty("--font-"+k,'"'+v+'"');window.dioLoadFont(v);}});}catch(e){}
 </script>
+<style>
+/* ---- v31: premium reader ---- */
+.view{background:var(--surface)!important;border-radius:18px;box-shadow:0 10px 30px rgba(15,40,30,.06)}
+.rbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px;padding:8px 10px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.rbar .rlbl{font-size:13px;color:var(--muted);margin-inline-end:4px}
+.rbar button{font:inherit;font-weight:700;min-width:40px;height:36px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);cursor:pointer}
+.rbar button[data-fs="-1"]{font-size:13px}.rbar button[data-fs="1"]{font-size:18px}
+.rbar .rsp{flex:1}
+.rbar .rpdf{background:var(--gold,#E3B23C);color:#1A1A1A;border-color:transparent;padding:0 14px}
+.view .md{font-size:calc(17px * var(--rs,1));line-height:1.95}
+.view .md h3{font-size:calc(21px * var(--rs,1))}
+.view .md h4{font-size:calc(18.5px * var(--rs,1));color:var(--brand);border-inline-start:4px solid var(--gold);padding-inline-start:10px;margin:24px 0 8px}
+.view .md .ar{font-size:calc(28px * var(--rs,1));text-align:center;border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);background:color-mix(in srgb,var(--gold) 8%,var(--surface));color:var(--text)}
+.view .md blockquote{color:var(--text);background:color-mix(in srgb,var(--brand) 7%,var(--surface));border:1px solid color-mix(in srgb,var(--brand) 22%,transparent);border-inline-start:5px solid var(--brand);border-radius:12px;padding:12px 16px}
+.view .md b{color:var(--text)}
+.view .md li::marker{color:var(--gold)}
+:root[data-theme="dark"] .view .md h4,:root[data-theme="dark"] .view .md h3{color:var(--gold-2,#F1D27A)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .view .md h4,:root:not([data-theme="light"]) .view .md h3{color:var(--gold-2,#F1D27A)}}
+
+</style>
+<style id="darkfix">/* dark-fix v31 */
+:root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
+:root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
+:root[data-theme="dark"] .pv.dk .l1{background:rgba(26,29,33,.35)!important}
+:root[data-theme="dark"] .big-ic.pdf{background:var(--surface)!important;color:#E59E9E!important}
+:root[data-theme="dark"] .li .yt .pl i{background:rgba(26,29,33,.95)!important}
+:root[data-theme="dark"] .li .yt .pl svg{color:#E59E9E!important}
+:root[data-theme="dark"] .doc{background:var(--surface)!important;border:1px solid var(--line)!important}
+:root[data-theme="dark"] .doc::before{background:repeating-linear-gradient(180deg,#2E3135 0 4px,transparent 4px 10px)!important}
+:root[data-theme="dark"] .lx{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(160deg,color-mix(in srgb,var(--gold) 70%,var(--surface)),var(--line) 45%,color-mix(in srgb,var(--gold) 70%,var(--surface))) border-box!important}
+:root[data-theme="dark"] .hero,:root[data-theme="dark"] .chero,:root[data-theme="dark"] .lux,:root[data-theme="dark"] .contact{background:var(--surface)!important}
+:root[data-theme="dark"] .lx{background:var(--surface)!important}
+:root[data-theme="dark"] .lhead{background:var(--surface)!important}
+:root[data-theme="dark"] .badge-free{background:#2F3335!important;color:#96BAA4!important}
+:root[data-theme="dark"] .outd{background:var(--surface)!important}
+:root[data-theme="dark"] .ls.on{background:color-mix(in srgb,var(--brand) 7%,var(--surface))!important}
+:root[data-theme="dark"] .k.video{background:#313235!important;color:#DD9C97!important}
+:root[data-theme="dark"] .k.pdf{background:#313234!important;color:#DEAC90!important}
+:root[data-theme="dark"] .k.audio{background:#2F3237!important;color:#A4A5E8!important}
+:root[data-theme="dark"] .k.article{background:#2F3336!important;color:#8FC1AC!important}
+:root[data-theme="dark"] .ls .ok{color:#96C6A8!important}
+:root[data-theme="dark"] .view{background:var(--surface)!important}
+:root[data-theme="dark"] .qa details{background:var(--surface)!important}
+:root[data-theme="dark"] .askf input,:root[data-theme="dark"] .askf textarea{background:var(--surface)!important}
+:root[data-theme="dark"] .hc{background:var(--surface)!important}
+:root[data-theme="dark"] header{background:rgba(26,29,33,.94)!important}
+:root[data-theme="dark"] .links{background:var(--surface)!important}
+:root[data-theme="dark"] .links a{color:var(--text)!important}
+:root[data-theme="dark"] .links a:hover{background:var(--surface)!important}
+:root[data-theme="dark"] .links a.on{background:var(--surface)!important}
+:root[data-theme="dark"] .btn-ghost,:root[data-theme="dark"] .hero .btn-ghost,:root[data-theme="dark"] .chero .btn-ghost,:root[data-theme="dark"] .shelf .btn-ghost{background:var(--surface)!important;border:1.5px solid var(--line)!important}
+:root[data-theme="dark"] .lang{background:var(--surface)!important}
+:root[data-theme="dark"] .hero.hero2{background:radial-gradient(700px 360px at 62% 30%,rgba(10,122,85,.07),transparent 70%),linear-gradient(rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,#303337!important}
+:root[data-theme="dark"] .h2badge{border:1px solid var(--line)!important;background:#303336!important;color:#91B7AA!important}
+:root[data-theme="dark"] .h2t{color:var(--text)!important}
+:root[data-theme="dark"] .hero2 p{color:var(--text)!important}
+:root[data-theme="dark"] .h2stats span{color:var(--text)!important}
+:root[data-theme="dark"] .h2card{background:var(--surface)!important}
+:root[data-theme="dark"] .h2ch small{color:#95C9B6!important}
+:root[data-theme="dark"] .h2ch .chip{background:#303336!important}
+:root[data-theme="dark"] .h2f span{color:var(--text)!important}
+:root[data-theme="dark"] .it-media.vid,:root[data-theme="dark"] .lrn .media{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box!important}
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) .msg.ok{background:#2E3335!important;color:#95B2A0!important}
+:root:not([data-theme="light"]) .msg.err{background:#313134!important;color:#C59999!important}
+:root:not([data-theme="light"]) .pv.dk .l1{background:rgba(26,29,33,.35)!important}
+:root:not([data-theme="light"]) .big-ic.pdf{background:var(--surface)!important;color:#E59E9E!important}
+:root:not([data-theme="light"]) .li .yt .pl i{background:rgba(26,29,33,.95)!important}
+:root:not([data-theme="light"]) .li .yt .pl svg{color:#E59E9E!important}
+:root:not([data-theme="light"]) .doc{background:var(--surface)!important;border:1px solid var(--line)!important}
+:root:not([data-theme="light"]) .doc::before{background:repeating-linear-gradient(180deg,#2E3135 0 4px,transparent 4px 10px)!important}
+:root:not([data-theme="light"]) .lx{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(160deg,color-mix(in srgb,var(--gold) 70%,var(--surface)),var(--line) 45%,color-mix(in srgb,var(--gold) 70%,var(--surface))) border-box!important}
+:root:not([data-theme="light"]) .hero,:root:not([data-theme="light"]) .chero,:root:not([data-theme="light"]) .lux,:root:not([data-theme="light"]) .contact{background:var(--surface)!important}
+:root:not([data-theme="light"]) .lx{background:var(--surface)!important}
+:root:not([data-theme="light"]) .lhead{background:var(--surface)!important}
+:root:not([data-theme="light"]) .badge-free{background:#2F3335!important;color:#96BAA4!important}
+:root:not([data-theme="light"]) .outd{background:var(--surface)!important}
+:root:not([data-theme="light"]) .ls.on{background:color-mix(in srgb,var(--brand) 7%,var(--surface))!important}
+:root:not([data-theme="light"]) .k.video{background:#313235!important;color:#DD9C97!important}
+:root:not([data-theme="light"]) .k.pdf{background:#313234!important;color:#DEAC90!important}
+:root:not([data-theme="light"]) .k.audio{background:#2F3237!important;color:#A4A5E8!important}
+:root:not([data-theme="light"]) .k.article{background:#2F3336!important;color:#8FC1AC!important}
+:root:not([data-theme="light"]) .ls .ok{color:#96C6A8!important}
+:root:not([data-theme="light"]) .view{background:var(--surface)!important}
+:root:not([data-theme="light"]) .qa details{background:var(--surface)!important}
+:root:not([data-theme="light"]) .askf input,:root:not([data-theme="light"]) .askf textarea{background:var(--surface)!important}
+:root:not([data-theme="light"]) .hc{background:var(--surface)!important}
+:root:not([data-theme="light"]) header{background:rgba(26,29,33,.94)!important}
+:root:not([data-theme="light"]) .links{background:var(--surface)!important}
+:root:not([data-theme="light"]) .links a{color:var(--text)!important}
+:root:not([data-theme="light"]) .links a:hover{background:var(--surface)!important}
+:root:not([data-theme="light"]) .links a.on{background:var(--surface)!important}
+:root:not([data-theme="light"]) .btn-ghost,:root:not([data-theme="light"]) .hero .btn-ghost,:root:not([data-theme="light"]) .chero .btn-ghost,:root:not([data-theme="light"]) .shelf .btn-ghost{background:var(--surface)!important;border:1.5px solid var(--line)!important}
+:root:not([data-theme="light"]) .lang{background:var(--surface)!important}
+:root:not([data-theme="light"]) .hero.hero2{background:radial-gradient(700px 360px at 62% 30%,rgba(10,122,85,.07),transparent 70%),linear-gradient(rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,#303337!important}
+:root:not([data-theme="light"]) .h2badge{border:1px solid var(--line)!important;background:#303336!important;color:#91B7AA!important}
+:root:not([data-theme="light"]) .h2t{color:var(--text)!important}
+:root:not([data-theme="light"]) .hero2 p{color:var(--text)!important}
+:root:not([data-theme="light"]) .h2stats span{color:var(--text)!important}
+:root:not([data-theme="light"]) .h2card{background:var(--surface)!important}
+:root:not([data-theme="light"]) .h2ch small{color:#95C9B6!important}
+:root:not([data-theme="light"]) .h2ch .chip{background:#303336!important}
+:root:not([data-theme="light"]) .h2f span{color:var(--text)!important}
+:root:not([data-theme="light"]) .it-media.vid,:root:not([data-theme="light"]) .lrn .media{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box!important}
+}</style>
 </head>
 <body>
 <header><div class="wrap nav">
@@ -811,14 +916,14 @@ async function route(){
     <span class="badge-free">ফ্রি কোর্স · বিনামূল্যে</span>
     <h1>${e(c.t)}</h1><p>${e(c.d)}</p>
     <div class="row">${ls.length?`<div class="prog"><i style="width:${pct}%"></i></div><span class="progt">${bn(done.length)}/${bn(ls.length)} পাঠ সম্পন্ন</span>`:""}
-      <a class="btn btn-ghost" href="/${slug}" style="padding:9px 18px;font-size:14px">লাইভ ক্লাসে ভর্তি</a></div>
+      <a class="btn btn-ghost" href="/${slug}" style="padding:9px 18px;font-size:14px">লাইভ ক্লাসে ভর্তি</a>${ls.some(x=>x.body)?`<button type="button" class="btn btn-primary" id="cpdf" style="padding:9px 18px;font-size:14px">⬇ পুরো কোর্স PDF</button>`:""}</div>
   </div></section>
   <div class="wrap lrn">
     <details class="outd" open><summary>পাঠের তালিকা (${bn(ls.length)})</summary>
       ${mods.map(g=>`<div class="mod"><h4>${e(g.m)}</h4>${g.i.map(x=>`<a class="ls${cur&&x.id===cur.id?" on":""}" href="${base}?l=${x.id}" data-l="${x.id}"><span class="k ${x.kind}">${KIND[x.kind]}</span><span>${e(x.title)}</span>${done.includes(x.id)?'<span class="ok">✓</span>':""}</a>`).join("")}</div>`).join("")||'<div class="empty" style="padding:16px">এখনও পাঠ যোগ হয়নি।</div>'}
     </details>
     <div>
-      <div class="view" id="view">${cur?lessonHTML(cur,ls,done,base):`<h2>পাঠ শীঘ্রই আসছে</h2><p class="lead">এই কোর্সের ফ্রি পাঠ তৈরি হচ্ছে ইনশাআল্লাহ। এর মধ্যে প্রশ্ন থাকলে নিচে করুন, অথবা লাইভ ক্লাসে ভর্তি হন।</p><p style="margin-top:16px"><a class="btn btn-primary" href="/${slug}">কোর্সের বিস্তারিত</a></p>`}</div>
+      ${cur&&cur.body?`<div class="rbar" role="toolbar" aria-label="পড়ার সেটিং"><span class="rlbl">লেখার আকার</span><button type="button" data-fs="-1" aria-label="লেখা ছোট করুন">A−</button><button type="button" data-fs="0" aria-label="স্বাভাবিক আকার" class="rmid">A</button><button type="button" data-fs="1" aria-label="লেখা বড় করুন">A+</button><span class="rsp"></span><button type="button" id="lpdf" class="rpdf">⬇ এই পাঠের PDF</button></div>`:""}<div class="view" id="view">${cur?lessonHTML(cur,ls,done,base):`<h2>পাঠ শীঘ্রই আসছে</h2><p class="lead">এই কোর্সের ফ্রি পাঠ তৈরি হচ্ছে ইনশাআল্লাহ। এর মধ্যে প্রশ্ন থাকলে নিচে করুন, অথবা লাইভ ক্লাসে ভর্তি হন।</p><p style="margin-top:16px"><a class="btn btn-primary" href="/${slug}">কোর্সের বিস্তারিত</a></p>`}</div>
       <div class="qa"><h3>প্রশ্নোত্তর</h3>
         ${qs.length?qs.map(q=>`<details><summary>${e(q.question)}</summary><div class="ans">${e(q.answer||"")}</div>${q.name?`<div class="who">প্রশ্ন করেছেন: ${e(q.name)}</div>`:""}</details>`).join(""):'<p class="empty" style="padding:0">এখনও কোনো প্রশ্নোত্তর নেই — প্রথম প্রশ্নটি আপনিই করুন।</p>'}
         <form class="askf" id="askF"><b>আপনার প্রশ্ন করুন</b>
@@ -831,6 +936,9 @@ async function route(){
   if(matchMedia("(max-width:959px)").matches&&cur)app.querySelector(".outd").open=false;
   app.querySelectorAll("[data-l]").forEach(a=>a.onclick=ev=>{ev.preventDefault();go(a.getAttribute("href"));scrollTo({top:document.getElementById("view").getBoundingClientRect().top+scrollY-90});});
   wireLesson(slug,ls,cur);
+  app.querySelectorAll("[data-fs]").forEach(b=>b.onclick=()=>{const d=+b.dataset.fs;let v=readScale();v=d===0?1:Math.min(1.8,Math.max(0.85,+(v+d*0.1).toFixed(2)));setScale(v);});
+  const cp=document.getElementById("cpdf");if(cp)cp.onclick=()=>coursePDF(c,ls.filter(x=>x.body));
+  const lp=document.getElementById("lpdf");if(lp&&cur)lp.onclick=()=>coursePDF(c,[cur],true);
   const f=document.getElementById("askF");
   f.onsubmit=async ev=>{ev.preventDefault();const d=Object.fromEntries(new FormData(f).entries());const m=document.getElementById("askM");
     if(d.question.trim().length<5){m.textContent="প্রশ্নটি একটু বিস্তারিত লিখুন।";return;}
@@ -838,6 +946,66 @@ async function route(){
     try{const r=await fetch(U+"/rest/v1/questions",{method:"POST",headers:{...HD,"Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify({course:slug,lesson_id:cur?cur.id:null,name:d.name.trim()||null,question:d.question.trim()})});
       if(!r.ok)throw 0;f.reset();m.textContent="প্রশ্ন পৌঁছেছে। উত্তর দেওয়া হলে এখানে প্রকাশিত হবে ইনশাআল্লাহ।";}
     catch(_){m.textContent="পাঠানো যায়নি। একটু পরে আবার চেষ্টা করুন।";}};
+}
+
+// ===== পড়ার আকার =====
+function readScale(){try{return +(localStorage.getItem("dio-read-scale")||1)}catch(_){return 1}}
+function setScale(v){document.documentElement.style.setProperty("--rs",v);try{localStorage.setItem("dio-read-scale",v)}catch(_){}}
+setScale(readScale());
+// ===== প্রিমিয়াম PDF (কোর্স / পাঠ) =====
+function coursePDF(c,lessons,single){
+  const w=window.open("","_blank");if(!w){alert("পপআপ আটকানো আছে — ব্রাউজারে এই সাইটের জন্য পপআপ চালু করুন।");return;}
+  const bnN=n=>String(n).replace(/\d/g,x=>"০১২৩৪৫৬৭৮৯"[x]);
+  const today=new Date().toLocaleDateString("bn-BD",{day:"numeric",month:"long",year:"numeric"});
+  const mods=[];lessons.forEach(x=>{const m=x.module||"পাঠসমূহ";let g=mods.find(y=>y.m===m);if(!g){g={m,i:[]};mods.push(g);}g.i.push(x);});
+  let n=0;
+  const toc=single?"":`<section class="toc"><h2>সূচিপত্র</h2>${mods.map(g=>`<div class="tm"><b>${e(g.m)}</b>${g.i.map(x=>{n++;return `<div class="tl"><span>${bnN(n)}.</span><span>${e(x.title)}</span></div>`}).join("")}</div>`).join("")}</section>`;
+  n=0;
+  const body=mods.map(g=>`${single?"":`<div class="modh"><span>${e(g.m)}</span></div>`}${g.i.map(x=>{n++;return `<article class="les"><div class="lno">${single?"পাঠ":"পাঠ "+bnN(n)}</div><h1>${e(x.title)}</h1><div class="md">${md(x.body)}</div></article>`}).join("")}`).join("");
+  const LOGO='<svg viewBox="0 0 64 64" width="56" height="56"><circle cx="32" cy="32" r="31" fill="#F1D27A"/><path d="M18 36h28v3H18z" fill="#0B3D4A"/><path d="M20 36a12 12 0 0 1 24 0z" fill="#0B3D4A"/><path d="M32 22l-1.5-5h3z" fill="#0B3D4A"/><circle cx="32" cy="14" r="2" fill="#0B3D4A"/><path d="M20 44l12 3 12-3v6l-12 3-12-3z" fill="#0B3D4A"/></svg>';
+  const title=single?lessons[0].title:c.t;
+  w.document.write(`<!doctype html><html lang="bn"><head><meta charset="utf-8"><title>${e(title)} — দারুল ইলম অনলাইন</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+@page{size:A4;margin:16mm 15mm 18mm;@bottom-center{content:"দারুল ইলম অনলাইন  ·  ${e(c.t).replace(/"/g,"")}  ·  পৃষ্ঠা " counter(page, bengali);font-family:"Hind Siliguri",sans-serif;font-size:8.5pt;color:#8A949A}}
+@page:first{@bottom-center{content:none}}
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{font-family:"Hind Siliguri",sans-serif;color:#1C2427;font-size:12pt;line-height:1.85;margin:0}
+.cover{height:257mm;display:flex;flex-direction:column;justify-content:space-between;border-radius:18px;padding:22mm 18mm;color:#fff;background:radial-gradient(500px 300px at 85% 10%,rgba(241,210,122,.18),transparent 70%),linear-gradient(150deg,#0B3D4A,#0A5A4A 60%,#0A7A55);position:relative;overflow:hidden;break-after:page}
+.cover::after{content:"";position:absolute;left:0;right:0;bottom:0;height:8px;background:linear-gradient(90deg,#A8862A,#F1D27A,#A8862A)}
+.cv-top{display:flex;align-items:center;gap:14px}.cv-top b{font-size:18pt;display:block}.cv-top small{color:#F1D27A}
+.cv-ay{font-family:Amiri,serif;font-size:26pt;color:#F1D27A;text-align:center;margin-bottom:10mm}
+.cv-mid h1{font-size:34pt;line-height:1.25;margin:0 0 6mm}.cv-mid p{font-size:13pt;color:#D7EAE6;max-width:150mm}
+.cv-kick{display:inline-block;border:1px solid rgba(241,210,122,.6);color:#F1D27A;border-radius:999px;padding:3px 14px;font-size:10pt;margin-bottom:6mm}
+.cv-bot{display:flex;justify-content:space-between;align-items:flex-end;font-size:10pt;color:#CFE3E6}
+.cv-bot b{color:#fff;font-size:12pt}
+.toc{break-after:page}.toc h2{font-size:20pt;color:#0B3D4A;border-bottom:3px solid #C9A13B;padding-bottom:4px}
+.tm{margin:12px 0 6px;break-inside:avoid}.tm b{color:#0A7A55;font-size:12.5pt}
+.tl{display:flex;gap:8px;padding:3px 0 3px 10px;border-bottom:1px dotted #E6DCC8;font-size:11pt}.tl span:first-child{color:#A8862A;font-weight:700;min-width:24px}
+.modh{break-before:page;text-align:center;padding:60mm 0 0}.modh span{display:inline-block;font-size:22pt;font-weight:700;color:#0B3D4A;border-top:3px solid #C9A13B;border-bottom:3px solid #C9A13B;padding:8mm 10mm}
+.les{break-before:page}.modh+.les{break-before:page}
+.lno{display:inline-block;background:#ECF8F2;color:#0A7A55;border:1px solid #CDE9DA;border-radius:999px;padding:2px 12px;font-size:9.5pt;font-weight:700}
+.les h1{font-size:21pt;line-height:1.3;color:#0B3D4A;margin:6px 0 10px;padding-bottom:6px;border-bottom:2px solid #E6DCC8}
+.md h3,.md h4{color:#0A7A55;margin:16px 0 6px;break-after:avoid}.md h4{font-size:13.5pt;border-inline-start:4px solid #C9A13B;padding-inline-start:8px}.md h3{font-size:15pt}
+.md p{margin:6px 0}.md ul,.md ol{margin:6px 0;padding-inline-start:22px}.md li{margin:3px 0}
+.md .ar{font-family:Amiri,serif;font-size:19pt;line-height:2;direction:rtl;text-align:center;color:#0B3D4A;background:#FFFBF0;border:1px solid #EADFC2;border-radius:10px;padding:8px 14px;margin:10px 0;break-inside:avoid}
+.md blockquote{background:#F1FAF5;border:1px solid #CDE9DA;border-inline-start:5px solid #0A7A55;border-radius:8px;padding:8px 14px;margin:10px 0;color:#1C2427;break-inside:avoid}
+.md b{color:#0B3D4A}
+.end{text-align:center;margin-top:14mm;font-family:Amiri,serif;color:#A8862A;font-size:16pt}
+.bar{position:sticky;top:0;background:#fff;padding:10px 0;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;margin-bottom:14px;z-index:5}
+.bar button{font:inherit;font-weight:700;padding:10px 18px;border-radius:12px;border:0;background:#F6B91A;cursor:pointer}
+@media screen{body{max-width:860px;margin:16px auto;padding:0 16px;background:#fff}.cover{height:auto;min-height:600px}}
+@media print{.bar{display:none}}
+</style></head><body>
+<div class="bar"><span>প্রিন্ট উইন্ডোতে “Save as PDF” বেছে নিন · Background graphics চালু রাখুন</span><button onclick="print()">PDF হিসেবে সেভ / প্রিন্ট</button></div>
+<section class="cover"><div class="cv-top">${LOGO}<div><b>দারুল ইলম অনলাইন</b><small>ঘরে বসে দ্বীন শিক্ষা · darulilmonline.com</small></div></div>
+<div class="cv-mid"><div class="cv-ay">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div><span class="cv-kick">${single?"পাঠ · "+e(c.t):"ফ্রি কোর্স · সম্পূর্ণ পাঠ"}</span><h1>${e(title)}</h1><p>${single?"":e(c.d||"")}</p></div>
+<div class="cv-bot"><div>${single?"":`<b>${bnN(lessons.length)}টি পাঠ</b> · ${bnN(mods.length)}টি অধ্যায়<br>`}প্রস্তুত: ${today}</div><div style="text-align:right">সাদকায়ে জারিয়ার নিয়তে<br>বিনামূল্যে বিতরণযোগ্য</div></div></section>
+${toc}${body}
+<div class="end">وَقُل رَّبِّ زِدْنِي عِلْمًا</div>
+<script>(document.fonts?document.fonts.ready:Promise.resolve()).then(function(){setTimeout(function(){print()},500)});<\/script>
+</body></html>`);
+  w.document.close();
 }
 function lessonHTML(x,ls,done,base){
   const i=ls.findIndex(y=>y.id===x.id),p=ls[i-1],n=ls[i+1],u=e(x.url||"");let body="";

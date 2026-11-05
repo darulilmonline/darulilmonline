@@ -689,6 +689,93 @@ try{var R=document.documentElement,S=localStorage,t=S.getItem("dio-theme"),p=S.g
 if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute("data-palette",p);
 ["bn","en","ar"].forEach(function(k){var v=S.getItem("dio-font-"+k);if(v){R.style.setProperty("--font-"+k,'"'+v+'"');window.dioLoadFont(v);}});}catch(e){}
 </script>
+<style id="darkfix">/* dark-fix v31 */
+:root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
+:root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
+:root[data-theme="dark"] .pv.dk .l1{background:rgba(26,29,33,.35)!important}
+:root[data-theme="dark"] .big-ic.pdf{background:var(--surface)!important;color:#E59E9E!important}
+:root[data-theme="dark"] .li .yt .pl i{background:rgba(26,29,33,.95)!important}
+:root[data-theme="dark"] .li .yt .pl svg{color:#E59E9E!important}
+:root[data-theme="dark"] .doc{background:var(--surface)!important;border:1px solid var(--line)!important}
+:root[data-theme="dark"] .doc::before{background:repeating-linear-gradient(180deg,#2E3135 0 4px,transparent 4px 10px)!important}
+:root[data-theme="dark"] .lx{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(160deg,color-mix(in srgb,var(--gold) 70%,var(--surface)),var(--line) 45%,color-mix(in srgb,var(--gold) 70%,var(--surface))) border-box!important}
+:root[data-theme="dark"] .hero,:root[data-theme="dark"] .chero,:root[data-theme="dark"] .lux,:root[data-theme="dark"] .contact{background:var(--surface)!important}
+:root[data-theme="dark"] .lx{background:var(--surface)!important}
+:root[data-theme="dark"] header{background:rgba(26,29,33,.94)!important}
+:root[data-theme="dark"] .links{background:var(--surface)!important}
+:root[data-theme="dark"] .links a{color:var(--text)!important}
+:root[data-theme="dark"] .links a:hover{background:var(--surface)!important}
+:root[data-theme="dark"] .links a.on{background:var(--surface)!important}
+:root[data-theme="dark"] .btn-ghost,:root[data-theme="dark"] .hero .btn-ghost,:root[data-theme="dark"] .chero .btn-ghost,:root[data-theme="dark"] .shelf .btn-ghost{background:var(--surface)!important;border:1.5px solid var(--line)!important}
+:root[data-theme="dark"] .lang{background:var(--surface)!important}
+:root[data-theme="dark"] .hero.hero2{background:radial-gradient(700px 360px at 62% 30%,rgba(10,122,85,.07),transparent 70%),linear-gradient(rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,#303337!important}
+:root[data-theme="dark"] .h2badge{border:1px solid var(--line)!important;background:#303336!important;color:#91B7AA!important}
+:root[data-theme="dark"] .h2t{color:var(--text)!important}
+:root[data-theme="dark"] .hero2 p{color:var(--text)!important}
+:root[data-theme="dark"] .h2stats span{color:var(--text)!important}
+:root[data-theme="dark"] .h2card{background:var(--surface)!important}
+:root[data-theme="dark"] .h2ch small{color:#95C9B6!important}
+:root[data-theme="dark"] .h2ch .chip{background:#303336!important}
+:root[data-theme="dark"] .h2f span{color:var(--text)!important}
+:root[data-theme="dark"] .li h3 a:hover{color:#91C3B2!important}
+:root[data-theme="dark"] .it-top .badge2{background:#303336!important;color:#91B7AA!important;border:1px solid var(--line)!important}
+:root[data-theme="dark"] .it-media.pdf{background:var(--surface)!important}
+:root[data-theme="dark"] .it-side{background:var(--surface)!important}
+:root[data-theme="dark"] .share a,:root[data-theme="dark"] .share button{background:var(--surface)!important}
+:root[data-theme="dark"] .it-media.vid,:root[data-theme="dark"] .lrn .media{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box!important}
+:root[data-theme="dark"] .ai-sum{border:1px solid var(--line)!important;background:linear-gradient(180deg,#303336,var(--surface))!important}
+:root[data-theme="dark"] .ai-h small{color:var(--text)!important}
+:root[data-theme="dark"] .ai-kp b{color:#91B7AA!important}
+:root[data-theme="dark"] .ai-tr{background:var(--surface)!important}
+:root[data-theme="dark"] .ai-tr>summary::after{color:#91C3B2!important}
+:root[data-theme="dark"] .ts{color:#91C3B2!important;background:#2F3336!important;border:1px solid var(--line)!important}
+:root[data-theme="dark"] .vpb{background:rgba(26,29,33,.96)!important}
+:root[data-theme="dark"] .vpb svg{color:#91C3B2!important}
+:root[data-theme="dark"] .it-aud2{border:1px solid var(--line)!important;background:#303336!important}
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]) .msg.ok{background:#2E3335!important;color:#95B2A0!important}
+:root:not([data-theme="light"]) .msg.err{background:#313134!important;color:#C59999!important}
+:root:not([data-theme="light"]) .pv.dk .l1{background:rgba(26,29,33,.35)!important}
+:root:not([data-theme="light"]) .big-ic.pdf{background:var(--surface)!important;color:#E59E9E!important}
+:root:not([data-theme="light"]) .li .yt .pl i{background:rgba(26,29,33,.95)!important}
+:root:not([data-theme="light"]) .li .yt .pl svg{color:#E59E9E!important}
+:root:not([data-theme="light"]) .doc{background:var(--surface)!important;border:1px solid var(--line)!important}
+:root:not([data-theme="light"]) .doc::before{background:repeating-linear-gradient(180deg,#2E3135 0 4px,transparent 4px 10px)!important}
+:root:not([data-theme="light"]) .lx{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(160deg,color-mix(in srgb,var(--gold) 70%,var(--surface)),var(--line) 45%,color-mix(in srgb,var(--gold) 70%,var(--surface))) border-box!important}
+:root:not([data-theme="light"]) .hero,:root:not([data-theme="light"]) .chero,:root:not([data-theme="light"]) .lux,:root:not([data-theme="light"]) .contact{background:var(--surface)!important}
+:root:not([data-theme="light"]) .lx{background:var(--surface)!important}
+:root:not([data-theme="light"]) header{background:rgba(26,29,33,.94)!important}
+:root:not([data-theme="light"]) .links{background:var(--surface)!important}
+:root:not([data-theme="light"]) .links a{color:var(--text)!important}
+:root:not([data-theme="light"]) .links a:hover{background:var(--surface)!important}
+:root:not([data-theme="light"]) .links a.on{background:var(--surface)!important}
+:root:not([data-theme="light"]) .btn-ghost,:root:not([data-theme="light"]) .hero .btn-ghost,:root:not([data-theme="light"]) .chero .btn-ghost,:root:not([data-theme="light"]) .shelf .btn-ghost{background:var(--surface)!important;border:1.5px solid var(--line)!important}
+:root:not([data-theme="light"]) .lang{background:var(--surface)!important}
+:root:not([data-theme="light"]) .hero.hero2{background:radial-gradient(700px 360px at 62% 30%,rgba(10,122,85,.07),transparent 70%),linear-gradient(rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,linear-gradient(90deg,rgba(15,40,30,.045) 1px,transparent 1px) 0 0/44px 44px,#303337!important}
+:root:not([data-theme="light"]) .h2badge{border:1px solid var(--line)!important;background:#303336!important;color:#91B7AA!important}
+:root:not([data-theme="light"]) .h2t{color:var(--text)!important}
+:root:not([data-theme="light"]) .hero2 p{color:var(--text)!important}
+:root:not([data-theme="light"]) .h2stats span{color:var(--text)!important}
+:root:not([data-theme="light"]) .h2card{background:var(--surface)!important}
+:root:not([data-theme="light"]) .h2ch small{color:#95C9B6!important}
+:root:not([data-theme="light"]) .h2ch .chip{background:#303336!important}
+:root:not([data-theme="light"]) .h2f span{color:var(--text)!important}
+:root:not([data-theme="light"]) .li h3 a:hover{color:#91C3B2!important}
+:root:not([data-theme="light"]) .it-top .badge2{background:#303336!important;color:#91B7AA!important;border:1px solid var(--line)!important}
+:root:not([data-theme="light"]) .it-media.pdf{background:var(--surface)!important}
+:root:not([data-theme="light"]) .it-side{background:var(--surface)!important}
+:root:not([data-theme="light"]) .share a,:root:not([data-theme="light"]) .share button{background:var(--surface)!important}
+:root:not([data-theme="light"]) .it-media.vid,:root:not([data-theme="light"]) .lrn .media{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box!important}
+:root:not([data-theme="light"]) .ai-sum{border:1px solid var(--line)!important;background:linear-gradient(180deg,#303336,var(--surface))!important}
+:root:not([data-theme="light"]) .ai-h small{color:var(--text)!important}
+:root:not([data-theme="light"]) .ai-kp b{color:#91B7AA!important}
+:root:not([data-theme="light"]) .ai-tr{background:var(--surface)!important}
+:root:not([data-theme="light"]) .ai-tr>summary::after{color:#91C3B2!important}
+:root:not([data-theme="light"]) .ts{color:#91C3B2!important;background:#2F3336!important;border:1px solid var(--line)!important}
+:root:not([data-theme="light"]) .vpb{background:rgba(26,29,33,.96)!important}
+:root:not([data-theme="light"]) .vpb svg{color:#91C3B2!important}
+:root:not([data-theme="light"]) .it-aud2{border:1px solid var(--line)!important;background:#303336!important}
+}</style>
 </head>
 <body>
 <header><div class="wrap nav">
