@@ -661,6 +661,11 @@ try{var R=document.documentElement,S=localStorage,t=S.getItem("dio-theme"),p=S.g
 if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute("data-palette",p);
 ["bn","en","ar"].forEach(function(k){var v=S.getItem("dio-font-"+k);if(v){R.style.setProperty("--font-"+k,'"'+v+'"');window.dioLoadFont(v);}});}catch(e){}
 </script>
+<style>
+.hft{overflow-x:auto}.hft table{width:100%;border-collapse:collapse;font-size:14px;min-width:520px}
+.hft th{text-align:start;padding:8px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}.hft td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+.hq{font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;color:#fff}.hq.excellent{background:#16A34A}.hq.good{background:#2563EB}.hq.weak{background:#D97706}
+</style>
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
@@ -925,6 +930,7 @@ function render(d,cred){
       ${d.payments.length?`<div class="rows" style="margin-top:12px">${d.payments.slice(0,6).map(p=>`<div><span>${mon(p.m)}</span><span class="ok">${money(p.a,p.c)}</span></div>`).join("")}</div>`:""}</div>
     <div class="pc wide"><h2>হাজিরা — এই মাস</h2><div class="stats3"><div><b class="ok">${bn(cnt("present"))}</b><span>উপস্থিত</span></div><div><b class="due">${bn(cnt("absent"))}</b><span>অনুপস্থিত</span></div><div><b>${bn(cnt("late"))}</b><span>দেরিতে</span></div><div><b>${bn(cnt("excused"))}</b><span>ছুটি</span></div></div>
       ${d.attendance.length?`<div class="chips">${d.attendance.slice(0,30).map(a=>`<span class="chip ${a.s}" title="${ST[a.s]}">${bn(new Date(a.d+"T00:00:00").getDate())} ${new Date(a.d+"T00:00:00").toLocaleDateString("bn-BD",{month:"short"})} · ${ST[a.s]}</span>`).join("")}</div>`:'<p class="muted">এখনো হাজিরা নেওয়া হয়নি।</p>'}</div>
+    ${(d.hifz||[]).length?`<div class="pc wide"><h2>হিফয অগ্রগতি</h2><div class="hft"><table><thead><tr><th>তারিখ</th><th>সবক</th><th>সবকি</th><th>মানযিল</th><th>মান</th></tr></thead><tbody>${d.hifz.slice(0,30).map(h=>`<tr><td>${new Date(h.d+"T00:00:00").toLocaleDateString("bn-BD",{day:"numeric",month:"short"})}</td><td>${e(h.sb||"—")}</td><td>${e(h.sq||"—")}</td><td>${e(h.mz||"—")}</td><td>${h.q?`<span class="hq ${h.q}">${{excellent:"চমৎকার",good:"ভালো",weak:"দুর্বল"}[h.q]}</span>`:""}${h.n?`<div class="muted" style="font-size:12px">${e(h.n)}</div>`:""}</td></tr>`).join("")}</tbody></table></div></div>`:""}
     <div class="pc wide rep"><h2>মাসিক রিপোর্ট</h2>${d.reports.length?d.reports.map((r,i)=>`<details ${i?"":"open"}><summary>${mon(r.m)}${r.by?" — "+e(r.by):""}</summary><p>${e(r.t)}</p></details>`).join(""):'<p class="muted">শিক্ষক মাস শেষে রিপোর্ট লিখবেন ইনশাআল্লাহ।</p>'}</div>
     </div>`;
   document.getElementById("out").onclick=()=>{save(KEY,null);location.reload();};

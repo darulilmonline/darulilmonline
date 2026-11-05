@@ -661,6 +661,14 @@ try{var R=document.documentElement,S=localStorage,t=S.getItem("dio-theme"),p=S.g
 if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute("data-palette",p);
 ["bn","en","ar"].forEach(function(k){var v=S.getItem("dio-font-"+k);if(v){R.style.setProperty("--font-"+k,'"'+v+'"');window.dioLoadFont(v);}});}catch(e){}
 </script>
+<style>
+.hf-box{border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:6px;background:color-mix(in srgb,var(--gold,#C9A13B) 7%,var(--surface))}
+.hf-grid{display:grid;gap:8px;margin:10px 0}@media(min-width:760px){.hf-grid{grid-template-columns:repeat(3,1fr)}}
+.hf-grid label{display:grid;gap:4px;font-size:13px;color:var(--muted)}
+.hf-grid input,.hf-n{font:inherit;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);width:100%}
+.hf-q{display:flex;gap:6px;margin-bottom:8px}.hf-q button{font:inherit;font-size:13px;font-weight:700;padding:7px 12px;border-radius:9px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer}
+.hf-q button.sel.excellent{background:#16A34A;color:#fff;border-color:#16A34A}.hf-q button.sel.good{background:#2563EB;color:#fff;border-color:#2563EB}.hf-q button.sel.weak{background:#D97706;color:#fff;border-color:#D97706}
+</style>
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
@@ -914,7 +922,8 @@ function render(d){
       ${b.meet?`<a class="btn ${nc&&nc.live?"btn-primary":"btn-ghost"}" href="${e(b.meet)}" target="_blank" rel="noopener" style="padding:10px 16px;font-size:14px">${nc&&nc.live?"ক্লাস শুরু করুন":"ক্লাসের লিংক"}</a>`:""}</div>
       ${b.students.length?`<table class="att-tbl">${b.students.map(s=>`<tr data-s="${s.id}"><td><b>${e(s.name)}</b>${s.age?`<div class="muted" style="font-size:13px">${bn(s.age)} বছর</div>`:""}</td>
         <td><div class="att-btns">${ST.map(([k,n])=>`<button type="button" data-st="${k}" class="${k}${s.att===k?" sel":""}">${n}</button>`).join("")}</div></td>
-        <td style="text-align:end"><button type="button" class="rp-btn${s.report?" has":""}" data-rp="${s.id}">${s.report?"✓ রিপোর্ট":"রিপোর্ট লিখুন"}</button></td></tr>
+        <td style="text-align:end;white-space:nowrap">${b.slug==="hifz"?`<button type="button" class="rp-btn hf-btn${s.hifz?" has":""}" data-hf="${s.id}">${s.hifz?"✓ হিফয":"হিফয"}</button> `:""}<button type="button" class="rp-btn${s.report?" has":""}" data-rp="${s.id}">${s.report?"✓ রিপোর্ট":"রিপোর্ট লিখুন"}</button></td></tr>
+        ${b.slug==="hifz"?`<tr class="hf-row" data-for="${s.id}" hidden><td colspan="3"><div class="hf-box"><b>আজকের হিফয — ${e(s.name)}</b><div class="hf-grid"><label>সবক (নতুন পড়া)<input data-k="sb" value="${e(s.hifz&&s.hifz.sb||"")}" placeholder="যেমন: সূরা মুলক ১–১০"></label><label>সবকি (কাছের পুনরাবৃত্তি)<input data-k="sq" value="${e(s.hifz&&s.hifz.sq||"")}" placeholder="যেমন: পারা ২৯, পৃষ্ঠা ১–৫"></label><label>মানযিল (পুরোনো পুনরাবৃত্তি)<input data-k="mz" value="${e(s.hifz&&s.hifz.mz||"")}" placeholder="যেমন: পারা ৩০ পুরো"></label></div><div class="hf-q">${[["excellent","চমৎকার"],["good","ভালো"],["weak","দুর্বল"]].map(([k,n])=>`<button type="button" data-q="${k}" class="${s.hifz&&s.hifz.q===k?"sel "+k:k}">${n}</button>`).join("")}</div><input data-k="n" value="${e(s.hifz&&s.hifz.n||"")}" placeholder="মন্তব্য (ঐচ্ছিক) — যেমন: মুতাশাবিহাতে আটকায়" class="hf-n"><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><button type="button" class="btn btn-primary hf-save" style="padding:9px 16px;font-size:14px">সেভ করুন</button><span class="muted hf-msg"></span></div></div></td></tr>`:""}
         <tr class="rp-row" data-for="${s.id}" hidden><td colspan="3" class="rp-box"><textarea placeholder="${monthName} — তিলাওয়াত/পড়ার অগ্রগতি, আচরণ, পরামর্শ…">${e(s.report||"")}</textarea><div style="display:flex;gap:8px;align-items:center;margin-top:8px"><button type="button" class="btn btn-primary rp-save" style="padding:9px 16px;font-size:14px">সেভ করুন</button><span class="muted rp-msg"></span></div></td></tr>`).join("")}</table>`:'<p class="muted">এই ব্যাচে এখনো শিক্ষার্থী নেই।</p>'}</div>`;}).join(""):'<div class="pc"><p class="muted">আপনাকে এখনো কোনো ব্যাচ দেওয়া হয়নি। admin-এর সাথে যোগাযোগ করুন।</p></div>'}`;
   document.getElementById("out").onclick=()=>{save(KEY,null);location.reload();};
   document.getElementById("dt").onchange=ev=>{day=ev.target.value;load_();};
@@ -923,6 +932,18 @@ function render(d){
     tr.querySelectorAll(".att-btns button").forEach(x=>x.classList.remove("sel"));if(!was)btn.classList.add("sel");
     const ok=await rpc("teacher_mark",{p_phone:cred.phone,p_code:cred.code,p_student:sid,p_date:day,p_status:st,p_note:null}).catch(()=>false);
     if(!ok){alert("সেভ হয়নি — ইন্টারনেট দেখে আবার চাপুন।");load_();}
+  });
+  app.querySelectorAll("[data-hf]").forEach(b=>b.onclick=()=>{const r=app.querySelector(`tr.hf-row[data-for="${b.dataset.hf}"]`);r.hidden=!r.hidden;});
+  app.querySelectorAll("tr.hf-row").forEach(r=>{
+    r.querySelectorAll("[data-q]").forEach(q=>q.onclick=()=>{const was=q.classList.contains("sel");r.querySelectorAll("[data-q]").forEach(x=>x.className=x.dataset.q);if(!was)q.className="sel "+q.dataset.q;});
+    r.querySelector(".hf-save").onclick=async()=>{
+      const v=k=>r.querySelector(`[data-k="${k}"]`).value.trim(),sel=r.querySelector("[data-q].sel"),m=r.querySelector(".hf-msg");
+      if(!v("sb")&&!v("sq")&&!v("mz")){m.textContent="অন্তত একটি ঘর পূরণ করুন।";return;}
+      m.textContent="সেভ হচ্ছে…";
+      const ok=await rpc("teacher_hifz",{p_phone:cred.phone,p_code:cred.code,p_student:+r.dataset.for,p_date:day,p_sabaq:v("sb"),p_sabqi:v("sq"),p_manzil:v("mz"),p_quality:sel?sel.dataset.q:"",p_note:v("n")}).catch(()=>false);
+      m.textContent=ok?"সেভ হয়েছে ✓ — অভিভাবক পোর্টালে দেখা যাবে":"সেভ হয়নি — আবার চেষ্টা করুন";
+      if(ok){const b=app.querySelector(`[data-hf="${r.dataset.for}"]`);b.classList.add("has");b.textContent="✓ হিফয";}
+    };
   });
   app.querySelectorAll("[data-rp]").forEach(b=>b.onclick=()=>{const r=app.querySelector(`tr.rp-row[data-for="${b.dataset.rp}"]`);r.hidden=!r.hidden;if(!r.hidden)r.querySelector("textarea").focus();});
   app.querySelectorAll("tr.rp-row .rp-save").forEach(b=>b.onclick=async()=>{

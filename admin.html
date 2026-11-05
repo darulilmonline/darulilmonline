@@ -119,7 +119,7 @@ td audio{width:220px;height:36px}
       <div><h1>অ্যাডমিন প্যানেল — দারুল ইলম অনলাইন</h1><div class="muted" id="who"></div></div>
       <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
     </div>
-    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="batches">ব্যাচ ও রুটিন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="courses">কোর্স</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="batches">ব্যাচ ও রুটিন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="courses">কোর্স</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="quiz">কুইজ</button><button class="tab ghost" data-tab="certs">সনদ</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
     <div id="panel-apps">
     <div class="stats" id="stats"></div>
     <div class="tools">
@@ -198,6 +198,24 @@ td audio{width:220px;height:36px}
       <div style="margin-bottom:14px"><button id="bNew">+ নতুন ব্যাচ</button></div>
       <div class="card" id="bForm" hidden style="margin-bottom:18px"></div>
       <div class="tbl"><table><thead><tr><th>ব্যাচ</th><th>কোর্স</th><th>শিক্ষক</th><th>দিন ও সময়</th><th>শিক্ষার্থী</th><th>লিংক</th><th></th></tr></thead><tbody id="brows"></tbody></table></div>
+    </div>
+
+    <div id="panel-quiz" style="display:none">
+      <p class="muted" style="margin-bottom:12px">প্রতিটি অধ্যায়ের শেষে MCQ। সঠিক উত্তর শিক্ষার্থী জমা দেওয়ার আগে দেখতে পায় না। ফ্রি কোর্সের চূড়ান্ত পরীক্ষা = কোর্সের সব প্রকাশিত প্রশ্ন; ৭০% পেলে সনদ।</p>
+      <div class="tools" style="flex-wrap:wrap;gap:8px"><select id="qzC"></select><select id="qzM"><option value="">— অধ্যায় বাছুন —</option></select><button id="qzNew">+ নতুন প্রশ্ন</button><button class="ghost" id="qzAI">✨ AI দিয়ে ৬টি প্রশ্ন</button><button class="ghost" id="qzPub">সব প্রকাশ করুন</button><span class="muted" id="qzMsg"></span></div>
+      <div class="card" id="qzForm" hidden style="margin:14px 0"></div>
+      <div class="tbl"><table><thead><tr><th>অধ্যায়</th><th>প্রশ্ন</th><th>সঠিক উত্তর</th><th>সাইটে</th><th></th></tr></thead><tbody id="qzRows"></tbody></table></div>
+    </div>
+
+    <div id="panel-certs" style="display:none">
+      <div class="card" style="margin-bottom:16px"><h1 style="font-size:18px;margin-bottom:10px">নতুন কোর্স সমাপনী সনদ</h1>
+        <div class="fgrid"><label>শিক্ষার্থীর নাম (সনদে যেভাবে থাকবে)<input id="ctN" list="ctNames"><datalist id="ctNames"></datalist></label>
+        <label>কোর্স<select id="ctC"></select></label>
+        <label>ফলাফল<input id="ctG" list="ctGrades" placeholder="যেমন: মুমতায (অসাধারণ)"><datalist id="ctGrades"><option value="মুমতায (অসাধারণ)"><option value="জায়্যিদ জিদ্দান (খুব ভালো)"><option value="জায়্যিদ (ভালো)"><option value="মাকবুল (উত্তীর্ণ)"></datalist></label>
+        <label>মন্তব্য (ঐচ্ছিক, সনদে দেখাবে না)<input id="ctNote"></label></div>
+        <div style="display:flex;gap:10px;align-items:center;margin-top:12px"><button id="ctGo">সনদ তৈরি ও প্রিন্ট</button><span class="muted" id="ctMsg"></span></div></div>
+      <div class="tools"><input id="ctQ" placeholder="নাম বা সনদ নম্বর দিয়ে খুঁজুন"></div>
+      <div class="tbl"><table><thead><tr><th>নম্বর</th><th>নাম</th><th>কোর্স</th><th>ধরন</th><th>ফলাফল</th><th>তারিখ</th><th></th></tr></thead><tbody id="ctRows"></tbody></table></div>
     </div>
 
     <div id="panel-teachers" style="display:none">
@@ -1020,7 +1038,119 @@ function openBForm(b){
   };
   box.scrollIntoView({behavior:"smooth"});
 }
+
+// ===== কুইজ =====
+let QZ=[],qzEdit=null;
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{
+  $("panel-quiz").style.display=b.dataset.tab==="quiz"?"block":"none";
+  $("panel-certs").style.display=b.dataset.tab==="certs"?"block":"none";
+  if(b.dataset.tab==="quiz") qzInit();
+  if(b.dataset.tab==="certs") ctInit();
+}));
+const ctitle=slug=>{const c=CLIST.find(x=>x.slug===slug);return c?c.content.bn.t:(COURSE[slug]||slug);};
+async function qzInit(){
+  if(!$("qzC").options.length){$("qzC").innerHTML=CLIST.map(c=>`<option value="${c.slug}">${esc(c.content.bn.t)}</option>`).join("");$("qzC").onchange=qzLoad;$("qzM").onchange=qzRender;}
+  qzLoad();
+}
+async function qzLoad(){
+  const c=$("qzC").value;
+  const [{data,error},{data:ls}]=await Promise.all([sb.from("quizzes").select("*").eq("course",c).order("sort").order("id"),sb.from("lessons").select("module,sort").eq("course",c).order("sort")]);
+  if(error){$("qzRows").innerHTML='<tr><td colspan="5" class="err">লোড হয়নি: '+esc(error.message)+' (phase2-v35.sql চালানো হয়েছে?)</td></tr>';return;}
+  QZ=data;const mods=[...new Set([...(ls||[]).map(x=>x.module).filter(Boolean),...data.map(x=>x.module).filter(Boolean)])];
+  const cur=$("qzM").value;$("qzM").innerHTML='<option value="">— সব অধ্যায় —</option>'+mods.map(m=>`<option ${m===cur?"selected":""}>${esc(m)}</option>`).join("");
+  qzRender();
+}
+function qzRender(){
+  const m=$("qzM").value,rows=QZ.filter(x=>!m||x.module===m);
+  const pub=QZ.filter(x=>x.published).length;$("qzMsg").textContent=`মোট ${QZ.length}টি · প্রকাশিত ${pub}টি`;
+  $("qzRows").innerHTML=rows.length?rows.map(x=>`<tr><td class="muted" style="max-width:180px">${esc(x.module||"")}</td><td style="max-width:420px">${esc(x.question)}</td><td>${esc((x.options||[])[x.answer]||"")}</td><td><input type="checkbox" data-qp="${x.id}" ${x.published?"checked":""}></td><td style="white-space:nowrap"><button class="mini" data-qe="${x.id}">সম্পাদনা</button> <button class="ghost mini" data-qd="${x.id}">মুছুন</button></td></tr>`).join(""):'<tr><td colspan="5" class="muted">এই অধ্যায়ে এখনো প্রশ্ন নেই — “+ নতুন প্রশ্ন” বা “✨ AI দিয়ে” চাপুন।</td></tr>';
+  document.querySelectorAll("[data-qp]").forEach(x=>x.onchange=async()=>{await sb.from("quizzes").update({published:x.checked}).eq("id",+x.dataset.qp);const q=QZ.find(y=>y.id==x.dataset.qp);if(q)q.published=x.checked;qzRender();});
+  document.querySelectorAll("[data-qe]").forEach(x=>x.onclick=()=>qzOpen(QZ.find(y=>y.id==x.dataset.qe)));
+  document.querySelectorAll("[data-qd]").forEach(x=>x.onclick=async()=>{if(!confirm("প্রশ্নটি মুছবেন?"))return;await sb.from("quizzes").delete().eq("id",+x.dataset.qd);qzLoad();});
+}
+$("qzNew").onclick=()=>qzOpen(null);
+$("qzPub").onclick=async()=>{if(!confirm("এই কোর্সের সব প্রশ্ন প্রকাশ করবেন? (আগে দেখে নিয়েছেন তো?)"))return;await sb.from("quizzes").update({published:true}).eq("course",$("qzC").value);qzLoad();};
+function qzOpen(q){
+  qzEdit=q?q.id:null;const box=$("qzForm");box.hidden=false;const o=q?q.options:["","","",""];
+  box.innerHTML=`<h1 style="font-size:18px;margin-bottom:10px">${q?"প্রশ্ন সম্পাদনা":"নতুন প্রশ্ন"}</h1>
+  <label class="muted">অধ্যায়<input id="qfM" value="${esc(q?q.module||"":$("qzM").value)}" list="qfML"><datalist id="qfML">${[...$("qzM").options].slice(1).map(x=>`<option value="${esc(x.value)}">`).join("")}</datalist></label>
+  <label class="muted">প্রশ্ন<textarea id="qfQ" rows="2">${esc(q?q.question:"")}</textarea></label>
+  ${[0,1,2,3].map(i=>`<label style="display:flex;gap:8px;align-items:center;margin:6px 0"><input type="radio" name="qfA" value="${i}" ${q&&q.answer===i||(!q&&i===0)?"checked":""} style="width:auto"><input class="qfO" value="${esc(o[i]||"")}" placeholder="অপশন ${i+1}${i===0?" (সঠিকটির পাশে গোল চিহ্ন দিন)":""}"></label>`).join("")}
+  <label class="muted">ব্যাখ্যা (উত্তরের পর দেখাবে, ঐচ্ছিক)<input id="qfE" value="${esc(q?q.explain||"":"")}"></label>
+  <label style="display:flex;gap:8px;align-items:center;margin-top:8px"><input type="checkbox" id="qfP" ${q&&q.published?"checked":""} style="width:auto"> সাইটে দেখাবে</label>
+  <div style="display:flex;gap:10px;margin-top:12px;align-items:center"><button id="qfS">সেভ</button><button class="ghost" id="qfX">বাতিল</button><span class="muted" id="qfMsg"></span></div>`;
+  $("qfX").onclick=()=>{box.hidden=true;};
+  $("qfS").onclick=async()=>{
+    const opts=[...document.querySelectorAll(".qfO")].map(x=>x.value.trim());const ans=+(document.querySelector('input[name=qfA]:checked')||{value:0}).value;
+    if(!$("qfQ").value.trim()||opts.filter(Boolean).length<2||!opts[ans]){$("qfMsg").textContent="প্রশ্ন, অন্তত দুটি অপশন ও সঠিক উত্তর দিন।";return;}
+    const keep=opts.map((x,i)=>({x,i})).filter(o=>o.x);const row={course:$("qzC").value,module:$("qfM").value.trim()||null,question:$("qfQ").value.trim(),options:keep.map(o=>o.x),answer:keep.findIndex(o=>o.i===ans),explain:$("qfE").value.trim()||null,published:$("qfP").checked};
+    if(!qzEdit)row.sort=(QZ.reduce((a,x)=>Math.max(a,x.sort||0),0))+10;
+    const {error}=qzEdit?await sb.from("quizzes").update(row).eq("id",qzEdit):await sb.from("quizzes").insert(row);
+    if(error){$("qfMsg").textContent="হয়নি: "+error.message;return;}box.hidden=true;qzLoad();
+  };
+  box.scrollIntoView({behavior:"smooth"});
+}
+async function geminiText(prompt){
+  const key=aiKey();if(!key)throw new Error("আগে লাইব্রেরি → ✨ AI লেখা প্যানেলে Gemini চাবি সেভ করুন");
+  let lastErr="";
+  for(const m of ["gemini-flash-latest","gemini-flash-lite-latest","gemini-pro-latest"]){
+    const r=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+m+":generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":key},
+      body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{responseMimeType:"application/json",temperature:0.4,maxOutputTokens:8192}})});
+    const d=await r.json().catch(()=>({}));
+    if(r.ok){const t=((d.candidates||[])[0]?.content?.parts||[]).map(p=>p.text||"").join("");try{return JSON.parse(t);}catch(_){return JSON.parse(t.slice(t.indexOf("["),t.lastIndexOf("]")+1));}}
+    lastErr=(d.error&&d.error.message)||r.status;
+  }
+  throw new Error("Gemini: "+lastErr);
+}
+$("qzAI").onclick=async()=>{
+  const c=$("qzC").value,m=$("qzM").value;if(!m){alert("আগে একটি অধ্যায় বাছুন।");return;}
+  $("qzMsg").textContent="অধ্যায়ের পাঠ পড়ে প্রশ্ন তৈরি হচ্ছে… (৩০–৬০ সেকেন্ড)";
+  try{
+    const {data:ls}=await sb.from("lessons").select("title,body").eq("course",c).eq("module",m).order("sort");
+    const text=(ls||[]).map(x=>"### "+x.title+"\n"+(x.body||"")).join("\n\n").slice(0,60000);
+    if(!text.trim())throw new Error("এই অধ্যায়ে লেখা পাঠ নেই");
+    const prompt=`You are an Islamic studies teacher writing a quiz in Bangla for an online madrasa. Based ONLY on the lesson text below, write 6 multiple-choice questions in clear, simple Bangla.
+Rules: each question has exactly 4 options; exactly one is correct; wrong options must be plausible but clearly wrong according to the text; do not invent facts, rulings or hadith not present in the text; vary difficulty; keep Arabic words exactly as in the text.
+Return ONLY a JSON array: [{"q":"প্রশ্ন","options":["ক","খ","গ","ঘ"],"answer":0,"explain":"সংক্ষিপ্ত ব্যাখ্যা"}] — answer is the 0-based index.
+
+LESSONS:
+${text}`;
+    const arr=await geminiText(prompt);
+    let sort=(QZ.reduce((a,x)=>Math.max(a,x.sort||0),0));
+    const rows=(arr||[]).filter(x=>x&&x.q&&Array.isArray(x.options)&&x.options.length>=2&&Number.isInteger(x.answer)&&x.options[x.answer]).map(x=>({course:c,module:m,question:String(x.q),options:x.options.map(String).slice(0,4),answer:Math.min(x.answer,3),explain:x.explain?String(x.explain):null,published:false,sort:(sort+=10)}));
+    if(!rows.length)throw new Error("AI ঠিকমতো প্রশ্ন দেয়নি — আবার চেষ্টা করুন");
+    const {error}=await sb.from("quizzes").insert(rows);if(error)throw error;
+    $("qzMsg").textContent=rows.length+"টি খসড়া প্রশ্ন যোগ হয়েছে ✓ — প্রতিটি দেখে “সাইটে” টিক দিন";qzLoad();
+  }catch(err){$("qzMsg").textContent="হয়নি: "+(err.message||err);}
+};
+// ===== সনদ =====
+let CT=[];
+async function ctInit(){
+  if(!$("ctC").options.length)$("ctC").innerHTML=CLIST.map(c=>`<option value="${c.slug}">${esc(c.content.bn.t)}</option>`).join("");
+  const {data:st}=await sb.from("students").select("name").order("name");$("ctNames").innerHTML=(st||[]).map(x=>`<option value="${esc(x.name)}">`).join("");
+  const {data,error}=await sb.from("certificates").select("*").order("created_at",{ascending:false}).limit(300);
+  if(error){$("ctRows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+esc(error.message)+' (phase2-v35.sql চালানো হয়েছে?)</td></tr>';return;}
+  CT=data;ctRender();
+}
+$("ctQ").oninput=()=>ctRender();
+function ctRender(){
+  const q=$("ctQ").value.trim().toLowerCase(),rows=CT.filter(x=>!q||x.name.toLowerCase().includes(q)||x.code.toLowerCase().includes(q));
+  $("ctRows").innerHTML=rows.length?rows.map(x=>`<tr${x.revoked?' style="opacity:.55"':""}><td><b>${esc(x.code)}</b></td><td>${esc(x.name)}</td><td>${esc(ctitle(x.course))}</td><td>${x.kind==="free"?"ফ্রি কোর্স":"ক্লাস"}</td><td>${x.grade?esc(x.grade):(x.score!=null?x.score+"%":"")}</td><td class="muted">${new Date(x.created_at).toLocaleDateString("bn-BD")}</td>
+  <td style="white-space:nowrap"><button class="mini" data-cp="${esc(x.code)}">প্রিন্ট</button> <button class="ghost mini" data-cl="${esc(x.code)}">লিংক</button> <button class="ghost mini" data-cr="${esc(x.code)}">${x.revoked?"পুনর্বহাল":"বাতিল"}</button></td></tr>`).join(""):'<tr><td colspan="7" class="muted">এখনো কোনো সনদ নেই।</td></tr>';
+  document.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>{const x=CT.find(y=>y.code===b.dataset.cp);dioCert({code:x.code,name:x.name,course:x.course,course_title:ctitle(x.course),kind:x.kind,score:x.score,grade:x.grade,date:x.created_at});});
+  document.querySelectorAll("[data-cl]").forEach(b=>b.onclick=async()=>{const u="https://darulilmonline.com/verify?c="+b.dataset.cl;try{await navigator.clipboard.writeText(u);b.textContent="কপি ✓";}catch(_){prompt("যাচাইয়ের লিংক:",u);}});
+  document.querySelectorAll("[data-cr]").forEach(b=>b.onclick=async()=>{const x=CT.find(y=>y.code===b.dataset.cr);if(!confirm(x.revoked?"সনদটি আবার বৈধ করবেন?":"সনদটি বাতিল করবেন? যাচাই পেজে “বাতিল” দেখাবে।"))return;await sb.from("certificates").update({revoked:!x.revoked}).eq("code",x.code);ctInit();});
+}
+$("ctGo").onclick=async()=>{
+  const name=$("ctN").value.trim(),course=$("ctC").value;if(name.length<3){$("ctMsg").textContent="নাম লিখুন।";return;}
+  $("ctMsg").textContent="তৈরি হচ্ছে…";let code,error;
+  for(let i=0;i<3;i++){code="DIO-"+newCode();({error}=await sb.from("certificates").insert({code,name,course,kind:"class",grade:$("ctG").value.trim()||null,note:$("ctNote").value.trim()||null,issued_by:"admin"}));if(!error)break;}
+  if(error){$("ctMsg").textContent="হয়নি: "+error.message;return;}
+  $("ctMsg").textContent="তৈরি হয়েছে ✓ "+code;dioCert({code,name,course,course_title:ctitle(course),kind:"class",grade:$("ctG").value.trim(),date:new Date().toISOString()});
+  $("ctN").value="";$("ctG").value="";$("ctNote").value="";ctInit();
+};
 init();
 </script>
+<script src="/cert.js"></script>
 </body>
 </html>
