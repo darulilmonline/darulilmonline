@@ -784,6 +784,39 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root:not([data-theme="light"]) .h2f span{color:var(--text)!important}
 :root:not([data-theme="light"]) .it-media.vid,:root:not([data-theme="light"]) .lrn .media{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box!important}
 }</style>
+<style id="mnav">/* mobile nav v32 */
+.mburg{display:none}
+.mdraw,.mdback{display:none}
+@media(max-width:959px){
+  .mburg{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;flex:none;padding:0}
+  .mburg svg{width:22px;height:22px}
+  .nav-r>.lang{display:none}
+  .logo>span>span{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
+  .logo small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
+  .mdback{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+  .mdraw{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);z-index:61;background:var(--surface);color:var(--text);box-shadow:-20px 0 50px rgba(0,0,0,.25);transform:translateX(105%);transition:transform .28s ease;padding:calc(14px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+  .mopen .mdback{opacity:1;pointer-events:auto}
+  .mopen .mdraw{transform:none}
+  .mdraw .mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .mdraw .mtop b{font-size:18px}
+  .mdraw .mx{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
+  .mdraw .lang{display:flex!important;margin:0 0 14px;align-self:flex-start}
+  .mdraw nav{display:grid;gap:4px;margin-bottom:16px}
+  .mdraw nav a{display:flex;align-items:center;justify-content:space-between;padding:14px 14px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:600;font-size:17px;border:1px solid transparent}
+  .mdraw nav a::after{content:"›";color:var(--gold,#C9A13B);font-size:22px}
+  .mdraw nav a:hover,.mdraw nav a:active{background:var(--surface-2);border-color:var(--line)}
+  .mdraw .mcta{display:grid;gap:10px;margin-top:auto}
+  .mdraw .mcta .btn{justify-content:center;width:100%}
+  .mdraw .mwa{background:#25D366;color:#fff;border:0}
+  body.mopen{overflow:hidden}
+}
+@media(max-width:760px){
+  .mbar{transform:translateY(120%);transition:transform .3s ease;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))!important}
+  .mbar.mshow{transform:none}
+  .mbar .btn{padding:11px 10px!important;font-size:15px!important}
+  body{padding-bottom:0!important}
+}
+</style>
 </head>
 <body>
 <header><div class="wrap nav">
@@ -1039,4 +1072,35 @@ fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/courses?select=slug,sort
 </script>
 <a class="wa-float" href="https://wa.me/8801329173444" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.2 1.2z"/></svg></a>
 <script>document.querySelectorAll(".links a").forEach(function(a){try{var r=a.getAttribute("href")||"";if(r.charAt(0)!=="/"||r.indexOf("#")>=0)return;var p=new URL(a.href,location.href).pathname.replace(/\.html$/,"").replace(/\/$/,"");var q=location.pathname.replace(/\.html$/,"").replace(/\/$/,"");if(p&&p===q)a.classList.add("on");}catch(e){}});</script>
+<script id="mnavjs">
+(function(){
+  var nav=document.querySelector("header .links"),navr=document.querySelector("header .nav-r");
+  if(!nav||!navr)return;
+  var B=document.body,lang=navr.querySelector(".lang");
+  var btn=document.createElement("button");btn.className="mburg";btn.type="button";btn.setAttribute("aria-label","মেনু");btn.setAttribute("aria-expanded","false");
+  btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  navr.appendChild(btn);
+  var back=document.createElement("div");back.className="mdback";
+  var dr=document.createElement("aside");dr.className="mdraw";dr.setAttribute("aria-label","মেনু");
+  var cta=document.querySelector(".hdr-cta");
+  dr.innerHTML='<div class="mtop"><b>মেনু</b><button type="button" class="mx" aria-label="বন্ধ করুন">×</button></div><div class="mlang"></div><nav></nav><div class="mcta"><a class="btn btn-primary" href="'+(cta?cta.getAttribute("href"):"/#apply")+'">'+(cta?cta.textContent:"ফ্রি ক্লাস বুক করুন")+'</a><a class="btn mwa" href="https://wa.me/8801329173444" target="_blank" rel="noopener">WhatsApp-এ কথা বলুন</a></div>';
+  B.appendChild(back);B.appendChild(dr);
+  var dn=dr.querySelector("nav");
+  function fill(){dn.innerHTML="";nav.querySelectorAll("a").forEach(function(a){var c=document.createElement("a");c.href=a.getAttribute("href");c.textContent=a.textContent;c.onclick=function(){close();};dn.appendChild(c);});}
+  var mq=matchMedia("(max-width:959px)");
+  function place(){if(!lang)return;if(mq.matches){dr.querySelector(".mlang").appendChild(lang);}else if(lang.parentNode!==navr){navr.insertBefore(lang,navr.querySelector(".setbtn"));}}
+  function open(){fill();B.classList.add("mopen");btn.setAttribute("aria-expanded","true");}
+  function close(){B.classList.remove("mopen");btn.setAttribute("aria-expanded","false");}
+  btn.onclick=open;back.onclick=close;dr.querySelector(".mx").onclick=close;
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});
+  place();(mq.addEventListener?mq.addEventListener("change",place):mq.addListener(place));
+  // নিচের বার: শুধু ওপরে স্ক্রল করলে দেখাবে
+  var bar=document.querySelector(".mbar");
+  if(bar){var last=scrollY,tick=false;
+    function upd(){var y=scrollY,doc=document.documentElement,nearEnd=y+innerHeight>doc.scrollHeight-260;
+      if(y<500||nearEnd||y>last+4)bar.classList.remove("mshow");else if(y<last-4)bar.classList.add("mshow");
+      last=y;tick=false;}
+    addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});}
+})();
+</script>
 </body></html>
