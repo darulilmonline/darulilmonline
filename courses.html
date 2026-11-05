@@ -738,6 +738,8 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 }</style>
 <style id="mnav">/* mobile nav v32 */
 .mburg{display:none}
+:root[data-theme="dark"] .setbtn{color:var(--text)!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .setbtn{color:var(--text)!important}}
 .links a,.logo>span>span,.hdr-cta{white-space:nowrap}
 @media(min-width:1280px){.links a{padding:8px 13px!important;font-size:15px}}
 .mdraw,.mdback{display:none}
