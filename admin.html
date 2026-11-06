@@ -1138,8 +1138,14 @@ $("ctQ").oninput=()=>ctRender();
 function ctRender(){
   const q=$("ctQ").value.trim().toLowerCase(),rows=CT.filter(x=>!q||x.name.toLowerCase().includes(q)||x.code.toLowerCase().includes(q));
   $("ctRows").innerHTML=rows.length?rows.map(x=>`<tr${x.revoked?' style="opacity:.55"':""}><td><b>${esc(x.code)}</b></td><td>${esc(x.name)}${x.name_en?`<div class="muted" style="font-size:12px">${esc(x.name_en)}</div>`:""}${x.name_ar?`<div class="muted" style="font-size:12px" dir="rtl">${esc(x.name_ar)}</div>`:""}</td><td>${esc(ctitle(x.course))}</td><td>${x.kind==="free"?"ফ্রি কোর্স":"ক্লাস"}</td><td>${x.grade?esc(x.grade):(x.score!=null?x.score+"%":"")}</td><td class="muted">${new Date(x.created_at).toLocaleDateString("bn-BD")}</td>
-  <td style="white-space:nowrap"><button class="mini" data-cp="${esc(x.code)}">প্রিন্ট</button> <button class="ghost mini" data-cl="${esc(x.code)}">লিংক</button> <button class="ghost mini" data-cr="${esc(x.code)}">${x.revoked?"পুনর্বহাল":"বাতিল"}</button></td></tr>`).join(""):'<tr><td colspan="7" class="muted">এখনো কোনো সনদ নেই।</td></tr>';
-  document.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>{const x=CT.find(y=>y.code===b.dataset.cp);dioCert({code:x.code,name:x.name,name_en:x.name_en,name_ar:x.name_ar,course:x.course,course_title:ctitle(x.course),kind:x.kind,score:x.score,grade:x.grade,date:x.created_at});});
+  <td style="white-space:nowrap"><button class="mini" data-cp="${esc(x.code)}">প্রিন্ট</button> <button class="ghost mini" data-cn="${esc(x.code)}">নাম</button> <button class="ghost mini" data-cl="${esc(x.code)}">লিংক</button> <button class="ghost mini" data-cr="${esc(x.code)}">${x.revoked?"পুনর্বহাল":"বাতিল"}</button></td></tr>`).join(""):'<tr><td colspan="7" class="muted">এখনো কোনো সনদ নেই।</td></tr>';
+  document.querySelectorAll("[data-cp]").forEach(b=>b.onclick=()=>dioCert({code:b.dataset.cp}));
+  document.querySelectorAll("[data-cn]").forEach(b=>b.onclick=async()=>{const x=CT.find(y=>y.code===b.dataset.cn);
+    const en=prompt("ইংরেজিতে নাম (ইংরেজি সনদের জন্য):",x.name_en||"");if(en===null)return;
+    if(en.trim()&&!/^[A-Za-z .'-]+$/.test(en.trim())){alert("ইংরেজি নাম শুধু ইংরেজি অক্ষরে।");return;}
+    const ar=prompt("আরবিতে নাম (আরবি সনদের জন্য):",x.name_ar||"");if(ar===null)return;
+    const {error}=await sb.from("certificates").update({name_en:en.trim()||null,name_ar:ar.trim()||null}).eq("code",x.code);
+    if(error){alert("হয়নি: "+error.message);return;}ctInit();});
   document.querySelectorAll("[data-cl]").forEach(b=>b.onclick=async()=>{const u="https://darulilmonline.com/verify?c="+b.dataset.cl;try{await navigator.clipboard.writeText(u);b.textContent="কপি ✓";}catch(_){prompt("যাচাইয়ের লিংক:",u);}});
   document.querySelectorAll("[data-cr]").forEach(b=>b.onclick=async()=>{const x=CT.find(y=>y.code===b.dataset.cr);if(!confirm(x.revoked?"সনদটি আবার বৈধ করবেন?":"সনদটি বাতিল করবেন? যাচাই পেজে “বাতিল” দেখাবে।"))return;await sb.from("certificates").update({revoked:!x.revoked}).eq("code",x.code);ctInit();});
 }
@@ -1148,11 +1154,11 @@ $("ctGo").onclick=async()=>{
   $("ctMsg").textContent="তৈরি হচ্ছে…";let code,error;
   for(let i=0;i<3;i++){code="DIO-"+newCode();({error}=await sb.from("certificates").insert({code,name,name_en:$("ctNe").value.trim()||null,name_ar:$("ctNa").value.trim()||null,course,kind:"class",grade:$("ctG").value.trim()||null,note:$("ctNote").value.trim()||null,issued_by:"admin"}));if(!error)break;}
   if(error){$("ctMsg").textContent="হয়নি: "+error.message;return;}
-  $("ctMsg").textContent="তৈরি হয়েছে ✓ "+code;dioCert({code,name,name_en:$("ctNe").value.trim(),name_ar:$("ctNa").value.trim(),course,course_title:ctitle(course),kind:"class",grade:$("ctG").value.trim(),date:new Date().toISOString()});
+  $("ctMsg").textContent="তৈরি হয়েছে ✓ "+code;dioCert({code});
   $("ctN").value="";$("ctNe").value="";$("ctNa").value="";$("ctG").value="";$("ctNote").value="";ctInit();
 };
 init();
 </script>
-<script src="/cert.js?v=40"></script>
+<script src="/cert.js?v=41"></script>
 </body>
 </html>

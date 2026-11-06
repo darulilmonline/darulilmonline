@@ -728,7 +728,8 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 .qzo.right{border-color:#16A34A;background:color-mix(in srgb,#16A34A 12%,var(--surface))}
 .qzo.wrong{border-color:#DC2626;background:color-mix(in srgb,#DC2626 12%,var(--surface))}
 .qzex{margin-top:8px;font-size:14px;padding:8px 12px;border-radius:10px;background:var(--surface-2);color:var(--text)}
-.qzname{display:grid;gap:6px;margin:10px 0;font-weight:600}.qzname input{font:inherit;padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+.qznames{display:grid;gap:4px;margin:14px 0 6px;padding:14px;border-radius:14px;border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);background:color-mix(in srgb,var(--gold) 7%,var(--surface))}
+.qzname{display:grid;gap:6px;margin:6px 0;font-weight:600}.qzname input{font:inherit;padding:11px 13px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
 .qzsub{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:10px}
 .qzres{width:100%;display:grid;gap:6px;justify-items:start;padding:16px;border-radius:16px;border:1px solid var(--line)}
 .qzres b{font-size:30px;line-height:1}.qzres.good{border-color:#16A34A;background:color-mix(in srgb,#16A34A 9%,var(--surface))}.qzres.good b{color:#16A34A}
@@ -1085,7 +1086,7 @@ ${toc}${body}
 
 // ===== কুইজ ও সনদ =====
 async function rpc(fn,args){const r=await fetch(U+"/rest/v1/rpc/"+fn,{method:"POST",headers:Object.assign({"Content-Type":"application/json"},HD),body:JSON.stringify(args)});if(!r.ok)throw new Error(r.status);return r.json();}
-function loadCertJs(){return new Promise((res,rej)=>{if(window.dioCert)return res();const sc=document.createElement("script");sc.src="/cert.js?v=40";sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});}
+function loadCertJs(){return new Promise((res,rej)=>{if(window.dioCert)return res();const sc=document.createElement("script");sc.src="/cert.js?v=41";sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});}
 async function quizPanel(slug,c){
   const bnd=x=>String(x).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
   let ov=document.getElementById("qzov");if(ov)ov.remove();
@@ -1109,13 +1110,13 @@ async function quizPanel(slug,c){
     ${certs.length?`<div class="qzcerts"><b>আপনার সনদ</b>${certs.map(x=>`<button type="button" class="qzcert" data-code="${e(x.code)}"><span>🎓 ${e(x.name)} · ${bnd(x.score)}% · ${e(x.code)}</span><b>দেখুন / PDF →</b></button>`).join("")}</div>`:""}`;
     box.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>run(mods[+b.dataset.m].items,mods[+b.dataset.m].module,false));
     box.querySelector("#qzfin").onclick=()=>run(mods.flatMap(m=>m.items),null,true);
-    box.querySelectorAll("[data-code]").forEach(b=>b.onclick=async()=>{const x=myCerts().find(y=>y.code===b.dataset.code);await loadCertJs();dioCert(Object.assign({course:slug,course_title:c.t},x));});
+    box.querySelectorAll("[data-code]").forEach(b=>b.onclick=async()=>{await loadCertJs();dioCert({code:b.dataset.code});});
   }
   function run(items,module,final){
     const A={};
     box.innerHTML=`<button type="button" class="qzback">← ফিরে যান</button><h3 class="qzt">${final?"চূড়ান্ত পরীক্ষা":e(module||"কুইজ")}</h3>${final?'<p class="muted">উত্তর জমা দেওয়ার পর শুধু মোট নম্বর দেখাবে। উত্তীর্ণ হলে সনদের জন্য আপনার নাম লাগবে।</p>':""}
     <ol class="qzlist">${items.map(q=>`<li class="qzq" data-id="${q.id}"><p>${e(q.q)}</p><div class="qzopts">${(q.o||[]).map((o,j)=>`<label class="qzo"><input type="radio" name="q${q.id}" value="${j}"><span>${e(o)}</span></label>`).join("")}</div><div class="qzex" hidden></div></li>`).join("")}</ol>
-    ${final?`<label class="qzname">সনদে যে নাম থাকবে<input id="qznm" maxlength="80" placeholder="পূর্ণ নাম (বাংলা বা ইংরেজি)"></label>`:""}
+    ${final?`<div class="qznames"><p class="muted" style="margin:0">সনদে নাম যেভাবে থাকবে — <b>পরে আর বদলানো যাবে না</b>, তাই নির্ভুল বানানে লিখুন।</p><label class="qzname">নাম (বাংলায়) *<input id="qznm" maxlength="80" placeholder="যেমন: আব্দুল্লাহ আল মামুন"></label><label class="qzname">নাম (ইংরেজিতে) — ইংরেজি সনদের জন্য, ঐচ্ছিক<input id="qzne" maxlength="80" dir="ltr" placeholder="e.g. Abdullah Al Mamun"></label><label class="qzname">নাম (আরবিতে) — আরবি সনদের জন্য, ঐচ্ছিক<input id="qzna" maxlength="80" dir="rtl" placeholder="مثال: عبد الله المأمون"></label></div>`:""}
     <div class="qzsub"><button type="button" class="btn btn-primary" id="qzgo">জমা দিন</button><span class="muted" id="qzmsg"></span></div>`;
     box.scrollTop=0;
     box.querySelector(".qzback").onclick=home;
@@ -1126,11 +1127,12 @@ async function quizPanel(slug,c){
       msg.textContent="যাচাই হচ্ছে…";
       if(final){
         const nm=(box.querySelector("#qznm").value||"").trim();if(nm.length<3){msg.textContent="সনদের জন্য নাম লিখুন।";return;}
-        let r;try{r=await rpc("cert_issue_free",{p_course:slug,p_name:nm,p_answers:A});}catch(_){msg.textContent="হয়নি — ইন্টারনেট দেখে আবার চেষ্টা করুন।";return;}
+        const ne=(box.querySelector("#qzne").value||"").trim(),na=(box.querySelector("#qzna").value||"").trim();if(ne&&!/^[A-Za-z .'-]+$/.test(ne)){msg.textContent="ইংরেজি নাম শুধু ইংরেজি অক্ষরে লিখুন।";return;}
+        let r;try{r=await rpc("cert_issue_free",{p_course:slug,p_name:nm,p_answers:A,p_name_en:ne,p_name_ar:na});}catch(_){msg.textContent="হয়নি — ইন্টারনেট দেখে আবার চেষ্টা করুন।";return;}
         if(!r.ok){box.querySelector(".qzsub").innerHTML=`<div class="qzres bad"><b>${r.score!=null?bnd(r.score)+"%":""}</b><span>${e(r.msg||"উত্তীর্ণ হননি")}</span><p class="muted">অধ্যায়ের কুইজগুলো আবার অনুশীলন করে চেষ্টা করুন — যত বার ইচ্ছা।</p><button type="button" class="btn btn-ghost" id="qzh">ফিরে যান</button></div>`;box.querySelector("#qzh").onclick=home;return;}
-        try{const L=JSON.parse(localStorage.getItem("dio-certs")||"[]").filter(x=>x.code!==r.code);L.push({code:r.code,name:r.name,course:slug,kind:"free",score:r.score,date:r.date});localStorage.setItem("dio-certs",JSON.stringify(L));}catch(_){}
+        try{const L=JSON.parse(localStorage.getItem("dio-certs")||"[]").filter(x=>x.code!==r.code);L.push({code:r.code,name:nm,course:slug,kind:"free",score:r.score});localStorage.setItem("dio-certs",JSON.stringify(L));}catch(_){}
         box.querySelector(".qzsub").innerHTML=`<div class="qzres good"><b>${bnd(r.score)}%</b><span>মাশাআল্লাহ! আপনি উত্তীর্ণ হয়েছেন।${r.again?" (এই নামে আপনার সনদ আগেই আছে — সেটাই দেখানো হলো)":""}</span><p>সনদ নম্বর: <b>${e(r.code)}</b></p><button type="button" class="btn btn-primary" id="qzc">🎓 সনদ দেখুন ও PDF</button></div>`;
-        box.querySelector("#qzc").onclick=async()=>{await loadCertJs();dioCert({code:r.code,name:r.name,course:slug,course_title:c.t,kind:"free",score:r.score,date:r.date});};
+        box.querySelector("#qzc").onclick=async()=>{await loadCertJs();dioCert({code:r.code});};
         return;
       }
       let r;try{r=await rpc("quiz_grade",{p_course:slug,p_module:module||"",p_answers:A});}catch(_){msg.textContent="হয়নি — আবার চেষ্টা করুন।";return;}

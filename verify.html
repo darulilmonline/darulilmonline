@@ -838,13 +838,13 @@ async function check(code){
   ${d.score!=null?`<dt>নম্বর</dt><dd>${bn(d.score)}%</dd>`:""}${d.grade?`<dt>ফলাফল</dt><dd>${e(d.grade)}</dd>`:""}
   <dt>তারিখ</dt><dd>${date}</dd><dt>সনদ নম্বর</dt><dd>${e(d.code)}</dd></dl>
   <p class="vtip">🔍 <b>মিলিয়ে নিন:</b> আপনার হাতের সনদে লেখা <b>নাম, কোর্স ও তারিখ</b> ওপরের তথ্যের সাথে হুবহু মিলছে কি না দেখুন। একটি অক্ষরও না মিললে সনদটি বদলানো হয়েছে — আমাদের WhatsApp-এ (01329-173444) জানান। আসল সনদের চারপাশের সরু ফ্রেমে অতি ক্ষুদ্র অক্ষরে এই সনদ নম্বরটিই লেখা থাকে।</p><button type="button" class="btn btn-ghost" id="vfp">সনদটি দেখুন (বাংলা / English / العربية)</button></div>`;
-  document.getElementById("vfp").onclick=()=>window.dioCert&&dioCert(d);
+  document.getElementById("vfp").onclick=()=>window.dioCert&&dioCert({code:d.code});
 }
 document.getElementById("vff").onsubmit=ev=>{ev.preventDefault();check(inp.value);history.replaceState(null,"","?c="+encodeURIComponent(inp.value.trim().toUpperCase()));};
 const c=new URLSearchParams(location.search).get("c");if(c)check(c);
 })();
 </script>
-<script src="/cert.js?v=40"></script>
+<script src="/cert.js?v=41"></script>
 <script id="mnavjs">
 (function(){
   var nav=document.querySelector("header .links"),navr=document.querySelector("header .nav-r");

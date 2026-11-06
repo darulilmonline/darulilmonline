@@ -1,4 +1,4 @@
-/* দারুল ইলম অনলাইন — তিন ভাষার নিরাপত্তা-সনদ — v40 */
+/* দারুল ইলম অনলাইন — তিন ভাষার নিরাপত্তা-সনদ — v41: সব তথ্য শুধু সার্ভার থেকে */
 (function () {
 var SB = "https://nlylwrbxejjxnfljcztv.supabase.co", SK = "sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg";
 var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (x) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[x]; }); };
@@ -136,46 +136,53 @@ function render(w, c, L, nm, fm, tt) {
     '(document.fonts?document.fonts.ready:Promise.resolve()).then(function(){setTimeout(function(){print()},700)});<\/script></body></html>';
   w.document.open(); w.document.write(html); w.document.close();
 }
-function pick(c) {
+function pick(input) {
+  var code = String((input && input.code) || input || "").trim().toUpperCase();
+  if (!code) return;
+  fetch(SB + "/rest/v1/rpc/cert_verify", { method: "POST", headers: { apikey: SK, Authorization: "Bearer " + SK, "Content-Type": "application/json" }, body: JSON.stringify({ p_code: code }) })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d) { alert("এই নম্বরের কোনো সনদ পাওয়া যায়নি।"); return; }
+      if (d.revoked) { alert("এই সনদটি বাতিল করা হয়েছে।"); return; }
+      dialog(d);
+    })
+    .catch(function () { alert("এখন সনদ তৈরি করা যাচ্ছে না — ইন্টারনেট দেখে আবার চেষ্টা করুন।"); });
+}
+function dialog(d) {
   var old = document.getElementById("dioCP"); if (old) old.remove();
   var st = document.getElementById("dioCPs");
   if (!st) { st = document.createElement("style"); st.id = "dioCPs"; st.textContent =
     "#dioCP{position:fixed;inset:0;z-index:99;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:16px;font-family:'Hind Siliguri',sans-serif}" +
-    "#dioCP .b{width:min(440px,100%);background:#fff;color:#1C2427;border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.3)}" +
+    "#dioCP .b{width:min(460px,100%);background:#fff;color:#1C2427;border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.3)}" +
     "#dioCP .h{padding:14px 18px;background:linear-gradient(135deg,#0B3D4A,#0A5A4A);color:#fff;border-bottom:4px solid #C9A13B;font-weight:700;font-size:17px}" +
-    "#dioCP .c{padding:16px 18px;display:grid;gap:12px}#dioCP .l{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}" +
-    "#dioCP .l button,#dioCP .g button{font:inherit;font-weight:700;padding:11px 6px;border-radius:12px;border:1.5px solid #E2E6E2;background:#F7F8F6;cursor:pointer;color:#1C2427}" +
-    "#dioCP .l button.on,#dioCP .g button.on{border-color:#0A7A55;background:#E8F6EF;color:#0A5A4A}" +
-    "#dioCP label{display:grid;gap:5px;font-size:14px;color:#4A5558}#dioCP input{font:inherit;font-size:16px;padding:10px 12px;border-radius:12px;border:1px solid #D6DBD6}" +
-    "#dioCP .g{display:grid;grid-template-columns:1fr 1fr;gap:8px}#dioCP .f{display:flex;gap:10px;justify-content:flex-end;padding:0 18px 16px}" +
+    "#dioCP .c{padding:16px 18px;display:grid;gap:10px}" +
+    "#dioCP .o{display:flex;align-items:center;gap:12px;width:100%;text-align:start;font:inherit;padding:12px 14px;border-radius:14px;border:1.5px solid #E2E6E2;background:#F7F8F6;cursor:pointer;color:#1C2427}" +
+    "#dioCP .o.on{border-color:#0A7A55;background:#E8F6EF}#dioCP .o:disabled{opacity:.5;cursor:not-allowed}" +
+    "#dioCP .o b{min-width:74px}#dioCP .o span{font-size:14px;color:#4A5558;overflow:hidden;text-overflow:ellipsis}" +
+    "#dioCP .g{display:grid;grid-template-columns:1fr 1fr;gap:8px}#dioCP .g button{font:inherit;font-weight:700;padding:9px 6px;border-radius:12px;border:1.5px solid #E2E6E2;background:#F7F8F6;cursor:pointer;color:#1C2427}#dioCP .g button.on{border-color:#0A7A55;background:#E8F6EF}" +
+    "#dioCP .n{font-size:13px;color:#6B767B;line-height:1.6}#dioCP .f{display:flex;gap:10px;justify-content:flex-end;padding:0 18px 16px}" +
     "#dioCP .f button{font:inherit;font-weight:700;padding:10px 18px;border-radius:12px;border:0;cursor:pointer}#dioCP .ok{background:#F6B91A}#dioCP .x{background:#EEF0EE}";
     document.head.appendChild(st); }
+  var latin = /^[A-Za-z .'-]+$/.test(d.name || "");
+  var N = { bn: d.name, en: d.name_en || (latin ? d.name : ""), ar: d.name_ar || "" };
   var L = "bn", fm = false, ov = document.createElement("div"); ov.id = "dioCP";
+  var opt = function (k, lab) { return '<button type="button" class="o' + (k === "bn" ? " on" : "") + '" data-l="' + k + '"' + (N[k] ? "" : " disabled") + '><b>' + lab + '</b><span' + (k === "ar" ? ' dir="rtl"' : "") + '>' + (N[k] ? esc(N[k]) : "এই ভাষায় নাম জমা নেই") + '</span></button>'; };
   ov.innerHTML = '<div class="b" role="dialog" aria-modal="true"><div class="h">সনদের ভাষা বাছুন</div><div class="c">' +
-    '<div class="l"><button type="button" data-l="bn" class="on">বাংলা</button><button type="button" data-l="en">English</button><button type="button" data-l="ar">العربية</button></div>' +
-    '<label id="cpN" hidden><span id="cpNl"></span><input id="cpNi" maxlength="80"></label>' +
-    '<div id="cpG" hidden><div style="font-size:14px;color:#4A5558;margin-bottom:5px">আরবি বাক্যের জন্য</div><div class="g"><button type="button" data-g="m" class="on">ছেলে / পুরুষ</button><button type="button" data-g="f">মেয়ে / নারী</button></div></div>' +
+    opt("bn", "বাংলা") + opt("en", "English") + opt("ar", "العربية") +
+    '<div id="cpG" hidden><div class="n" style="margin-bottom:5px">আরবি বাক্যের জন্য</div><div class="g"><button type="button" data-g="m" class="on">ছেলে / পুরুষ</button><button type="button" data-g="f">মেয়ে / নারী</button></div></div>' +
+    '<div class="n">নিরাপত্তার জন্য নাম শুধু দারুল ইলমের রেকর্ড থেকে আসে, বদলানো যায় না। কোনো ভাষায় নাম যোগ বা সংশোধন দরকার হলে WhatsApp-এ (01329-173444) সনদ নম্বরসহ জানান।</div>' +
     '</div><div class="f"><button type="button" class="x">বাতিল</button><button type="button" class="ok">সনদ তৈরি করুন</button></div></div>';
   document.body.appendChild(ov);
   var q = function (s) { return ov.querySelector(s); };
-  function upd() {
-    ov.querySelectorAll("[data-l]").forEach(function (b) { b.classList.toggle("on", b.dataset.l === L); });
-    q("#cpN").hidden = L === "bn"; q("#cpG").hidden = L !== "ar";
-    if (L !== "bn") { q("#cpNl").textContent = L === "en" ? "ইংরেজিতে নাম (সনদে যেভাবে থাকবে)" : "আরবিতে নাম (সনদে যেভাবে থাকবে)";
-      q("#cpNi").dir = L === "ar" ? "rtl" : "ltr"; q("#cpNi").value = (L === "en" ? c.name_en : c.name_ar) || q("#cpNi").dataset[L] || ""; q("#cpNi").placeholder = L === "en" ? "e.g. Abdullah Al Mamun" : "مثال: عبد الله المأمون"; }
-  }
-  ov.querySelectorAll("[data-l]").forEach(function (b) { b.onclick = function () { if (L !== "bn") q("#cpNi").dataset[L] = q("#cpNi").value; L = b.dataset.l; upd(); }; });
+  ov.querySelectorAll("[data-l]").forEach(function (b) { b.onclick = function () { L = b.dataset.l; ov.querySelectorAll("[data-l]").forEach(function (x) { x.classList.toggle("on", x === b); }); q("#cpG").hidden = L !== "ar"; }; });
   ov.querySelectorAll("[data-g]").forEach(function (b) { b.onclick = function () { fm = b.dataset.g === "f"; ov.querySelectorAll("[data-g]").forEach(function (x) { x.classList.toggle("on", x === b); }); }; });
   q(".x").onclick = function () { ov.remove(); }; ov.onclick = function (e) { if (e.target === ov) ov.remove(); };
-  q(".ok").onclick = async function () {
-    var nm = L === "bn" ? c.name : q("#cpNi").value.trim();
-    if (!nm) { q("#cpNi").focus(); return; }
+  q(".ok").onclick = function () {
+    if (!N[L]) return;
     var w = window.open("", "_blank"); if (!w) { alert("পপআপ আটকানো আছে — ব্রাউজারে এই সাইটের জন্য পপআপ চালু করুন।"); return; }
     w.document.write('<p style="font-family:sans-serif;padding:20px">সনদ তৈরি হচ্ছে…</p>');
-    ov.remove(); var tt = await titles(c); render(w, c, L, nm, fm, tt);
+    ov.remove(); render(w, d, L, N[L], fm, d.titles || {});
   };
-  upd();
 }
 window.dioCert = pick;
-window.dioCertRender = function (c, L, nm, fm) { var w = window.open("", "_blank"); titles(c).then(function (tt) { render(w, c, L || "bn", nm || c.name, !!fm, tt); }); };
 })();
