@@ -76,6 +76,17 @@ tr.sub td{background:var(--bg)}
 .hist div{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 
 td audio{width:220px;height:36px}
+
+.acK{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:14px 0}
+.acK div{background:var(--card,#fff);border:1px solid var(--line,#e8e2d4);border-radius:16px;padding:14px 16px}
+.acK b{display:block;font-size:24px;line-height:1.2}.acK span{color:var(--muted,#6b767b);font-size:14px}.acK small{display:block;color:var(--muted,#6b767b);font-size:12px;margin-top:2px}
+.acK .good b{color:#16A34A}.acK .bad b{color:#C2410C}
+.acG{display:grid;gap:16px}@media(min-width:1000px){.acG{grid-template-columns:1.4fr 1fr}}
+.acH{font-size:16px;margin-bottom:10px}
+.acBar{display:grid;grid-template-columns:130px 1fr 44px;gap:8px;align-items:center;margin:7px 0;font-size:14px}
+.acBar i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,#0A7A55,#34B27D)}
+.acLeg{display:flex;gap:14px;font-size:13px;color:var(--muted,#6b767b);margin-top:6px}.acLeg span::before{content:"";display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px;vertical-align:middle;background:var(--c)}
+tr.sent td{opacity:.55}
 </style>
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .st-new{background:#31312C!important;color:#C2A493!important}
@@ -119,7 +130,7 @@ td audio{width:220px;height:36px}
       <div><h1>অ্যাডমিন প্যানেল — দারুল ইলম অনলাইন</h1><div class="muted" id="who"></div></div>
       <div style="display:flex;gap:8px"><button class="ghost" id="reload">রিফ্রেশ</button><button class="ghost" id="logout">লগআউট</button></div>
     </div>
-    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="batches">ব্যাচ ও রুটিন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="courses">কোর্স</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="quiz">কুইজ</button><button class="tab ghost" data-tab="certs">সনদ</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
+    <div class="tools" style="margin-bottom:18px"><button class="tab active" data-tab="apps">ভর্তির আবেদন</button><button class="tab ghost" data-tab="students">শিক্ষার্থী ও ফি</button><button class="tab ghost" data-tab="acct">হিসাব</button><button class="tab ghost" data-tab="batches">ব্যাচ ও রুটিন</button><button class="tab ghost" data-tab="teachers">শিক্ষক আবেদন</button><button class="tab ghost" data-tab="faculty">শিক্ষকমণ্ডলী</button><button class="tab ghost" data-tab="recs">তিলাওয়াত</button><button class="tab ghost" data-tab="courses">কোর্স</button><button class="tab ghost" data-tab="learn">পাঠ ও প্রশ্নোত্তর</button><button class="tab ghost" data-tab="quiz">কুইজ</button><button class="tab ghost" data-tab="certs">সনদ</button><button class="tab ghost" data-tab="media">লাইব্রেরি</button><button class="tab ghost" data-tab="cms">সাইটের লেখা</button></div>
     <div id="panel-apps">
     <div class="stats" id="stats"></div>
     <div class="tools">
@@ -198,6 +209,17 @@ td audio{width:220px;height:36px}
       <div style="margin-bottom:14px"><button id="bNew">+ নতুন ব্যাচ</button></div>
       <div class="card" id="bForm" hidden style="margin-bottom:18px"></div>
       <div class="tbl"><table><thead><tr><th>ব্যাচ</th><th>কোর্স</th><th>শিক্ষক</th><th>দিন ও সময়</th><th>শিক্ষার্থী</th><th>লিংক</th><th></th></tr></thead><tbody id="brows"></tbody></table></div>
+    </div>
+
+    <div id="panel-acct" style="display:none">
+      <div class="tools" style="flex-wrap:wrap;gap:8px;align-items:center"><label class="muted">মাস <select id="acM"></select></label><button class="ghost" id="acR">রিফ্রেশ</button><span class="muted" id="acMsg"></span></div>
+      <div class="acK" id="acK"></div>
+      <div class="acG"><div class="card"><h1 class="acH">গত ৬ মাস — প্রত্যাশিত বনাম আদায় (টাকা)</h1><div id="acChart"></div></div>
+      <div class="card"><h1 class="acH">কোর্স অনুযায়ী সক্রিয় শিক্ষার্থী</h1><div id="acCourse"></div></div></div>
+      <div class="card" style="margin-top:16px"><div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between"><h1 class="acH" style="margin:0">ফি বাকি — <span id="acDm"></span></h1>
+        <div style="display:flex;gap:8px;flex-wrap:wrap"><button id="acNext">পরের জনকে রিমাইন্ডার →</button><button class="ghost" id="acCopy">তালিকা কপি</button></div></div>
+        <p class="muted" style="margin:6px 0 10px;font-size:14px">“রিমাইন্ডার” চাপলে WhatsApp-এ তৈরি মেসেজ খুলবে — শুধু Send চাপবেন। পাঠানো হলে পাশে ✓ থাকবে, যাতে কাউকে দুবার না যায়।</p>
+        <div class="tbl"><table><thead><tr><th>শিক্ষার্থী</th><th>কোর্স / ব্যাচ</th><th>মাসিক ফি</th><th>দেওয়া</th><th>বাকি</th><th></th></tr></thead><tbody id="acDue"></tbody></table></div></div>
     </div>
 
     <div id="panel-quiz" style="display:none">
@@ -1157,6 +1179,71 @@ $("ctGo").onclick=async()=>{
   $("ctMsg").textContent="তৈরি হয়েছে ✓ "+code;dioCert({code});
   $("ctN").value="";$("ctNe").value="";$("ctNa").value="";$("ctG").value="";$("ctNote").value="";ctInit();
 };
+
+// ===== হিসাব ও ফি রিমাইন্ডার =====
+const bnn=x=>Number(x||0).toLocaleString("bn-BD");
+const mLabel=m=>new Date(m+"T00:00:00").toLocaleDateString("bn-BD",{month:"short",year:"numeric"});
+const mAdd=(m,k)=>{const d=new Date(m+"T00:00:00");d.setMonth(d.getMonth()+k);return d.toISOString().slice(0,7)+"-01";};
+let AC=null;
+document.querySelectorAll(".tab").forEach(b=>b.addEventListener("click",()=>{$("panel-acct").style.display=b.dataset.tab==="acct"?"block":"none";if(b.dataset.tab==="acct")acInit();}));
+async function acInit(){
+  if(!$("acM").options.length){const now=new Date().toISOString().slice(0,7)+"-01";$("acM").innerHTML=[...Array(12)].map((_,i)=>{const m=mAdd(now,-i);return `<option value="${m}">${new Date(m+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"})}</option>`}).join("");$("acM").onchange=acRender;$("acR").onclick=acLoad;}
+  acLoad();
+}
+async function acLoad(){
+  $("acMsg").textContent="লোড হচ্ছে…";
+  const from=mAdd($("acM").options[$("acM").options.length-1].value,-6);
+  const [st,pa,ap]=await Promise.all([sb.from("students").select("*"),sb.from("payments").select("*").gte("month",from),sb.from("applications").select("created_at,status,course").gte("created_at",from)]);
+  if(st.error||pa.error){$("acMsg").textContent="লোড হয়নি: "+((st.error||pa.error).message);return;}
+  AC={st:st.data||[],pa:pa.data||[],ap:ap.data||[]};$("acMsg").textContent="";acRender();
+}
+function acMonth(m){
+  const next=mAdd(m,1),active=AC.st.filter(x=>x.status==="active"&&(!x.start_date||x.start_date<next));
+  const pays=AC.pa.filter(p=>p.month===m),paid={};pays.forEach(p=>{paid[p.student_id]=(paid[p.student_id]||0)+Number(p.amount||0);});
+  const bdt=x=>(x.currency||"BDT")==="BDT";
+  const exp=active.filter(bdt).reduce((a,x)=>a+Number(x.monthly_fee||0),0);
+  const col=pays.filter(p=>(p.currency||"BDT")==="BDT").reduce((a,p)=>a+Number(p.amount||0),0);
+  const other={};pays.filter(p=>(p.currency||"BDT")!=="BDT").forEach(p=>{other[p.currency]=(other[p.currency]||0)+Number(p.amount||0);});
+  const due=active.filter(x=>Number(x.monthly_fee||0)>0&&(paid[x.id]||0)<Number(x.monthly_fee)).map(x=>({x,paid:paid[x.id]||0,due:Number(x.monthly_fee)-(paid[x.id]||0)}));
+  return {active,exp,col,other,due,paid};
+}
+function acRender(){
+  if(!AC)return;const m=$("acM").value,r=acMonth(m),next=mAdd(m,1);
+  const apps=AC.ap.filter(a=>a.created_at>=m&&a.created_at<next).length;
+  const newSt=AC.st.filter(x=>x.created_at>=m&&x.created_at<next).length;
+  const rate=r.exp?Math.round(Math.min(r.col,r.exp)*100/r.exp):0;
+  const oth=Object.entries(r.other).map(([c,v])=>bnn(v)+" "+c).join(" · ");
+  $("acK").innerHTML=`<div><b>${bnn(r.active.length)}</b><span>সক্রিয় শিক্ষার্থী</span></div>
+  <div><b>৳${bnn(r.exp)}</b><span>প্রত্যাশিত ফি</span></div>
+  <div class="good"><b>৳${bnn(r.col)}</b><span>আদায় হয়েছে</span>${oth?`<small>+ ${oth}</small>`:""}</div>
+  <div class="bad"><b>৳${bnn(r.due.filter(d=>(d.x.currency||"BDT")==="BDT").reduce((a,d)=>a+d.due,0))}</b><span>বাকি (${bnn(r.due.length)} জন)</span></div>
+  <div><b>${bnn(rate)}%</b><span>আদায়ের হার</span></div>
+  <div><b>${bnn(apps)}</b><span>নতুন আবেদন</span><small>নতুন ভর্তি: ${bnn(newSt)}</small></div>`;
+  // ৬ মাসের চার্ট (SVG)
+  const ms=[...Array(6)].map((_,i)=>mAdd(m,i-5)),data=ms.map(x=>acMonth(x)),mx=Math.max(1,...data.map(d=>Math.max(d.exp,d.col)));
+  const W=560,H=210,bw=30;
+  $("acChart").innerHTML=`<svg viewBox="0 0 ${W} ${H+34}" style="width:100%;height:auto">${[0,.5,1].map(f=>`<line x1="40" x2="${W}" y1="${10+H*(1-f)}" y2="${10+H*(1-f)}" stroke="#e5e7e2"/><text x="36" y="${14+H*(1-f)}" font-size="11" text-anchor="end" fill="#888">${bnn(Math.round(mx*f))}</text>`).join("")}
+  ${data.map((d,i)=>{const x=60+i*(W-70)/6,he=H*d.exp/mx,hc=H*d.col/mx;return `<rect x="${x}" y="${10+H-he}" width="${bw}" height="${he}" rx="4" fill="#D9C08A"><title>প্রত্যাশিত ৳${bnn(d.exp)}</title></rect><rect x="${x+bw+4}" y="${10+H-hc}" width="${bw}" height="${hc}" rx="4" fill="#0A7A55"><title>আদায় ৳${bnn(d.col)}</title></rect><text x="${x+bw+2}" y="${H+28}" font-size="12" text-anchor="middle" fill="#555">${mLabel(ms[i])}</text>`}).join("")}</svg>
+  <div class="acLeg"><span style="--c:#D9C08A">প্রত্যাশিত</span><span style="--c:#0A7A55">আদায়</span></div>`;
+  // কোর্স
+  const byC={};r.active.forEach(x=>{byC[x.course||"—"]=(byC[x.course||"—"]||0)+1;});const cm=Math.max(1,...Object.values(byC));
+  $("acCourse").innerHTML=Object.entries(byC).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<div class="acBar"><span>${esc(COURSE[c]||c)}</span><i style="width:${Math.max(4,n*100/cm)}%"></i><b>${bnn(n)}</b></div>`).join("")||'<p class="muted">এখনো সক্রিয় শিক্ষার্থী নেই।</p>';
+  // বাকি তালিকা
+  $("acDm").textContent=new Date(m+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"});
+  const sent=acSent(m);
+  $("acDue").innerHTML=r.due.length?r.due.sort((a,b)=>b.due-a.due).map(d=>`<tr class="${sent[d.x.id]?"sent":""}" data-id="${d.x.id}"><td><b>${esc(d.x.name)}</b><div class="muted" style="font-size:12px">${esc(d.x.phone)}</div></td><td>${esc(COURSE[d.x.course]||d.x.course||"")}${d.x.batch?`<div class="muted" style="font-size:12px">${esc(d.x.batch)}</div>`:""}</td><td>${bnn(d.x.monthly_fee)} ${d.x.currency==="BDT"?"৳":esc(d.x.currency)}</td><td>${bnn(d.paid)}</td><td><b style="color:#C2410C">${bnn(d.due)}</b></td><td style="white-space:nowrap"><button class="mini" data-rem="${d.x.id}">${sent[d.x.id]?"✓ আবার পাঠান":"রিমাইন্ডার"}</button></td></tr>`).join(""):'<tr><td colspan="6" class="muted">আলহামদুলিল্লাহ — এই মাসে কারো ফি বাকি নেই।</td></tr>';
+  document.querySelectorAll("[data-rem]").forEach(b=>b.onclick=()=>acRemind(+b.dataset.rem));
+}
+function acSent(m){try{return JSON.parse(localStorage.getItem("dio-rem-"+m)||"{}")}catch(_){return{}}}
+function acRemind(id){
+  const m=$("acM").value,r=acMonth(m),d=r.due.find(y=>y.x.id===id);if(!d)return;
+  const mon=new Date(m+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"}),cur=d.x.currency==="BDT"?"টাকা":d.x.currency;
+  const msg=`আসসালামু আলাইকুম ওয়া রাহমাতুল্লাহ।\n\n${d.x.name}-এর ${mon} মাসের ফি ${bnn(d.due)} ${cur} এখনো বাকি আছে।\n\nbKash / Nagad: 01329-173444 (Send Money)\nপাঠানোর পর ট্রানজেকশন আইডি এখানে দিলে আমরা জমা করে নেব ইনশাআল্লাহ।\n\nইতিমধ্যে দিয়ে থাকলে এই মেসেজের জন্য দুঃখিত — জানালে ঠিক করে নিচ্ছি।\nজাযাকাল্লাহু খাইরান।\n— দারুল ইলম অনলাইন`;
+  window.open("https://wa.me/"+waNum(d.x.phone)+"?text="+encodeURIComponent(msg),"_blank");
+  const s=acSent(m);s[id]=Date.now();localStorage.setItem("dio-rem-"+m,JSON.stringify(s));acRender();
+}
+$("acNext").onclick=()=>{const m=$("acM").value,s=acSent(m),d=acMonth(m).due.sort((a,b)=>b.due-a.due).find(y=>!s[y.x.id]);if(!d){alert("সবাইকে রিমাইন্ডার পাঠানো হয়ে গেছে ✓");return;}acRemind(d.x.id);};
+$("acCopy").onclick=async()=>{const m=$("acM").value,r=acMonth(m);const t=r.due.map((d,i)=>`${i+1}. ${d.x.name} (${d.x.phone}) — বাকি ${d.due} ${d.x.currency}`).join("\n");try{await navigator.clipboard.writeText(t);$("acCopy").textContent="কপি ✓";}catch(_){prompt("তালিকা:",t);}};
 init();
 </script>
 <script src="/cert.js?v=42"></script>
