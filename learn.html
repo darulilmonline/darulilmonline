@@ -719,7 +719,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 .qzempty{text-align:center;padding:30px 10px}
 .qzback{font:inherit;border:0;background:none;color:var(--brand);font-weight:700;cursor:pointer;padding:0;margin-bottom:6px}
 .qzt{font-size:20px;margin:4px 0 10px}
-.qzlist{display:grid;gap:14px;padding-inline-start:22px;margin:10px 0}
+.qzlist{display:grid;gap:14px;padding-inline-start:26px;margin:10px 0;list-style:bengali}
 .qzq p{font-weight:600;margin:0 0 8px;line-height:1.7}
 .qzopts{display:grid;gap:8px}
 .qzo{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;border:1px solid var(--line);cursor:pointer;line-height:1.6}
@@ -1137,8 +1137,9 @@ async function quizPanel(slug,c){
       (r.results||[]).forEach(x=>{const li=box.querySelector(`.qzq[data-id="${x.id}"]`);if(!li)return;
         li.querySelectorAll(".qzo").forEach((l,j)=>{l.classList.toggle("right",j===x.a);if(A[x.id]===j&&j!==x.a)l.classList.add("wrong");l.querySelector("input").disabled=true;});
         if(x.e){const ex=li.querySelector(".qzex");ex.hidden=false;ex.textContent=x.e;}});
-      box.querySelector(".qzsub").innerHTML=`<div class="qzres ${pct>=70?"good":"bad"}"><b>${bnd(pct)}%</b><span>${bnd(r.score)} / ${bnd(r.total)} সঠিক${pct>=70?" — চমৎকার!":" — আরেকবার পাঠ দেখে চেষ্টা করুন"}</span><button type="button" class="btn btn-ghost" id="qzh">সব কুইজ</button></div>`;
+      box.querySelector(".qzsub").innerHTML=`<div class="qzres ${pct>=70?"good":"bad"}"><b>${bnd(pct)}%</b><span>${bnd(r.score)} / ${bnd(r.total)} সঠিক${pct>=70?" — চমৎকার!":" — আরেকবার পাঠ দেখে চেষ্টা করুন"}</span>${pct>=70?`<p class="muted" style="margin:4px 0 0">🎓 সনদ পেতে এবার পুরো কোর্সের <b>চূড়ান্ত পরীক্ষা</b> দিন — ৭০% পেলেই সনদ।</p>`:""}<div style="display:flex;gap:8px;flex-wrap:wrap">${pct>=70?`<button type="button" class="btn btn-primary" id="qzf2">চূড়ান্ত পরীক্ষা দিয়ে সনদ নিন →</button>`:""}<button type="button" class="btn btn-ghost" id="qzh">সব কুইজ</button></div></div>`;
       box.querySelector("#qzh").onclick=home;
+      const f2=box.querySelector("#qzf2");if(f2)f2.onclick=()=>run(mods.flatMap(m=>m.items),null,true);
     };
   }
   home();
