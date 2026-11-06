@@ -1,4 +1,4 @@
-/* দারুল ইলম অনলাইন — তিন ভাষার সনদ — v37 */
+/* দারুল ইলম অনলাইন — তিন ভাষার নিরাপত্তা-সনদ — v40 */
 (function () {
 var SB = "https://nlylwrbxejjxnfljcztv.supabase.co", SK = "sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg";
 var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (x) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[x]; }); };
@@ -40,6 +40,44 @@ async function titles(c) {
   try { var r = await fetch(SB + "/rest/v1/courses?select=content&slug=eq." + encodeURIComponent(c.course), { headers: { apikey: SK, Authorization: "Bearer " + SK } });
     var d = await r.json(); var ct = (d[0] || {}).content || {}; return { bn: (ct.bn || {}).t, en: (ct.en || {}).t, ar: (ct.ar || {}).t }; } catch (e) { return {}; }
 }
+
+function f2(n){return Math.round(n*100)/100;}
+function guilloche(){ /* পুরো পাতা: ২৯৭ × ২১০ মিমি */
+  var out='',i,j,t,x,y,d;
+  for(i=0;i<34;i++){ d='M'; for(j=0;j<=120;j++){ x=12+j*(273/120); y=16+i*5.4+Math.sin(j/120*Math.PI*6+i*0.55)*2.2+Math.sin(j/120*Math.PI*17+i)*0.6; d+=(j?' L':'')+f2(x)+' '+f2(y);} out+='<path d="'+d+'"/>'; }
+  var ros='';
+  for(i=0;i<40;i++){ d='M'; var ph=i*Math.PI*2/40; for(j=0;j<=200;j++){ t=j/200*Math.PI*2; var r=30+9*Math.sin(7*t+ph)+3*Math.sin(19*t); x=148.5+r*Math.cos(t+ph/7); y=112+r*Math.sin(t+ph/7); d+=(j?' L':'')+f2(x)+' '+f2(y);} ros+='<path d="'+d+'Z"/>'; }
+  return '<svg class="gl" viewBox="0 0 297 210" preserveAspectRatio="none"><g fill="none" stroke="#0A7A55" stroke-opacity=".07" stroke-width=".18">'+out+'</g><g fill="none" stroke="#C9A13B" stroke-opacity=".12" stroke-width=".15">'+ros+'</g></svg>';
+}
+function star8(cx,cy,r,fill,stroke,sw){ /* আট-কোণা তারকা (খাতাম) */
+  var p=function(rot){var a=[];for(var k=0;k<4;k++){var t=rot+k*Math.PI/2;a.push(f2(cx+r*Math.cos(t))+','+f2(cy+r*Math.sin(t)));}return a.join(' ');};
+  return '<polygon points="'+p(Math.PI/4)+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+sw+'"/><polygon points="'+p(0)+'" fill="'+fill+'" stroke="'+stroke+'" stroke-width="'+sw+'"/>';
+}
+function microFrame(code){
+  var unit='DARUL ILM ONLINE \u2022 VERIFY AT DARULILMONLINE.COM/VERIFY \u2022 '+code+' \u2022 \u0627\u0644\u0639\u0644\u0645 \u2022 ', txt='';
+  while(txt.length<1500) txt+=unit;
+  return '<svg class="mf" viewBox="0 0 297 210"><defs><path id="mfp" d="M11 11 H286 V199 H11 Z"/></defs><text font-size="1.45" fill="#0B3D4A" fill-opacity=".75" letter-spacing=".05" font-family="Arial,sans-serif"><textPath href="#mfp">'+txt+'</textPath></text></svg>';
+}
+function rosette(L,code){
+  var sc='',k,n=40;
+  for(k=0;k<n;k++){var t=k*Math.PI*2/n;sc+='<circle cx="'+f2(50+44*Math.cos(t))+'" cy="'+f2(50+44*Math.sin(t))+'" r="5.2"/>';}
+  var ring=(L==="ar"?"\u062f\u0627\u0631 \u0627\u0644\u0639\u0644\u0645 \u0623\u0648\u0646\u0644\u0627\u064a\u0646 \u2022 \u0634\u0647\u0627\u062f\u0629 \u0645\u0648\u062b\u0651\u0642\u0629 \u2022 ":L==="en"?"DARUL ILM ONLINE \u2022 VERIFIED CERTIFICATE \u2022 ":"\u09a6\u09be\u09b0\u09c1\u09b2 \u0987\u09b2\u09ae \u0985\u09a8\u09b2\u09be\u0987\u09a8 \u2022 \u09af\u09be\u099a\u09be\u0987\u09af\u09cb\u0997\u09cd\u09af \u09b8\u09a8\u09a6 \u2022 ");
+  return '<svg viewBox="0 0 100 128" class="ros"><defs><radialGradient id="gf" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#FFF1BF"/><stop offset=".45" stop-color="#E9C25A"/><stop offset="1" stop-color="#A8812A"/></radialGradient>'+
+    '<linearGradient id="rb" x1="0" x2="1"><stop offset="0" stop-color="#0A5A4A"/><stop offset="1" stop-color="#0B3D4A"/></linearGradient><path id="rc" d="M50 50 m-31 0 a31 31 0 1 1 62 0 a31 31 0 1 1 -62 0"/></defs>'+
+    '<path d="M34 86 L26 126 L37 118 L44 128 L50 92 Z" fill="url(#rb)"/><path d="M66 86 L74 126 L63 118 L56 128 L50 92 Z" fill="url(#rb)"/>'+
+    '<g fill="url(#gf)">'+sc+'<circle cx="50" cy="50" r="44"/></g><circle cx="50" cy="50" r="38" fill="none" stroke="#7A5A14" stroke-width=".8"/>'+
+    '<circle cx="50" cy="50" r="25" fill="none" stroke="#7A5A14" stroke-width=".6"/>'+
+    '<text font-size="5.6" font-weight="700" fill="#4A350A" letter-spacing=".2" font-family="Hind Siliguri,Amiri,sans-serif"><textPath href="#rc">'+ring+ring+'</textPath></text>'+
+    star8(50,50,15,"#F6DD8E","#7A5A14",.7)+'<circle cx="50" cy="50" r="6.5" fill="#0B3D4A"/><path d="M45.6 51.5h8.8v1h-8.8zM46.2 51.5a3.8 3.8 0 0 1 7.6 0z" fill="#F1D27A"/></svg>';
+}
+function cornerOrn(){
+  return '<svg viewBox="0 0 100 100">'+star8(18,18,9,"none","#C9A13B",1.6)+star8(18,18,4.5,"#0A7A55","none",0)+
+    '<path d="M4 4h70M4 4v70" stroke="#C9A13B" stroke-width="2.4" fill="none"/><path d="M32 18h40M18 32v40" stroke="#0A7A55" stroke-width="1" fill="none"/>'+
+    '<circle cx="76" cy="4" r="2.4" fill="#C9A13B"/><circle cx="4" cy="76" r="2.4" fill="#C9A13B"/></svg>';
+}
+function watermark(){
+  return '<svg class="wm" viewBox="0 0 200 200">'+star8(100,100,92,"none","#0B3D4A",1.2)+star8(100,100,78,"none","#C9A13B",.8)+star8(100,100,50,"none","#0B3D4A",.8)+'<circle cx="100" cy="100" r="30" fill="none" stroke="#C9A13B" stroke-width=".8"/></svg>';
+}
 function render(w, c, L, nm, fm, tt) {
   var t = T[L], free = c.kind === "free", rtl = L === "ar";
   var title = free ? t.tF : t.tC, dd = dates(new Date(c.date || Date.now()), L);
@@ -49,7 +87,7 @@ function render(w, c, L, nm, fm, tt) {
   var dua = typeof t.dua === "function" ? t.dua(fm) : t.dua;
   var url = "https://darulilmonline.com/verify?c=" + encodeURIComponent(c.code);
   var LOGO = '<svg viewBox="0 0 64 64" width="64" height="64"><circle cx="32" cy="32" r="31" fill="#0B3D4A"/><path d="M18 36h28v3H18z" fill="#F1D27A"/><path d="M20 36a12 12 0 0 1 24 0z" fill="#F1D27A"/><path d="M32 22l-1.5-5h3z" fill="#F1D27A"/><circle cx="32" cy="14" r="2" fill="#F1D27A"/><path d="M20 44l12 3 12-3v6l-12 3-12-3z" fill="#FBF7EE"/></svg>';
-  var corner = '<svg viewBox="0 0 100 100"><path d="M4 4h60M4 4v60" stroke="#C9A13B" stroke-width="3" fill="none"/><path d="M14 14h36M14 14v36" stroke="#C9A13B" stroke-width="1.5" fill="none"/><circle cx="14" cy="14" r="5" fill="#C9A13B"/><path d="M30 4c4 8 4 18-6 26M4 30c8 4 18 4 26-6" stroke="#0A7A55" stroke-width="1.5" fill="none"/></svg>';
+  var corner = cornerOrn();
   var nmSize = L === "en" ? "40pt" : L === "ar" ? "32pt" : "30pt";
   var html = '<!doctype html><html lang="' + L + '" dir="' + (rtl ? "rtl" : "ltr") + '"><head><meta charset="utf-8"><title>' + esc(title) + " — " + esc(nm) + '</title>' +
     '<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">' +
@@ -57,10 +95,13 @@ function render(w, c, L, nm, fm, tt) {
     '<style>@page{size:A4 landscape;margin:0}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}' +
     'body{margin:0;font-family:' + t.font + ';color:#1C2427;background:#e9ece8}' +
     '.pg{width:297mm;height:210mm;margin:0 auto;padding:9mm;background:#fff;position:relative;overflow:hidden}' +
-    '.fr{position:absolute;inset:9mm;border:2.5px solid #0B3D4A;border-radius:6px}.fr2{position:absolute;inset:12mm;border:1px solid #C9A13B;border-radius:4px}' +
+    '.fr{position:absolute;inset:9mm;border:2.5px solid #0B3D4A;border-radius:6px}.fr2{position:absolute;inset:12mm;border:1px solid #C9A13B;border-radius:4px}.fr3{position:absolute;inset:13.2mm;border:.6px solid #0A7A55;border-radius:3px;opacity:.6}' +
     '.bg{position:absolute;inset:12mm;background:radial-gradient(60% 70% at 50% 45%,rgba(241,210,122,.13),transparent 70%),repeating-linear-gradient(45deg,rgba(11,61,74,.025) 0 2px,transparent 2px 14px)}' +
+    '.gl,.mf{position:absolute;inset:0;width:297mm;height:210mm}.wm{position:absolute;left:50%;top:52%;width:120mm;height:120mm;transform:translate(-50%,-50%);opacity:.06}' +
+    '.ros{position:absolute;' + (rtl ? "left" : "right") + ':19mm;top:17mm;width:30mm;height:38.4mm;filter:drop-shadow(0 1.5mm 1.5mm rgba(0,0,0,.18))}' +
+    '.sec{display:block;font-size:7.5pt;color:#6B767B;margin-top:.5mm;letter-spacing:.3px;font-family:Arial,sans-serif;direction:ltr}' +
     '.cn{position:absolute;width:30mm;height:30mm}.cn svg{width:100%;height:100%}.tl{top:13mm;left:13mm}.tr{top:13mm;right:13mm;transform:scaleX(-1)}.bl{bottom:13mm;left:13mm;transform:scaleY(-1)}.br{bottom:13mm;right:13mm;transform:scale(-1)}' +
-    '.in{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:14mm 30mm 12mm}' +
+    '.in{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:14mm 42mm 12mm}' +
     '.hd{display:flex;align-items:center;gap:12px}.hd b{font-size:20pt;color:#0B3D4A;display:block;line-height:1.15}.hd small{color:#A8862A;font-size:10pt;font-family:"Hind Siliguri",sans-serif}' +
     '.ar{font-family:Amiri,serif;color:#A8862A;font-size:16pt;margin:4mm 0 1mm}' +
     '.ti{font-size:' + (L === "en" ? "32pt" : "30pt") + ';font-weight:700;color:#0A5A4A;margin:1mm 0 0;line-height:1.2}' +
@@ -78,9 +119,9 @@ function render(w, c, L, nm, fm, tt) {
     '.bar{position:sticky;top:0;background:#fff;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;z-index:5;font-family:"Hind Siliguri",sans-serif;direction:ltr}.bar button{font:inherit;font-weight:700;padding:10px 18px;border-radius:12px;border:0;background:#F6B91A;cursor:pointer}' +
     '@media print{.bar{display:none}body{background:#fff}}@media screen{.pg{margin:16px auto;box-shadow:0 10px 40px rgba(0,0,0,.15)}}</style></head><body>' +
     '<div class="bar"><span>প্রিন্ট উইন্ডোতে Layout: Landscape, “Save as PDF” বেছে নিন</span><button onclick="print()">PDF হিসেবে সেভ / প্রিন্ট</button></div>' +
-    '<div class="pg"><div class="bg"></div><div class="fr"></div><div class="fr2"></div>' +
+    '<div class="pg"><div class="bg"></div>' + guilloche() + watermark() + '<div class="fr"></div><div class="fr2"></div><div class="fr3"></div>' + microFrame(c.code) +
     '<div class="cn tl">' + corner + '</div><div class="cn tr">' + corner + '</div><div class="cn bl">' + corner + '</div><div class="cn br">' + corner + '</div>' +
-    '<div class="seal">' + t.seal + '</div>' +
+    rosette(L, c.code) +
     '<div class="in"><div class="hd">' + LOGO + '<div style="text-align:' + (rtl ? "right" : "left") + '"><b>' + t.brand + '</b><small>' + t.tag + '</small></div></div>' +
     '<div class="ar">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>' +
     '<div class="ti">' + esc(title) + '</div><div class="ti2">' + t.sub(free) + '</div>' +

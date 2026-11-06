@@ -622,6 +622,7 @@ header{background:rgba(255,255,255,.94)!important;backdrop-filter:blur(10px);-we
 .vr.bad{border-color:#DC2626;background:color-mix(in srgb,#DC2626 7%,var(--surface))}
 .vr .vh{display:flex;align-items:center;gap:10px;font-size:20px;font-weight:800;margin-bottom:10px}
 .vr.ok .vh{color:#16A34A}.vr.bad .vh{color:#DC2626}
+.vtip{font-size:14px;line-height:1.7;margin:0 0 12px;padding:10px 12px;border-radius:12px;background:var(--surface);border:1px dashed var(--line)}
 .vr dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:0 0 14px}.vr dt{color:var(--muted)}.vr dd{margin:0;font-weight:600}
 </style>
 <script>
@@ -836,14 +837,14 @@ async function check(code){
   <dt>নাম</dt><dd>${e(d.name)}${d.name_en?`<br><span dir="ltr">${e(d.name_en)}</span>`:""}${d.name_ar?`<br><span dir="rtl">${e(d.name_ar)}</span>`:""}</dd><dt>কোর্স</dt><dd>${e(d.course_title||d.course)}</dd><dt>ধরন</dt><dd>${kind}</dd>
   ${d.score!=null?`<dt>নম্বর</dt><dd>${bn(d.score)}%</dd>`:""}${d.grade?`<dt>ফলাফল</dt><dd>${e(d.grade)}</dd>`:""}
   <dt>তারিখ</dt><dd>${date}</dd><dt>সনদ নম্বর</dt><dd>${e(d.code)}</dd></dl>
-  <button type="button" class="btn btn-ghost" id="vfp">সনদটি দেখুন (বাংলা / English / العربية)</button></div>`;
+  <p class="vtip">🔍 <b>মিলিয়ে নিন:</b> আপনার হাতের সনদে লেখা <b>নাম, কোর্স ও তারিখ</b> ওপরের তথ্যের সাথে হুবহু মিলছে কি না দেখুন। একটি অক্ষরও না মিললে সনদটি বদলানো হয়েছে — আমাদের WhatsApp-এ (01329-173444) জানান। আসল সনদের চারপাশের সরু ফ্রেমে অতি ক্ষুদ্র অক্ষরে এই সনদ নম্বরটিই লেখা থাকে।</p><button type="button" class="btn btn-ghost" id="vfp">সনদটি দেখুন (বাংলা / English / العربية)</button></div>`;
   document.getElementById("vfp").onclick=()=>window.dioCert&&dioCert(d);
 }
 document.getElementById("vff").onsubmit=ev=>{ev.preventDefault();check(inp.value);history.replaceState(null,"","?c="+encodeURIComponent(inp.value.trim().toUpperCase()));};
 const c=new URLSearchParams(location.search).get("c");if(c)check(c);
 })();
 </script>
-<script src="/cert.js?v=39"></script>
+<script src="/cert.js?v=40"></script>
 <script id="mnavjs">
 (function(){
   var nav=document.querySelector("header .links"),navr=document.querySelector("header .nav-r");
