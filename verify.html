@@ -833,10 +833,10 @@ async function check(code){
   if(d.revoked){out.innerHTML=`<div class="vr bad"><div class="vh">✕ এই সনদটি বাতিল করা হয়েছে</div><dl><dt>নম্বর</dt><dd>${e(d.code)}</dd><dt>নাম</dt><dd>${e(d.name)}</dd></dl></div>`;return;}
   const kind=d.kind==="free"?"স্ব-অধ্যয়ন সমাপনী সনদ (ফ্রি কোর্স, অনলাইন পরীক্ষা)":"কোর্স সমাপনী সনদ (শিক্ষকের তত্ত্বাবধানে)";
   out.innerHTML=`<div class="vr ok"><div class="vh">✓ সনদটি আসল — দারুল ইলম অনলাইন কর্তৃক প্রদত্ত</div><dl>
-  <dt>নাম</dt><dd>${e(d.name)}</dd><dt>কোর্স</dt><dd>${e(d.course_title||d.course)}</dd><dt>ধরন</dt><dd>${kind}</dd>
+  <dt>নাম</dt><dd>${e(d.name)}${d.name_en?`<br><span dir="ltr">${e(d.name_en)}</span>`:""}${d.name_ar?`<br><span dir="rtl">${e(d.name_ar)}</span>`:""}</dd><dt>কোর্স</dt><dd>${e(d.course_title||d.course)}</dd><dt>ধরন</dt><dd>${kind}</dd>
   ${d.score!=null?`<dt>নম্বর</dt><dd>${bn(d.score)}%</dd>`:""}${d.grade?`<dt>ফলাফল</dt><dd>${e(d.grade)}</dd>`:""}
   <dt>তারিখ</dt><dd>${date}</dd><dt>সনদ নম্বর</dt><dd>${e(d.code)}</dd></dl>
-  <button type="button" class="btn btn-ghost" id="vfp">সনদটি দেখুন</button></div>`;
+  <button type="button" class="btn btn-ghost" id="vfp">সনদটি দেখুন (বাংলা / English / العربية)</button></div>`;
   document.getElementById("vfp").onclick=()=>window.dioCert&&dioCert(d);
 }
 document.getElementById("vff").onsubmit=ev=>{ev.preventDefault();check(inp.value);history.replaceState(null,"","?c="+encodeURIComponent(inp.value.trim().toUpperCase()));};

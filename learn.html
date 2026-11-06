@@ -1108,7 +1108,7 @@ async function quizPanel(slug,c){
     ${certs.length?`<div class="qzcerts"><b>আপনার সনদ</b>${certs.map(x=>`<button type="button" class="qzcert" data-code="${e(x.code)}">🎓 ${e(x.name)} · ${bnd(x.score)}% · ${e(x.code)}</button>`).join("")}</div>`:""}`;
     box.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>run(mods[+b.dataset.m].items,mods[+b.dataset.m].module,false));
     box.querySelector("#qzfin").onclick=()=>run(mods.flatMap(m=>m.items),null,true);
-    box.querySelectorAll("[data-code]").forEach(b=>b.onclick=async()=>{const x=myCerts().find(y=>y.code===b.dataset.code);await loadCertJs();dioCert(Object.assign({course_title:c.t},x));});
+    box.querySelectorAll("[data-code]").forEach(b=>b.onclick=async()=>{const x=myCerts().find(y=>y.code===b.dataset.code);await loadCertJs();dioCert(Object.assign({course:slug,course_title:c.t},x));});
   }
   function run(items,module,final){
     const A={};
@@ -1129,7 +1129,7 @@ async function quizPanel(slug,c){
         if(!r.ok){box.querySelector(".qzsub").innerHTML=`<div class="qzres bad"><b>${r.score!=null?bnd(r.score)+"%":""}</b><span>${e(r.msg||"উত্তীর্ণ হননি")}</span><p class="muted">অধ্যায়ের কুইজগুলো আবার অনুশীলন করে চেষ্টা করুন — যত বার ইচ্ছা।</p><button type="button" class="btn btn-ghost" id="qzh">ফিরে যান</button></div>`;box.querySelector("#qzh").onclick=home;return;}
         try{const L=JSON.parse(localStorage.getItem("dio-certs")||"[]");L.push({code:r.code,name:r.name,course:slug,kind:"free",score:r.score,date:r.date});localStorage.setItem("dio-certs",JSON.stringify(L));}catch(_){}
         box.querySelector(".qzsub").innerHTML=`<div class="qzres good"><b>${bnd(r.score)}%</b><span>মাশাআল্লাহ! আপনি উত্তীর্ণ হয়েছেন।</span><p>সনদ নম্বর: <b>${e(r.code)}</b></p><button type="button" class="btn btn-primary" id="qzc">🎓 সনদ দেখুন ও PDF</button></div>`;
-        box.querySelector("#qzc").onclick=async()=>{await loadCertJs();dioCert({code:r.code,name:r.name,course_title:c.t,kind:"free",score:r.score,date:r.date});};
+        box.querySelector("#qzc").onclick=async()=>{await loadCertJs();dioCert({code:r.code,name:r.name,course:slug,course_title:c.t,kind:"free",score:r.score,date:r.date});};
         return;
       }
       let r;try{r=await rpc("quiz_grade",{p_course:slug,p_module:module||"",p_answers:A});}catch(_){msg.textContent="হয়নি — আবার চেষ্টা করুন।";return;}
