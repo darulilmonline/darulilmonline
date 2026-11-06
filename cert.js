@@ -1,4 +1,4 @@
-/* দারুল ইলম অনলাইন — তিন ভাষার নিরাপত্তা-সনদ — v41: সব তথ্য শুধু সার্ভার থেকে */
+/* দারুল ইলম অনলাইন — তিন ভাষার নিরাপত্তা-সনদ — v42: ইসলামি অলংকরণ, সব তথ্য শুধু সার্ভার থেকে */
 (function () {
 var SB = "https://nlylwrbxejjxnfljcztv.supabase.co", SK = "sb_publishable_N2xa0vKr70Ou1S2zlieZTw_qVqrImfg";
 var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"]/g, function (x) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[x]; }); };
@@ -47,7 +47,7 @@ function guilloche(){ /* পুরো পাতা: ২৯৭ × ২১০ ম�
   for(i=0;i<34;i++){ d='M'; for(j=0;j<=120;j++){ x=12+j*(273/120); y=16+i*5.4+Math.sin(j/120*Math.PI*6+i*0.55)*2.2+Math.sin(j/120*Math.PI*17+i)*0.6; d+=(j?' L':'')+f2(x)+' '+f2(y);} out+='<path d="'+d+'"/>'; }
   var ros='';
   for(i=0;i<40;i++){ d='M'; var ph=i*Math.PI*2/40; for(j=0;j<=200;j++){ t=j/200*Math.PI*2; var r=30+9*Math.sin(7*t+ph)+3*Math.sin(19*t); x=148.5+r*Math.cos(t+ph/7); y=112+r*Math.sin(t+ph/7); d+=(j?' L':'')+f2(x)+' '+f2(y);} ros+='<path d="'+d+'Z"/>'; }
-  return '<svg class="gl" viewBox="0 0 297 210" preserveAspectRatio="none"><g fill="none" stroke="#0A7A55" stroke-opacity=".07" stroke-width=".18">'+out+'</g><g fill="none" stroke="#C9A13B" stroke-opacity=".12" stroke-width=".15">'+ros+'</g></svg>';
+  return '<svg class="gl" viewBox="0 0 297 210" preserveAspectRatio="none"><g fill="none" stroke="#0A7A55" stroke-opacity=".07" stroke-width=".18">'+out+'</g></svg>';
 }
 function star8(cx,cy,r,fill,stroke,sw){ /* আট-কোণা তারকা (খাতাম) */
   var p=function(rot){var a=[];for(var k=0;k<4;k++){var t=rot+k*Math.PI/2;a.push(f2(cx+r*Math.cos(t))+','+f2(cy+r*Math.sin(t)));}return a.join(' ');};
@@ -56,7 +56,7 @@ function star8(cx,cy,r,fill,stroke,sw){ /* আট-কোণা তারকা (
 function microFrame(code){
   var unit='DARUL ILM ONLINE \u2022 VERIFY AT DARULILMONLINE.COM/VERIFY \u2022 '+code+' \u2022 \u0627\u0644\u0639\u0644\u0645 \u2022 ', txt='';
   while(txt.length<1500) txt+=unit;
-  return '<svg class="mf" viewBox="0 0 297 210"><defs><path id="mfp" d="M11 11 H286 V199 H11 Z"/></defs><text font-size="1.45" fill="#0B3D4A" fill-opacity=".75" letter-spacing=".05" font-family="Arial,sans-serif"><textPath href="#mfp">'+txt+'</textPath></text></svg>';
+  return '<svg class="mf" viewBox="0 0 297 210"><defs><path id="mfp" d="M21.2 21.2 H275.8 V188.8 H21.2 Z"/></defs><text font-size="1.3" fill="#0A4A40" fill-opacity=".8" letter-spacing=".05" font-family="Arial,sans-serif"><textPath href="#mfp">'+txt+'</textPath></text></svg>';
 }
 function rosette(L,code){
   var sc='',k,n=40;
@@ -78,6 +78,34 @@ function cornerOrn(){
 function watermark(){
   return '<svg class="wm" viewBox="0 0 200 200">'+star8(100,100,92,"none","#0B3D4A",1.2)+star8(100,100,78,"none","#C9A13B",.8)+star8(100,100,50,"none","#0B3D4A",.8)+'<circle cx="100" cy="100" r="30" fill="none" stroke="#C9A13B" stroke-width=".8"/></svg>';
 }
+
+function islamicFrame(){ /* গাঢ় সবুজ পাড়ে সোনালি তারকা-নকশা, কোণায় মেডেলিয়ন */
+  var tile='<pattern id="bt" x="9" y="9" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#0A4A40"/>'+
+    star8(4,4,3.1,"none","#E2BE5C",.32)+star8(4,4,1.2,"#E2BE5C","none",0)+
+    '<path d="M0 0L1.2 0 0 1.2ZM8 0L6.8 0 8 1.2ZM0 8L1.2 8 0 6.8ZM8 8L6.8 8 8 6.8Z" fill="#C9A13B" fill-opacity=".7"/></pattern>';
+  var bg='<pattern id="tess" width="21" height="21" patternUnits="userSpaceOnUse">'+star8(10.5,10.5,6.2,"none","#0A7A55",.22)+star8(10.5,10.5,3,"none","#C9A13B",.18)+
+    '<path d="M0 10.5h4.3M16.7 10.5H21M10.5 0v4.3M10.5 16.7V21M0 0l4 4M21 0l-4 4M0 21l4-4M21 21l-4-4" stroke="#0A7A55" stroke-width=".18" fill="none"/></pattern>';
+  var corners='',cx=[13,284],cy=[13,197];
+  for(var a=0;a<2;a++)for(var b=0;b<2;b++){var x=cx[a],y=cy[b];
+    corners+='<rect x="'+(x-5)+'" y="'+(y-5)+'" width="10" height="10" fill="url(#gc)" stroke="#7A5A14" stroke-width=".3"/>'+star8(x,y,3.8,"#0A4A40","#7A5A14",.25)+star8(x,y,1.5,"#F6DD8E","none",0);}
+  return '<svg class="if" viewBox="0 0 297 210"><defs>'+tile+bg+'<linearGradient id="gc" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#F6DD8E"/><stop offset=".5" stop-color="#D8AE48"/><stop offset="1" stop-color="#A8812A"/></linearGradient></defs>'+
+    '<rect x="17" y="17" width="263" height="176" fill="url(#tess)" opacity=".32"/>'+
+    '<path fill-rule="evenodd" fill="url(#bt)" d="M8 8H289V202H8ZM18 18V192H279V18Z"/>'+
+    '<rect x="8" y="8" width="281" height="194" fill="none" stroke="#C9A13B" stroke-width=".9"/><rect x="6.4" y="6.4" width="284.2" height="197.2" fill="none" stroke="#0A4A40" stroke-width=".6"/>'+
+    '<rect x="18" y="18" width="261" height="174" fill="none" stroke="#C9A13B" stroke-width=".9"/><rect x="19.6" y="19.6" width="257.8" height="170.8" fill="none" stroke="#0A7A55" stroke-width=".25"/>'+
+    corners+'</svg>';
+}
+function shamsa(){ /* উসমানি শামসা — সূক্ষ্ম পাপড়ি-রেখা (নিরাপত্তা + সৌন্দর্য) */
+  var g='',k,cx=148.5,cy=114;
+  for(k=0;k<48;k++)g+='<ellipse cx="'+cx+'" cy="'+f2(cy-21)+'" rx="5.2" ry="21" transform="rotate('+f2(k*7.5)+' '+cx+' '+cy+')"/>';
+  for(k=0;k<24;k++)g+='<ellipse cx="'+cx+'" cy="'+f2(cy-34)+'" rx="3" ry="9" transform="rotate('+f2(k*15)+' '+cx+' '+cy+')"/>';
+  return '<svg class="sh" viewBox="0 0 297 210"><g fill="none" stroke="#C9A13B" stroke-width=".14" stroke-opacity=".38">'+g+'</g>'+
+    '<g fill="none" stroke="#0A7A55" stroke-opacity=".28">'+'<circle cx="'+cx+'" cy="'+cy+'" r="44" stroke-width=".3"/><circle cx="'+cx+'" cy="'+cy+'" r="45.5" stroke-width=".15"/>'+star8(cx,cy,30,"none","#0A7A55",.25)+star8(cx,cy,12,"none","#C9A13B",.25)+'</g></svg>';
+}
+function divider(w){
+  return '<svg class="dv" viewBox="0 0 160 8" style="width:'+w+'mm"><path d="M2 4H66M94 4H158" stroke="#C9A13B" stroke-width=".6"/><path d="M10 4H62M98 4H150" stroke="#0A7A55" stroke-width=".25" transform="translate(0 1.4)"/>'+
+    '<path d="M62 4l3-2.2 3 2.2-3 2.2zM92 4l3-2.2 3 2.2-3 2.2z" fill="#C9A13B"/>'+star8(80,4,3.6,"#0A4A40","#C9A13B",.4)+star8(80,4,1.4,"#F6DD8E","none",0)+'</svg>';
+}
 function render(w, c, L, nm, fm, tt) {
   var t = T[L], free = c.kind === "free", rtl = L === "ar";
   var title = free ? t.tF : t.tC, dd = dates(new Date(c.date || Date.now()), L);
@@ -96,19 +124,19 @@ function render(w, c, L, nm, fm, tt) {
     'body{margin:0;font-family:' + t.font + ';color:#1C2427;background:#e9ece8}' +
     '.pg{width:297mm;height:210mm;margin:0 auto;padding:9mm;background:#fff;position:relative;overflow:hidden}' +
     '.fr{position:absolute;inset:9mm;border:2.5px solid #0B3D4A;border-radius:6px}.fr2{position:absolute;inset:12mm;border:1px solid #C9A13B;border-radius:4px}.fr3{position:absolute;inset:13.2mm;border:.6px solid #0A7A55;border-radius:3px;opacity:.6}' +
-    '.bg{position:absolute;inset:12mm;background:radial-gradient(60% 70% at 50% 45%,rgba(241,210,122,.13),transparent 70%),repeating-linear-gradient(45deg,rgba(11,61,74,.025) 0 2px,transparent 2px 14px)}' +
-    '.gl,.mf{position:absolute;inset:0;width:297mm;height:210mm}.wm{position:absolute;left:50%;top:52%;width:120mm;height:120mm;transform:translate(-50%,-50%);opacity:.06}' +
-    '.ros{position:absolute;' + (rtl ? "left" : "right") + ':19mm;top:17mm;width:30mm;height:38.4mm;filter:drop-shadow(0 1.5mm 1.5mm rgba(0,0,0,.18))}' +
+    '.bg{position:absolute;inset:18mm;background:radial-gradient(60% 70% at 50% 45%,rgba(241,210,122,.13),transparent 70%),repeating-linear-gradient(45deg,rgba(11,61,74,.025) 0 2px,transparent 2px 14px)}' +
+    '.gl,.mf,.if,.sh{position:absolute;inset:0;width:297mm;height:210mm}.glow{position:absolute;inset:19mm;background:radial-gradient(ellipse 62% 60% at 50% 46%,rgba(255,253,246,.94) 0,rgba(255,253,246,.82) 55%,rgba(255,253,246,0) 100%)}.dv{display:block;height:auto;margin:1mm auto}.wm{position:absolute;left:50%;top:52%;width:120mm;height:120mm;transform:translate(-50%,-50%);opacity:.06}' +
+    '.ros{position:absolute;' + (rtl ? "left" : "right") + ':25mm;top:24mm;width:28mm;height:35.8mm;filter:drop-shadow(0 1.5mm 1.5mm rgba(0,0,0,.18))}' +
     '.sec{display:block;font-size:7.5pt;color:#6B767B;margin-top:.5mm;letter-spacing:.3px;font-family:Arial,sans-serif;direction:ltr}' +
     '.cn{position:absolute;width:30mm;height:30mm}.cn svg{width:100%;height:100%}.tl{top:13mm;left:13mm}.tr{top:13mm;right:13mm;transform:scaleX(-1)}.bl{bottom:13mm;left:13mm;transform:scaleY(-1)}.br{bottom:13mm;right:13mm;transform:scale(-1)}' +
-    '.in{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:14mm 42mm 12mm}' +
+    '.in{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;text-align:center;padding:16mm 46mm 15mm}' +
     '.hd{display:flex;align-items:center;gap:12px}.hd b{font-size:20pt;color:#0B3D4A;display:block;line-height:1.15}.hd small{color:#A8862A;font-size:10pt;font-family:"Hind Siliguri",sans-serif}' +
-    '.ar{font-family:Amiri,serif;color:#A8862A;font-size:16pt;margin:4mm 0 1mm}' +
+    '.ar{font-family:Amiri,serif;color:#A8862A;font-size:16pt;margin:2mm 0 0}' +
     '.ti{font-size:' + (L === "en" ? "32pt" : "30pt") + ';font-weight:700;color:#0A5A4A;margin:1mm 0 0;line-height:1.2}' +
-    '.ti2{font-family:' + (L === "ar" ? "'Cormorant Garamond',serif" : "Amiri,serif") + ';font-size:15pt;color:#0B3D4A;margin-bottom:4mm}' +
+    '.ti2{font-family:' + (L === "ar" ? "'Cormorant Garamond',serif" : "Amiri,serif") + ';font-size:15pt;color:#0B3D4A;margin-bottom:0}' +
     '.sm{font-size:13pt;color:#4A5558;font-style:' + (L === "en" ? "italic" : "normal") + '}' +
-    '.nm{font-family:' + t.nameFont + ';font-size:' + nmSize + ';font-weight:700;color:#111;margin:1mm 0 1mm;padding:0 12mm 2mm;border-bottom:2px solid #C9A13B;min-width:150mm;line-height:1.3}' +
-    '.co{font-size:19pt;font-weight:700;color:#0B3D4A;margin:3mm 0 1mm}' +
+    '.nm{font-family:' + t.nameFont + ';font-size:' + nmSize + ';font-weight:700;color:#111;margin:0;padding:0 12mm;line-height:1.3}' +
+    '.co{font-size:19pt;font-weight:700;color:#0B3D4A;margin:1mm 0 1mm}' +
     '.ln{font-size:' + (L === "en" ? "14pt" : "12.5pt") + ';color:#3E4A4E;max-width:205mm;line-height:1.7}.ln b{color:#0A5A4A}' +
     '.dt{font-size:11pt;color:#4A5558;margin-top:3mm}' +
     '.ft{margin-top:auto;width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:10mm}' +
@@ -119,13 +147,13 @@ function render(w, c, L, nm, fm, tt) {
     '.bar{position:sticky;top:0;background:#fff;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;z-index:5;font-family:"Hind Siliguri",sans-serif;direction:ltr}.bar button{font:inherit;font-weight:700;padding:10px 18px;border-radius:12px;border:0;background:#F6B91A;cursor:pointer}' +
     '@media print{.bar{display:none}body{background:#fff}}@media screen{.pg{margin:16px auto;box-shadow:0 10px 40px rgba(0,0,0,.15)}}</style></head><body>' +
     '<div class="bar"><span>প্রিন্ট উইন্ডোতে Layout: Landscape, “Save as PDF” বেছে নিন</span><button onclick="print()">PDF হিসেবে সেভ / প্রিন্ট</button></div>' +
-    '<div class="pg"><div class="bg"></div>' + guilloche() + watermark() + '<div class="fr"></div><div class="fr2"></div><div class="fr3"></div>' + microFrame(c.code) +
-    '<div class="cn tl">' + corner + '</div><div class="cn tr">' + corner + '</div><div class="cn bl">' + corner + '</div><div class="cn br">' + corner + '</div>' +
+    '<div class="pg"><div class="bg"></div>' + guilloche() + islamicFrame() + '<div class="glow"></div>' + shamsa() + microFrame(c.code) +
+    
     rosette(L, c.code) +
     '<div class="in"><div class="hd">' + LOGO + '<div style="text-align:' + (rtl ? "right" : "left") + '"><b>' + t.brand + '</b><small>' + t.tag + '</small></div></div>' +
     '<div class="ar">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>' +
-    '<div class="ti">' + esc(title) + '</div><div class="ti2">' + t.sub(free) + '</div>' +
-    '<div class="sm">' + t.cert + '</div><div class="nm" dir="auto">' + esc(nm) + '</div>' +
+    '<div class="ti">' + esc(title) + '</div><div class="ti2">' + t.sub(free) + '</div>' + divider(90) +
+    '<div class="sm">' + t.cert + '</div><div class="nm" dir="auto">' + esc(nm) + '</div>' + divider(150) +
     '<div class="co" dir="auto">' + esc(course) + '</div>' +
     '<div class="ln">' + line + dua + '</div>' +
     '<div class="dt">' + t.date + dd[0] + (dd[1] ? " · " + dd[1] : "") + '</div>' +
