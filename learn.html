@@ -715,7 +715,8 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 .qzok{margin-inline-start:auto;font-style:normal;color:#16A34A;font-weight:800;font-size:20px}
 .qzfinal{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:16px;border-radius:16px;border:1px solid color-mix(in srgb,var(--gold) 50%,transparent);background:color-mix(in srgb,var(--gold) 9%,var(--surface))}
 .qzfinal b{display:block;font-size:17px}.qzfinal small{color:var(--muted)}
-.qzcerts{display:grid;gap:8px;margin-top:14px}.qzcert{font:inherit;text-align:start;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);cursor:pointer}
+.qzcerts{display:grid;gap:8px;margin-top:14px}.qzcert{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;font-family:inherit;text-align:start;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);cursor:pointer}
+.qzcert b{color:var(--brand);font-size:14px;white-space:nowrap}
 .qzempty{text-align:center;padding:30px 10px}
 .qzback{font:inherit;border:0;background:none;color:var(--brand);font-weight:700;cursor:pointer;padding:0;margin-bottom:6px}
 .qzt{font-size:20px;margin:4px 0 10px}
@@ -1084,7 +1085,7 @@ ${toc}${body}
 
 // ===== কুইজ ও সনদ =====
 async function rpc(fn,args){const r=await fetch(U+"/rest/v1/rpc/"+fn,{method:"POST",headers:Object.assign({"Content-Type":"application/json"},HD),body:JSON.stringify(args)});if(!r.ok)throw new Error(r.status);return r.json();}
-function loadCertJs(){return new Promise((res,rej)=>{if(window.dioCert)return res();const sc=document.createElement("script");sc.src="/cert.js";sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});}
+function loadCertJs(){return new Promise((res,rej)=>{if(window.dioCert)return res();const sc=document.createElement("script");sc.src="/cert.js?v=39";sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});}
 async function quizPanel(slug,c){
   const bnd=x=>String(x).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
   let ov=document.getElementById("qzov");if(ov)ov.remove();
@@ -1098,14 +1099,14 @@ async function quizPanel(slug,c){
   const total=mods.reduce((a,m)=>a+m.items.length,0);
   const best=k=>{try{return JSON.parse(localStorage.getItem("dio-quiz-"+slug)||"{}")[k]}catch(_){return null}};
   const setBest=(k,v)=>{try{const o=JSON.parse(localStorage.getItem("dio-quiz-"+slug)||"{}");if(!(k in o)||v>o[k])o[k]=v;localStorage.setItem("dio-quiz-"+slug,JSON.stringify(o));}catch(_){}};
-  const myCerts=()=>{try{return JSON.parse(localStorage.getItem("dio-certs")||"[]").filter(x=>x.course===slug)}catch(_){return[]}};
+  const myCerts=()=>{try{const seen={};return JSON.parse(localStorage.getItem("dio-certs")||"[]").filter(x=>x.course===slug&&!seen[x.code]&&(seen[x.code]=1))}catch(_){return[]}};
   function home(){
     if(!total){box.innerHTML='<div class="qzempty"><b>এই কোর্সের কুইজ শীঘ্রই আসছে ইনশাআল্লাহ।</b><p class="muted">ততক্ষণ পাঠগুলো পড়তে থাকুন।</p></div>';return;}
     const certs=myCerts();
     box.innerHTML=`<p class="muted">প্রতিটি অধ্যায়ের কুইজ দিয়ে নিজেকে যাচাই করুন। সব অধ্যায় শেষে <b>চূড়ান্ত পরীক্ষায় ৭০%</b> পেলে QR যাচাইযোগ্য সনদ পাবেন।</p>
     <div class="qzmods">${mods.map((m,i)=>{const b=best(m.module);return `<button type="button" class="qzmod" data-m="${i}"><span class="qzn">${String(i+1).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d])}</span><span><b>${e(m.module||"কুইজ")}</b><small>${bnd(m.items.length)}টি প্রশ্ন${b!=null?` · সেরা: ${bnd(b)}%`:""}</small></span>${b!=null&&b>=70?'<i class="qzok">✓</i>':""}</button>`}).join("")}</div>
     <div class="qzfinal"><div><b>চূড়ান্ত পরীক্ষা ও সনদ</b><small>${bnd(total)}টি প্রশ্ন · উত্তীর্ণ হতে ৭০%</small></div><button type="button" class="btn btn-primary" id="qzfin">পরীক্ষা শুরু করুন</button></div>
-    ${certs.length?`<div class="qzcerts"><b>আপনার সনদ</b>${certs.map(x=>`<button type="button" class="qzcert" data-code="${e(x.code)}">🎓 ${e(x.name)} · ${bnd(x.score)}% · ${e(x.code)}</button>`).join("")}</div>`:""}`;
+    ${certs.length?`<div class="qzcerts"><b>আপনার সনদ</b>${certs.map(x=>`<button type="button" class="qzcert" data-code="${e(x.code)}"><span>🎓 ${e(x.name)} · ${bnd(x.score)}% · ${e(x.code)}</span><b>দেখুন / PDF →</b></button>`).join("")}</div>`:""}`;
     box.querySelectorAll("[data-m]").forEach(b=>b.onclick=()=>run(mods[+b.dataset.m].items,mods[+b.dataset.m].module,false));
     box.querySelector("#qzfin").onclick=()=>run(mods.flatMap(m=>m.items),null,true);
     box.querySelectorAll("[data-code]").forEach(b=>b.onclick=async()=>{const x=myCerts().find(y=>y.code===b.dataset.code);await loadCertJs();dioCert(Object.assign({course:slug,course_title:c.t},x));});
@@ -1127,8 +1128,8 @@ async function quizPanel(slug,c){
         const nm=(box.querySelector("#qznm").value||"").trim();if(nm.length<3){msg.textContent="সনদের জন্য নাম লিখুন।";return;}
         let r;try{r=await rpc("cert_issue_free",{p_course:slug,p_name:nm,p_answers:A});}catch(_){msg.textContent="হয়নি — ইন্টারনেট দেখে আবার চেষ্টা করুন।";return;}
         if(!r.ok){box.querySelector(".qzsub").innerHTML=`<div class="qzres bad"><b>${r.score!=null?bnd(r.score)+"%":""}</b><span>${e(r.msg||"উত্তীর্ণ হননি")}</span><p class="muted">অধ্যায়ের কুইজগুলো আবার অনুশীলন করে চেষ্টা করুন — যত বার ইচ্ছা।</p><button type="button" class="btn btn-ghost" id="qzh">ফিরে যান</button></div>`;box.querySelector("#qzh").onclick=home;return;}
-        try{const L=JSON.parse(localStorage.getItem("dio-certs")||"[]");L.push({code:r.code,name:r.name,course:slug,kind:"free",score:r.score,date:r.date});localStorage.setItem("dio-certs",JSON.stringify(L));}catch(_){}
-        box.querySelector(".qzsub").innerHTML=`<div class="qzres good"><b>${bnd(r.score)}%</b><span>মাশাআল্লাহ! আপনি উত্তীর্ণ হয়েছেন।</span><p>সনদ নম্বর: <b>${e(r.code)}</b></p><button type="button" class="btn btn-primary" id="qzc">🎓 সনদ দেখুন ও PDF</button></div>`;
+        try{const L=JSON.parse(localStorage.getItem("dio-certs")||"[]").filter(x=>x.code!==r.code);L.push({code:r.code,name:r.name,course:slug,kind:"free",score:r.score,date:r.date});localStorage.setItem("dio-certs",JSON.stringify(L));}catch(_){}
+        box.querySelector(".qzsub").innerHTML=`<div class="qzres good"><b>${bnd(r.score)}%</b><span>মাশাআল্লাহ! আপনি উত্তীর্ণ হয়েছেন।${r.again?" (এই নামে আপনার সনদ আগেই আছে — সেটাই দেখানো হলো)":""}</span><p>সনদ নম্বর: <b>${e(r.code)}</b></p><button type="button" class="btn btn-primary" id="qzc">🎓 সনদ দেখুন ও PDF</button></div>`;
         box.querySelector("#qzc").onclick=async()=>{await loadCertJs();dioCert({code:r.code,name:r.name,course:slug,course_title:c.t,kind:"free",score:r.score,date:r.date});};
         return;
       }
