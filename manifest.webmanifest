@@ -1,0 +1,23 @@
+{
+  "name": "দারুল ইলম অনলাইন",
+  "short_name": "দারুল ইলম",
+  "description": "ঘরে বসে দ্বীন শিক্ষা — কুরআন, তাজবীদ, হিফয, আকীদা, ফিকহ ও আরও।",
+  "lang": "bn",
+  "dir": "ltr",
+  "start_url": "/?source=app",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF7EE",
+  "theme_color": "#0B3D4A",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "ফ্রি কোর্স", "url": "/learn", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "অভিভাবক পোর্টাল", "url": "/portal", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] },
+    { "name": "লাইব্রেরি", "url": "/library", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

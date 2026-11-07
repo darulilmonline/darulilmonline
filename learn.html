@@ -735,6 +735,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 .qzres b{font-size:30px;line-height:1}.qzres.good{border-color:#16A34A;background:color-mix(in srgb,#16A34A 9%,var(--surface))}.qzres.good b{color:#16A34A}
 .qzres.bad{border-color:#D97706;background:color-mix(in srgb,#D97706 9%,var(--surface))}.qzres.bad b{color:#D97706}
 </style>
+<link rel="manifest" href="/manifest.webmanifest">
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
@@ -977,7 +978,7 @@ async function route(){
   document.title=c.t+" — ফ্রি কোর্স — দারুল ইলম অনলাইন";
   if(!cache[slug]){
     try{const [ls,qs]=await Promise.all([get(`lessons?select=*&course=eq.${slug}&published=eq.true&order=sort.asc,id.asc`),get(`questions?select=id,name,question,answer,answered_at&course=eq.${slug}&published=eq.true&order=answered_at.desc.nullslast`)]);cache[slug]={ls,qs};}
-    catch(_){app.innerHTML='<div class="wrap empty">এখন লোড করা যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।</div>';return;}
+    catch(_){app.innerHTML=navigator.onLine?'<div class="wrap empty">এখন লোড করা যাচ্ছে না। একটু পরে আবার চেষ্টা করুন।</div>':'<div class="wrap empty"><b>আপনি এখন অফলাইনে।</b><br>এই কোর্সটি এখনো অফলাইনে রাখা হয়নি — নেট এলে কোর্স খুলে “⬇ অফলাইনে রাখুন” চাপুন।<br><br><a class="btn btn-primary" href="/offline">অফলাইনে রাখা কোর্সগুলো দেখুন</a></div>';return;}
   }
   const {ls,qs}=cache[slug];
   const lid=+new URLSearchParams(location.search).get("l")||(ls[0]&&ls[0].id);
@@ -991,7 +992,7 @@ async function route(){
     <span class="badge-free">ফ্রি কোর্স · বিনামূল্যে</span>
     <h1>${e(c.t)}</h1><p>${e(c.d)}</p>
     <div class="row">${ls.length?`<div class="prog"><i style="width:${pct}%"></i></div><span class="progt">${bn(done.length)}/${bn(ls.length)} পাঠ সম্পন্ন</span>`:""}
-      <a class="btn btn-ghost" href="/${slug}" style="padding:9px 18px;font-size:14px">লাইভ ক্লাসে ভর্তি</a>${ls.some(x=>x.body)?`<button type="button" class="btn btn-primary" id="cpdf" style="padding:9px 18px;font-size:14px">⬇ পুরো কোর্স PDF</button>`:""}<button type="button" class="btn btn-ghost" id="qzopen" style="padding:9px 18px;font-size:14px">✎ কুইজ ও সনদ</button></div>
+      <a class="btn btn-ghost" href="/${slug}" style="padding:9px 18px;font-size:14px">লাইভ ক্লাসে ভর্তি</a>${ls.some(x=>x.body)?`<button type="button" class="btn btn-primary" id="cpdf" style="padding:9px 18px;font-size:14px">⬇ পুরো কোর্স PDF</button>`:""}<button type="button" class="btn btn-ghost" id="qzopen" style="padding:9px 18px;font-size:14px">✎ কুইজ ও সনদ</button>${ls.some(x=>x.body)&&("serviceWorker" in navigator)?`<button type="button" class="btn btn-ghost" id="offsave" style="padding:9px 18px;font-size:14px">${offList().some(o=>o.slug===slug)?"✓ অফলাইনে আছে":"⬇ অফলাইনে রাখুন"}</button>`:""}</div>
   </div></section>
   <div class="wrap lrn">
     <details class="outd" open><summary>পাঠের তালিকা (${bn(ls.length)})</summary>
@@ -1012,6 +1013,7 @@ async function route(){
   app.querySelectorAll("[data-l]").forEach(a=>a.onclick=ev=>{ev.preventDefault();go(a.getAttribute("href"));scrollTo({top:document.getElementById("view").getBoundingClientRect().top+scrollY-90});});
   wireLesson(slug,ls,cur);
   app.querySelectorAll("[data-fs]").forEach(b=>b.onclick=()=>{const d=+b.dataset.fs;let v=readScale();v=d===0?1:Math.min(1.8,Math.max(0.85,+(v+d*0.1).toFixed(2)));setScale(v);});
+  const os=document.getElementById("offsave");if(os)os.onclick=()=>offlineSave(slug,c,ls,os);
   const qo=document.getElementById("qzopen");if(qo)qo.onclick=()=>quizPanel(slug,c);
   const cp=document.getElementById("cpdf");if(cp)cp.onclick=()=>coursePDF(c,ls.filter(x=>x.body));
   const lp=document.getElementById("lpdf");if(lp&&cur)lp.onclick=()=>coursePDF(c,[cur],true);
@@ -1084,6 +1086,27 @@ ${toc}${body}
   w.document.close();
 }
 
+
+// ===== অফলাইনে রাখা =====
+function offList(){try{return JSON.parse(localStorage.getItem("dio-offline")||"[]")}catch(_){return[]}}
+async function offlineSave(slug,c,ls,btn){
+  if(!navigator.onLine){alert("এখন ইন্টারনেট নেই — নেট থাকা অবস্থায় চাপুন।");return;}
+  btn.disabled=true;btn.textContent="সংরক্ষণ হচ্ছে…";
+  try{
+    await navigator.serviceWorker.ready;
+    if(!navigator.serviceWorker.controller)await new Promise(r=>setTimeout(r,800));
+    await Promise.all([
+      fetch(U+"/rest/v1/"+`lessons?select=*&course=eq.${slug}&published=eq.true&order=sort.asc,id.asc`,{headers:HD}),
+      fetch(U+"/rest/v1/"+`questions?select=id,name,question,answer,answered_at&course=eq.${slug}&published=eq.true&order=answered_at.desc.nullslast`,{headers:HD}),
+      fetch("/learn/"+encodeURIComponent(slug),{headers:{accept:"text/html"}}),fetch("/learn",{headers:{accept:"text/html"}}),fetch("/offline",{headers:{accept:"text/html"}})
+    ]);
+    if(!navigator.serviceWorker.controller){btn.disabled=false;btn.textContent="⬇ অফলাইনে রাখুন";alert("প্রথমবার ব্যবহার — পেজটা একবার রিফ্রেশ করে আবার “অফলাইনে রাখুন” চাপুন।");return;}
+    const L=offList().filter(o=>o.slug!==slug);L.push({slug,t:c.t,n:ls.filter(x=>x.body).length,at:Date.now()});localStorage.setItem("dio-offline",JSON.stringify(L));
+    btn.textContent="✓ অফলাইনে আছে";
+    alert("আলহামদুলিল্লাহ! “"+c.t+"” কোর্সের সব পাঠ এই ডিভাইসে রাখা হলো। এখন ইন্টারনেট ছাড়াও পড়তে পারবেন।\n\nনতুন পাঠ যোগ হলে নেট থাকা অবস্থায় এই বোতাম আবার চাপলেই হালনাগাদ হবে।");
+  }catch(_){btn.textContent="⬇ অফলাইনে রাখুন";alert("সংরক্ষণ হয়নি — ইন্টারনেট দেখে আবার চেষ্টা করুন।");}
+  btn.disabled=false;
+}
 // ===== কুইজ ও সনদ =====
 async function rpc(fn,args){const r=await fetch(U+"/rest/v1/rpc/"+fn,{method:"POST",headers:Object.assign({"Content-Type":"application/json"},HD),body:JSON.stringify(args)});if(!r.ok)throw new Error(r.status);return r.json();}
 function loadCertJs(){return new Promise((res,rej)=>{if(window.dioCert)return res();const sc=document.createElement("script");sc.src="/cert.js?v=42";sc.onload=res;sc.onerror=rej;document.head.appendChild(sc);});}
@@ -1179,6 +1202,22 @@ fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/courses?select=slug,sort
 </script>
 <a class="wa-float" href="https://wa.me/8801329173444" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5l.9 2.1c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1.1c.2-.3.4-.2.6-.1l2 1c.3.1.5.2.5.3.1.2.1.6-.2 1.2z"/></svg></a>
 <script>document.querySelectorAll(".links a").forEach(function(a){try{var r=a.getAttribute("href")||"";if(r.charAt(0)!=="/"||r.indexOf("#")>=0)return;var p=new URL(a.href,location.href).pathname.replace(/\.html$/,"").replace(/\/$/,"");var q=location.pathname.replace(/\.html$/,"").replace(/\/$/,"");if(p&&p===q)a.classList.add("on");}catch(e){}});</script>
+<script id="pwajs">
+(function(){
+  if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});
+  var st=document.createElement("style");st.textContent=".pwat{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(150%);z-index:80;background:#0B3D4A;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .3s;max-width:92vw;text-align:center}.pwat.on{transform:translateX(-50%)}.pwat.ok{background:#0A7A55}";document.head.appendChild(st);
+  var t=document.createElement("div");t.className="pwat";t.setAttribute("role","status");document.body.appendChild(t);var h;
+  function toast(m,ok){t.textContent=m;t.className="pwat on"+(ok?" ok":"");clearTimeout(h);h=setTimeout(function(){t.className="pwat"+(ok?" ok":"")},ok?2500:5000);}
+  addEventListener("offline",function(){toast("আপনি অফলাইনে — আগে দেখা ও অফলাইনে রাখা পাঠ পড়া যাবে");});
+  addEventListener("online",function(){toast("আবার অনলাইনে ✓",true);});
+  var dp=null;
+  addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;
+    var mc=document.querySelector(".mdraw .mcta");if(mc&&!document.getElementById("pwaInst")){var b=document.createElement("button");b.id="pwaInst";b.type="button";b.className="btn btn-ghost";b.textContent="📲 অ্যাপ হিসেবে ইনস্টল করুন";b.onclick=function(){dp&&dp.prompt();};mc.insertBefore(b,mc.firstChild);}
+    document.querySelectorAll("[data-pwa-install]").forEach(function(b){b.hidden=false;b.onclick=function(){dp&&dp.prompt();};});
+  });
+  addEventListener("appinstalled",function(){var b=document.getElementById("pwaInst");if(b)b.remove();toast("ইনস্টল হয়েছে — হোম স্ক্রিনে দারুল ইলমের আইকন দেখুন",true);});
+})();
+</script>
 <script id="mnavjs">
 (function(){
   var nav=document.querySelector("header .links"),navr=document.querySelector("header .nav-r");

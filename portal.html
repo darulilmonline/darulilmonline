@@ -666,6 +666,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 .hft th{text-align:start;padding:8px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}.hft td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 .hq{font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;color:#fff}.hq.excellent{background:#16A34A}.hq.good{background:#2563EB}.hq.weak{background:#D97706}
 </style>
+<link rel="manifest" href="/manifest.webmanifest">
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
@@ -939,6 +940,22 @@ function render(d,cred){
 document.getElementById("lf").onsubmit=ev=>{ev.preventDefault();const f=new FormData(ev.target);document.getElementById("le").textContent="যাচাই হচ্ছে…";login(f.get("phone").trim(),f.get("code").trim(),!!f.get("rem"));};
 const c=load(KEY);if(c)login(c.phone,c.code,true);
 
+})();
+</script>
+<script id="pwajs">
+(function(){
+  if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});
+  var st=document.createElement("style");st.textContent=".pwat{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(150%);z-index:80;background:#0B3D4A;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .3s;max-width:92vw;text-align:center}.pwat.on{transform:translateX(-50%)}.pwat.ok{background:#0A7A55}";document.head.appendChild(st);
+  var t=document.createElement("div");t.className="pwat";t.setAttribute("role","status");document.body.appendChild(t);var h;
+  function toast(m,ok){t.textContent=m;t.className="pwat on"+(ok?" ok":"");clearTimeout(h);h=setTimeout(function(){t.className="pwat"+(ok?" ok":"")},ok?2500:5000);}
+  addEventListener("offline",function(){toast("আপনি অফলাইনে — আগে দেখা ও অফলাইনে রাখা পাঠ পড়া যাবে");});
+  addEventListener("online",function(){toast("আবার অনলাইনে ✓",true);});
+  var dp=null;
+  addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;
+    var mc=document.querySelector(".mdraw .mcta");if(mc&&!document.getElementById("pwaInst")){var b=document.createElement("button");b.id="pwaInst";b.type="button";b.className="btn btn-ghost";b.textContent="📲 অ্যাপ হিসেবে ইনস্টল করুন";b.onclick=function(){dp&&dp.prompt();};mc.insertBefore(b,mc.firstChild);}
+    document.querySelectorAll("[data-pwa-install]").forEach(function(b){b.hidden=false;b.onclick=function(){dp&&dp.prompt();};});
+  });
+  addEventListener("appinstalled",function(){var b=document.getElementById("pwaInst");if(b)b.remove();toast("ইনস্টল হয়েছে — হোম স্ক্রিনে দারুল ইলমের আইকন দেখুন",true);});
 })();
 </script>
 <script id="mnavjs">
