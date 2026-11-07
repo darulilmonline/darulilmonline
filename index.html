@@ -635,6 +635,73 @@ try{var R=document.documentElement,S=localStorage,t=S.getItem("dio-theme"),p=S.g
 if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute("data-palette",p);
 ["bn","en","ar"].forEach(function(k){var v=S.getItem("dio-font-"+k);if(v){R.style.setProperty("--font-"+k,'"'+v+'"');window.dioLoadFont(v);}});}catch(e){}
 </script>
+<link rel="manifest" href="/manifest.webmanifest">
+<style>
+/* ---- v45: আজকের দিন ---- */
+.tday{padding:34px 0 10px}
+.tdh{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.tdk{display:inline-block;font-size:13px;font-weight:700;color:var(--brand);background:color-mix(in srgb,var(--brand) 10%,var(--surface));border:1px solid color-mix(in srgb,var(--brand) 25%,transparent);border-radius:999px;padding:3px 12px}
+.tdh h2{font-size:clamp(24px,4vw,32px);margin:8px 0 2px}.tdh p{margin:0}
+.tdadj{display:flex;align-items:center;gap:6px}.tdadj button{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:18px;cursor:pointer}
+.tdg{display:grid;gap:16px}@media(min-width:900px){.tdg{grid-template-columns:1fr 1fr}}
+.tdc{background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:18px 20px;box-shadow:0 12px 30px rgba(15,40,30,.06)}
+.pth{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.pth h3{margin:0;font-size:19px}
+.ptc{display:flex;gap:6px;flex-wrap:wrap}.ptc select{font:inherit;font-size:14px;padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+.ptnext{margin:14px 0 10px;padding:14px 16px;border-radius:16px;color:#fff;background:linear-gradient(135deg,#0B3D4A,#0A7A55);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.ptnext small{display:block;color:#CFE7DD;font-size:13px}.ptnext b{font-size:22px}.ptnext .cd{font-size:20px;font-weight:700;color:#F1D27A;font-variant-numeric:tabular-nums}
+.ptl{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}@media(min-width:560px){.ptl{grid-template-columns:repeat(6,1fr)}}
+.ptl div{text-align:center;padding:10px 4px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2)}
+.ptl div.on{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 14%,var(--surface));box-shadow:0 0 0 1px var(--gold) inset}
+.ptl span{display:block;font-size:13px;color:var(--muted)}.ptl b{font-size:16px}
+.ptnote{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+.dlt{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}.dlt button{font:inherit;font-weight:700;font-size:14px;padding:8px 12px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer}
+.dlt button.on{background:var(--brand);color:#fff;border-color:var(--brand)}
+.dlar{font-family:Amiri,"Noto Naskh Arabic",serif;font-size:clamp(24px,4vw,30px);line-height:2;direction:rtl;text-align:center;color:var(--text);padding:14px 10px;border-radius:16px;background:color-mix(in srgb,var(--gold) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--gold) 40%,transparent)}
+.dlbn{font-size:17px;line-height:1.8;margin:12px 0 4px}.dlsrc{font-size:13.5px;color:var(--muted)}
+.dla{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.dla .btn{padding:8px 14px;font-size:14px}
+:root[data-theme="dark"] .tdk{color:var(--gold-2,#F1D27A);background:rgba(241,210,122,.1);border-color:rgba(241,210,122,.35)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tdk{color:var(--gold-2,#F1D27A);background:rgba(241,210,122,.1);border-color:rgba(241,210,122,.35)}}
+
+</style>
+<style id="mnav">/* mobile nav v32 */
+.mburg{display:none}
+:root[data-theme="dark"] .setbtn{color:var(--text)!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .setbtn{color:var(--text)!important}}
+.links a,.logo>span>span,.hdr-cta{white-space:nowrap}
+@media(min-width:1280px){.links a{padding:8px 13px!important;font-size:15px}}
+.mdraw,.mdback{display:none}
+@media(max-width:1279px){
+  .links{display:none!important}
+  .hdr-cta{display:none!important}
+  .mburg{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;flex:none;padding:0}
+  .mburg svg{width:22px;height:22px}
+  .nav-r>.lang{display:none}
+  .logo>span>span{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
+  .logo small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
+  .mdback{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+  .mdraw{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);z-index:61;background:var(--surface);color:var(--text);box-shadow:-20px 0 50px rgba(0,0,0,.25);transform:translateX(105%);visibility:hidden;transition:transform .28s ease,visibility .28s;padding:calc(14px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+  .mopen .mdback{opacity:1;pointer-events:auto}
+  .mopen .mdraw{transform:none;visibility:visible}
+  .mdraw .mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .mdraw .mtop b{font-size:18px}
+  .mdraw .mx{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
+  .mdraw .lang{display:flex!important;margin:0 0 14px;align-self:flex-start}
+  .mdraw nav{display:grid;gap:4px;margin-bottom:16px}
+  .mdraw nav a{display:flex;align-items:center;justify-content:space-between;padding:14px 14px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:600;font-size:17px;border:1px solid transparent}
+  .mdraw nav a::after{content:"›";color:var(--gold,#C9A13B);font-size:22px}
+  .mdraw nav a:hover,.mdraw nav a:active{background:var(--surface-2);border-color:var(--line)}
+  .mdraw .mcta{display:grid;gap:10px;margin-top:auto}
+  .mdraw .mcta .btn{justify-content:center;width:100%}
+  .mdraw .mwa{background:#25D366;color:#fff;border:0}
+  body.mopen{overflow:hidden}
+}
+@media(max-width:760px){
+  .mbar{transform:translateY(120%);transition:transform .3s ease;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))!important}
+  .mbar.mshow{transform:none}
+  .mbar .btn{padding:11px 10px!important;font-size:15px!important}
+  body{padding-bottom:0!important}
+}
+</style>
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
@@ -694,45 +761,6 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root:not([data-theme="light"]) .h2f span{color:var(--text)!important}
 :root:not([data-theme="light"]) .li h3 a:hover{color:#91C3B2!important}
 }</style>
-<style id="mnav">/* mobile nav v32 */
-.mburg{display:none}
-:root[data-theme="dark"] .setbtn{color:var(--text)!important}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .setbtn{color:var(--text)!important}}
-.links a,.logo>span>span,.hdr-cta{white-space:nowrap}
-@media(min-width:1280px){.links a{padding:8px 13px!important;font-size:15px}}
-.mdraw,.mdback{display:none}
-@media(max-width:1279px){
-  .links{display:none!important}
-  .hdr-cta{display:none!important}
-  .mburg{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;flex:none;padding:0}
-  .mburg svg{width:22px;height:22px}
-  .nav-r>.lang{display:none}
-  .logo>span>span{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
-  .logo small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
-  .mdback{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
-  .mdraw{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);z-index:61;background:var(--surface);color:var(--text);box-shadow:-20px 0 50px rgba(0,0,0,.25);transform:translateX(105%);visibility:hidden;transition:transform .28s ease,visibility .28s;padding:calc(14px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto}
-  .mopen .mdback{opacity:1;pointer-events:auto}
-  .mopen .mdraw{transform:none;visibility:visible}
-  .mdraw .mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-  .mdraw .mtop b{font-size:18px}
-  .mdraw .mx{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
-  .mdraw .lang{display:flex!important;margin:0 0 14px;align-self:flex-start}
-  .mdraw nav{display:grid;gap:4px;margin-bottom:16px}
-  .mdraw nav a{display:flex;align-items:center;justify-content:space-between;padding:14px 14px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:600;font-size:17px;border:1px solid transparent}
-  .mdraw nav a::after{content:"›";color:var(--gold,#C9A13B);font-size:22px}
-  .mdraw nav a:hover,.mdraw nav a:active{background:var(--surface-2);border-color:var(--line)}
-  .mdraw .mcta{display:grid;gap:10px;margin-top:auto}
-  .mdraw .mcta .btn{justify-content:center;width:100%}
-  .mdraw .mwa{background:#25D366;color:#fff;border:0}
-  body.mopen{overflow:hidden}
-}
-@media(max-width:760px){
-  .mbar{transform:translateY(120%);transition:transform .3s ease;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))!important}
-  .mbar.mshow{transform:none}
-  .mbar .btn{padding:11px 10px!important;font-size:15px!important}
-  body{padding-bottom:0!important}
-}
-</style>
 </head>
 <body>
 
@@ -791,6 +819,16 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
   </div>
 </section>
 
+<section class="tday" id="today" aria-label="আজকের দিন"><div class="wrap">
+<div class="tdh"><div><span class="tdk">আজকের দিন</span><h2 id="tdHijri">—</h2><p id="tdGreg" class="muted"></p></div>
+<div class="tdadj" title="বাংলাদেশে চাঁদ দেখার ওপর হিজরি তারিখ এক দিন কম-বেশি হতে পারে"><span class="muted">হিজরি</span><button type="button" data-hadj="-1" aria-label="এক দিন কমান">−</button><button type="button" data-hadj="1" aria-label="এক দিন বাড়ান">+</button></div></div>
+<div class="tdg">
+<div class="tdc pt"><div class="pth"><h3>নামাজের সময়</h3><div class="ptc"><select id="ptCity" aria-label="জেলা"></select><select id="ptAsr" aria-label="আসরের মাযহাব"><option value="2">আসর: হানাফী</option><option value="1">আসর: শাফেঈ</option></select></div></div>
+<div class="ptnext" id="ptNext"></div><div class="ptl" id="ptList"></div>
+<p class="ptnote">ফোনেই হিসাব হয় (ফজর-এশা ১৮°)। এটি আনুমানিক — আপনার এলাকার মসজিদের জামাতের সময় মেনে চলুন।</p></div>
+<div class="tdc dly"><div class="dlt" role="tablist"><button type="button" class="on" data-dt="a">আজকের আয়াত</button><button type="button" data-dt="h">আজকের হাদীস</button><button type="button" data-dt="d">আজকের দোয়া</button></div>
+<div id="dlBody"></div><div class="dla"><button type="button" class="btn btn-ghost" id="dlShare">WhatsApp-এ শেয়ার</button><button type="button" class="btn btn-ghost" id="dlCopy">কপি</button></div></div>
+</div></div></section>
 <section class="libx" id="library"><div class="wrap">
   <div class="libx-card">
     <div class="libx-txt">
@@ -1096,6 +1134,22 @@ fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/media?select=kind&publis
  const L=document.documentElement.lang,f=n=>L==="bn"?String(n).replace(/\d/g,x=>"০১২৩৪৫৬৭৮৯"[x]):L==="ar"?String(n).replace(/\d/g,x=>"٠١٢٣٤٥٦٧٨٩"[x]):String(n);
  Object.keys(c).forEach(k=>{const el=document.getElementById("lc-"+k);if(el)el.textContent=f(c[k]);});}).catch(()=>{});
 </script>
+<script id="pwajs">
+(function(){
+  if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});
+  var st=document.createElement("style");st.textContent=".pwat{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(150%);z-index:80;background:#0B3D4A;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .3s;max-width:92vw;text-align:center}.pwat.on{transform:translateX(-50%)}.pwat.ok{background:#0A7A55}";document.head.appendChild(st);
+  var t=document.createElement("div");t.className="pwat";t.setAttribute("role","status");document.body.appendChild(t);var h;
+  function toast(m,ok){t.textContent=m;t.className="pwat on"+(ok?" ok":"");clearTimeout(h);h=setTimeout(function(){t.className="pwat"+(ok?" ok":"")},ok?2500:5000);}
+  addEventListener("offline",function(){toast("আপনি অফলাইনে — আগে দেখা ও অফলাইনে রাখা পাঠ পড়া যাবে");});
+  addEventListener("online",function(){toast("আবার অনলাইনে ✓",true);});
+  var dp=null;
+  addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;
+    var mc=document.querySelector(".mdraw .mcta");if(mc&&!document.getElementById("pwaInst")){var b=document.createElement("button");b.id="pwaInst";b.type="button";b.className="btn btn-ghost";b.textContent="📲 অ্যাপ হিসেবে ইনস্টল করুন";b.onclick=function(){dp&&dp.prompt();};mc.insertBefore(b,mc.firstChild);}
+    document.querySelectorAll("[data-pwa-install]").forEach(function(b){b.hidden=false;b.onclick=function(){dp&&dp.prompt();};});
+  });
+  addEventListener("appinstalled",function(){var b=document.getElementById("pwaInst");if(b)b.remove();toast("ইনস্টল হয়েছে — হোম স্ক্রিনে দারুল ইলমের আইকন দেখুন",true);});
+})();
+</script>
 <script id="mnavjs">
 (function(){
   var nav=document.querySelector("header .links"),navr=document.querySelector("header .nav-r");
@@ -1125,6 +1179,77 @@ fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/media?select=kind&publis
       if(y<500||nearEnd||y>last+4)bar.classList.remove("mshow");else if(y<last-4)bar.classList.add("mshow");
       last=y;tick=false;}
     addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});}
+})();
+</script>
+<script id="todayjs">
+(function(){
+const bn=x=>String(x).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
+const LS=(k,v)=>{try{if(v===undefined)return localStorage.getItem("dio-"+k);localStorage.setItem("dio-"+k,v)}catch(_){}};
+/* ---- জেলা ---- */
+const CITIES=[["dhaka","ঢাকা",23.8103,90.4125],["chattogram","চট্টগ্রাম",22.3569,91.7832],["rajshahi","রাজশাহী",24.3745,88.6042],["khulna","খুলনা",22.8456,89.5403],["barishal","বরিশাল",22.701,90.3535],["sylhet","সিলেট",24.8949,91.8687],["rangpur","রংপুর",25.7439,89.2752],["mymensingh","ময়মনসিংহ",24.7471,90.4203],["cumilla","কুমিল্লা",23.4607,91.1809],["gazipur","গাজীপুর",23.9999,90.4203],["narayanganj","নারায়ণগঞ্জ",23.6238,90.5],["coxsbazar","কক্সবাজার",21.4272,92.0058],["bogura","বগুড়া",24.8465,89.3773],["jashore","যশোর",23.1664,89.2081],["dinajpur","দিনাজপুর",25.6217,88.6355],["noakhali","নোয়াখালী",22.8696,91.0995],["feni","ফেনী",23.0159,91.3976],["tangail","টাঙ্গাইল",24.2513,89.9167],["faridpur","ফরিদপুর",23.607,89.8429],["kushtia","কুষ্টিয়া",23.9013,89.1205],["pabna","পাবনা",24.0064,89.2372],["brahmanbaria","ব্রাহ্মণবাড়িয়া",23.9571,91.1119],["sunamganj","সুনামগঞ্জ",25.0658,91.395],["patuakhali","পটুয়াখালী",22.3596,90.3299]];
+/* ---- নামাজের সময়: জ্যোতির্বিজ্ঞানের হিসাব (PrayTimes পদ্ধতি) ---- */
+const dr=Math.PI/180,sin=d=>Math.sin(d*dr),cos=d=>Math.cos(d*dr),tan=d=>Math.tan(d*dr),asin=x=>Math.asin(x)/dr,acos=x=>Math.acos(x)/dr,atan2=(y,x)=>Math.atan2(y,x)/dr,acot=x=>Math.atan(1/x)/dr;
+const fix=(a,b)=>{a=a-b*Math.floor(a/b);return a<0?a+b:a;};
+function sunPos(jd){const D=jd-2451545,g=fix(357.529+.98560028*D,360),q=fix(280.459+.98564736*D,360),L=fix(q+1.915*sin(g)+.02*sin(2*g),360),e=23.439-.00000036*D;
+  const RA=atan2(cos(e)*sin(L),cos(L))/15,decl=asin(sin(e)*sin(L));return{decl,eqt:q/15-fix(RA,24)};}
+function times(date,lat,lng,tz,asrF){
+  const y=date.getFullYear(),m=date.getMonth()+1,d=date.getDate();
+  let Y=y,M=m;if(M<=2){Y-=1;M+=12;}const A=Math.floor(Y/100),B=2-A+Math.floor(A/4);
+  const jd=Math.floor(365.25*(Y+4716))+Math.floor(30.6001*(M+1))+d+B-1524.5-lng/(15*24);
+  const mid=t=>{const e=sunPos(jd+t).eqt;return fix(12-e,24);};
+  const ang=(a,t,ccw)=>{const p=sunPos(jd+t),z=mid(t),v=acos((-sin(a)-sin(p.decl)*sin(lat))/(cos(p.decl)*cos(lat)))/15;return z+(ccw?-v:v);};
+  const asr=(f,t)=>{const p=sunPos(jd+t);return ang(-acot(f+tan(Math.abs(lat-p.decl))),t);};
+  let T={fajr:5/24,sunrise:6/24,dhuhr:12/24,asr:13/24,maghrib:18/24,isha:18/24};
+  for(let i=0;i<2;i++){T={fajr:ang(18,T.fajr,true)/24,sunrise:ang(.833,T.sunrise,true)/24,dhuhr:mid(T.dhuhr)/24,asr:asr(asrF,T.asr)/24,maghrib:ang(.833,T.maghrib)/24,isha:ang(18,T.isha)/24};}
+  const adj=h=>h*24+tz-lng/15;
+  const out={fajr:adj(T.fajr),sunrise:adj(T.sunrise),dhuhr:adj(T.dhuhr)+1/60,asr:adj(T.asr),maghrib:adj(T.maghrib)+1/60,isha:adj(T.isha)};
+  return out;
+}
+const NAMES=[["fajr","ফজর"],["sunrise","সূর্যোদয়"],["dhuhr","যোহর"],["asr","আসর"],["maghrib","মাগরিব"],["isha","এশা"]];
+function hm(h){h=fix(h,24);let H=Math.floor(h),Mi=Math.round((h-H)*60);if(Mi===60){H=(H+1)%24;Mi=0;}const pm=H>=12,h12=((H+11)%12)+1;return bn(h12)+":"+bn(String(Mi).padStart(2,"0"))+" "+(H<4?"রাত":H<12?"সকাল":H<15?"দুপুর":H<18?"বিকাল":H<19?"সন্ধ্যা":"রাত");}
+const cityEl=document.getElementById("ptCity"),asrEl=document.getElementById("ptAsr");
+cityEl.innerHTML=CITIES.map(c=>`<option value="${c[0]}">${c[1]}</option>`).join("")+'<option value="gps">📍 আমার অবস্থান</option>';
+cityEl.value=LS("pt-city")||"dhaka";asrEl.value=LS("pt-asr")||"2";
+let LOC=null;
+function loc(){const v=cityEl.value;if(v==="gps"&&LOC)return LOC;const c=CITIES.find(x=>x[0]===v)||CITIES[0];return{lat:c[2],lng:c[3],tz:6,name:c[1]};}
+function render(){
+  const L=loc(),now=new Date(),t=times(now,L.lat,L.lng,L.tz,+asrEl.value);
+  const devTz=-now.getTimezoneOffset()/60,nowH=now.getHours()+now.getMinutes()/60+now.getSeconds()/3600+(L.tz-devTz);
+  const order=["fajr","dhuhr","asr","maghrib","isha"];let nx=order.find(k=>t[k]>nowH),tomorrow=false;
+  if(!nx){nx="fajr";tomorrow=true;}
+  const target=tomorrow?times(new Date(now.getTime()+864e5),L.lat,L.lng,L.tz,+asrEl.value).fajr+24:t[nx];
+  let left=Math.max(0,target-nowH),H=Math.floor(left),M=Math.floor((left-H)*60),S=Math.floor(((left-H)*60-M)*60);
+  const nm=NAMES.find(n=>n[0]===nx)[1];
+  document.getElementById("ptNext").innerHTML=`<div><small>পরের ওয়াক্ত · ${L.name||""}</small><b>${nm} — ${hm(tomorrow?target-24:target)}</b></div><div class="cd" aria-live="off">${bn(String(H).padStart(2,"0"))}:${bn(String(M).padStart(2,"0"))}:${bn(String(S).padStart(2,"0"))}</div>`;
+  document.getElementById("ptList").innerHTML=NAMES.map(([k,n])=>`<div class="${k===nx&&!tomorrow||(tomorrow&&k==="fajr")?"on":""}"><span>${n}</span><b>${hm(t[k]).replace(/ .*/,"")}</b></div>`).join("");
+}
+cityEl.onchange=()=>{LS("pt-city",cityEl.value);if(cityEl.value==="gps"&&!LOC){if(!navigator.geolocation){alert("এই ডিভাইসে অবস্থান পাওয়া যাচ্ছে না।");cityEl.value="dhaka";return render();}
+  navigator.geolocation.getCurrentPosition(p=>{LOC={lat:p.coords.latitude,lng:p.coords.longitude,tz:-new Date().getTimezoneOffset()/60,name:"আপনার অবস্থান"};render();},()=>{alert("অবস্থানের অনুমতি পাওয়া যায়নি — জেলা বেছে নিন।");cityEl.value="dhaka";LS("pt-city","dhaka");render();});return;}render();};
+asrEl.onchange=()=>{LS("pt-asr",asrEl.value);render();};
+if(cityEl.value==="gps"){cityEl.value="dhaka";}
+render();setInterval(render,1000);
+/* ---- তারিখ ---- */
+function dates(){
+  const off=+(LS("hadj")||0),now=new Date(),h=new Date(now.getTime()+off*864e5);
+  let hij="";try{const pp=new Intl.DateTimeFormat("bn-BD-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric"}).formatToParts(h);const g=t=>(pp.find(o=>o.type===t)||{}).value||"";hij=g("day")+" "+g("month")+" "+g("year")+" হিজরি";}catch(_){}
+  document.getElementById("tdHijri").textContent=hij||now.toLocaleDateString("bn-BD",{weekday:"long"});
+  document.getElementById("tdGreg").textContent=now.toLocaleDateString("bn-BD",{weekday:"long",day:"numeric",month:"long",year:"numeric"})+" খ্রিস্টাব্দ";
+}
+document.querySelectorAll("[data-hadj]").forEach(b=>b.onclick=()=>{const v=Math.max(-2,Math.min(2,(+(LS("hadj")||0))+(+b.dataset.hadj)));LS("hadj",v);dates();});
+dates();
+/* ---- আজকের আয়াত / হাদীস / দোয়া ---- */
+const D={
+a:[["إِنَّ مَعَ الْعُسْرِ يُسْرًا","নিশ্চয় কষ্টের সাথে স্বস্তি আছে।","সূরা ইনশিরাহ ৯৪:৬"],["وَقُل رَّبِّ زِدْنِي عِلْمًا","আর বলুন, হে আমার রব, আমার জ্ঞান বাড়িয়ে দিন।","সূরা ত্বহা ২০:১১৪"],["أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ","জেনে রাখো, আল্লাহর স্মরণেই অন্তর প্রশান্ত হয়।","সূরা রা'দ ১৩:২৮"],["فَاذْكُرُونِي أَذْكُرْكُمْ","তোমরা আমাকে স্মরণ করো, আমি তোমাদের স্মরণ করব।","সূরা বাকারা ২:১৫২"],["إِنَّ اللَّهَ مَعَ الصَّابِرِينَ","নিশ্চয় আল্লাহ ধৈর্যশীলদের সাথে আছেন।","সূরা বাকারা ২:১৫৩"],["لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا","আল্লাহ কাউকে তার সামর্থ্যের বাইরে দায়িত্ব দেন না।","সূরা বাকারা ২:২৮৬"],["وَمَن يَتَوَكَّلْ عَلَى اللَّهِ فَهُوَ حَسْبُهُ","যে আল্লাহর ওপর ভরসা করে, তিনিই তার জন্য যথেষ্ট।","সূরা তালাক ৬৫:৩"],["لَئِن شَكَرْتُمْ لَأَزِيدَنَّكُمْ","যদি তোমরা শুকরিয়া আদায় করো, আমি অবশ্যই তোমাদের আরও দেব।","সূরা ইবরাহীম ১৪:৭"],["وَقُولُوا لِلنَّاسِ حُسْنًا","মানুষের সাথে সুন্দরভাবে কথা বলো।","সূরা বাকারা ২:৮৩"],["إِنَّمَا الْمُؤْمِنُونَ إِخْوَةٌ","মুমিনরা পরস্পর ভাই ভাই।","সূরা হুজুরাত ৪৯:১০"],["وَبِالْوَالِدَيْنِ إِحْسَانًا","এবং বাবা-মায়ের সাথে সদ্ব্যবহার করো।","সূরা বনী ইসরাঈল ১৭:২৩"],["قُلْ هُوَ اللَّهُ أَحَدٌ","বলুন, তিনি আল্লাহ, এক ও অদ্বিতীয়।","সূরা ইখলাস ১১২:১"]],
+h:[["إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ","সব কাজ নিয়তের ওপর নির্ভরশীল।","সহীহ বুখারী ও মুসলিম"],["خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ","তোমাদের মধ্যে সর্বোত্তম সে, যে কুরআন শেখে এবং শেখায়।","সহীহ বুখারী"],["أَحَبُّ الْأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ","আল্লাহর কাছে সবচেয়ে প্রিয় আমল যা নিয়মিত করা হয় — যদিও অল্প হয়।","সহীহ বুখারী ও মুসলিম"],["لَا يُؤْمِنُ أَحَدُكُمْ حَتَّىٰ يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ","তোমাদের কেউ পূর্ণ মুমিন হবে না, যতক্ষণ না ভাইয়ের জন্য তা-ই পছন্দ করে যা নিজের জন্য করে।","সহীহ বুখারী ও মুসলিম"],["الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ","প্রকৃত মুসলিম সে, যার জিহ্বা ও হাত থেকে অন্যরা নিরাপদ।","সহীহ বুখারী ও মুসলিম"],["لَا تَغْضَبْ","রাগ কোরো না।","সহীহ বুখারী"],["الْكَلِمَةُ الطَّيِّبَةُ صَدَقَةٌ","সুন্দর কথা সদকা।","সহীহ বুখারী ও মুসলিম"],["تَبَسُّمُكَ فِي وَجْهِ أَخِيكَ لَكَ صَدَقَةٌ","তোমার ভাইয়ের সামনে মুচকি হাসি তোমার জন্য সদকা।","সুনানে তিরমিযী"],["الطُّهُورُ شَطْرُ الْإِيمَانِ","পবিত্রতা ঈমানের অর্ধেক।","সহীহ মুসলিম"],["الرَّاحِمُونَ يَرْحَمُهُمُ الرَّحْمَٰنُ","দয়াশীলদের প্রতি দয়াময় দয়া করেন।","সুনানে আবু দাউদ ও তিরমিযী"],["مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ","যে জ্ঞানের সন্ধানে পথ চলে, আল্লাহ তার জন্য জান্নাতের পথ সহজ করে দেন।","সহীহ মুসলিম"],["الْحَيَاءُ لَا يَأْتِي إِلَّا بِخَيْرٍ","লজ্জাশীলতা কল্যাণ ছাড়া কিছুই আনে না।","সহীহ বুখারী ও মুসলিম"]],
+d:[["رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ","হে আমাদের রব, দুনিয়াতে কল্যাণ দাও, আখিরাতে কল্যাণ দাও এবং জাহান্নামের আযাব থেকে রক্ষা করো।","সূরা বাকারা ২:২০১"],["رَبِّ اشْرَحْ لِي صَدْرِي ۝ وَيَسِّرْ لِي أَمْرِي","হে আমার রব, আমার বক্ষ প্রশস্ত করে দিন এবং আমার কাজ সহজ করে দিন।","সূরা ত্বহা ২০:২৫–২৬"],["رَبِّ ارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا","হে আমার রব, তাঁদের প্রতি দয়া করুন, যেমন তাঁরা শৈশবে আমাকে লালন-পালন করেছেন।","সূরা বনী ইসরাঈল ১৭:২৪"],["لَا إِلَٰهَ إِلَّا أَنْتَ سُبْحَانَكَ إِنِّي كُنْتُ مِنَ الظَّالِمِينَ","তুমি ছাড়া কোনো ইলাহ নেই, তুমি পবিত্র; নিশ্চয় আমি জুলুমকারীদের অন্তর্ভুক্ত ছিলাম।","সূরা আম্বিয়া ২১:৮৭"],["حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ","আল্লাহই আমাদের জন্য যথেষ্ট, তিনি উত্তম কর্মবিধায়ক।","সূরা আলে ইমরান ৩:১৭৩"],["رَبَّنَا تَقَبَّلْ مِنَّا إِنَّكَ أَنْتَ السَّمِيعُ الْعَلِيمُ","হে আমাদের রব, আমাদের থেকে কবুল করো; নিশ্চয় তুমি সর্বশ্রোতা, সর্বজ্ঞ।","সূরা বাকারা ২:১২৭"],["اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا","হে আল্লাহ, আমি তোমার কাছে উপকারী জ্ঞান চাই।","সুনানে ইবনে মাজাহ"],["اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي","হে আল্লাহ, তুমি ক্ষমাশীল, ক্ষমা ভালোবাসো; সুতরাং আমাকে ক্ষমা করো।","সুনানে তিরমিযী"],["اللَّهُمَّ اهْدِنِي لِأَحْسَنِ الْأَخْلَاقِ لَا يَهْدِي لِأَحْسَنِهَا إِلَّا أَنْتَ","হে আল্লাহ, আমাকে সর্বোত্তম চরিত্রের পথ দেখাও; তুমি ছাড়া কেউ তা দেখাতে পারে না।","সহীহ মুসলিম"],["رَبَّنَا ظَلَمْنَا أَنْفُسَنَا وَإِنْ لَمْ تَغْفِرْ لَنَا وَتَرْحَمْنَا لَنَكُونَنَّ مِنَ الْخَاسِرِينَ","হে আমাদের রব, আমরা নিজেদের ওপর জুলুম করেছি; তুমি ক্ষমা ও দয়া না করলে আমরা ক্ষতিগ্রস্ত হব।","সূরা আ'রাফ ৭:২৩"],["سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ","আল্লাহ পবিত্র, তাঁর প্রশংসাসহ; মহান আল্লাহ পবিত্র।","সহীহ বুখারী ও মুসলিম"],["رَبِّ أَوْزِعْنِي أَنْ أَشْكُرَ نِعْمَتَكَ الَّتِي أَنْعَمْتَ عَلَيَّ","হে আমার রব, আমাকে তোমার দেওয়া নেয়ামতের শুকরিয়া আদায়ের সামর্থ্য দাও।","সূরা নামল ২৭:১৯"]]};
+const day=Math.floor((Date.now()-new Date().getTimezoneOffset()*6e4)/864e5);let cur="a";
+function show(){const L=D[cur],x=L[day%L.length];document.getElementById("dlBody").innerHTML=`<div class="dlar">${x[0]}</div><p class="dlbn">${x[1]}</p><div class="dlsrc">— ${x[2]}</div>`;
+  document.querySelectorAll("[data-dt]").forEach(b=>b.classList.toggle("on",b.dataset.dt===cur));}
+document.querySelectorAll("[data-dt]").forEach(b=>b.onclick=()=>{cur=b.dataset.dt;show();});
+const txt=()=>{const x=D[cur][day%D[cur].length],lab={a:"আজকের আয়াত",h:"আজকের হাদীস",d:"আজকের দোয়া"}[cur];return `${lab}\n\n${x[0]}\n\n${x[1]}\n— ${x[2]}\n\nদারুল ইলম অনলাইন · darulilmonline.com`;};
+document.getElementById("dlShare").onclick=()=>window.open("https://wa.me/?text="+encodeURIComponent(txt()),"_blank");
+document.getElementById("dlCopy").onclick=async e=>{try{await navigator.clipboard.writeText(txt());e.target.textContent="কপি ✓";}catch(_){prompt("কপি করুন:",txt());}};
+show();
 })();
 </script>
 </body>
