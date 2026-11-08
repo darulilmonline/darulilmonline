@@ -635,7 +635,6 @@ try{var R=document.documentElement,S=localStorage,t=S.getItem("dio-theme"),p=S.g
 if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute("data-palette",p);
 ["bn","en","ar"].forEach(function(k){var v=S.getItem("dio-font-"+k);if(v){R.style.setProperty("--font-"+k,'"'+v+'"');window.dioLoadFont(v);}});}catch(e){}
 </script>
-<link rel="manifest" href="/manifest.webmanifest">
 <style>
 /* ---- v45: আজকের দিন ---- */
 .tday{padding:34px 0 10px}
@@ -663,45 +662,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tdk{color:var(--gold-2,#F1D27A);background:rgba(241,210,122,.1);border-color:rgba(241,210,122,.35)}}
 
 </style>
-<style id="mnav">/* mobile nav v32 */
-.mburg{display:none}
-:root[data-theme="dark"] .setbtn{color:var(--text)!important}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .setbtn{color:var(--text)!important}}
-.links a,.logo>span>span,.hdr-cta{white-space:nowrap}
-@media(min-width:1280px){.links a{padding:8px 13px!important;font-size:15px}}
-.mdraw,.mdback{display:none}
-@media(max-width:1279px){
-  .links{display:none!important}
-  .hdr-cta{display:none!important}
-  .mburg{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;flex:none;padding:0}
-  .mburg svg{width:22px;height:22px}
-  .nav-r>.lang{display:none}
-  .logo>span>span{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
-  .logo small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
-  .mdback{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
-  .mdraw{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);z-index:61;background:var(--surface);color:var(--text);box-shadow:-20px 0 50px rgba(0,0,0,.25);transform:translateX(105%);visibility:hidden;transition:transform .28s ease,visibility .28s;padding:calc(14px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto}
-  .mopen .mdback{opacity:1;pointer-events:auto}
-  .mopen .mdraw{transform:none;visibility:visible}
-  .mdraw .mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-  .mdraw .mtop b{font-size:18px}
-  .mdraw .mx{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
-  .mdraw .lang{display:flex!important;margin:0 0 14px;align-self:flex-start}
-  .mdraw nav{display:grid;gap:4px;margin-bottom:16px}
-  .mdraw nav a{display:flex;align-items:center;justify-content:space-between;padding:14px 14px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:600;font-size:17px;border:1px solid transparent}
-  .mdraw nav a::after{content:"›";color:var(--gold,#C9A13B);font-size:22px}
-  .mdraw nav a:hover,.mdraw nav a:active{background:var(--surface-2);border-color:var(--line)}
-  .mdraw .mcta{display:grid;gap:10px;margin-top:auto}
-  .mdraw .mcta .btn{justify-content:center;width:100%}
-  .mdraw .mwa{background:#25D366;color:#fff;border:0}
-  body.mopen{overflow:hidden}
-}
-@media(max-width:760px){
-  .mbar{transform:translateY(120%);transition:transform .3s ease;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))!important}
-  .mbar.mshow{transform:none}
-  .mbar .btn{padding:11px 10px!important;font-size:15px!important}
-  body{padding-bottom:0!important}
-}
-</style>
+<link rel="manifest" href="/manifest.webmanifest">
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
@@ -761,6 +722,46 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root:not([data-theme="light"]) .h2f span{color:var(--text)!important}
 :root:not([data-theme="light"]) .li h3 a:hover{color:#91C3B2!important}
 }</style>
+<style id="mnav">/* mobile nav v32 */
+.mburg{display:none}
+.srchbtn{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);flex:none;text-decoration:none}.srchbtn svg{width:20px;height:20px}
+:root[data-theme="dark"] .setbtn{color:var(--text)!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .setbtn{color:var(--text)!important}}
+.links a,.logo>span>span,.hdr-cta{white-space:nowrap}
+@media(min-width:1280px){.links a{padding:8px 13px!important;font-size:15px}}
+.mdraw,.mdback{display:none}
+@media(max-width:1279px){
+  .links{display:none!important}
+  .hdr-cta{display:none!important}
+  .mburg{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;flex:none;padding:0}
+  .mburg svg{width:22px;height:22px}
+  .nav-r>.lang{display:none}
+  .logo>span>span{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
+  .logo small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
+  .mdback{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+  .mdraw{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);z-index:61;background:var(--surface);color:var(--text);box-shadow:-20px 0 50px rgba(0,0,0,.25);transform:translateX(105%);visibility:hidden;transition:transform .28s ease,visibility .28s;padding:calc(14px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+  .mopen .mdback{opacity:1;pointer-events:auto}
+  .mopen .mdraw{transform:none;visibility:visible}
+  .mdraw .mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .mdraw .mtop b{font-size:18px}
+  .mdraw .mx{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
+  .mdraw .lang{display:flex!important;margin:0 0 14px;align-self:flex-start}
+  .mdraw nav{display:grid;gap:4px;margin-bottom:16px}
+  .mdraw nav a{display:flex;align-items:center;justify-content:space-between;padding:14px 14px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:600;font-size:17px;border:1px solid transparent}
+  .mdraw nav a::after{content:"›";color:var(--gold,#C9A13B);font-size:22px}
+  .mdraw nav a:hover,.mdraw nav a:active{background:var(--surface-2);border-color:var(--line)}
+  .mdraw .mcta{display:grid;gap:10px;margin-top:auto}
+  .mdraw .mcta .btn{justify-content:center;width:100%}
+  .mdraw .mwa{background:#25D366;color:#fff;border:0}
+  body.mopen{overflow:hidden}
+}
+@media(max-width:760px){
+  .mbar{transform:translateY(120%);transition:transform .3s ease;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))!important}
+  .mbar.mshow{transform:none}
+  .mbar .btn{padding:11px 10px!important;font-size:15px!important}
+  body{padding-bottom:0!important}
+}
+</style>
 </head>
 <body>
 
@@ -1134,53 +1135,6 @@ fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/media?select=kind&publis
  const L=document.documentElement.lang,f=n=>L==="bn"?String(n).replace(/\d/g,x=>"০১২৩৪৫৬৭৮৯"[x]):L==="ar"?String(n).replace(/\d/g,x=>"٠١٢٣٤٥٦٧٨٩"[x]):String(n);
  Object.keys(c).forEach(k=>{const el=document.getElementById("lc-"+k);if(el)el.textContent=f(c[k]);});}).catch(()=>{});
 </script>
-<script id="pwajs">
-(function(){
-  if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});
-  var st=document.createElement("style");st.textContent=".pwat{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(150%);z-index:80;background:#0B3D4A;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .3s;max-width:92vw;text-align:center}.pwat.on{transform:translateX(-50%)}.pwat.ok{background:#0A7A55}";document.head.appendChild(st);
-  var t=document.createElement("div");t.className="pwat";t.setAttribute("role","status");document.body.appendChild(t);var h;
-  function toast(m,ok){t.textContent=m;t.className="pwat on"+(ok?" ok":"");clearTimeout(h);h=setTimeout(function(){t.className="pwat"+(ok?" ok":"")},ok?2500:5000);}
-  addEventListener("offline",function(){toast("আপনি অফলাইনে — আগে দেখা ও অফলাইনে রাখা পাঠ পড়া যাবে");});
-  addEventListener("online",function(){toast("আবার অনলাইনে ✓",true);});
-  var dp=null;
-  addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;
-    var mc=document.querySelector(".mdraw .mcta");if(mc&&!document.getElementById("pwaInst")){var b=document.createElement("button");b.id="pwaInst";b.type="button";b.className="btn btn-ghost";b.textContent="📲 অ্যাপ হিসেবে ইনস্টল করুন";b.onclick=function(){dp&&dp.prompt();};mc.insertBefore(b,mc.firstChild);}
-    document.querySelectorAll("[data-pwa-install]").forEach(function(b){b.hidden=false;b.onclick=function(){dp&&dp.prompt();};});
-  });
-  addEventListener("appinstalled",function(){var b=document.getElementById("pwaInst");if(b)b.remove();toast("ইনস্টল হয়েছে — হোম স্ক্রিনে দারুল ইলমের আইকন দেখুন",true);});
-})();
-</script>
-<script id="mnavjs">
-(function(){
-  var nav=document.querySelector("header .links"),navr=document.querySelector("header .nav-r");
-  if(!nav||!navr)return;
-  var B=document.body,lang=navr.querySelector(".lang");
-  var btn=document.createElement("button");btn.className="mburg";btn.type="button";btn.setAttribute("aria-label","মেনু");btn.setAttribute("aria-expanded","false");
-  btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
-  navr.appendChild(btn);
-  var back=document.createElement("div");back.className="mdback";
-  var dr=document.createElement("aside");dr.className="mdraw";dr.setAttribute("aria-label","মেনু");
-  var cta=document.querySelector(".hdr-cta");
-  dr.innerHTML='<div class="mtop"><b>মেনু</b><button type="button" class="mx" aria-label="বন্ধ করুন">×</button></div><div class="mlang"></div><nav></nav><div class="mcta"><a class="btn btn-primary" href="'+(cta?cta.getAttribute("href"):"/#apply")+'">'+(cta?cta.textContent:"ফ্রি ক্লাস বুক করুন")+'</a><a class="btn mwa" href="https://wa.me/8801329173444" target="_blank" rel="noopener">WhatsApp-এ কথা বলুন</a></div>';
-  B.appendChild(back);B.appendChild(dr);
-  var dn=dr.querySelector("nav");
-  function fill(){dn.innerHTML="";nav.querySelectorAll("a").forEach(function(a){var c=document.createElement("a");c.href=a.getAttribute("href");c.textContent=a.textContent;c.onclick=function(){close();};dn.appendChild(c);});}
-  var mq=matchMedia("(max-width:1279px)");
-  function place(){if(!lang)return;if(mq.matches){dr.querySelector(".mlang").appendChild(lang);}else if(lang.parentNode!==navr){navr.insertBefore(lang,navr.querySelector(".setbtn"));}}
-  function open(){fill();B.classList.add("mopen");btn.setAttribute("aria-expanded","true");}
-  function close(){B.classList.remove("mopen");btn.setAttribute("aria-expanded","false");}
-  btn.onclick=open;back.onclick=close;dr.querySelector(".mx").onclick=close;
-  document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});
-  place();(mq.addEventListener?mq.addEventListener("change",place):mq.addListener(place));
-  // নিচের বার: শুধু ওপরে স্ক্রল করলে দেখাবে
-  var bar=document.querySelector(".mbar");
-  if(bar){var last=scrollY,tick=false;
-    function upd(){var y=scrollY,doc=document.documentElement,nearEnd=y+innerHeight>doc.scrollHeight-260;
-      if(y<500||nearEnd||y>last+4)bar.classList.remove("mshow");else if(y<last-4)bar.classList.add("mshow");
-      last=y;tick=false;}
-    addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});}
-})();
-</script>
 <script id="todayjs">
 (function(){
 const bn=x=>String(x).replace(/\d/g,d=>"০১২৩৪৫৬৭৮৯"[d]);
@@ -1250,6 +1204,56 @@ const txt=()=>{const x=D[cur][day%D[cur].length],lab={a:"আজকের আয�
 document.getElementById("dlShare").onclick=()=>window.open("https://wa.me/?text="+encodeURIComponent(txt()),"_blank");
 document.getElementById("dlCopy").onclick=async e=>{try{await navigator.clipboard.writeText(txt());e.target.textContent="কপি ✓";}catch(_){prompt("কপি করুন:",txt());}};
 show();
+})();
+</script>
+<script id="pwajs">
+(function(){
+  if("serviceWorker" in navigator&&(location.protocol==="https:"||location.hostname==="localhost"))addEventListener("load",function(){navigator.serviceWorker.register("/sw.js").catch(function(){});});
+  var st=document.createElement("style");st.textContent=".pwat{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(150%);z-index:80;background:#0B3D4A;color:#fff;padding:10px 16px;border-radius:999px;font-size:14px;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .3s;max-width:92vw;text-align:center}.pwat.on{transform:translateX(-50%)}.pwat.ok{background:#0A7A55}";document.head.appendChild(st);
+  var t=document.createElement("div");t.className="pwat";t.setAttribute("role","status");document.body.appendChild(t);var h;
+  function toast(m,ok){t.textContent=m;t.className="pwat on"+(ok?" ok":"");clearTimeout(h);h=setTimeout(function(){t.className="pwat"+(ok?" ok":"")},ok?2500:5000);}
+  addEventListener("offline",function(){toast("আপনি অফলাইনে — আগে দেখা ও অফলাইনে রাখা পাঠ পড়া যাবে");});
+  addEventListener("online",function(){toast("আবার অনলাইনে ✓",true);});
+  var dp=null;
+  addEventListener("beforeinstallprompt",function(e){e.preventDefault();dp=e;
+    var mc=document.querySelector(".mdraw .mcta");if(mc&&!document.getElementById("pwaInst")){var b=document.createElement("button");b.id="pwaInst";b.type="button";b.className="btn btn-ghost";b.textContent="📲 অ্যাপ হিসেবে ইনস্টল করুন";b.onclick=function(){dp&&dp.prompt();};mc.insertBefore(b,mc.firstChild);}
+    document.querySelectorAll("[data-pwa-install]").forEach(function(b){b.hidden=false;b.onclick=function(){dp&&dp.prompt();};});
+  });
+  addEventListener("appinstalled",function(){var b=document.getElementById("pwaInst");if(b)b.remove();toast("ইনস্টল হয়েছে — হোম স্ক্রিনে দারুল ইলমের আইকন দেখুন",true);});
+})();
+</script>
+<script id="mnavjs">
+(function(){
+  var nav=document.querySelector("header .links"),navr=document.querySelector("header .nav-r");
+  if(!nav||!navr)return;
+  var B=document.body,lang=navr.querySelector(".lang");
+  var btn=document.createElement("button");btn.className="mburg";btn.type="button";btn.setAttribute("aria-label","মেনু");btn.setAttribute("aria-expanded","false");
+  btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  var sb=document.createElement("a");sb.className="srchbtn";sb.href="/search";sb.setAttribute("aria-label","খুঁজুন");sb.title="খুঁজুন";
+  sb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+  var setb=navr.querySelector(".setbtn");if(!document.querySelector(".srchbtn")){if(setb)navr.insertBefore(sb,setb);else navr.appendChild(sb);}
+  navr.appendChild(btn);
+  var back=document.createElement("div");back.className="mdback";
+  var dr=document.createElement("aside");dr.className="mdraw";dr.setAttribute("aria-label","মেনু");
+  var cta=document.querySelector(".hdr-cta");
+  dr.innerHTML='<div class="mtop"><b>মেনু</b><button type="button" class="mx" aria-label="বন্ধ করুন">×</button></div><div class="mlang"></div><nav></nav><div class="mcta"><a class="btn btn-primary" href="'+(cta?cta.getAttribute("href"):"/#apply")+'">'+(cta?cta.textContent:"ফ্রি ক্লাস বুক করুন")+'</a><a class="btn mwa" href="https://wa.me/8801329173444" target="_blank" rel="noopener">WhatsApp-এ কথা বলুন</a></div>';
+  B.appendChild(back);B.appendChild(dr);
+  var dn=dr.querySelector("nav");
+  function fill(){dn.innerHTML="";nav.querySelectorAll("a").forEach(function(a){var c=document.createElement("a");c.href=a.getAttribute("href");c.textContent=a.textContent;c.onclick=function(){close();};dn.appendChild(c);});}
+  var mq=matchMedia("(max-width:1279px)");
+  function place(){if(!lang)return;if(mq.matches){dr.querySelector(".mlang").appendChild(lang);}else if(lang.parentNode!==navr){navr.insertBefore(lang,navr.querySelector(".setbtn"));}}
+  function open(){fill();B.classList.add("mopen");btn.setAttribute("aria-expanded","true");}
+  function close(){B.classList.remove("mopen");btn.setAttribute("aria-expanded","false");}
+  btn.onclick=open;back.onclick=close;dr.querySelector(".mx").onclick=close;
+  document.addEventListener("keydown",function(e){if(e.key==="Escape")close();});
+  place();(mq.addEventListener?mq.addEventListener("change",place):mq.addListener(place));
+  // নিচের বার: শুধু ওপরে স্ক্রল করলে দেখাবে
+  var bar=document.querySelector(".mbar");
+  if(bar){var last=scrollY,tick=false;
+    function upd(){var y=scrollY,doc=document.documentElement,nearEnd=y+innerHeight>doc.scrollHeight-260;
+      if(y<500||nearEnd||y>last+4)bar.classList.remove("mshow");else if(y<last-4)bar.classList.add("mshow");
+      last=y;tick=false;}
+    addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});}
 })();
 </script>
 </body>

@@ -667,6 +667,53 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 .hq{font-size:12px;font-weight:800;border-radius:999px;padding:2px 9px;color:#fff}.hq.excellent{background:#16A34A}.hq.good{background:#2563EB}.hq.weak{background:#D97706}
 </style>
 <link rel="manifest" href="/manifest.webmanifest">
+<style>
+.rcm{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.5);display:grid;place-items:center;padding:16px}
+.rcb{width:min(420px,100%);background:var(--surface);color:var(--text);border-radius:20px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.3)}
+.rch{padding:14px 18px;background:linear-gradient(135deg,#0B3D4A,#0A5A4A);color:#fff;border-bottom:4px solid #C9A13B;font-weight:700;font-size:17px}
+.rcc{padding:16px 18px;display:grid;gap:10px}.rcc label{display:grid;gap:6px;font-weight:600}.rcc select{font:inherit;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text)}
+.rcf{display:flex;gap:10px;justify-content:flex-end;padding:0 18px 16px}
+</style>
+<style id="mnav">/* mobile nav v32 */
+.mburg{display:none}
+.srchbtn{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);flex:none;text-decoration:none}.srchbtn svg{width:20px;height:20px}
+:root[data-theme="dark"] .setbtn{color:var(--text)!important}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .setbtn{color:var(--text)!important}}
+.links a,.logo>span>span,.hdr-cta{white-space:nowrap}
+@media(min-width:1280px){.links a{padding:8px 13px!important;font-size:15px}}
+.mdraw,.mdback{display:none}
+@media(max-width:1279px){
+  .links{display:none!important}
+  .hdr-cta{display:none!important}
+  .mburg{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;flex:none;padding:0}
+  .mburg svg{width:22px;height:22px}
+  .nav-r>.lang{display:none}
+  .logo>span>span{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
+  .logo small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
+  .mdback{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
+  .mdraw{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);z-index:61;background:var(--surface);color:var(--text);box-shadow:-20px 0 50px rgba(0,0,0,.25);transform:translateX(105%);visibility:hidden;transition:transform .28s ease,visibility .28s;padding:calc(14px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto}
+  .mopen .mdback{opacity:1;pointer-events:auto}
+  .mopen .mdraw{transform:none;visibility:visible}
+  .mdraw .mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .mdraw .mtop b{font-size:18px}
+  .mdraw .mx{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
+  .mdraw .lang{display:flex!important;margin:0 0 14px;align-self:flex-start}
+  .mdraw nav{display:grid;gap:4px;margin-bottom:16px}
+  .mdraw nav a{display:flex;align-items:center;justify-content:space-between;padding:14px 14px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:600;font-size:17px;border:1px solid transparent}
+  .mdraw nav a::after{content:"›";color:var(--gold,#C9A13B);font-size:22px}
+  .mdraw nav a:hover,.mdraw nav a:active{background:var(--surface-2);border-color:var(--line)}
+  .mdraw .mcta{display:grid;gap:10px;margin-top:auto}
+  .mdraw .mcta .btn{justify-content:center;width:100%}
+  .mdraw .mwa{background:#25D366;color:#fff;border:0}
+  body.mopen{overflow:hidden}
+}
+@media(max-width:760px){
+  .mbar{transform:translateY(120%);transition:transform .3s ease;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))!important}
+  .mbar.mshow{transform:none}
+  .mbar .btn{padding:11px 10px!important;font-size:15px!important}
+  body{padding-bottom:0!important}
+}
+</style>
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
@@ -756,45 +803,6 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root:not([data-theme="light"]) .rp-btn{background:var(--surface)!important}
 :root:not([data-theme="light"]) .rp-btn.has{color:#96BAA4!important}
 }</style>
-<style id="mnav">/* mobile nav v32 */
-.mburg{display:none}
-:root[data-theme="dark"] .setbtn{color:var(--text)!important}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .setbtn{color:var(--text)!important}}
-.links a,.logo>span>span,.hdr-cta{white-space:nowrap}
-@media(min-width:1280px){.links a{padding:8px 13px!important;font-size:15px}}
-.mdraw,.mdback{display:none}
-@media(max-width:1279px){
-  .links{display:none!important}
-  .hdr-cta{display:none!important}
-  .mburg{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);cursor:pointer;flex:none;padding:0}
-  .mburg svg{width:22px;height:22px}
-  .nav-r>.lang{display:none}
-  .logo>span>span{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
-  .logo small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:44vw}
-  .mdback{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:60;opacity:0;pointer-events:none;transition:opacity .25s}
-  .mdraw{display:flex;flex-direction:column;position:fixed;top:0;right:0;bottom:0;width:min(86vw,360px);z-index:61;background:var(--surface);color:var(--text);box-shadow:-20px 0 50px rgba(0,0,0,.25);transform:translateX(105%);visibility:hidden;transition:transform .28s ease,visibility .28s;padding:calc(14px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow-y:auto}
-  .mopen .mdback{opacity:1;pointer-events:auto}
-  .mopen .mdraw{transform:none;visibility:visible}
-  .mdraw .mtop{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-  .mdraw .mtop b{font-size:18px}
-  .mdraw .mx{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--text);font-size:22px;line-height:1;cursor:pointer}
-  .mdraw .lang{display:flex!important;margin:0 0 14px;align-self:flex-start}
-  .mdraw nav{display:grid;gap:4px;margin-bottom:16px}
-  .mdraw nav a{display:flex;align-items:center;justify-content:space-between;padding:14px 14px;border-radius:12px;text-decoration:none;color:var(--text);font-weight:600;font-size:17px;border:1px solid transparent}
-  .mdraw nav a::after{content:"›";color:var(--gold,#C9A13B);font-size:22px}
-  .mdraw nav a:hover,.mdraw nav a:active{background:var(--surface-2);border-color:var(--line)}
-  .mdraw .mcta{display:grid;gap:10px;margin-top:auto}
-  .mdraw .mcta .btn{justify-content:center;width:100%}
-  .mdraw .mwa{background:#25D366;color:#fff;border:0}
-  body.mopen{overflow:hidden}
-}
-@media(max-width:760px){
-  .mbar{transform:translateY(120%);transition:transform .3s ease;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px))!important}
-  .mbar.mshow{transform:none}
-  .mbar .btn{padding:11px 10px!important;font-size:15px!important}
-  body{padding-bottom:0!important}
-}
-</style>
 </head>
 <body>
 <header><div class="wrap nav">
@@ -904,6 +912,74 @@ const save=(k,v)=>{try{v?localStorage.setItem(k,JSON.stringify(v)):localStorage.
 const load=k=>{try{return JSON.parse(localStorage.getItem(k)||"null");}catch(_){return null;}};
 
 const app=document.getElementById("app"),KEY="dio_portal";
+
+// ===== মাসিক রিপোর্ট কার্ড (PDF) =====
+function rcPick(d){
+  const ms=new Set();const add=x=>x&&ms.add(String(x).slice(0,7));
+  d.attendance.forEach(a=>add(a.d));d.payments.forEach(p=>add(p.m));d.reports.forEach(r=>add(r.m));(d.hifz||[]).forEach(h=>add(h.d));
+  add(new Date().toISOString());
+  const list=[...ms].sort().reverse().slice(0,12);
+  const old=document.getElementById("rcM");if(old)old.remove();
+  const ov=document.createElement("div");ov.id="rcM";ov.className="rcm";
+  ov.innerHTML=`<div class="rcb" role="dialog" aria-modal="true"><div class="rch">মাসিক রিপোর্ট কার্ড</div><div class="rcc"><label>কোন মাসের?<select id="rcSel">${list.map(m=>`<option value="${m}">${mon(m+"-01")}</option>`).join("")}</select></label><p class="muted" style="font-size:14px;margin:0">হাজিরা, ফি, ${(d.hifz||[]).length?"হিফয অগ্রগতি, ":""}আর শিক্ষকের মন্তব্য — এক পাতায়। প্রিন্ট বা PDF হিসেবে রাখা যাবে।</p></div><div class="rcf"><button class="btn btn-ghost" id="rcX">বাতিল</button><button class="btn btn-primary" id="rcGo">তৈরি করুন</button></div></div>`;
+  document.body.appendChild(ov);
+  ov.onclick=ev=>{if(ev.target===ov)ov.remove();};document.getElementById("rcX").onclick=()=>ov.remove();
+  document.getElementById("rcGo").onclick=()=>{const m=document.getElementById("rcSel").value;ov.remove();rcMake(d,m);};
+}
+function rcMake(d,ym){
+  const w=window.open("","_blank");if(!w){alert("পপআপ আটকানো আছে — ব্রাউজারে এই সাইটের জন্য পপআপ চালু করুন।");return;}
+  const s=d.student,bnd=x=>String(x).replace(/\d/g,c=>"০১২৩৪৫৬৭৮৯"[c]),E=x=>e(x==null?"":x);
+  const att=d.attendance.filter(a=>String(a.d).slice(0,7)===ym).sort((a,b)=>a.d<b.d?-1:1);
+  const cnt={present:0,absent:0,late:0,excused:0};att.forEach(a=>{if(cnt[a.s]!=null)cnt[a.s]++;});
+  const held=att.length-cnt.excused,pct=held?Math.round((cnt.present+cnt.late)*100/held):null;
+  const pays=d.payments.filter(p=>String(p.m).slice(0,7)===ym),paid=pays.reduce((a,p)=>a+Number(p.a||0),0),fee=Number(s.fee||0);
+  const rep=d.reports.find(r=>String(r.m).slice(0,7)===ym);
+  const hz=(d.hifz||[]).filter(h=>String(h.d).slice(0,7)===ym).sort((a,b)=>a.d<b.d?-1:1);
+  const qc={excellent:0,good:0,weak:0};hz.forEach(h=>{if(qc[h.q]!=null)qc[h.q]++;});
+  const QN={excellent:"চমৎকার",good:"ভালো",weak:"দুর্বল"},SC={present:"#16A34A",late:"#2563EB",absent:"#DC2626",excused:"#9CA3AF"};
+  const dt=x=>new Date(String(x).slice(0,10)+"T00:00:00").toLocaleDateString("bn-BD",{day:"numeric",month:"short"});
+  const grade=pct==null?"—":pct>=95?"মুমতায":pct>=85?"জায়্যিদ জিদ্দান":pct>=70?"জায়্যিদ":"উন্নতি প্রয়োজন";
+  const star=(cx,cy,r,f)=>{const p=o=>[0,1,2,3].map(k=>{const t=o+k*Math.PI/2;return (cx+r*Math.cos(t)).toFixed(2)+","+(cy+r*Math.sin(t)).toFixed(2)}).join(" ");return `<polygon points="${p(Math.PI/4)}" fill="${f}"/><polygon points="${p(0)}" fill="${f}"/>`;};
+  const band=`<svg viewBox="0 0 210 8" preserveAspectRatio="none" style="display:block;width:100%;height:8mm"><defs><pattern id="bp" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#0A4A40"/>${star(4,4,2.8,"none")}<g fill="none" stroke="#E2BE5C" stroke-width=".3">${star(4,4,2.8,"none").replace(/fill="none"/g,"")}</g>${star(4,4,1.1,"#E2BE5C")}</pattern></defs><rect width="210" height="8" fill="url(#bp)"/></svg>`;
+  const html=`<!doctype html><html lang="bn"><head><meta charset="utf-8"><title>মাসিক রিপোর্ট — ${E(s.name)} — ${mon(ym+"-01")}</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>@page{size:A4;margin:0}*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+body{margin:0;font-family:"Hind Siliguri",sans-serif;color:#1C2427;background:#e9ece8;font-size:11pt}
+.pg{width:210mm;min-height:296mm;margin:0 auto;background:#FFFDF7;position:relative;display:flex;flex-direction:column}
+.hd{background:linear-gradient(135deg,#0B3D4A,#0A5A4A);color:#fff;padding:5mm 14mm 4mm;display:flex;align-items:center;gap:12px}
+.hd b{font-size:19pt;display:block;line-height:1.2}.hd small{color:#F1D27A;font-size:10pt}.hd .r{margin-left:auto;text-align:right}.hd .r span{display:block;font-size:10pt;color:#CFE3E6}.hd .r strong{font-size:15pt;color:#F1D27A}
+.bd{padding:4mm 14mm 2mm;flex:1}
+.bis{font-family:Amiri,serif;text-align:center;color:#A8862A;font-size:14pt;margin:0 0 3mm}
+.info{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-bottom:2mm}.info div{border:1px solid #E6DCC8;border-radius:3mm;padding:2.5mm 3mm;background:#fff}.info span{display:block;font-size:8.5pt;color:#6B767B}.info b{font-size:11pt}
+h2{font-size:11.5pt;color:#0A5A4A;margin:2.8mm 0 1.6mm;display:flex;align-items:center;gap:6px}h2::before{content:"";width:3mm;height:3mm;transform:rotate(45deg);background:#C9A13B;display:inline-block}
+.kp{display:grid;grid-template-columns:repeat(5,1fr);gap:3mm}.kp div{text-align:center;border-radius:3mm;padding:1.6mm 2mm;background:#fff;border:1px solid #E6DCC8}.kp b{display:block;font-size:15pt;line-height:1.1}.kp span{font-size:8.5pt;color:#6B767B}
+.cal{display:flex;flex-wrap:wrap;gap:1.6mm;margin-top:3mm}.cal i{font-style:normal;width:11mm;text-align:center;border-radius:2mm;padding:.8mm 0;color:#fff;font-size:8.5pt}
+.fee{display:flex;justify-content:space-between;align-items:center;border:1px solid #E6DCC8;border-radius:3mm;padding:3mm 4mm;background:#fff}.fee b{font-size:13pt}
+table{width:100%;border-collapse:collapse;font-size:9.5pt;background:#fff}th{background:#F1FAF5;color:#0A5A4A;text-align:left;padding:1.8mm 2mm;border-bottom:1px solid #CDE9DA}td{padding:1.2mm 2mm;border-bottom:1px solid #EEE7D6;vertical-align:top}
+.q{font-size:8pt;font-weight:700;color:#fff;border-radius:99px;padding:.4mm 2mm}
+.rep{border:1px solid #CDE9DA;border-left:4px solid #0A7A55;background:#F1FAF5;border-radius:3mm;padding:3mm 4mm;line-height:1.65;max-height:34mm;overflow:hidden;white-space:pre-wrap}
+.ft{display:grid;grid-template-columns:1fr 1fr;gap:20mm;padding:0 20mm 2mm;margin-top:2mm}.ft div{text-align:center;font-size:9.5pt;color:#4A5558}.ft i{display:block;border-top:1px solid #0B3D4A;margin-bottom:1mm;height:7mm}
+.du{text-align:center;font-family:Amiri,serif;color:#A8862A;font-size:12pt;margin:1mm 0 0}.nt{text-align:center;font-size:8.5pt;color:#8A949A;padding-bottom:3mm}
+.bar{position:sticky;top:0;background:#fff;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ddd;z-index:5}.bar button{font:inherit;font-weight:700;padding:10px 18px;border-radius:12px;border:0;background:#F6B91A;cursor:pointer}
+@media print{.bar{display:none}body{background:#fff}}@media screen{.pg{margin:16px auto;box-shadow:0 10px 40px rgba(0,0,0,.15)}}</style></head><body>
+<div class="bar"><span>প্রিন্ট উইন্ডোতে “Save as PDF” বেছে নিন · Background graphics চালু রাখুন</span><button onclick="print()">PDF হিসেবে সেভ / প্রিন্ট</button></div>
+<div class="pg">${band}<div class="hd"><svg viewBox="0 0 64 64" width="52" height="52"><circle cx="32" cy="32" r="31" fill="#F1D27A"/><path d="M18 36h28v3H18z" fill="#0B3D4A"/><path d="M20 36a12 12 0 0 1 24 0z" fill="#0B3D4A"/><circle cx="32" cy="14" r="2" fill="#0B3D4A"/><path d="M32 22l-1.5-5h3z" fill="#0B3D4A"/><path d="M20 44l12 3 12-3v6l-12 3-12-3z" fill="#0B3D4A"/></svg><div><b>দারুল ইলম অনলাইন</b><small>মাসিক অগ্রগতি প্রতিবেদন</small></div><div class="r"><span>মাস</span><strong>${mon(ym+"-01")}</strong></div></div>
+<div class="bd"><div class="bis">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+<div class="info"><div><span>শিক্ষার্থী</span><b>${E(s.name)}</b></div><div><span>কোর্স</span><b>${E(d.course_title||s.course)}</b></div><div><span>ব্যাচ</span><b>${E(s.batch||"—")}</b></div><div><span>শিক্ষক</span><b>${E(s.teacher||"—")}</b></div></div>
+<h2>হাজিরা</h2>${att.length?`<div class="kp"><div><b style="color:#16A34A">${bnd(cnt.present)}</b><span>উপস্থিত</span></div><div><b style="color:#2563EB">${bnd(cnt.late)}</b><span>দেরিতে</span></div><div><b style="color:#DC2626">${bnd(cnt.absent)}</b><span>অনুপস্থিত</span></div><div><b style="color:#6B7280">${bnd(cnt.excused)}</b><span>ছুটি</span></div><div><b style="color:#0A5A4A">${pct==null?"—":bnd(pct)+"%"}</b><span>উপস্থিতির হার</span></div></div>
+<div class="cal">${att.map(a=>`<i style="background:${SC[a.s]||"#999"}" title="${ST[a.s]||""}">${bnd(String(a.d).slice(8,10))}</i>`).join("")}</div>`:`<p style="color:#6B767B">এই মাসে কোনো হাজিরা রেকর্ড নেই।</p>`}
+<h2>মাসিক ফি</h2><div class="fee"><span>মাসিক ফি: <b>${bnd(fee)} ${s.currency==="BDT"?"টাকা":E(s.currency)}</b></span>${fee&&paid>=fee?`<b style="color:#16A34A">✓ পরিশোধিত</b>`:paid?`<b style="color:#D97706">আংশিক — ${bnd(paid)} দেওয়া, বাকি ${bnd(fee-paid)}</b>`:`<b style="color:#DC2626">বাকি</b>`}</div>
+${hz.length?`<h2>হিফয অগ্রগতি</h2><div class="kp" style="grid-template-columns:repeat(4,1fr);margin-bottom:3mm"><div><b>${bnd(hz.length)}</b><span>সবকের দিন</span></div><div><b style="color:#16A34A">${bnd(qc.excellent)}</b><span>চমৎকার</span></div><div><b style="color:#2563EB">${bnd(qc.good)}</b><span>ভালো</span></div><div><b style="color:#D97706">${bnd(qc.weak)}</b><span>দুর্বল</span></div></div>
+<table><thead><tr><th>তারিখ</th><th>সবক</th><th>সবকি</th><th>মানযিল</th><th>মান</th></tr></thead><tbody>${hz.slice(-6).map(h=>`<tr><td>${dt(h.d)}</td><td>${E(h.sb||"—")}</td><td>${E(h.sq||"—")}</td><td>${E(h.mz||"—")}</td><td>${h.q?`<span class="q" style="background:${h.q==="excellent"?"#16A34A":h.q==="good"?"#2563EB":"#D97706"}">${QN[h.q]}</span>`:""}</td></tr>`).join("")}</tbody></table>${hz.length>6?`<p style="font-size:8.5pt;color:#8A949A;margin:1mm 0 0">শেষ ৬ দিন দেখানো হয়েছে — পুরো মাসের হিসাব ওপরের সারসংক্ষেপে।</p>`:""}`:""}
+<h2>শিক্ষকের মন্তব্য</h2>${rep?`<div class="rep">${E(rep.t)}</div><p style="font-size:9pt;color:#6B767B;margin:1.5mm 0 0">— ${E(rep.by||s.teacher||"শিক্ষক")}</p>`:`<p style="color:#6B767B">এই মাসের মন্তব্য এখনো লেখা হয়নি।</p>`}
+<h2>সামগ্রিক মূল্যায়ন (উপস্থিতির ভিত্তিতে)</h2><div class="fee"><span>এই মাসে নিয়মিততা</span><b style="color:#0A5A4A">${grade}</b></div>
+</div>
+<div class="du">رَبِّ زِدْنِي عِلْمًا</div>
+<div class="ft"><div><i></i>শিক্ষক</div><div><i></i>পরিচালক, দারুল ইলম অনলাইন</div></div>
+<div class="nt">প্রস্তুত: ${new Date().toLocaleDateString("bn-BD",{day:"numeric",month:"long",year:"numeric"})} · darulilmonline.com/portal</div>${band}</div>
+<script>(document.fonts?document.fonts.ready:Promise.resolve()).then(function(){setTimeout(function(){print()},500)});<\/script></body></html>`;
+  w.document.write(html);w.document.close();
+}
 const ST={present:"উপস্থিত",absent:"অনুপস্থিত",late:"দেরিতে",excused:"ছুটি"};
 const money=(a,c)=>c==="SAR"?bn(a)+" ر.س":"৳"+bn(Number(a).toLocaleString("en-US"));
 const mon=m=>new Date(m+"T00:00:00").toLocaleDateString("bn-BD",{month:"long",year:"numeric"});
@@ -925,7 +1001,7 @@ function render(d,cred){
        ${b.meet?`<p style="margin-top:12px;font-size:14px" class="muted">ক্লাস শুরুর ১৫ মিনিট আগে এখানে "যোগ দিন" বাটন আসবে।</p>`:""}</div>`;}
   else cls=`<div class="pc"><h2>ক্লাসের রুটিন</h2><p class="muted">${s.batch?"ব্যাচ: "+e(s.batch)+" — রুটিন শীঘ্রই যোগ হবে।":"ব্যাচ এখনো ঠিক হয়নি। শীঘ্রই জানানো হবে ইনশাআল্লাহ।"}</p></div>`;
   app.innerHTML=`<div class="pt-head"><div><span class="muted">আসসালামু আলাইকুম</span><h1>${e(s.name)}</h1><p>${e(d.course_title||"")}${s.batch?" · ব্যাচ: "+e(s.batch):""}${s.teacher?" · শিক্ষক: "+e(s.teacher):""}</p></div>
-    <button class="btn btn-ghost" id="out" style="padding:10px 16px;font-size:14px">বের হোন</button></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn btn-primary" id="rcBtn" style="padding:10px 16px;font-size:14px">📄 মাসিক রিপোর্ট কার্ড</button><button class="btn btn-ghost" id="out" style="padding:10px 16px;font-size:14px">বের হোন</button></div></div>
     <div class="pt-grid">${cls}
     <div class="pc"><h2>এই মাসের ফি</h2>${paidThis?`<p class="ok" style="font-size:20px">✓ পরিশোধিত</p>`:`<p class="due" style="font-size:20px">বাকি — ${money(s.fee,s.currency)}</p><p class="muted" style="margin-top:6px">${s.currency==="SAR"?"পেমেন্টের মাধ্যম জানতে WhatsApp করুন।":"bKash/Nagad: 01329-173444 (Send Money) — পাঠিয়ে ট্রানজেকশন আইডি WhatsApp-এ দিন।"}</p>`}
       ${d.payments.length?`<div class="rows" style="margin-top:12px">${d.payments.slice(0,6).map(p=>`<div><span>${mon(p.m)}</span><span class="ok">${money(p.a,p.c)}</span></div>`).join("")}</div>`:""}</div>
@@ -934,6 +1010,7 @@ function render(d,cred){
     ${(d.hifz||[]).length?`<div class="pc wide"><h2>হিফয অগ্রগতি</h2><div class="hft"><table><thead><tr><th>তারিখ</th><th>সবক</th><th>সবকি</th><th>মানযিল</th><th>মান</th></tr></thead><tbody>${d.hifz.slice(0,30).map(h=>`<tr><td>${new Date(h.d+"T00:00:00").toLocaleDateString("bn-BD",{day:"numeric",month:"short"})}</td><td>${e(h.sb||"—")}</td><td>${e(h.sq||"—")}</td><td>${e(h.mz||"—")}</td><td>${h.q?`<span class="hq ${h.q}">${{excellent:"চমৎকার",good:"ভালো",weak:"দুর্বল"}[h.q]}</span>`:""}${h.n?`<div class="muted" style="font-size:12px">${e(h.n)}</div>`:""}</td></tr>`).join("")}</tbody></table></div></div>`:""}
     <div class="pc wide rep"><h2>মাসিক রিপোর্ট</h2>${d.reports.length?d.reports.map((r,i)=>`<details ${i?"":"open"}><summary>${mon(r.m)}${r.by?" — "+e(r.by):""}</summary><p>${e(r.t)}</p></details>`).join(""):'<p class="muted">শিক্ষক মাস শেষে রিপোর্ট লিখবেন ইনশাআল্লাহ।</p>'}</div>
     </div>`;
+  document.getElementById("rcBtn").onclick=()=>rcPick(d);
   document.getElementById("out").onclick=()=>{save(KEY,null);location.reload();};
   if(b&&nc&&!nc.live)setTimeout(()=>login(cred.phone,cred.code,false),Math.min(Math.max((nc.inMin-15)*60e3,60e3),30*60e3));
 }
@@ -965,6 +1042,9 @@ const c=load(KEY);if(c)login(c.phone,c.code,true);
   var B=document.body,lang=navr.querySelector(".lang");
   var btn=document.createElement("button");btn.className="mburg";btn.type="button";btn.setAttribute("aria-label","মেনু");btn.setAttribute("aria-expanded","false");
   btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  var sb=document.createElement("a");sb.className="srchbtn";sb.href="/search";sb.setAttribute("aria-label","খুঁজুন");sb.title="খুঁজুন";
+  sb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+  var setb=navr.querySelector(".setbtn");if(!document.querySelector(".srchbtn")){if(setb)navr.insertBefore(sb,setb);else navr.appendChild(sb);}
   navr.appendChild(btn);
   var back=document.createElement("div");back.className="mdback";
   var dr=document.createElement("aside");dr.className="mdraw";dr.setAttribute("aria-label","মেনু");

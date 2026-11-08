@@ -1,7 +1,7 @@
-/* দারুল ইলম অনলাইন — অফলাইন সার্ভিস ওয়ার্কার — v44 */
-const V = "dio-v44";
+/* দারুল ইলম অনলাইন — অফলাইন সার্ভিস ওয়ার্কার — v46 */
+const V = "dio-v46";
 const PAGES = V + "-pages", DATA = "dio-data", STATIC = V + "-static", FONTS = "dio-fonts";
-const SHELL = ["/", "/courses", "/learn", "/library", "/apps", "/guide-parent", "/guide-teacher", "/offline", "/cert.js",
+const SHELL = ["/", "/courses", "/learn", "/library", "/apps", "/guide-parent", "/guide-teacher", "/offline", "/search", "/cert.js",
   "/favicon.svg", "/favicon.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/manifest.webmanifest"];
 const SB = "https://nlylwrbxejjxnfljcztv.supabase.co";
 

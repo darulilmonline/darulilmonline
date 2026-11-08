@@ -674,6 +674,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 }</style>
 <style id="mnav">/* mobile nav v32 */
 .mburg{display:none}
+.srchbtn{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:var(--text);flex:none;text-decoration:none}.srchbtn svg{width:20px;height:20px}
 :root[data-theme="dark"] .setbtn{color:var(--text)!important}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .setbtn{color:var(--text)!important}}
 .links a,.logo>span>span,.hdr-cta{white-space:nowrap}
@@ -922,6 +923,9 @@ f.addEventListener("submit",async e=>{
   var B=document.body,lang=navr.querySelector(".lang");
   var btn=document.createElement("button");btn.className="mburg";btn.type="button";btn.setAttribute("aria-label","মেনু");btn.setAttribute("aria-expanded","false");
   btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>';
+  var sb=document.createElement("a");sb.className="srchbtn";sb.href="/search";sb.setAttribute("aria-label","খুঁজুন");sb.title="খুঁজুন";
+  sb.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+  var setb=navr.querySelector(".setbtn");if(!document.querySelector(".srchbtn")){if(setb)navr.insertBefore(sb,setb);else navr.appendChild(sb);}
   navr.appendChild(btn);
   var back=document.createElement("div");back.className="mdback";
   var dr=document.createElement("aside");dr.className="mdraw";dr.setAttribute("aria-label","মেনু");
