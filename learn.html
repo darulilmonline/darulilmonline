@@ -845,6 +845,20 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
   body:has(#learnApp .outd[open]) .wa-float{display:none!important}
   #learnApp .outd .ls{padding:11px 10px!important}
 }
+
+@media(max-width:959px){
+  .lrn{padding-bottom:70px!important}
+  #learnApp .outd:not([open]){left:50%!important;right:auto!important;transform:translateX(-50%);width:auto;max-width:calc(100% - 28px);border-radius:999px!important;transition:transform .3s ease,opacity .3s;box-shadow:0 10px 28px rgba(11,61,74,.35)}
+  #learnApp .outd:not([open])::before{display:none}
+  #learnApp .outd:not([open])>summary{border-radius:999px;padding:7px 36px 9px 8px!important;gap:8px;flex-wrap:nowrap}
+  #learnApp .outd:not([open]) .oic{width:30px;height:30px;border-radius:50%;font-size:15px}
+  #learnApp .outd:not([open]) .oh small{display:none}
+  #learnApp .outd:not([open]) .omb{font-size:14px!important;max-width:58vw}
+  #learnApp .outd:not([open]) .obar{position:absolute;left:46px;right:36px;bottom:5px;height:2.5px;flex-basis:auto}
+  #learnApp .outd:not([open])>summary::before{top:50%;transform:translateY(-50%);right:14px;font-size:11px}
+  #learnApp .outd.hid:not([open]){transform:translateX(-50%) translateY(170%);opacity:0;pointer-events:none}
+  .wa-float{bottom:calc(74px + env(safe-area-inset-bottom,0px))!important}
+}
 </style>
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
@@ -931,6 +945,24 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root:not([data-theme="light"]) .it-media.vid,:root:not([data-theme="light"]) .lrn .media{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box!important}
 :root:not([data-theme="light"]) #learnApp .outd .ls.on .no{border-color:var(--line)!important}
 }</style>
+<style id="nav51">
+/* ---- v51: ফোনে সরু পিল + স্ক্রলে লুকানো ---- */
+@media(max-width:959px){
+  .lrn{padding-bottom:76px!important}
+  #learnApp .outd:not([open]){left:50%!important;right:auto!important;width:min(92vw,440px);transform:translateX(-50%);border-radius:999px!important;bottom:calc(12px + env(safe-area-inset-bottom,0px));box-shadow:0 10px 30px rgba(11,61,74,.35);transition:transform .3s ease,opacity .3s}
+  #learnApp .outd:not([open])::before{display:none}
+  #learnApp .outd:not([open])>summary{padding:7px 42px 9px 8px!important;gap:10px;border-radius:999px;overflow:hidden;flex-wrap:nowrap;background:linear-gradient(135deg,#0B3D4A,#0A4A40)}
+  #learnApp .outd:not([open]) .oic{width:32px;height:32px;border-radius:50%;font-size:15px}
+  #learnApp .outd:not([open]) .oh small{display:none}
+  #learnApp .outd:not([open]) .omb{font-size:14px!important;font-weight:700}
+  #learnApp .outd:not([open]) .obar{position:absolute;left:46px;right:42px;bottom:4px;height:3px;flex-basis:auto;background:rgba(255,255,255,.14)}
+  #learnApp .outd:not([open])>summary::before{top:50%;transform:translateY(-50%);right:16px;font-size:12px}
+  body.nvhide #learnApp .outd:not([open]){transform:translate(-50%,160%);opacity:0;pointer-events:none}
+  .wa-float{bottom:calc(76px + env(safe-area-inset-bottom,0px))!important;transition:transform .3s}
+  body.nvhide .wa-float{transform:translateY(64px)}
+  #learnApp .outd[open]{left:10px!important;right:10px!important;transform:none;width:auto}
+}
+</style>
 </head>
 <body>
 <header><div class="wrap nav">
@@ -1351,6 +1383,24 @@ fetch("https://nlylwrbxejjxnfljcztv.supabase.co/rest/v1/courses?select=slug,sort
       if(y<500||nearEnd||y>last+4)bar.classList.remove("mshow");else if(y<last-4)bar.classList.add("mshow");
       last=y;tick=false;}
     addEventListener("scroll",function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});}
+})();
+</script>
+<script id="nav51">
+(function(){var last=scrollY,t=false;
+addEventListener("scroll",function(){if(t)return;t=true;requestAnimationFrame(function(){t=false;
+  var o=document.querySelector("#learnApp .outd");if(!o||o.open||innerWidth>959){last=scrollY;return;}
+  var y=scrollY,end=y+innerHeight>document.documentElement.scrollHeight-120;
+  if(end||y<120||y<last-6)o.classList.remove("hid");else if(y>last+6)o.classList.add("hid");
+  last=y;});},{passive:true});})();
+</script>
+<script id="nav51js">
+(function(){var last=scrollY,t=false;
+  addEventListener("scroll",function(){if(t)return;t=true;requestAnimationFrame(function(){
+    var y=scrollY,d=y-last,od=document.querySelector("#learnApp .outd");
+    if(od&&od.open){document.body.classList.remove("nvhide");}
+    else if(y<120||d<-6)document.body.classList.remove("nvhide");
+    else if(d>6)document.body.classList.add("nvhide");
+    last=y;t=false;});},{passive:true});
 })();
 </script>
 </body></html>
