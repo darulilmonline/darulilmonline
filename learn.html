@@ -565,7 +565,7 @@ header{box-shadow:none}
 .progt{font-size:14px;color:var(--muted);font-weight:600}
 .lrn{display:grid;gap:24px;grid-template-columns:1fr;padding:30px 0 60px}
 @media(min-width:960px){.lrn{grid-template-columns:320px 1fr;align-items:start}.outd{position:sticky;top:96px;max-height:calc(100vh - 116px);overflow:auto}}
-.outd{border:1px solid var(--line);border-radius:14px;background:#fff}
+.outd{border:1px solid var(--line);border-radius:14px;background:var(--surface)}
 .outd>summary{list-style:none;cursor:pointer;padding:14px 16px;font-weight:700;display:flex;justify-content:space-between}
 .outd>summary::after{content:"▾";color:var(--muted)}
 .outd[open]>summary::after{content:"▴"}
@@ -799,6 +799,53 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root[data-theme="dark"] .cmx-k{color:var(--gold-2,#F1D27A);background:rgba(241,210,122,.1);border-color:rgba(241,210,122,.35)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cmx-k{color:var(--gold-2,#F1D27A);background:rgba(241,210,122,.1);border-color:rgba(241,210,122,.35)}}
 </style>
+<style id="nav50">
+/* ---- v50: প্রিমিয়াম কোর্স-নেভিগেটর ---- */
+#learnApp .outd{background:linear-gradient(170deg,#0B3D4A 0%,#0A4A40 55%,#0A3A33 100%)!important;border:1px solid rgba(201,161,59,.35)!important;border-radius:22px!important;color:#EAF4F1;box-shadow:0 18px 40px rgba(11,61,74,.22);scrollbar-width:thin;scrollbar-color:rgba(241,210,122,.5) transparent;position:relative}
+#learnApp .outd::before{content:"";position:absolute;inset:0 0 auto;height:4px;background:linear-gradient(90deg,#A8862A,#F1D27A,#A8862A);border-radius:22px 22px 0 0}
+#learnApp .outd>summary{display:flex!important;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 18px 14px!important;border-bottom:1px solid rgba(241,210,122,.18);position:sticky;top:0;z-index:2;background:linear-gradient(170deg,#0B3D4A,#0A4540);border-radius:22px 22px 0 0}
+#learnApp .outd>summary::after{display:none!important}
+.oic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;background:rgba(241,210,122,.14);border:1px solid rgba(241,210,122,.35);font-size:18px;flex:none}
+.oh{display:grid;line-height:1.3;min-width:0;flex:1}.oh small{font-size:12px;color:#BFD9D1;font-weight:600;letter-spacing:.3px}.oh b{font-size:16px;color:#fff}
+.omb{display:none}
+.obar{flex-basis:100%;height:6px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}.obar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#C9A13B,#F1D27A)}
+#learnApp .outd .mod{padding:4px 8px 6px}
+#learnApp .outd .mod h4{background:none!important;border:0!important;color:#F1D27A!important;font-size:12.5px!important;font-weight:700;letter-spacing:.2px;padding:14px 10px 6px!important;display:flex;align-items:center;gap:8px}
+#learnApp .outd .mod h4::before{content:"";width:8px;height:8px;transform:rotate(45deg);background:#C9A13B;flex:none}
+#learnApp .outd .mod h4::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(241,210,122,.35),transparent)}
+#learnApp .outd .ls{display:flex!important;align-items:flex-start;gap:10px;padding:9px 10px!important;margin:2px 0;border-radius:12px;border:0!important;color:#DCEBE6!important;background:none!important;text-decoration:none;transition:background .15s,color .15s;position:relative}
+#learnApp .outd .ls:hover{background:rgba(255,255,255,.07)!important;color:#fff!important}
+#learnApp .outd .ls .no{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:12.5px;font-weight:700;color:#BFD9D1;border:1.5px solid rgba(191,217,209,.35);margin-top:1px}
+#learnApp .outd .ls .no.dn{background:#16A34A;border-color:#16A34A;color:#fff}
+#learnApp .outd .ls .tt{font-size:14.5px;line-height:1.5;min-width:0}
+#learnApp .outd .ls .tt .k{display:inline-block;font-style:normal;font-size:11px;font-weight:700;margin-inline-start:6px;padding:1px 7px;border-radius:99px;background:rgba(241,210,122,.16)!important;color:#F1D27A!important;vertical-align:1px}
+#learnApp .outd .ls.on{background:linear-gradient(90deg,rgba(241,210,122,.22),rgba(241,210,122,.06))!important;color:#fff!important;font-weight:700}
+#learnApp .outd .ls.on::before{content:"";position:absolute;inset-inline-start:-8px;top:8px;bottom:8px;width:4px;border-radius:4px;background:#F1D27A}
+#learnApp .outd .ls.on .no{background:#F1D27A;border-color:#F1D27A;color:#0B3D4A}
+#learnApp .outd .ls .ok{display:none}
+#learnApp .outd .empty{color:#BFD9D1}
+@media(min-width:960px){#learnApp .outd{top:92px!important}}
+/* ফোন: নিচে ভাসমান বার → চাপলে নিচ থেকে ওঠা তালিকা */
+@media(max-width:959px){
+  .lrn{padding-bottom:96px}
+  #learnApp .outd{position:fixed!important;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom,0px));z-index:66;max-height:none;margin:0;border-radius:20px!important}
+  #learnApp .outd>summary{border-radius:20px;border-bottom:0;padding:12px 44px 12px 14px!important;position:relative}
+  #learnApp .outd>summary::before{content:"▲";position:absolute;right:16px;top:20px;color:#F1D27A;font-size:13px}
+  #learnApp .outd[open]>summary::before{content:"▼"}
+  #learnApp .outd>summary .obar{flex-basis:100%;height:4px}
+  .odk{display:none}.omb{display:block;font-size:14.5px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  #learnApp .outd .oh small::after{content:" · তালিকা দেখতে চাপুন"}
+  #learnApp .outd[open]{top:auto;max-height:78vh;overflow:auto;border-radius:22px 22px 20px 20px!important;box-shadow:0 -10px 60px rgba(0,0,0,.45)}
+  #learnApp .outd[open]>summary{position:sticky;top:0;border-radius:20px 20px 0 0;border-bottom:1px solid rgba(241,210,122,.18)}
+  #learnApp .outd[open] .oh small::after{content:" · বন্ধ করতে চাপুন"}
+  body:has(#learnApp .outd[open])::after{content:"";position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:65}
+  body:has(#learnApp .outd[open]){overflow:hidden}
+  .mbar{display:none!important}
+  .wa-float{bottom:calc(96px + env(safe-area-inset-bottom,0px))!important}
+  body:has(#learnApp .outd[open]) .wa-float{display:none!important}
+  #learnApp .outd .ls{padding:11px 10px!important}
+}
+</style>
 <style id="darkfix">/* dark-fix v31 */
 :root[data-theme="dark"] .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root[data-theme="dark"] .msg.err{background:#313134!important;color:#C59999!important}
@@ -813,7 +860,6 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root[data-theme="dark"] .lx{background:var(--surface)!important}
 :root[data-theme="dark"] .lhead{background:var(--surface)!important}
 :root[data-theme="dark"] .badge-free{background:#2F3335!important;color:#96BAA4!important}
-:root[data-theme="dark"] .outd{background:var(--surface)!important}
 :root[data-theme="dark"] .ls.on{background:color-mix(in srgb,var(--brand) 7%,var(--surface))!important}
 :root[data-theme="dark"] .k.video{background:#313235!important;color:#DD9C97!important}
 :root[data-theme="dark"] .k.pdf{background:#313234!important;color:#DEAC90!important}
@@ -841,6 +887,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root[data-theme="dark"] .h2ch .chip{background:#303336!important}
 :root[data-theme="dark"] .h2f span{color:var(--text)!important}
 :root[data-theme="dark"] .it-media.vid,:root[data-theme="dark"] .lrn .media{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box!important}
+:root[data-theme="dark"] #learnApp .outd .ls.on .no{border-color:var(--line)!important}
 @media (prefers-color-scheme:dark){
 :root:not([data-theme="light"]) .msg.ok{background:#2E3335!important;color:#95B2A0!important}
 :root:not([data-theme="light"]) .msg.err{background:#313134!important;color:#C59999!important}
@@ -855,7 +902,6 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root:not([data-theme="light"]) .lx{background:var(--surface)!important}
 :root:not([data-theme="light"]) .lhead{background:var(--surface)!important}
 :root:not([data-theme="light"]) .badge-free{background:#2F3335!important;color:#96BAA4!important}
-:root:not([data-theme="light"]) .outd{background:var(--surface)!important}
 :root:not([data-theme="light"]) .ls.on{background:color-mix(in srgb,var(--brand) 7%,var(--surface))!important}
 :root:not([data-theme="light"]) .k.video{background:#313235!important;color:#DD9C97!important}
 :root:not([data-theme="light"]) .k.pdf{background:#313234!important;color:#DEAC90!important}
@@ -883,6 +929,7 @@ if(t&&t!=="auto")R.setAttribute("data-theme",t);if(p&&p!=="teal")R.setAttribute(
 :root:not([data-theme="light"]) .h2ch .chip{background:#303336!important}
 :root:not([data-theme="light"]) .h2f span{color:var(--text)!important}
 :root:not([data-theme="light"]) .it-media.vid,:root:not([data-theme="light"]) .lrn .media{background:linear-gradient(var(--surface),var(--surface)) padding-box,linear-gradient(135deg,#F3D27A,#C9A13B 38%,#0A7A55 72%,#0B3D4A) border-box!important}
+:root:not([data-theme="light"]) #learnApp .outd .ls.on .no{border-color:var(--line)!important}
 }</style>
 </head>
 <body>
@@ -1019,8 +1066,8 @@ async function route(){
       <a class="btn btn-ghost" href="/${slug}" style="padding:9px 18px;font-size:14px">লাইভ ক্লাসে ভর্তি</a>${ls.some(x=>x.body)?`<button type="button" class="btn btn-primary" id="cpdf" style="padding:9px 18px;font-size:14px">⬇ পুরো কোর্স PDF</button>`:""}<button type="button" class="btn btn-ghost" id="qzopen" style="padding:9px 18px;font-size:14px">✎ কুইজ ও সনদ</button>${ls.some(x=>x.body)&&("serviceWorker" in navigator)?`<button type="button" class="btn btn-ghost" id="offsave" style="padding:9px 18px;font-size:14px">${offList().some(o=>o.slug===slug)?"✓ অফলাইনে আছে":"⬇ অফলাইনে রাখুন"}</button>`:""}</div>
   </div></section>
   <div class="wrap lrn">
-    <details class="outd" open><summary>পাঠের তালিকা (${bn(ls.length)})</summary>
-      ${mods.map(g=>`<div class="mod"><h4>${e(g.m)}</h4>${g.i.map(x=>`<a class="ls${cur&&x.id===cur.id?" on":""}" href="${base}?l=${x.id}" data-l="${x.id}"><span class="k ${x.kind}">${KIND[x.kind]}</span><span>${e(x.title)}</span>${done.includes(x.id)?'<span class="ok">✓</span>':""}</a>`).join("")}</div>`).join("")||'<div class="empty" style="padding:16px">এখনও পাঠ যোগ হয়নি।</div>'}
+    <details class="outd" open><summary><span class="oic">📖</span><span class="oh"><small>কোর্সের পাঠসমূহ</small><b class="odk">${bn(done.length)}/${bn(ls.length)} পাঠ সম্পন্ন</b><b class="omb">${cur?"পাঠ "+bn(ls.indexOf(cur)+1)+"/"+bn(ls.length)+" · "+e(cur.title):"পাঠের তালিকা"}</b></span><span class="obar"><i style="width:${ls.length?Math.round(done.length*100/ls.length):0}%"></i></span></summary>
+      ${mods.map(g=>`<div class="mod"><h4>${e(g.m)}</h4>${g.i.map(x=>`<a class="ls${cur&&x.id===cur.id?" on":""}" href="${base}?l=${x.id}" data-l="${x.id}"><span class="no${done.includes(x.id)?" dn":""}">${done.includes(x.id)?"✓":bn(ls.indexOf(x)+1)}</span><span class="tt">${e(x.title)}${x.kind!=="article"?`<em class="k ${x.kind}">${KIND[x.kind]}</em>`:""}</span></a>`).join("")}</div>`).join("")||'<div class="empty" style="padding:16px">এখনও পাঠ যোগ হয়নি।</div>'}
     </details>
     <div>
       ${cur&&cur.body?`<div class="rbar" role="toolbar" aria-label="পড়ার সেটিং"><span class="rlbl">লেখার আকার</span><button type="button" data-fs="-1" aria-label="লেখা ছোট করুন">A−</button><button type="button" data-fs="0" aria-label="স্বাভাবিক আকার" class="rmid">A</button><button type="button" data-fs="1" aria-label="লেখা বড় করুন">A+</button><span class="rsp"></span><button type="button" id="lpdf" class="rpdf">⬇ এই পাঠের PDF</button></div>`:""}<div class="view" id="view">${cur?lessonHTML(cur,ls,done,base):`<h2>পাঠ শীঘ্রই আসছে</h2><p class="lead">এই কোর্সের ফ্রি পাঠ তৈরি হচ্ছে ইনশাআল্লাহ। এর মধ্যে প্রশ্ন থাকলে নিচে করুন, অথবা লাইভ ক্লাসে ভর্তি হন।</p><p style="margin-top:16px"><a class="btn btn-primary" href="/${slug}">কোর্সের বিস্তারিত</a></p>`}</div>
