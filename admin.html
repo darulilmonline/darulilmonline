@@ -299,10 +299,10 @@ tr.sent td{opacity:.55}
           <input id="mTitle" placeholder="শিরোনাম — যেমন: সূরা ফাতিহা (তাজবীদসহ)">
           <select id="mCourse"><option value="">সাধারণ / সব কোর্স</option><option value="noorani">নূরানী কায়দা</option><option value="tajweed">তাজবীদ</option><option value="hifz">হিফয</option><option value="salah">নামাজ ও আমল</option><option value="arabic">আরবি ভাষা</option><option value="quran-words">কুরআন শব্দে শব্দে</option><option value="tafsir">তাফসীর</option><option value="hadith-words">হাদীস শব্দে শব্দে</option><option value="dua-words">দোয়া শব্দে শব্দে</option><option value="aqidah">আকীদা</option><option value="fiqh">ফিকহ</option><option value="seerah">সীরাত</option><option value="akhlaq">আদব-আখলাক</option><option value="history">নবীদের কাহিনী ও ইতিহাস</option><option value="english">ইংরেজি</option><option value="math">গণিত</option></select>
           <textarea id="mDesc" placeholder="ছোট বিবরণ (ঐচ্ছিক)"></textarea>
-          <label class="muted">ফাইল বেছে নিন — ছবি, PDF, অডিও, ছোট ভিডিও (সর্বোচ্চ ৫০MB)<input id="mFile" type="file" accept="image/*,application/pdf,audio/*,video/*,.opus,.ogg,.m4a" style="margin-top:6px"></label>
+          <label class="muted">ফাইল বেছে নিন — ছবি, PDF, অডিও, ভিডিও (R2 যুক্ত থাকলে ২ GB পর্যন্ত, না থাকলে ৫০MB)<input id="mFile" type="file" accept="image/*,application/pdf,audio/*,video/*,.opus,.ogg,.m4a" style="margin-top:6px"></label>
           <input id="mUrl" placeholder="অথবা লিংক দিন — YouTube, Google Drive, Facebook ইত্যাদি">
         </div>
-        <div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="mSave">যোগ করুন</button><span id="mMsg" class="muted"></span></div>
+        <div id="r2Use" style="margin-top:10px;font-size:14px"></div><div style="display:flex;gap:10px;align-items:center;margin-top:12px;flex-wrap:wrap"><button id="mSave">যোগ করুন</button><span id="mMsg" class="muted"></span></div>
         <p class="muted" style="margin-top:8px">বড় ভিডিও YouTube-এ আপলোড করে লিংক দিন — দ্রুত চলবে, জায়গাও বাঁচবে। AI লেখা চাইলে ভিডিও Public রাখুন।</p>
       </div>
       <div class="tbl"><table><thead><tr><th>তারিখ</th><th>শিরোনাম</th><th>ধরন</th><th>কোর্স</th><th>দেখুন</th><th>সাইটে দেখাবে</th><th></th></tr></thead><tbody id="mrows"></tbody></table></div>
@@ -470,6 +470,40 @@ function kindOfUrl(u){u=u.toLowerCase();
   if(/youtu\.?be|vimeo|facebook\.com\/.*video|\.mp4($|\?)/.test(u))return"video";
   if(/\.pdf($|\?)/.test(u))return"pdf"; if(/\.(jpe?g|png|webp|gif)($|\?)/.test(u))return"image";
   if(/\.(mp3|m4a|ogg|opus|wav)($|\?)/.test(u))return"audio"; return"link";}
+
+// ===== Cloudflare R2 আপলোড (v48) =====
+let R2READY=null;
+async function r2Ready(){if(R2READY!==null)return R2READY;try{const r=await fetch("/api/r2/status");const d=await r.json();R2READY=!!d.ready;}catch(_){R2READY=false;}return R2READY;}
+async function r2Auth(){const {data}=await sb.auth.getSession();return {Authorization:"Bearer "+(data.session&&data.session.access_token||"")};}
+async function r2Upload(file,folder,onp){
+  const safe=file.name.replace(/[^\w.\-]+/g,"_").slice(-60),key=folder+"/"+new Date().toISOString().slice(0,7)+"/"+Date.now()+"-"+safe;
+  const A=await r2Auth(),J={...A,"Content-Type":"application/json"};
+  const c=await (await fetch("/api/r2/mpu/create",{method:"POST",headers:J,body:JSON.stringify({key,type:file.type||"application/octet-stream"})})).json();
+  if(!c.ok)throw new Error(c.error||"R2 আপলোড শুরু হয়নি");
+  const CH=20*1024*1024,n=Math.max(1,Math.ceil(file.size/CH)),parts=[];
+  try{
+    for(let i=0;i<n;i++){
+      let ok=false,err;
+      for(let t=0;t<3&&!ok;t++){try{
+        const r=await fetch(`/api/r2/mpu/part?key=${encodeURIComponent(c.key)}&uploadId=${encodeURIComponent(c.uploadId)}&part=${i+1}`,{method:"PUT",headers:A,body:file.slice(i*CH,Math.min(file.size,(i+1)*CH))});
+        const d=await r.json();if(!d.ok)throw new Error(d.error||r.status);parts.push({partNumber:d.partNumber,etag:d.etag});ok=true;}catch(e){err=e;await new Promise(r=>setTimeout(r,1500));}}
+      if(!ok)throw err;
+      onp&&onp(Math.round((i+1)*100/n));
+    }
+    const d=await (await fetch("/api/r2/mpu/complete",{method:"POST",headers:J,body:JSON.stringify({key:c.key,uploadId:c.uploadId,parts})})).json();
+    if(!d.ok)throw new Error(d.error||"জোড়া লাগানো যায়নি");
+    return {key:c.key,url:"/m/"+c.key,path:"r2:"+c.key};
+  }catch(e){fetch("/api/r2/mpu/abort",{method:"POST",headers:J,body:JSON.stringify({key:c.key,uploadId:c.uploadId})});throw e;}
+}
+async function r2Delete(path){if(!path||!String(path).startsWith("r2:"))return false;const A=await r2Auth();await fetch("/api/r2/obj?key="+encodeURIComponent(String(path).slice(3)),{method:"DELETE",headers:A});return true;}
+async function rmFile(path){if(!path)return;if(await r2Delete(path))return;await sb.storage.from("media").remove([path]);}
+async function r2UsageShow(){
+  const el=$("r2Use");if(!el)return;if(!(await r2Ready())){el.innerHTML='<span class="muted">ফাইল রাখা হচ্ছে Supabase-এ (১ GB, প্রতি ফাইল ৫০MB পর্যন্ত)। Cloudflare R2 যুক্ত করলে বড় ফাইল ও বেশি জায়গা পাবেন।</span>';return;}
+  try{const A=await r2Auth(),d=await (await fetch("/api/r2/usage",{headers:A})).json();if(!d.ok)throw 0;
+    const gb=d.size/1073741824,pct=Math.min(100,gb*10),bn=x=>x.toLocaleString("bn-BD",{maximumFractionDigits:2});
+    el.innerHTML=`<b>☁ Cloudflare R2</b> — ${bn(gb)} GB ব্যবহার · ${d.count.toLocaleString("bn-BD")}টি ফাইল <span style="display:inline-block;width:140px;height:8px;border-radius:6px;background:#e5e7e2;vertical-align:middle;margin:0 6px"><i style="display:block;height:100%;width:${pct}%;border-radius:6px;background:${gb>9?"#C2410C":"#0A7A55"}"></i></span><span class="muted">১০ GB পর্যন্ত ফ্রি${gb>10?" · এর বেশি অংশে মাসে প্রতি GB প্রায় ০.০১৫ ডলার":""}</span>`;}
+  catch(_){el.innerHTML='<span class="muted">R2 যুক্ত আছে, তবে ব্যবহারের হিসাব আনা যায়নি।</span>';}
+}
 $("mSave").onclick=async()=>{
   const title=$("mTitle").value.trim(),file=$("mFile").files[0],url=$("mUrl").value.trim(),msg=$("mMsg");
   if(!title){msg.textContent="শিরোনাম দিন।";return;}
@@ -478,20 +512,28 @@ $("mSave").onclick=async()=>{
   try{
     let row={title,course:$("mCourse").value||null,description:$("mDesc").value.trim()||null};
     if(file){
-      if(file.size>50*1024*1024) throw new Error("ফাইল ৫০MB-এর বেশি — YouTube/Drive লিংক দিন।");
-      const kind=kindOfFile(file),safe=file.name.replace(/[^\w.\-]+/g,"_").slice(-60),path=kind+"/"+Date.now()+"-"+safe;
+      const kind=kindOfFile(file);
+      if(await r2Ready()){
+        if(file.size>2*1024*1024*1024) throw new Error("ফাইল ২ GB-এর বেশি — বড় ভিডিও YouTube-এ দিন।");
+        const r=await r2Upload(file,kind,p=>{msg.textContent="R2-তে আপলোড হচ্ছে… "+p.toLocaleString("bn-BD")+"%";});
+        row={...row,kind,path:r.path,url:r.url};
+      } else {
+      if(file.size>50*1024*1024) throw new Error("ফাইল ৫০MB-এর বেশি — YouTube/Drive লিংক দিন, অথবা Cloudflare R2 যুক্ত করুন।");
+      const safe=file.name.replace(/[^\w.\-]+/g,"_").slice(-60),path=kind+"/"+Date.now()+"-"+safe;
       const ct=file.type||(kind==="audio"?"audio/ogg":"application/octet-stream");
       const up=await sb.storage.from("media").upload(path,file,{contentType:ct,upsert:false});
       if(up.error) throw up.error;
       row={...row,kind,path,url:sb.storage.from("media").getPublicUrl(path).data.publicUrl};
+      }
     } else row={...row,kind:kindOfUrl(url),url};
     const {error}=await sb.from("media").insert(row); if(error) throw error;
-    msg.textContent="যোগ হয়েছে ✓ — সাইটের লাইব্রেরিতে দেখা যাচ্ছে।";["mTitle","mDesc","mUrl"].forEach(i=>$(i).value="");$("mFile").value="";loadMedia();
+    msg.textContent="যোগ হয়েছে ✓ — সাইটের লাইব্রেরিতে দেখা যাচ্ছে।";r2UsageShow();["mTitle","mDesc","mUrl"].forEach(i=>$(i).value="");$("mFile").value="";loadMedia();
   }catch(e){msg.textContent="হয়নি: "+(e.message||e);}
   $("mSave").disabled=false;
 };
 let MEDIA={};
 async function loadMedia(){
+  r2UsageShow();
   const {data,error}=await sb.from("media").select("*").order("created_at",{ascending:false});
   if(data) MEDIA=Object.fromEntries(data.map(r=>[r.id,r]));
   if(error){$("mrows").innerHTML='<tr><td colspan="7" class="err">লোড হয়নি: '+error.message+' (media.sql চালানো হয়েছে?)</td></tr>';return;}
@@ -520,13 +562,20 @@ async function loadMedia(){
       const u=tr.querySelector("#eU"); if(u){ if(!/^https?:\/\//.test(u.value.trim())){tr.querySelector("#eMsg").textContent="সঠিক লিংক দিন (https:// দিয়ে শুরু)।";return;} upd.url=u.value.trim(); }
       tr.querySelector("#eMsg").textContent="সেভ হচ্ছে…";
       const af=tr.querySelector("#eA")&&tr.querySelector("#eA").files[0],arm=tr.querySelector("#eArm")&&tr.querySelector("#eArm").checked;
-      if(af){if(af.size>50*1024*1024){tr.querySelector("#eMsg").textContent="অডিও ৫০MB-এর বেশি।";return;}
+      if(af){
+        if(await r2Ready()){
+          try{const x=await r2Upload(af,"audio",p=>{tr.querySelector("#eMsg").textContent="অডিও R2-তে যাচ্ছে… "+p.toLocaleString("bn-BD")+"%";});
+            if(r.audio_path)await rmFile(r.audio_path);upd.audio_path=x.path;upd.audio_url=x.url;}
+          catch(e){tr.querySelector("#eMsg").textContent="অডিও আপলোড হয়নি: "+(e.message||e);return;}
+        } else {
+        if(af.size>50*1024*1024){tr.querySelector("#eMsg").textContent="অডিও ৫০MB-এর বেশি।";return;}
         const ap="audio/"+Date.now()+"-"+af.name.replace(/[^\w.\-]+/g,"_").slice(-40);
         const up=await sb.storage.from("media").upload(ap,af,{contentType:af.type||"audio/mpeg",upsert:false});
         if(up.error){tr.querySelector("#eMsg").textContent="অডিও আপলোড হয়নি: "+up.error.message;return;}
-        if(r.audio_path)await sb.storage.from("media").remove([r.audio_path]);
+        if(r.audio_path)await rmFile(r.audio_path);
         upd.audio_path=ap;upd.audio_url=sb.storage.from("media").getPublicUrl(ap).data.publicUrl;
-      } else if(arm){if(r.audio_path)await sb.storage.from("media").remove([r.audio_path]);upd.audio_path=null;upd.audio_url=null;}
+        }
+      } else if(arm){if(r.audio_path)await rmFile(r.audio_path);upd.audio_path=null;upd.audio_url=null;}
       const {error}=await sb.from("media").update(upd).eq("id",r.id);
       if(error){tr.querySelector("#eMsg").textContent="হয়নি: "+error.message;return;}
       loadMedia();
@@ -536,7 +585,8 @@ async function loadMedia(){
   document.querySelectorAll("#mrows [data-ai]").forEach(b=>b.onclick=()=>aiPanel(MEDIA[b.dataset.ai],b.closest("tr")));
   document.querySelectorAll("#mrows [data-del]").forEach(b=>b.onclick=async()=>{
     if(!confirm("এটা মুছে ফেলবেন?"))return;
-    if(b.dataset.path){const {error}=await sb.storage.from("media").remove([b.dataset.path]);if(error){alert(error.message);return;}}
+    if(b.dataset.path){try{await rmFile(b.dataset.path);}catch(e){alert(e.message||e);return;}}
+    {const m=MEDIA[b.dataset.del];if(m&&m.audio_path){try{await rmFile(m.audio_path);}catch(_){}}}
     const {error}=await sb.from("media").delete().eq("id",b.dataset.del);if(error)alert(error.message);loadMedia();});
 }
 async function loadRecs(){

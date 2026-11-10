@@ -1,5 +1,5 @@
-/* দারুল ইলম অনলাইন — অফলাইন সার্ভিস ওয়ার্কার — v46 */
-const V = "dio-v46";
+/* দারুল ইলম অনলাইন — অফলাইন সার্ভিস ওয়ার্কার — v48 */
+const V = "dio-v48";
 const PAGES = V + "-pages", DATA = "dio-data", STATIC = V + "-static", FONTS = "dio-fonts";
 const SHELL = ["/", "/courses", "/learn", "/library", "/apps", "/guide-parent", "/guide-teacher", "/offline", "/search", "/cert.js",
   "/favicon.svg", "/favicon.png", "/apple-touch-icon.png", "/icon-192.png", "/icon-512.png", "/manifest.webmanifest"];
@@ -12,7 +12,7 @@ self.addEventListener("activate", e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith("dio-v") && !k.startsWith(V)).map(k => caches.delete(k)))).then(() => self.clients.claim()));
 });
 
-const NOCACHE = /^\/(admin|api\/)/;
+const NOCACHE = /^\/(admin|api\/|m\/)/;
 function shellFor(path) {
   if (path.startsWith("/learn")) return "/learn";
   if (path.startsWith("/c/")) return "/course";
